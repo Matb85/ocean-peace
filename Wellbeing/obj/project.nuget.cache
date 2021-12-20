@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E5e1CcT91Y8u9/3+mgTCTW8Z14S110yQbid+Xt3xfTBI/9PRZpLqoRBzJe12lSZ2q6zaFaD26/DQKN4g2oodYA==",
+  "dgSpecHash": "k8wRd1tuxGH20sj6PJ39yxWXubMDROiIeK9ynSeS0W2UuupIKxT8UT3XoA1bfk4/jmrlMFAEFyF17Ug2wat+eQ==",
   "success": true,
-  "projectFilePath": "D:\\Users\\Lukasz\\Maui\\Wellbeing\\Wellbeing\\Wellbeing.csproj",
+  "projectFilePath": "D:\\Users\\Łukasz\\Documents\\GitHub\\wellbeing\\Wellbeing\\Wellbeing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Łukasz\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\Łukasz\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

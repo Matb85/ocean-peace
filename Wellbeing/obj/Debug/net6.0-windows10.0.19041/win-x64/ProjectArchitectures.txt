@@ -1,1 +1,1 @@
-D:\Users\Lukasz\Maui\Wellbeing\Wellbeing\Wellbeing.csproj;neutral
+D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\Wellbeing.csproj;neutral

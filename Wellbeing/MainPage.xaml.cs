@@ -16,7 +16,7 @@ namespace Wellbeing
 		private void OnCounterClicked(object sender, EventArgs e)
 		{
 			count+=2*4;
-			CounterLabel.Text = $"Current count: {count}";
+			CounterLabel.Text = $"O kurwa działa: {count}";
 
 			SemanticScreenReader.Announce(CounterLabel.Text);
 		}

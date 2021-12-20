@@ -37819,11 +37819,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Users\\Lukasz\\Maui\\Wellbeing\\Wellbeing\\Wellbeing.csproj",
+      "projectUniqueName": "D:\\Users\\Łukasz\\Documents\\GitHub\\wellbeing\\Wellbeing\\Wellbeing.csproj",
       "projectName": "Wellbeing",
-      "projectPath": "D:\\Users\\Lukasz\\Maui\\Wellbeing\\Wellbeing\\Wellbeing.csproj",
+      "projectPath": "D:\\Users\\Łukasz\\Documents\\GitHub\\wellbeing\\Wellbeing\\Wellbeing.csproj",
       "packagesPath": "C:\\Users\\Łukasz\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\Lukasz\\Maui\\Wellbeing\\Wellbeing\\obj\\",
+      "outputPath": "D:\\Users\\Łukasz\\Documents\\GitHub\\wellbeing\\Wellbeing\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
