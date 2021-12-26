@@ -18,7 +18,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\bin\Debug\net6.0-windows10.0.19041\win-x64\AppX</LayoutDir>
-    <RegisteredManifestChecksum>0D3C1030DCA550B0C3CFB24B28F972A832C317CEF8C986CCE38CECE50F63E1B0</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>4D1CD820047267CFA24672D752CA1C3F47CC1DE06AEF62FAF316B3D1BEDF4374</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>86B29EA9-7FB5-4611-898B-F6FA91E8AFB7_1.0.0.0_neutral__9zz4h110yvjzm</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>86B29EA9-7FB5-4611-898B-F6FA91E8AFB7_9zz4h110yvjzm!App</RegisteredUserModeAppID>
     <RegisteredPackageID>86B29EA9-7FB5-4611-898B-F6FA91E8AFB7</RegisteredPackageID>
@@ -29,29 +29,29 @@
     <AppXManifest Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\bin\Debug\net6.0-windows10.0.19041\win-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2021-12-20T14:32:34.957</Modified>
+      <Modified>2021-12-26T20:56:53.612</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\bin\Debug\net6.0-windows10.0.19041\win-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2021-12-20T14:32:34.618</Modified>
+      <Modified>2021-12-26T20:56:53.280</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\bin\Debug\net6.0-windows10.0.19041\win-x64\Wellbeing.runtimeconfig.json">
       <PackagePath>Wellbeing.runtimeconfig.json</PackagePath>
-      <Modified>2021-12-20T14:32:34.262</Modified>
+      <Modified>2021-12-22T18:14:46.832</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\bin\Debug\net6.0-windows10.0.19041\win-x64\Wellbeing.dll">
       <PackagePath>Wellbeing.dll</PackagePath>
-      <Modified>2021-12-20T14:32:32.936</Modified>
+      <Modified>2021-12-26T20:56:52.415</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\obj\Debug\net6.0-windows10.0.19041\win-x64\apphost.exe">
       <PackagePath>Wellbeing.exe</PackagePath>
-      <Modified>2021-12-20T14:32:33.658</Modified>
+      <Modified>2021-12-26T20:56:53.043</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\bin\Debug\net6.0-windows10.0.19041\win-x64\Wellbeing.deps.json">
       <PackagePath>Wellbeing.deps.json</PackagePath>
-      <Modified>2021-12-20T14:32:34.150</Modified>
+      <Modified>2021-12-23T22:48:32.186</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.netcore.app.runtime.win-x64\6.0.0\runtimes\win-x64\lib\net6.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -713,25 +713,25 @@
       <PackagePath>netstandard.dll</PackagePath>
       <Modified>2021-10-22T23:44:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Core.Runtime.win\6.0.101-preview.10.2068\lib\net6.0-windows10.0.19041\Microsoft.Maui.dll">
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Core.Runtime.win\6.0.101-preview.11.2349\lib\net6.0-windows10.0.19041\Microsoft.Maui.dll">
       <PackagePath>Microsoft.Maui.dll</PackagePath>
-      <Modified>2021-10-29T17:16:50.000</Modified>
+      <Modified>2021-12-08T03:30:38.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Runtime.win\6.0.101-preview.10.2068\lib\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.dll">
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Runtime.win\6.0.101-preview.11.2349\lib\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.dll">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.dll</PackagePath>
-      <Modified>2021-10-29T17:16:04.000</Modified>
+      <Modified>2021-12-08T03:30:16.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Runtime.win\6.0.101-preview.10.2068\lib\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Xaml.dll">
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Runtime.win\6.0.101-preview.11.2349\lib\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Xaml.dll">
       <PackagePath>Microsoft.Maui.Controls.Xaml.dll</PackagePath>
-      <Modified>2021-10-29T17:16:24.000</Modified>
+      <Modified>2021-12-08T03:30:16.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Runtime.win\6.0.101-preview.10.2068\lib\net6.0-windows10.0.19041\Microsoft.Maui.Controls.dll">
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Runtime.win\6.0.101-preview.11.2349\lib\net6.0-windows10.0.19041\Microsoft.Maui.Controls.dll">
       <PackagePath>Microsoft.Maui.Controls.dll</PackagePath>
-      <Modified>2021-10-29T17:16:04.000</Modified>
+      <Modified>2021-12-08T03:30:14.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Runtime.win\6.0.101-preview.10.2068\lib\net6.0-windows10.0.19041\Microsoft.Maui.Essentials.dll">
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Runtime.win\6.0.101-preview.11.2349\lib\net6.0-windows10.0.19041\Microsoft.Maui.Essentials.dll">
       <PackagePath>Microsoft.Maui.Essentials.dll</PackagePath>
-      <Modified>2021-10-29T17:16:10.000</Modified>
+      <Modified>2021-12-08T03:31:00.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.netcore.app.runtime.win-x64\6.0.0\runtimes\win-x64\native\Microsoft.DiaSymReader.Native.amd64.dll">
       <PackagePath>Microsoft.DiaSymReader.Native.amd64.dll</PackagePath>
@@ -1065,53 +1065,49 @@
       <PackagePath>Microsoft.Extensions.Primitives.dll</PackagePath>
       <Modified>2021-10-22T23:51:10.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.graphics.win2d\1.0.0.29-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.Graphics.Canvas.Interop.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.graphics.win2d\1.0.0.30\lib\net5.0-windows10.0.18362.0\Microsoft.Graphics.Canvas.Interop.dll">
       <PackagePath>Microsoft.Graphics.Canvas.Interop.dll</PackagePath>
-      <Modified>2021-10-27T23:19:28.000</Modified>
+      <Modified>2021-11-16T23:41:48.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.maui.graphics\6.0.101-preview.10.640\lib\net6.0-windows10.0.18362\Microsoft.Maui.Graphics.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.maui.graphics\6.0.101-preview.11.758\lib\net6.0-windows10.0.18362\Microsoft.Maui.Graphics.dll">
       <PackagePath>Microsoft.Maui.Graphics.dll</PackagePath>
-      <Modified>2021-10-29T01:33:36.000</Modified>
+      <Modified>2021-11-29T21:34:06.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.maui.graphics.win2d.winui.desktop\6.0.101-preview.10.640\lib\net6.0-windows10.0.18362\Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.maui.graphics.win2d.winui.desktop\6.0.101-preview.11.758\lib\net6.0-windows10.0.18362\Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll">
       <PackagePath>Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll</PackagePath>
-      <Modified>2021-10-29T01:33:16.000</Modified>
+      <Modified>2021-11-29T21:33:26.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.InteractiveExperiences.Projection.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.InteractiveExperiences.Projection.dll">
       <PackagePath>Microsoft.InteractiveExperiences.Projection.dll</PackagePath>
-      <Modified>2021-10-25T20:19:50.000</Modified>
+      <Modified>2021-11-16T04:57:36.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.WinUI.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.WinUI.dll">
       <PackagePath>Microsoft.WinUI.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.AppLifecycle.Projection.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.AppLifecycle.Projection.dll">
       <PackagePath>Microsoft.Windows.AppLifecycle.Projection.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll">
       <PackagePath>Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.ApplicationModel.Resources.Projection.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.ApplicationModel.Resources.Projection.dll">
       <PackagePath>Microsoft.Windows.ApplicationModel.Resources.Projection.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll">
       <PackagePath>Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.System.Power.Projection.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.Windows.System.Power.Projection.dll">
       <PackagePath>Microsoft.Windows.System.Power.Projection.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\lib\net5.0-windows10.0.18362.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\lib\net5.0-windows10.0.18362.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll">
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.Net.dll</PackagePath>
-      <Modified>2021-10-25T20:30:28.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\system.codedom\4.7.0\lib\netstandard2.0\System.CodeDom.dll">
-      <PackagePath>System.CodeDom.dll</PackagePath>
-      <Modified>2019-11-15T08:36:56.000</Modified>
+      <Modified>2021-11-16T05:08:40.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\system.diagnostics.eventlog\6.0.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.Messages.dll">
       <PackagePath>System.Diagnostics.EventLog.Messages.dll</PackagePath>
@@ -1121,25 +1117,13 @@
       <PackagePath>System.Diagnostics.EventLog.dll</PackagePath>
       <Modified>2021-10-22T23:47:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.graphics.win2d\1.0.0.29-preview3\runtimes\win10-x64\native\Microsoft.Graphics.Canvas.dll">
+    <AppxPackagedFile Include="C:\Users\Łukasz\.nuget\packages\microsoft.graphics.win2d\1.0.0.30\runtimes\win10-x64\native\Microsoft.Graphics.Canvas.dll">
       <PackagePath>Microsoft.Graphics.Canvas.dll</PackagePath>
-      <Modified>2021-10-27T23:24:10.000</Modified>
+      <Modified>2021-11-16T23:45:32.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\6.0.101-preview.10.2068\ref\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
-      <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>
-      <Modified>2021-10-29T17:11:36.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\6.0.101-preview.10.2068\ref\net6.0-windows10.0.19041\Microsoft.Maui.Controls.pri">
-      <PackagePath>Microsoft.Maui.Controls.pri</PackagePath>
-      <Modified>2021-10-29T17:10:50.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Core.Ref.win\6.0.101-preview.10.2068\ref\net6.0-windows10.0.19041\Microsoft.Maui.pri">
-      <PackagePath>Microsoft.Maui.pri</PackagePath>
-      <Modified>2021-10-29T17:10:32.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.win\6.0.101-preview.10.2068\ref\net6.0-windows10.0.19041\Microsoft.Maui.Essentials.pri">
-      <PackagePath>Microsoft.Maui.Essentials.pri</PackagePath>
-      <Modified>2021-10-29T17:05:16.000</Modified>
+    <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\obj\Debug\net6.0-windows10.0.19041\win-x64\Platforms\Windows\App.xbf">
+      <PackagePath>Platforms\Windows\App.xbf</PackagePath>
+      <Modified>2021-12-26T20:56:52.277</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Users\Łukasz\Documents\GitHub\wellbeing\Wellbeing\obj\Debug\net6.0-windows10.0.19041\win-x64\resizetizer\sp\Assets\appiconfgSplashScreen.scale-100.png">
       <PackagePath>Assets\appiconfgSplashScreen.scale-100.png</PackagePath>
@@ -1305,41 +1289,57 @@
       <PackagePath>Assets\dotnet_bot.scale-400.png</PackagePath>
       <Modified>2021-12-20T14:32:32.758</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\6.0.101-preview.11.2349\ref\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
+      <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>
+      <Modified>2021-12-08T03:22:12.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\6.0.101-preview.11.2349\ref\net6.0-windows10.0.19041\Microsoft.Maui.Controls.pri">
+      <PackagePath>Microsoft.Maui.Controls.pri</PackagePath>
+      <Modified>2021-12-08T03:20:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Core.Ref.win\6.0.101-preview.11.2349\ref\net6.0-windows10.0.19041\Microsoft.Maui.pri">
+      <PackagePath>Microsoft.Maui.pri</PackagePath>
+      <Modified>2021-12-08T03:19:40.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.win\6.0.101-preview.11.2349\ref\net6.0-windows10.0.19041\Microsoft.Maui.Essentials.pri">
+      <PackagePath>Microsoft.Maui.Essentials.pri</PackagePath>
+      <Modified>2021-12-08T03:19:20.000</Modified>
+    </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
-    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0-preview3.msix">
-      <Name>Microsoft.WindowsAppRuntime.1.0-preview3</Name>
-      <Version>0.297.2018.0</Version>
+    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0.msix">
+      <Name>Microsoft.WindowsAppRuntime.1.0</Name>
+      <Version>0.319.455.0</Version>
       <Architecture>x86</Architecture>
-      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0-preview3, MinVersion = 0.297.2018.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0-preview3.msix</AppxLocation>
+      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0, MinVersion = 0.319.455.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0.msix</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0-preview3.msix">
-      <Name>Microsoft.WindowsAppRuntime.1.0-preview3</Name>
-      <Version>0.297.2018.0</Version>
+    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0.msix">
+      <Name>Microsoft.WindowsAppRuntime.1.0</Name>
+      <Version>0.319.455.0</Version>
       <Architecture>win32</Architecture>
-      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0-preview3, MinVersion = 0.297.2018.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0-preview3.msix</AppxLocation>
+      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0, MinVersion = 0.319.455.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-x86\Microsoft.WindowsAppRuntime.1.0.msix</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-x64\Microsoft.WindowsAppRuntime.1.0-preview3.msix">
-      <Name>Microsoft.WindowsAppRuntime.1.0-preview3</Name>
-      <Version>0.297.2018.0</Version>
+    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-x64\Microsoft.WindowsAppRuntime.1.0.msix">
+      <Name>Microsoft.WindowsAppRuntime.1.0</Name>
+      <Version>0.319.455.0</Version>
       <Architecture>x64</Architecture>
-      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0-preview3, MinVersion = 0.297.2018.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-x64\Microsoft.WindowsAppRuntime.1.0-preview3.msix</AppxLocation>
+      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0, MinVersion = 0.319.455.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-x64\Microsoft.WindowsAppRuntime.1.0.msix</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>
-    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-arm64\Microsoft.WindowsAppRuntime.1.0-preview3.msix">
-      <Name>Microsoft.WindowsAppRuntime.1.0-preview3</Name>
-      <Version>0.297.2018.0</Version>
+    <ResolvedSDKReference Include="C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-arm64\Microsoft.WindowsAppRuntime.1.0.msix">
+      <Name>Microsoft.WindowsAppRuntime.1.0</Name>
+      <Version>0.319.455.0</Version>
       <Architecture>arm64</Architecture>
-      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0-preview3, MinVersion = 0.297.2018.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
-      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0-preview3\build\..\tools\MSIX\win10-arm64\Microsoft.WindowsAppRuntime.1.0-preview3.msix</AppxLocation>
+      <FrameworkIdentity>Name = Microsoft.WindowsAppRuntime.1.0, MinVersion = 0.319.455.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\Łukasz\.nuget\packages\microsoft.windowsappsdk\1.0.0\build\..\tools\MSIX\win10-arm64\Microsoft.WindowsAppRuntime.1.0.msix</AppxLocation>
       <MoreInfo>
       </MoreInfo>
     </ResolvedSDKReference>

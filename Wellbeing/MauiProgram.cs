@@ -3,6 +3,9 @@ using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Hosting;
 
+using Wellbeing.Models;
+using System.Threading;
+
 namespace Wellbeing
 {
 	public static class MauiProgram
@@ -19,5 +22,7 @@ namespace Wellbeing
 
 			return builder.Build();
 		}
+
+		
 	}
 }

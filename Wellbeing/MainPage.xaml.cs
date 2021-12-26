@@ -19,6 +19,8 @@ namespace Wellbeing
 			CounterLabel.Text = $"O kurwa działa: {count}";
 
 			SemanticScreenReader.Announce(CounterLabel.Text);
+
+			
 		}
 	}
 }

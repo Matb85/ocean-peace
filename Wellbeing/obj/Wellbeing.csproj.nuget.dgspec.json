@@ -65,22 +65,22 @@
           "dependencies": {
             "Microsoft.Maui.Controls.Build.Tasks": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Dependencies": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Extensions": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Resizetizer.Sdk": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             }
           },
@@ -94,6 +94,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-arm",
+              "version": "[6.0.0, 6.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-arm64",
+              "version": "[6.0.0, 6.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[6.0.0, 6.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.Android": {
               "privateAssets": "all"
@@ -118,22 +132,22 @@
           "dependencies": {
             "Microsoft.Maui.Controls.Build.Tasks": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Dependencies": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Extensions": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Resizetizer.Sdk": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             }
           },
@@ -171,22 +185,22 @@
           "dependencies": {
             "Microsoft.Maui.Controls.Build.Tasks": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Dependencies": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Extensions": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Resizetizer.Sdk": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             }
           },
@@ -225,31 +239,31 @@
           "dependencies": {
             "Microsoft.Graphics.Win2D": {
               "target": "Package",
-              "version": "[1.0.0.29-preview3, )"
+              "version": "[1.0.0.30, )"
             },
             "Microsoft.Maui.Controls.Build.Tasks": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Dependencies": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Extensions": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Resizetizer.Sdk": {
               "target": "Package",
-              "version": "[6.0.101-preview.10.2068, )",
+              "version": "[6.0.101-preview.11.2349, )",
               "autoReferenced": true
             },
             "Microsoft.WindowsAppSDK": {
               "target": "Package",
-              "version": "[1.0.0-preview3, )"
+              "version": "[1.0.0, )"
             }
           },
           "imports": [

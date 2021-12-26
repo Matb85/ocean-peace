@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wellbeing.Views.LoginPage">
+    <ScrollView>
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*">
+
+            <Label  Text="Welcome to VAIS!"
+                    Grid.Row="1"
+                    SemanticProperties.HeadingLevel="Level1"
+                    FontSize="32"
+                    HorizontalOptions="Center" />
+
+            <Entry Placeholder="Login"
+                   Grid.Row="3"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Sing in!"
+                    Grid.Row="5"
+                    HorizontalOptions="Center" />
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

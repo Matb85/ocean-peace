@@ -9,6 +9,13 @@
 //------------------------------------------------------------------------------
 
 
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using Wellbeing.Models;
+
 namespace Wellbeing.WinUI
 {
 #if !DISABLE_XAML_GENERATED_MAIN
@@ -33,6 +40,7 @@ namespace Wellbeing.WinUI
                 global::System.Threading.SynchronizationContext.SetSynchronizationContext(context);
                 new App();
             });
+
         }
     }
 #endif

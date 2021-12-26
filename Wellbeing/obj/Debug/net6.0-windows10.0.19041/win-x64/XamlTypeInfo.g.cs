@@ -224,7 +224,7 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[35];
+            _typeNameTable = new string[32];
             _typeNameTable[0] = "Microsoft.Maui.MauiWinUIApplication";
             _typeNameTable[1] = "Microsoft.UI.Xaml.Application";
             _typeNameTable[2] = "Microsoft.UI.Xaml.LaunchActivatedEventArgs";
@@ -256,12 +256,9 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
             _typeNameTable[28] = "Microsoft.UI.Xaml.DependencyObject";
             _typeNameTable[29] = "Microsoft.Maui.Controls.Platform.ShellView";
             _typeNameTable[30] = "Microsoft.UI.Xaml.Media.Brush";
-            _typeNameTable[31] = "Microsoft.Maui.MauiButton";
-            _typeNameTable[32] = "Microsoft.UI.Xaml.Controls.Button";
-            _typeNameTable[33] = "Int32";
-            _typeNameTable[34] = "Microsoft.Maui.MauiNavigationView";
+            _typeNameTable[31] = "Microsoft.Maui.Platform.MauiNavigationView";
 
-            _typeTable = new global::System.Type[35];
+            _typeTable = new global::System.Type[32];
             _typeTable[0] = typeof(global::Microsoft.Maui.MauiWinUIApplication);
             _typeTable[1] = typeof(global::Microsoft.UI.Xaml.Application);
             _typeTable[2] = typeof(global::Microsoft.UI.Xaml.LaunchActivatedEventArgs);
@@ -293,10 +290,7 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
             _typeTable[28] = typeof(global::Microsoft.UI.Xaml.DependencyObject);
             _typeTable[29] = typeof(global::Microsoft.Maui.Controls.Platform.ShellView);
             _typeTable[30] = typeof(global::Microsoft.UI.Xaml.Media.Brush);
-            _typeTable[31] = typeof(global::Microsoft.Maui.MauiButton);
-            _typeTable[32] = typeof(global::Microsoft.UI.Xaml.Controls.Button);
-            _typeTable[33] = typeof(global::System.Int32);
-            _typeTable[34] = typeof(global::Microsoft.Maui.MauiNavigationView);
+            _typeTable[31] = typeof(global::Microsoft.Maui.Platform.MauiNavigationView);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -335,8 +329,7 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
         private object Activate_6_NavigationView() { return new global::Microsoft.UI.Xaml.Controls.NavigationView(); }
         private object Activate_27_NavigationViewTemplateSettings() { return new global::Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings(); }
         private object Activate_29_ShellView() { return new global::Microsoft.Maui.Controls.Platform.ShellView(); }
-        private object Activate_31_MauiButton() { return new global::Microsoft.Maui.MauiButton(); }
-        private object Activate_34_MauiNavigationView() { return new global::Microsoft.Maui.MauiNavigationView(); }
+        private object Activate_31_MauiNavigationView() { return new global::Microsoft.Maui.Platform.MauiNavigationView(); }
         private void VectorAdd_16_IList(object instance, object item)
         {
             var collection = (global::System.Collections.Generic.ICollection<global::System.Object>)instance;
@@ -563,26 +556,9 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
                 xamlType = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 31:   //  Microsoft.Maui.MauiButton
-                userType = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Button"));
-                userType.Activator = Activate_31_MauiButton;
-                userType.AddMemberName("BackgroundColor");
-                userType.AddMemberName("BorderRadius");
-                userType.SetIsBindable();
-                xamlType = userType;
-                break;
-
-            case 32:   //  Microsoft.UI.Xaml.Controls.Button
-                xamlType = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 33:   //  Int32
-                xamlType = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlSystemBaseType(typeName, type);
-                break;
-
-            case 34:   //  Microsoft.Maui.MauiNavigationView
+            case 31:   //  Microsoft.Maui.Platform.MauiNavigationView
                 userType = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.NavigationView"));
-                userType.Activator = Activate_34_MauiNavigationView;
+                userType.Activator = Activate_31_MauiNavigationView;
                 userType.SetIsBindable();
                 xamlType = userType;
                 break;
@@ -1021,26 +997,6 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
             var that = (global::Microsoft.Maui.Controls.Platform.ShellView)instance;
             that.FlyoutBackgroundColor = (global::Microsoft.UI.Xaml.Media.Brush)Value;
         }
-        private object get_41_MauiButton_BackgroundColor(object instance)
-        {
-            var that = (global::Microsoft.Maui.MauiButton)instance;
-            return that.BackgroundColor;
-        }
-        private void set_41_MauiButton_BackgroundColor(object instance, object Value)
-        {
-            var that = (global::Microsoft.Maui.MauiButton)instance;
-            that.BackgroundColor = (global::Microsoft.UI.Xaml.Media.Brush)Value;
-        }
-        private object get_42_MauiButton_BorderRadius(object instance)
-        {
-            var that = (global::Microsoft.Maui.MauiButton)instance;
-            return that.BorderRadius;
-        }
-        private void set_42_MauiButton_BorderRadius(object instance, object Value)
-        {
-            var that = (global::Microsoft.Maui.MauiButton)instance;
-            that.BorderRadius = (global::System.Int32)Value;
-        }
 
         private global::Microsoft.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
@@ -1332,20 +1288,6 @@ namespace Wellbeing.Wellbeing_XamlTypeInfo
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.Getter = get_40_ShellView_FlyoutBackgroundColor;
                 xamlMember.Setter = set_40_ShellView_FlyoutBackgroundColor;
-                break;
-            case "Microsoft.Maui.MauiButton.BackgroundColor":
-                userType = (global::Wellbeing.Wellbeing_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Maui.MauiButton");
-                xamlMember = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlMember(this, "BackgroundColor", "Microsoft.UI.Xaml.Media.Brush");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_41_MauiButton_BackgroundColor;
-                xamlMember.Setter = set_41_MauiButton_BackgroundColor;
-                break;
-            case "Microsoft.Maui.MauiButton.BorderRadius":
-                userType = (global::Wellbeing.Wellbeing_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Microsoft.Maui.MauiButton");
-                xamlMember = new global::Wellbeing.Wellbeing_XamlTypeInfo.XamlMember(this, "BorderRadius", "Int32");
-                xamlMember.SetIsDependencyProperty();
-                xamlMember.Getter = get_42_MauiButton_BorderRadius;
-                xamlMember.Setter = set_42_MauiButton_BorderRadius;
                 break;
             }
             return xamlMember;

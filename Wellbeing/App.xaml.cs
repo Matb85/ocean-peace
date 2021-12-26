@@ -2,6 +2,10 @@
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;
 using Application = Microsoft.Maui.Controls.Application;
+using System.Threading;
+
+using Wellbeing.Models;
+using Wellbeing.Views;
 
 namespace Wellbeing
 {
@@ -11,7 +15,13 @@ namespace Wellbeing
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+			MainPage = new ApplicationsActivityPage();
+
+			AppTimer appTimer = new AppTimer();
 		}
-	}
+
+        
+
+		
+    }
 }
