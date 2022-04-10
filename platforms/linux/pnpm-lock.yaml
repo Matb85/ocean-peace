@@ -4,7 +4,7 @@ specifiers:
   '@sveltejs/vite-plugin-svelte': 1.0.0-next.41
   '@tauri-apps/api': 1.0.0-rc.3
   '@tauri-apps/cli': 1.0.0-rc.8
-  '@tsconfig/svelte': 2.0.1
+  '@tsconfig/svelte': 3.0.0
   sirv-cli: 2.0.2
   svelte: 3.47.0
   svelte-check: 2.6.0
@@ -20,7 +20,7 @@ dependencies:
 devDependencies:
   '@sveltejs/vite-plugin-svelte': 1.0.0-next.41_svelte@3.47.0+vite@2.9.1
   '@tauri-apps/cli': 1.0.0-rc.8
-  '@tsconfig/svelte': 2.0.1
+  '@tsconfig/svelte': 3.0.0
   svelte: 3.47.0
   svelte-check: 2.6.0_svelte@3.47.0
   svelte-preprocess: 4.10.5_svelte@3.47.0+typescript@4.6.3
@@ -189,8 +189,8 @@ packages:
       '@tauri-apps/cli-win32-x64-msvc': 1.0.0-rc.8
     dev: true
 
-  /@tsconfig/svelte/2.0.1:
-    resolution: {integrity: sha512-aqkICXbM1oX5FfgZd2qSSAGdyo/NRxjWCamxoyi3T8iVQnzGge19HhDYzZ6NrVOW7bhcWNSq9XexWFtMzbB24A==}
+  /@tsconfig/svelte/3.0.0:
+    resolution: {integrity: sha512-pYrtLtOwku/7r1i9AMONsJMVYAtk3hzOfiGNekhtq5tYBGA7unMve8RvUclKLMT3PrihvJqUmzsRGh0RP84hKg==}
     dev: true
 
   /@types/node/17.0.23:
