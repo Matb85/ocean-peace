@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@sveltejs/vite-plugin-svelte': 1.0.0-next.41
-  '@tauri-apps/api': 1.0.0-rc.3
+  '@tauri-apps/api': 1.0.0-rc.4
   '@tauri-apps/cli': 1.0.0-rc.8
   '@tsconfig/svelte': 3.0.0
   sirv-cli: 2.0.2
@@ -14,7 +14,7 @@ specifiers:
   vite: 2.9.1
 
 dependencies:
-  '@tauri-apps/api': 1.0.0-rc.3
+  '@tauri-apps/api': 1.0.0-rc.4
   sirv-cli: 2.0.2
 
 devDependencies:
@@ -85,11 +85,11 @@ packages:
       - supports-color
     dev: true
 
-  /@tauri-apps/api/1.0.0-rc.3:
-    resolution: {integrity: sha512-/ZbyBjuUoU6mYm8RzibIUvVuJ31ZwYA2+fTRl7FF4LVFhzCVJ1YI1BS5ohGb2GsLNmLpfeo7kDHaIhV2uaOchQ==}
+  /@tauri-apps/api/1.0.0-rc.4:
+    resolution: {integrity: sha512-1HaUsx8+TzFHDoQ+Mmd6RWaMsPyZlurQHgACDt+il5e/ui6pDkumVXaS92SnY5XOcS4gBC0BkgjVfkWgcm/Oww==}
     engines: {node: '>= 12.13.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
     dependencies:
-      type-fest: 2.12.1
+      type-fest: 2.12.2
     dev: false
 
   /@tauri-apps/cli-darwin-arm64/1.0.0-rc.8:
@@ -993,8 +993,8 @@ packages:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: true
 
-  /type-fest/2.12.1:
-    resolution: {integrity: sha512-AiknQSEqKVGDDjtZqeKrUoTlcj7FKhupmnVUgz6KoOKtvMwRGE6hUNJ/nVear+h7fnUPO1q/htSkYKb1pyntkQ==}
+  /type-fest/2.12.2:
+    resolution: {integrity: sha512-qt6ylCGpLjZ7AaODxbpyBZSs9fCI9SkL3Z9q2oxMBQhs/uyY+VD8jHA8ULCGmWQJlBgqvO3EJeAngOHD8zQCrQ==}
     engines: {node: '>=12.20'}
     dev: false
 
