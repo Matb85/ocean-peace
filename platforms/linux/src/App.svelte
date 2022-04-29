@@ -1,23 +1,27 @@
 <script lang="ts">
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
+  import logo from './assets/logo.svg'
+  import photoNull from './assets/null_photo.svg'
+  import background  from './assets/background.svg'
 </script>
 
 <main>
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Hello Typescript!</h1>
+  <!-- Background -->
+  <div class="bg">
+    <img src={background} alt="Svelte Logo" />
+  </div>
 
-  <Counter />
+  <!-- Navigation Bar -->
+  <div class="nav">
+    <div class="profile">
+      <img class="pic" src={photoNull} alt="Svelte Logo" />
+      <p class="name">John Doe</p>
+    </div>
+    <div class="logo">
+      <img class="pic" src={logo} alt="Svelte Logo" />
+      <p class="text">OceanPeace</p>
+    </div>
+  </div>
 
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
 </main>
 
 <style>
@@ -25,41 +29,85 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
+  /* Background */
+  .bg {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+  .bg img {
+    height: max-content;
+    width: max-content;
+    
+  }
 
-  main {
+  /* Navigation Bar */
+  .nav {
+    height: 100vh;
+    width: 308px;
+    background-color: #FFFFFF;
+    border-radius: 0px 32px 32px 0px;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    pointer-events: none;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav .profile {
+    width: 171px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 98px;
+  }
+  .nav .profile .pic {
+    position: relative;
+    height: 171px;
+    width: 171px;
+    filter: drop-shadow(0px 2px 18px rgba(0, 0, 0, 0.25));
+    border-radius: 24px;
+  }
+  .nav .profile .name {
+    width: 171px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 120%;
     text-align: center;
-    padding: 1em;
-    margin: 0 auto;
   }
 
-  img {
-    height: 16rem;
-    width: 16rem;
+  .nav .logo {
+    height: 35px;
+    width: 210px;
+    top: 35px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    
   }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
+  .nav .logo .pic {
+    height: 35px;
+    width: 42px;
   }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
+  .nav .logo .text {
+    height: 35px;
+    width: 161px;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 35px;
+    margin: 0px 7px;
   }
 </style>
