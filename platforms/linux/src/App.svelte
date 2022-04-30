@@ -2,6 +2,15 @@
   import logo from './assets/logo.svg'
   import photoNull from './assets/null_photo.svg'
   import background  from './assets/background.svg'
+
+
+  import { invoke } from '@tauri-apps/api/tauri'
+
+  let lol = 0;
+  function OnClick(): void {
+    console.dir(window)
+    invoke('test_command',{i: lol}).then ((message) => lol=(message));
+  }
 </script>
 
 <main>
@@ -10,21 +19,31 @@
     <img src={background} alt="Svelte Logo" />
   </div>
 
+  
   <!-- Navigation Bar -->
   <div class="nav">
+
     <div class="profile">
       <img class="pic" src={photoNull} alt="Svelte Logo" />
       <p class="name">John Doe</p>
     </div>
+
     <div class="logo">
       <img class="pic" src={logo} alt="Svelte Logo" />
       <p class="text">OceanPeace</p>
     </div>
+    <button style="pointer-events: initial;" on:click={OnClick}>{lol}</button>
   </div>
-
+  <p>{lol}</p>
 </main>
 
 <style>
+  *{
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    pointer-events: none;
+  }
+
   :root {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -37,13 +56,10 @@
     left: 0%;
     top: 0%;
     overflow: hidden;
-    pointer-events: none;
-    user-select: none;
   }
   .bg img {
     height: max-content;
     width: max-content;
-    
   }
 
   /* Navigation Bar */
@@ -55,8 +71,6 @@
     position: absolute;
     top: 0%;
     left: 0%;
-    pointer-events: none;
-    user-select: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,7 +108,6 @@
     position: absolute;
     display: flex;
     flex-direction: row;
-    
   }
   .nav .logo .pic {
     height: 35px;
