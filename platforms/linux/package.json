@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "1.0.0-next.41",
-    "@tauri-apps/cli": "1.0.0-rc.8",
+    "@tauri-apps/cli": "1.0.0-rc.9",
     "@tsconfig/svelte": "3.0.0",
     "svelte": "3.47.0",
     "svelte-check": "2.6.0",
@@ -22,7 +22,7 @@
     "vite": "2.9.1"
   },
   "dependencies": {
-    "@tauri-apps/api": "1.0.0-rc.3",
+    "@tauri-apps/api": "1.0.0-rc.4",
     "sirv-cli": "2.0.2"
   }
 }
