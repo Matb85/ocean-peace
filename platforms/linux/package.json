@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite dev",
-    "start": "sirv public --no-clear",
+    "start": "sirv build --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "tauri": "tauri"
   },

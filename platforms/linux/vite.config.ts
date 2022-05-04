@@ -7,7 +7,7 @@ const production = process.env.NODE_ENV === "production";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    routify({ devHelper: !production }),
+    routify(),
     svelte({
       emitCss: false,
       compilerOptions: { dev: !production },
