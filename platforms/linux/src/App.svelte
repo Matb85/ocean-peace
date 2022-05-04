@@ -1,7 +1,9 @@
 <script lang="ts">
-  import logo from './assets/logo.svg'
-  import photoNull from './assets/null_photo.svg'
-  import background  from './assets/background.svg'
+  import logo from "./assets/logo.svg";
+  import photoNull from "./assets/null_photo.svg";
+  import background from "./assets/background.svg";
+  import Button from "@redinnlabs/system/Elements/Button/Button.svelte";
+  import ToDo from "@redinnlabs/system/Units/Cards/ToDo/ToDo.svelte";
 </script>
 
 <main>
@@ -15,19 +17,22 @@
     <div class="profile">
       <img class="pic" src={photoNull} alt="Svelte Logo" />
       <p class="name">John Doe</p>
+      <Button>test</Button>
+      <ToDo title="test" />
     </div>
     <div class="logo">
       <img class="pic" src={logo} alt="Svelte Logo" />
       <p class="text">OceanPeace</p>
     </div>
   </div>
-
 </main>
 
-<style>
+<style lang="postcss">
+  @import "@redinnlabs/system/utils/base.css";
+
   :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+      "Helvetica Neue", sans-serif;
   }
   /* Background */
   .bg {
@@ -43,14 +48,13 @@
   .bg img {
     height: max-content;
     width: max-content;
-    
   }
 
   /* Navigation Bar */
   .nav {
     height: 100vh;
     width: 308px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 0px 32px 32px 0px;
     position: absolute;
     top: 0%;
@@ -79,7 +83,7 @@
   }
   .nav .profile .name {
     width: 171px;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
     font-size: 21px;
@@ -94,7 +98,6 @@
     position: absolute;
     display: flex;
     flex-direction: row;
-    
   }
   .nav .logo .pic {
     height: 35px;
@@ -103,7 +106,7 @@
   .nav .logo .text {
     height: 35px;
     width: 161px;
-    font-family: 'Lato';
+    font-family: "Lato";
     font-style: normal;
     font-weight: 700;
     font-size: 25px;
