@@ -3,3 +3,4 @@ build/
 
 .DS_Store
 platforms/linux/.routify/
+.pnpm-debug.log
