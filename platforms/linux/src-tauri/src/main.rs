@@ -15,42 +15,8 @@ struct Payload {
 }
 
 fn main() {
-  use std::thread;
-  
-  thread::spawn(move || {
-    //loop {
-      let mut sys = System::new_all();
-      sys.refresh_all();
-      for (pid, process) in sys.processes() {
-        println!("[{}] {}",pid, process.name());
-      }
 
-      let mut prev_window_id: u64 = 0;
-      match get_active_window() {
-        Ok(active_window) => {
-            println!("active window: {:?}", active_window);
-
-            prev_window_id = active_window.process_id;
-        },
-        Err(()) => {
-            println!("error occurred while getting the active window");
-        }
-        
-      }
-      loop {
-        match get_active_window() {
-          Ok(active_window) => {
-              if active_window.process_id != prev_window_id {
-                println!("active window: {:?}", active_window);
-              }
-              prev_window_id = active_window.process_id;
-          },
-          Err(()) => {
-              println!("error occurred while getting the active window");
-          }
-        }
-      }
-  });
+  mayo::run_process();
 
   tauri::Builder::default()
     .setup(|app| {

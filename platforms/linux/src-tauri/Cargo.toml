@@ -17,6 +17,8 @@ tauri-build = { version = "1.0.0-rc.5", features = [] }
 [dependencies]
 sysinfo = "0.23.11"
 active-win-pos-rs = "0.4.1"
+timer = "0.2.0"
+chrono = "0.4.19"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.0-rc.6", features = ["api-all"] }
