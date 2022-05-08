@@ -13,7 +13,7 @@
   "devDependencies": {
     "@roxi/routify": "^3.0.0-next.90",
     "@sveltejs/vite-plugin-svelte": "1.0.0-next.42",
-    "@tauri-apps/cli": "1.0.0-rc.9",
+    "@tauri-apps/cli": "1.0.0-rc.10",
     "@tsconfig/svelte": "3.0.0",
     "autoprefixer": "^10.4.7",
     "svelte": "3.48.0",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release",
-    "@tauri-apps/api": "1.0.0-rc.4",
+    "@tauri-apps/api": "1.0.0-rc.5",
     "sirv-cli": "2.0.2"
   }
 }
