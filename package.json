@@ -1,0 +1,12 @@
+{
+  "name": "ocean-peace",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Redinn-Labs/ocean-peace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Redinn-Labs/ocean-peace/issues"
+  },
+  "homepage": "https://github.com/Redinn-Labs/ocean-peace#readme"
+}
