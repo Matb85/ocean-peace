@@ -2,5 +2,5 @@ node_modules/
 build/
 
 .DS_Store
-platforms/linux/.routify/
+.routify
 .pnpm-debug.log
