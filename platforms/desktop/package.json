@@ -1,11 +1,11 @@
 {
-  "name": "ocean-peace",
+  "name": "desktop",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite dev",
+    "build": "pnpm --filter web run build",
+    "dev": "pnpm --filter web run dev",
     "start": "sirv build --no-clear",
     "tauri": "tauri"
   },
