@@ -1,0 +1,4 @@
+@import "@redinnlabs/system/utils/base.css";
+
+@tailwind base;
+@tailwind utilities;
