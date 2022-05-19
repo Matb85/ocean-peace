@@ -4,8 +4,6 @@
 )]
 
 mod mayo;
-use sysinfo::{Pid, PidExt, ProcessExt, System, SystemExt};
-use active_win_pos_rs::{get_active_window};
 
 use tauri::Manager;
 // the payload type must implement `Serialize` and `Clone`.
@@ -37,8 +35,7 @@ fn main() {
     .expect("failed to run app");
 }
 
-use serde::ser::{Serialize};
-use serde::Deserialize;
+
 
 #[tauri::command]
 fn test_command(mut i: i8) -> i8{
