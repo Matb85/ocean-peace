@@ -1,31 +1,28 @@
 <script lang="ts">
-  import logo from "../assets/logo.svg";
-  import photoNull from "../assets/null_photo.svg";
-  import background from "../assets/background.svg";
-  import Button from "@redinnlabs/system/Elements/Button/Button.svelte";
-  import ToDo from "@redinnlabs/system/Units/Cards/ToDo/ToDo.svelte";
+  
   import "@redinnlabs/system/utils/base.css";
+  import { Button, Icon, Heading } from "@redinnlabs/system/Elements";
+  import { Goal } from "@redinnlabs/system/Units";
+  import { mdiPencil } from '@mdi/js';
 </script>
 
 <main>
-  <!-- Background -->
-  <div class="bg">
-    <img src={background} alt="Svelte Logo" />
+  <!-- content -->
+  <div class="content">
+    <div class="startFocus_btn" >
+      <Button>Start a focus session</Button>
+    </div>
+    <div class="goals_title">
+      <Heading tag={6}>Your Goals</Heading>
+    </div>
+    <div class="goals">
+      {#each Array(4) as _, i}
+        <Goal title={"Finish this finally Bisu"} info={"Whole project left xd"}></Goal>
+      {/each}
+        <Button secondary=true >Add Goal</Button>
+    </div>
   </div>
 
-  <!-- Navigation Bar -->
-  <div class="nav">
-    <div class="profile">
-      <img class="pic" src={photoNull} alt="Svelte Logo" />
-      <p class="name">John Doe</p>
-      <Button>test</Button>
-      <ToDo title="test" />
-    </div>
-    <div class="logo">
-      <img class="pic" src={logo} alt="Svelte Logo" />
-      <p class="text">OceanPeace</p>
-    </div>
-  </div>
 </main>
 
 <style lang="postcss">
@@ -33,79 +30,32 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
       "Helvetica Neue", sans-serif;
   }
-  /* Background */
-  .bg {
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    left: 0%;
-    top: 0%;
-    overflow: hidden;
-  }
-  .bg img {
-    height: max-content;
-    width: max-content;
-  }
-
-  /* Navigation Bar */
-  .nav {
-    height: 100vh;
-    width: 308px;
-    background-color: #ffffff;
-    border-radius: 0px 32px 32px 0px;
-    position: absolute;
-    top: 0%;
-    left: 0%;
+  .content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    place-content: center;
+    pointer-events: all;
+    user-select: none;
+    margin-bottom: 60px;
+    margin-top: 10px;
   }
 
-  .nav .profile {
-    width: 171px;
-    position: absolute;
+  .startFocus_btn {
+
+  }
+
+  .goals_title {
+    margin-bottom: -25px;
+  }
+
+  .goals {
     display: flex;
     flex-direction: column;
     align-items: center;
-    top: 98px;
+    gap: 21px;
+    top: 520px;
   }
-  .nav .profile .pic {
-    position: relative;
-    height: 171px;
-    width: 171px;
-    filter: drop-shadow(0px 2px 18px rgba(0, 0, 0, 0.25));
-    border-radius: 24px;
-  }
-  .nav .profile .name {
-    width: 171px;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 21px;
-    line-height: 120%;
-    text-align: center;
-  }
-
-  .nav .logo {
-    height: 35px;
-    width: 210px;
-    top: 35px;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-  }
-  .nav .logo .pic {
-    height: 35px;
-    width: 42px;
-  }
-  .nav .logo .text {
-    height: 35px;
-    width: 161px;
-    font-family: "Lato";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 35px;
-    margin: 0px 7px;
-  }
+  
+  
 </style>

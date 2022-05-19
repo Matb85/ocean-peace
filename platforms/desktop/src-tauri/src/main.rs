@@ -19,7 +19,7 @@ fn main() {
   tauri::Builder::default()
     .setup(|app| {
       // listen to the `event-name` (emitted on any window)
-      let id = app.listen_global("OnChangeView", |event| {
+      let id = app.listen_global("OnChangeView", |_event| {
       //   let viewName: String = ["{:?}", &event.payload()];
       //   app.emit_all("ChangeView", Payload { message: viewName.into()}).unwrap();
       });
