@@ -3,8 +3,7 @@
   import photoNull from "../assets/null_photo.svg";
   import background from "../assets/background.svg";
   import Button from "@redinnlabs/system/Elements/Button/Button.svelte";
-  import ToDo from "@redinnlabs/system/Units/Cards/ToDo/ToDo.svelte";
-  import "@redinnlabs/system/utils/base.css";
+  import { ToDo, Goal } from "@redinnlabs/system/Units";
 </script>
 
 <main>
@@ -18,8 +17,10 @@
     <div class="profile">
       <img class="pic" src={photoNull} alt="Svelte Logo" />
       <p class="name">John Doe</p>
+      <div class="overscroll-none rounded-full text-primary1">hii</div>
+
       <Button>test</Button>
-      <ToDo title="test" />
+      <Goal title="test" />
     </div>
     <div class="logo">
       <img class="pic" src={logo} alt="Svelte Logo" />

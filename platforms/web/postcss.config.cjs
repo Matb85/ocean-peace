@@ -1,1 +1,1 @@
-module.exports = require("@redinnlabs/system/utils/postcss.config.cjs").default;
+module.exports = require("@redinnlabs/system/utils/postcss.config.cjs");
