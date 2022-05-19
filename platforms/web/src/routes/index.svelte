@@ -1,7 +1,7 @@
 <script lang="ts">
   
   import "@redinnlabs/system/utils/base.css";
-  import { Button, Icon, Heading } from "@redinnlabs/system/Elements";
+  import { Button, Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import { mdiPencil } from '@mdi/js';
 </script>
@@ -9,6 +9,9 @@
 <main>
   <!-- content -->
   <div class="content">
+    <div class="w-full h-96 block">
+      <Aquarium percent={80}></Aquarium>
+    </div>
     <div class="startFocus_btn" >
       <Button>Start a focus session</Button>
     </div>
@@ -17,10 +20,11 @@
     </div>
     <div class="goals">
       {#each Array(4) as _, i}
-        <Goal title={"Finish this finally Bisu"} info={"Whole project left xd"}></Goal>
+        <Goal title={"Some goal here"} info={"something left"} className="Goal"></Goal>
       {/each}
         <Button secondary=true >Add Goal</Button>
     </div>
+    <a href="/focus">focus</a>
   </div>
 
 </main>
@@ -38,7 +42,7 @@
     pointer-events: all;
     user-select: none;
     margin-bottom: 60px;
-    margin-top: 10px;
+    gap: 20px;
   }
 
   .startFocus_btn {
@@ -46,7 +50,7 @@
   }
 
   .goals_title {
-    margin-bottom: -25px;
+    
   }
 
   .goals {
@@ -55,6 +59,7 @@
     align-items: center;
     gap: 21px;
     top: 520px;
+
   }
   
   
