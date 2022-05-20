@@ -54,12 +54,10 @@
   }
 
   .goals {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 21px;
-    top: 520px;
-
+    @apply place-content-center place-items-center
+      grid grid-cols-1
+      gap-5;
+      
   }
   
   
