@@ -1,87 +1,79 @@
 <script lang="ts">
-  
-    import "@redinnlabs/system/utils/base.css";
-    import { BackButton, Button, Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
-    import { Schedule, Preset } from "@redinnlabs/system/Units";
-    import { mdiPencil } from '@mdi/js';
-    import W from "@redinnlabs/system/assets/icon-working.svg";
-    import A from "@redinnlabs/system/assets/icon-add.svg";
+  import "@redinnlabs/system/utils/base.css";
+  import { BackButton, Button, Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Schedule, Preset } from "@redinnlabs/system/Units";
+  import { mdiPencil } from "@mdi/js";
+  import W from "@redinnlabs/system/assets/icon-working.svg";
+  import A from "@redinnlabs/system/assets/icon-add.svg";
 </script>
 
-    <!-- C O N T E N T -->
-    
-    <div class="content">
-        <!-- svelte-ignore component-name-lowercase -->
-        
-        <div class="title">
-            <Heading tag={3}>Focus</Heading>
-        </div>
+<!-- C O N T E N T -->
 
-        <div class="preset_title">
-            <Heading tag={5}>Presets</Heading>
-        </div>
-        <div class="presets">
-            {#each Array(3) as _, i}
-                <Preset src={W} label="Bottom text {i}"/>
-            {/each}
-            <Preset src={A} noShadowWrapper = true />
-        </div>
+<div class="content">
+  <!-- svelte-ignore component-name-lowercase -->
 
-        <div class="schedule_title">
-            <Heading tag={5}>Schedule</Heading>
-        </div>
-        <div class="schedule">
-            {#each Array(3) as _, i }
-                <Schedule src={W} title="Event example"></Schedule>
-            {/each}
-            <Button secondary=true >Add a Rule</Button>
-        </div>
-    </div>
-    <a href="/index" id="back">back</a>
-    <div class="back" htmlfor="back">
-        <BackButton/>
-    </div>
+  <div class="title">
+    <Heading tag={3}>Focus</Heading>
+  </div>
+
+  <div class="preset_title">
+    <Heading tag={5}>Presets</Heading>
+  </div>
+  <div class="presets">
+    {#each Array(3) as _, i}
+      <Preset src={W} label="Bottom text {i}" />
+    {/each}
+    <Preset src={A} noShadowWrapper="true" />
+  </div>
+
+  <div class="schedule_title">
+    <Heading tag={5}>Schedule</Heading>
+  </div>
+  <div class="schedule">
+    {#each Array(3) as _, i}
+      <Schedule src={W} title="Event example" />
+    {/each}
+    <Button secondary="true">Add a Rule</Button>
+  </div>
+</div>
+<a href="/index" id="back">back</a>
+<div class="back" htmlfor="back">
+  <BackButton />
+</div>
 
 <style lang="postcss">
-    .back {
-        @apply
-            absolute
+  .back {
+    @apply absolute
             top-5 left-3
             min-h-fit min-w-fit;
-    }
-    .title {
-        @apply
-            absolute
+  }
+  .title {
+    @apply absolute
             top-7;
-    }
-    .content {
-        @apply 
-            flex flex-col 
+  }
+  .content {
+    @apply flex flex-col 
             items-center place-content-center
             select-none
             mb-14 mt-28
-            gap-14
-            ;
-        pointer-events: all;
-    }
-    .content .preset_title{
-        @apply -mb-10;
-    }
-    .content .presets{
-        @apply 
-            grid
+            gap-14;
+    pointer-events: all;
+  }
+  .content .preset_title {
+    @apply -mb-10;
+  }
+  .content .presets {
+    @apply grid
             grid-cols-2
             gap-4;
-    }
+  }
 
-    .content .schedule_title{
-        @apply -mb-10;
-    }
-    .content .schedule{
-        @apply 
-            grid
-            grid-cols-1
-            gap-4
+  .content .schedule_title {
+    @apply -mb-10;
+  }
+  .content .schedule {
+    @apply w-11/12 mx-auto
+        grid grid-cols-1 gap-4
             place-items-center;
-    }
+  }
 </style>
