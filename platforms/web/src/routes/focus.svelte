@@ -5,6 +5,13 @@
   import { mdiPencil } from "@mdi/js";
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
+
+  function back() {
+    location.href='/index';
+  }
+  function presetPressed() {
+    location.href='/presetEdit';
+  }
 </script>
 
 <!-- C O N T E N T -->
@@ -21,7 +28,7 @@
   </div>
   <div class="presets">
     {#each Array(3) as _, i}
-      <Preset src={W} label="Bottom text {i}" />
+      <Preset src={W} label="Bottom text {i}" onClick={presetPressed}/>
     {/each}
     <Preset src={A} noShadowWrapper="true" />
   </div>
@@ -36,9 +43,9 @@
     <Button secondary="true">Add a Rule</Button>
   </div>
 </div>
-<a href="/index" id="back">back</a>
+
 <div class="back" htmlfor="back">
-  <BackButton />
+  <BackButton on:click={back}/>
 </div>
 
 <style lang="postcss">
