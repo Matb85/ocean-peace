@@ -8,7 +8,7 @@ importers:
   platforms/desktop:
     specifiers:
       '@tauri-apps/api': 1.0.0-rc.5
-      '@tauri-apps/cli': 1.0.0-rc.10
+      '@tauri-apps/cli': 1.0.0-rc.11
       pnpm: ^7.1.1
       sirv-cli: 2.0.2
     dependencies:
@@ -16,7 +16,7 @@ importers:
       pnpm: 7.1.1
       sirv-cli: 2.0.2
     devDependencies:
-      '@tauri-apps/cli': 1.0.0-rc.10
+      '@tauri-apps/cli': 1.0.0-rc.11
 
   platforms/web:
     specifiers:
@@ -26,6 +26,7 @@ importers:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.43
       '@tsconfig/svelte': 3.0.0
       autoprefixer: ^10.4.7
+      postcss: ^8.4.14
       svelte: 3.48.0
       svelte-check: 2.7.0
       svelte-preprocess: 4.10.6
@@ -35,15 +36,16 @@ importers:
       vite: 2.9.9
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/33cc7b44f95e1a6324145e76864908edc52974cf
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/03e87455ea3558f6704d6339b37d3ef9aa387ecc
     devDependencies:
       '@roxi/routify': 3.0.0-next.90
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.43_svelte@3.48.0+vite@2.9.9
       '@tsconfig/svelte': 3.0.0
-      autoprefixer: 10.4.7
+      autoprefixer: 10.4.7_postcss@8.4.14
+      postcss: 8.4.14
       svelte: 3.48.0
-      svelte-check: 2.7.0_svelte@3.48.0
-      svelte-preprocess: 4.10.6_wwvk7nlptlrqo2czohjtk6eiqm
+      svelte-check: 2.7.0_s3dopqgs4h45owyu2kxaf6kyfu
+      svelte-preprocess: 4.10.6_duhgfvbo5codih7syhobgij5ny
       tailwindcss: 3.0.24
       tslib: 2.4.0
       typescript: 4.6.4
@@ -166,8 +168,8 @@ packages:
       type-fest: 2.12.2
     dev: false
 
-  /@tauri-apps/cli-darwin-arm64/1.0.0-rc.10:
-    resolution: {integrity: sha512-KwnAAsR+H/U9NPF2P3UvZ0orfh/e8ng639GCvQoN/7b/EYzkLXYWGFd1sddTSSu8BM4OvIVXK1B86pn1xFohyg==}
+  /@tauri-apps/cli-darwin-arm64/1.0.0-rc.11:
+    resolution: {integrity: sha512-OiefgwvFmyo/sbZtOo+hYFFGUS5hP3QlAtwDw0AMtGGA6K2QIb8KzMog5hsNcqp8h4vOUJ/0vMy8KdPHRmc90A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -175,8 +177,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-darwin-x64/1.0.0-rc.10:
-    resolution: {integrity: sha512-xIH+UnZPofpx4n3aphu2SD45uPXtX3rlsI5aO0ANsDWN/esuAAwRnh+JR+NlmJXPKwy1BNz9pewczE5JO5BdqA==}
+  /@tauri-apps/cli-darwin-x64/1.0.0-rc.11:
+    resolution: {integrity: sha512-BA8knn2YTMetiFQiJg60JFhkeA5oexIqCKjOShWNHB3ft0xMGyTfkEjSo/cFHa3ESw54eHP9twhUD/yoXQV0zw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -184,8 +186,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-linux-arm-gnueabihf/1.0.0-rc.10:
-    resolution: {integrity: sha512-j0cVDcP7MPyOh8mC6pTiOnsGgxMc4GFlQGBUvriRkWFCrUbZPbq1Pxt/eTcroVGsT/ItCXvnYd9jEQ+e50LI3A==}
+  /@tauri-apps/cli-linux-arm-gnueabihf/1.0.0-rc.11:
+    resolution: {integrity: sha512-w3W5L0yQIRpH+LKtMNeAGagcVPICHx7x/V9jbSkThdmvoiSIwPc++lyNqr8aQ57rGi947LkoKTARyNSVr87DOA==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
@@ -193,8 +195,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-linux-arm64-gnu/1.0.0-rc.10:
-    resolution: {integrity: sha512-usdftJI/Jx0Z6TK8YJaHp2BtcNlvHeIUOnh3SmThbbYzDSFDqEW2E/McbxEhJJ13FPLVMLiIZYPpH26gE3vQxw==}
+  /@tauri-apps/cli-linux-arm64-gnu/1.0.0-rc.11:
+    resolution: {integrity: sha512-r6ew6fc8M39zBvanh1gN7JeLWhuyQnp0cuTScd2RvH29gdqx0Ox++AvYd/reLYY9Fxpa8qATkyMbmK+rhwfXRg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -202,8 +204,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-linux-arm64-musl/1.0.0-rc.10:
-    resolution: {integrity: sha512-zsOhkc477mbe5wSkNuLv+D6RmQvDiaV8rHTaur+B/pxk9F0SrCYoO0Slf6x08bIiSkjyL/gN0PxnOBbEBA0u4A==}
+  /@tauri-apps/cli-linux-arm64-musl/1.0.0-rc.11:
+    resolution: {integrity: sha512-2YXU53UK5AU/v5YFXs3/R0UGA2e+/gz8mMLDkKhH3r09g265ycxnkNgOBaEP2ul/rxLG3ZLDZFzDXx3n3pIzFQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -211,8 +213,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-linux-x64-gnu/1.0.0-rc.10:
-    resolution: {integrity: sha512-ongWuhXieKwW+xaYPshw/59xYbZVH6JNw+KRb/054VFnfZe/ZDYbN86mCJIlegOq9WAkdc0XSm1EEDx3i9FYCg==}
+  /@tauri-apps/cli-linux-x64-gnu/1.0.0-rc.11:
+    resolution: {integrity: sha512-3yr4QeCQIKdMWxLGa9goBd59DbuFwrnDXJlbA9cYD11jftDdIfFLYJNYJVyoLk7lHhsPh8cVmfEHmEU1By+D7Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -220,8 +222,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-linux-x64-musl/1.0.0-rc.10:
-    resolution: {integrity: sha512-3AXJEdhFlX/erLBXmBkRG+oWfFLMMaJALSnxvzerteSNWiaEzTngy9Mo1yeAT51FhvJ+dbYQv0BWvPPFRYzpTQ==}
+  /@tauri-apps/cli-linux-x64-musl/1.0.0-rc.11:
+    resolution: {integrity: sha512-JJhVo9XKPin5Pgwm2+/LiCEVTbdGoKJLemP1mu6BZhGh1zMG3+u0Yyqql8+ZfoEU5FinFTELFRhRo7UNaWSCbQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -229,8 +231,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-win32-ia32-msvc/1.0.0-rc.10:
-    resolution: {integrity: sha512-2SvSk9z51AfCsbch2fvX4GNo3s0b8TO/Kd9B6rDIZ7TUxwnGShJNup2+KGvBovKqFAPmgyrSbgyEMKhKc1B4iA==}
+  /@tauri-apps/cli-win32-ia32-msvc/1.0.0-rc.11:
+    resolution: {integrity: sha512-uJn80LUCju2QXhVpchQkN3MlQHXD/4ZNJHMTHtLqiDu6BOifaCWBm7F/xVO1IuZDhs36K4zSOXdmDh684DQJ2w==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -238,8 +240,8 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli-win32-x64-msvc/1.0.0-rc.10:
-    resolution: {integrity: sha512-mijSjeQGBGh6rvpkrqsSiTB4vwGprAXoDCmnIxliZ1Md4GgLMh8jzIug1UKAUmmIW1nOaQ9C9xu4wQXyoRqWHg==}
+  /@tauri-apps/cli-win32-x64-msvc/1.0.0-rc.11:
+    resolution: {integrity: sha512-f1yS++rZRkVfqcfkGUAgBAihzUBrQwJu+fPkrqu0LpVwfaGMPP58H1IqtLbLGvCTbL8vUekq15gmAMs51eHbtw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -247,20 +249,20 @@ packages:
     dev: true
     optional: true
 
-  /@tauri-apps/cli/1.0.0-rc.10:
-    resolution: {integrity: sha512-njDei3F3mlnotnujUF0jWteZC39RCm6JNAxZpzTFvWKFI/650DoA9hHTMa6onbazVgmOWdrbMHYWU/xBC/jUTw==}
+  /@tauri-apps/cli/1.0.0-rc.11:
+    resolution: {integrity: sha512-tTrJiHa0rVyAh9IbuZ9hjEj02MetyoLKeWxQMl3fuDtl1+g1M7pjQqzS0aXLYMGmNYp/qAtj89IzsSpY1JJ9LA==}
     engines: {node: '>= 10'}
     hasBin: true
     optionalDependencies:
-      '@tauri-apps/cli-darwin-arm64': 1.0.0-rc.10
-      '@tauri-apps/cli-darwin-x64': 1.0.0-rc.10
-      '@tauri-apps/cli-linux-arm-gnueabihf': 1.0.0-rc.10
-      '@tauri-apps/cli-linux-arm64-gnu': 1.0.0-rc.10
-      '@tauri-apps/cli-linux-arm64-musl': 1.0.0-rc.10
-      '@tauri-apps/cli-linux-x64-gnu': 1.0.0-rc.10
-      '@tauri-apps/cli-linux-x64-musl': 1.0.0-rc.10
-      '@tauri-apps/cli-win32-ia32-msvc': 1.0.0-rc.10
-      '@tauri-apps/cli-win32-x64-msvc': 1.0.0-rc.10
+      '@tauri-apps/cli-darwin-arm64': 1.0.0-rc.11
+      '@tauri-apps/cli-darwin-x64': 1.0.0-rc.11
+      '@tauri-apps/cli-linux-arm-gnueabihf': 1.0.0-rc.11
+      '@tauri-apps/cli-linux-arm64-gnu': 1.0.0-rc.11
+      '@tauri-apps/cli-linux-arm64-musl': 1.0.0-rc.11
+      '@tauri-apps/cli-linux-x64-gnu': 1.0.0-rc.11
+      '@tauri-apps/cli-linux-x64-musl': 1.0.0-rc.11
+      '@tauri-apps/cli-win32-ia32-msvc': 1.0.0-rc.11
+      '@tauri-apps/cli-win32-x64-msvc': 1.0.0-rc.11
     dev: true
 
   /@tsconfig/svelte/3.0.0:
@@ -388,7 +390,7 @@ packages:
     dev: false
     optional: true
 
-  /autoprefixer/10.4.7:
+  /autoprefixer/10.4.7_postcss@8.4.14:
     resolution: {integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
@@ -400,6 +402,7 @@ packages:
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
+      postcss: 8.4.14
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -2186,17 +2189,17 @@ packages:
     hasBin: true
     dev: false
 
-  /postcss-js/4.0.0_postcss@8.4.13:
+  /postcss-js/4.0.0_postcss@8.4.14:
     resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
     engines: {node: ^12 || ^14 || >= 16}
     peerDependencies:
       postcss: ^8.3.3
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.13
+      postcss: 8.4.14
     dev: true
 
-  /postcss-load-config/3.1.4_postcss@8.4.13:
+  /postcss-load-config/3.1.4_postcss@8.4.14:
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
     peerDependencies:
@@ -2209,17 +2212,17 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.5
-      postcss: 8.4.13
+      postcss: 8.4.14
       yaml: 1.10.2
     dev: true
 
-  /postcss-nested/5.0.6_postcss@8.4.13:
+  /postcss-nested/5.0.6_postcss@8.4.14:
     resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.13
+      postcss: 8.4.14
       postcss-selector-parser: 6.0.10
     dev: true
 
@@ -2235,8 +2238,8 @@ packages:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
     dev: true
 
-  /postcss/8.4.13:
-    resolution: {integrity: sha512-jtL6eTBrza5MPzy8oJLFuUscHDXTV5KcLlqAWHl5q5WYRfnNRGSmOZmOZ1T6Gy7A99mOZfqungmZMpMmCVJ8ZA==}
+  /postcss/8.4.14:
+    resolution: {integrity: sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.4
@@ -2746,7 +2749,7 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte-check/2.7.0_svelte@3.48.0:
+  /svelte-check/2.7.0_s3dopqgs4h45owyu2kxaf6kyfu:
     resolution: {integrity: sha512-GrvG24j0+i8AOm0k0KyJ6Dqc+TAR2yzB7rtS4nljHStunVxCTr/1KYlv4EsOeoqtHLzeWMOd5D2O6nDdP/yw4A==}
     hasBin: true
     peerDependencies:
@@ -2759,7 +2762,7 @@ packages:
       sade: 1.8.1
       source-map: 0.7.3
       svelte: 3.48.0
-      svelte-preprocess: 4.10.6_wwvk7nlptlrqo2czohjtk6eiqm
+      svelte-preprocess: 4.10.6_duhgfvbo5codih7syhobgij5ny
       typescript: 4.6.4
     transitivePeerDependencies:
       - '@babel/core'
@@ -2783,7 +2786,7 @@ packages:
       svelte: 3.48.0
     dev: true
 
-  /svelte-preprocess/4.10.6_wwvk7nlptlrqo2czohjtk6eiqm:
+  /svelte-preprocess/4.10.6_duhgfvbo5codih7syhobgij5ny:
     resolution: {integrity: sha512-I2SV1w/AveMvgIQlUF/ZOO3PYVnhxfcpNyGt8pxpUVhPfyfL/CZBkkw/KPfuFix5FJ9TnnNYMhACK3DtSaYVVQ==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -2828,6 +2831,7 @@ packages:
       '@types/sass': 1.43.1
       detect-indent: 6.1.0
       magic-string: 0.25.9
+      postcss: 8.4.14
       sorcery: 0.10.0
       strip-indent: 3.0.0
       svelte: 3.48.0
@@ -2857,10 +2861,10 @@ packages:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
-      postcss: 8.4.13
-      postcss-js: 4.0.0_postcss@8.4.13
-      postcss-load-config: 3.1.4_postcss@8.4.13
-      postcss-nested: 5.0.6_postcss@8.4.13
+      postcss: 8.4.14
+      postcss-js: 4.0.0_postcss@8.4.14
+      postcss-load-config: 3.1.4_postcss@8.4.14
+      postcss-nested: 5.0.6_postcss@8.4.14
       postcss-selector-parser: 6.0.10
       postcss-value-parser: 4.2.0
       quick-lru: 5.1.1
@@ -3026,7 +3030,7 @@ packages:
         optional: true
     dependencies:
       esbuild: 0.14.39
-      postcss: 8.4.13
+      postcss: 8.4.14
       resolve: 1.22.0
       rollup: 2.73.0
     optionalDependencies:
@@ -3104,8 +3108,8 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/33cc7b44f95e1a6324145e76864908edc52974cf:
-    resolution: {commit: 33cc7b44f95e1a6324145e76864908edc52974cf, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/03e87455ea3558f6704d6339b37d3ef9aa387ecc:
+    resolution: {commit: 03e87455ea3558f6704d6339b37d3ef9aa387ecc, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
     version: 1.5.0
     dependencies:
