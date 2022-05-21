@@ -35,7 +35,7 @@ importers:
       vite: 2.9.9
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/33cc7b44f95e1a6324145e76864908edc52974cf
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/c34bbac2a1b0b57e82e31f6a8df9eb20a3ac0031
     devDependencies:
       '@roxi/routify': 3.0.0-next.90
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.43_svelte@3.48.0+vite@2.9.9
@@ -3104,10 +3104,10 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/33cc7b44f95e1a6324145e76864908edc52974cf:
-    resolution: {commit: 33cc7b44f95e1a6324145e76864908edc52974cf, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/c34bbac2a1b0b57e82e31f6a8df9eb20a3ac0031:
+    resolution: {commit: c34bbac2a1b0b57e82e31f6a8df9eb20a3ac0031, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.5.0
+    version: 1.5.3
     dependencies:
       '@mdi/js': 6.7.96
       modular-slider: 0.10.0

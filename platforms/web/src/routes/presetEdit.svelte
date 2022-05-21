@@ -3,7 +3,7 @@
     import "@redinnlabs/system/utils/base.css";
     import { BackButton, Button, Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
     import { Schedule, Preset } from "@redinnlabs/system/Units";
-    import { TimeInput } from "@redinnlabs/system/Form";
+    import { TimeInput, RadioInput } from "@redinnlabs/system/Form";
     import { mdiPencil } from '@mdi/js';
     import W from "@redinnlabs/system/assets/icon-working.svg";
     import A from "@redinnlabs/system/assets/icon-add.svg";
@@ -14,11 +14,15 @@
     <div class="content">
         <!-- svelte-ignore component-name-lowercase -->
         
+
+        <RadioInput options={[{value: 'Pomodoro'}, { value: 'Continues'}, { value: 'Stopwatch'}]}/>
+
         <div class="title">
             <Heading tag={3}>Preset name</Heading>
         </div>
         <TimeInput></TimeInput>
     </div>
+
     <a href="/focus" id="back">back</a>
     <div class="back" htmlfor="back">
         <BackButton/>
@@ -37,7 +41,7 @@
     .edit {
         @apply
             absolute
-            top-5 right-3
+            top-8 right-4
             min-h-fit min-w-fit;
     }
     .title {
