@@ -1,19 +1,13 @@
 <script lang="ts">
   
     import "@redinnlabs/system/utils/base.css";
-    import { BackButton, Button, Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
-    import { Schedule, Preset } from "@redinnlabs/system/Units";
+    import { BackButton, Button, Icon, Heading, EditButton } from "@redinnlabs/system/Elements";
     import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
     import { mdiPencil } from '@mdi/js';
-    import W from "@redinnlabs/system/assets/icon-working.svg";
-    import A from "@redinnlabs/system/assets/icon-add.svg";
 
 
     export let presetName: string = 'Example';
 
-    function back () {
-        location.href='/focus';
-    }
 </script>
 
     <!-- C O N T E N T -->
@@ -25,7 +19,7 @@
         </div>
 
         <div class="duration">
-            <Heading tag={5} className="font-normal">Duration</Heading>
+            <Heading tag={5} className="!font-normal">Duration</Heading>
             <RadioInput options={[
                 { value: 'Pomodoro'}, 
                 { value: 'Continues'}, 
@@ -36,7 +30,7 @@
         </div>
 
         <div class="options">
-            <Heading tag={5} className="font-normal">Options</Heading>
+            <Heading tag={5} className="!font-normal">Options</Heading>
             <CheckMultiple options= {[
                 { label: 'Hard Limit', isChecked: true },
                 { label: '20:20:20 Rule', isChecked: false },
@@ -45,7 +39,7 @@
         </div>
 
         <div class="soundtrack">
-            <Heading tag={5} className="font-normal">Soundtrack</Heading>
+            <Heading tag={5} className="!font-normal">Soundtrack</Heading>
         </div>
         
         <div class="start">
@@ -53,11 +47,13 @@
         </div>
     </div>
 
-    <div class="back" htmlfor="back">
-        <BackButton on:click={back}/>
+    <div class="back">
+        <a href="/focus">
+            <BackButton/>
+        </a>
     </div>
     <div class="edit">
-        <Icon d={mdiPencil} fill="black" className="w-10 h-10"/>
+        <EditButton/>
     </div>
     
 
@@ -73,7 +69,7 @@
     .edit {
         @apply
             absolute
-            top-8 right-4
+            top-5 right-3
             min-h-fit min-w-fit;
     }
     .start {

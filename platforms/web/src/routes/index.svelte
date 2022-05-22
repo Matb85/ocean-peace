@@ -1,16 +1,12 @@
 <script lang="ts">
   
   import "@redinnlabs/system/utils/base.css";
-  import { Button, Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
-  import { mdiPencil } from '@mdi/js';
   
-  export let curScreenTime: number = 65;
+  export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
 
-  function startFocus () {
-    location.href='/focus';
-  };
 </script>
 
 <main>
@@ -21,21 +17,32 @@
       <Aquarium percent={(maxScreenTime - curScreenTime)/maxScreenTime < 0 ? 0 : (maxScreenTime - curScreenTime)/maxScreenTime * 100}></Aquarium>
       
     </div>
-    <div class="screentime">
+    <div class="screentime text-shadow">
       <Heading tag={5} className="text-white">Your Screen time</Heading>
-      <Heading tag={2} className="text-white">{curScreenTime < 59 ? '' : Math.floor(curScreenTime/ 60) + "h"} {curScreenTime%60 == 0 ? '' : curScreenTime % 60 + 'min'}</Heading>
-      <Heading tag={4} className="text-white">{Math.floor((maxScreenTime - curScreenTime)/ 60) + 'h'} {(maxScreenTime - curScreenTime)% 60 +'min'} left</Heading>
+      <Heading tag={2} className="text-white text-shadow-sm">
+        {curScreenTime < 59 ? '' : Math.floor(curScreenTime/ 60) + "h"} 
+        {curScreenTime%60 == 0 ? '' : curScreenTime % 60 + 'min'}
+      </Heading>
+      <Heading tag={4} className="text-white">
+        {Math.floor((maxScreenTime - curScreenTime)/ 60) + 'h'} 
+        {(maxScreenTime - curScreenTime)%60 == 0 ? '' : (maxScreenTime - curScreenTime)% 60 +'min'} 
+        left
+      </Heading>
     </div>
     <div class="startFocus_btn" >
-      <Button on:click={startFocus}>Start a focus session</Button>
+      <a href="/focus">
+        <Button>Start a focus session</Button>
+      </a>
     </div>
 
     <div class="goals_title">
-      <Heading tag={6}>Your Goals</Heading>
+      <Heading tag={6} className="!font-normal">Your Goals</Heading>
     </div>
     <div class="goals">
       {#each Array(4) as _, i}
-        <Goal title={"Some goal here"} info={"something left"} className="Goal"></Goal>
+        <a href="/goal" class="w-full">
+          <Goal title={"Some goal here"} info={"something left"} className="Goal" ></Goal>
+        </a>
       {/each}
         <Button secondary=true >Add Goal</Button>
     </div>
@@ -82,8 +89,9 @@
       grid grid-cols-1
       w-11/12
       gap-5;
-      
   }
   
-  
+  .text-shadow {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));  
+  }
 </style>
