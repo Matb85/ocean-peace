@@ -20,6 +20,6 @@ jobs:
 
       - name: Copy app files
         run: |
-          rsync -avh --delete --relative \
+          rsync -avh --delete \
           ./platforms/web/build/* \
           ${{ secrets.REMOTE_SERVER }}:${{ secrets.REMOTE_TARGET_DEV }}
