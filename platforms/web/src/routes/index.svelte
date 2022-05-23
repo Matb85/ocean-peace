@@ -1,32 +1,54 @@
 <script lang="ts">
-  import logo from "../assets/logo.svg";
-  import photoNull from "../assets/null_photo.svg";
-  import background from "../assets/background.svg";
-  import Button from "@redinnlabs/system/Elements/Button/Button.svelte";
-  import { ToDo, Goal } from "@redinnlabs/system/Units";
+  
+  import "@redinnlabs/system/utils/base.css";
+  import { Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Goal } from "@redinnlabs/system/Units";
+  
+  export let curScreenTime: number = 100;
+  export let maxScreenTime: number = 270;
+
 </script>
 
 <main>
-  <!-- Background -->
-  <div class="bg">
-    <img src={background} alt="Svelte Logo" />
+  <!-- content -->
+  <div class="content">
+
+    <div class="w-full h-96 block ">
+      <Aquarium percent={(maxScreenTime - curScreenTime)/maxScreenTime < 0 ? 0 : (maxScreenTime - curScreenTime)/maxScreenTime * 100}></Aquarium>
+      
+    </div>
+    <div class="screentime text-shadow">
+      <Heading tag={5} className="text-white">Your Screen time</Heading>
+      <Heading tag={2} className="text-white text-shadow-sm">
+        {curScreenTime < 59 ? '' : Math.floor(curScreenTime/ 60) + "h"} 
+        {curScreenTime%60 == 0 ? '' : curScreenTime % 60 + 'min'}
+      </Heading>
+      <Heading tag={4} className="text-white">
+        {Math.floor((maxScreenTime - curScreenTime)/ 60) + 'h'} 
+        {(maxScreenTime - curScreenTime)%60 == 0 ? '' : (maxScreenTime - curScreenTime)% 60 +'min'} 
+        left
+      </Heading>
+    </div>
+    <div class="startFocus_btn" >
+      <a href="/focus">
+        <Button>Start a focus session</Button>
+      </a>
+    </div>
+
+    <div class="goals_title">
+      <Heading tag={6} className="!font-normal">Your Goals</Heading>
+    </div>
+    <div class="goals">
+      {#each Array(4) as _, i}
+        <a href="/goal" class="w-full">
+          <Goal title={"Some goal here"} info={"something left"} className="Goal" ></Goal>
+        </a>
+      {/each}
+        <Button secondary=true >Add Goal</Button>
+    </div>
+
   </div>
 
-  <!-- Navigation Bar -->
-  <div class="nav">
-    <div class="profile">
-      <img class="pic" src={photoNull} alt="Svelte Logo" />
-      <p class="name">John Doe</p>
-      <div class="overscroll-none rounded-full text-primary1">hii</div>
-
-      <Button>test</Button>
-      <Goal title="test" />
-    </div>
-    <div class="logo">
-      <img class="pic" src={logo} alt="Svelte Logo" />
-      <p class="text">OceanPeace</p>
-    </div>
-  </div>
 </main>
 
 <style lang="postcss">
@@ -34,79 +56,42 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
       "Helvetica Neue", sans-serif;
   }
-  /* Background */
-  .bg {
-    height: 100vh;
-    width: 100vw;
-    position: absolute;
-    left: 0%;
-    top: 0%;
-    overflow: hidden;
+
+  .screentime{
+    @apply absolute
+      top-44
+      grid
+      grid-cols-1
+      place-items-center;
   }
-  .bg img {
-    height: max-content;
-    width: max-content;
+  .content {
+    pointer-events: all;
+    @apply 
+        flex
+        flex-col
+        gap-5
+        items-center
+        place-content-center
+        select-none
+        mb-14;
   }
 
-  /* Navigation Bar */
-  .nav {
-    height: 100vh;
-    width: 308px;
-    background-color: #ffffff;
-    border-radius: 0px 32px 32px 0px;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .startFocus_btn {
+
   }
 
-  .nav .profile {
-    width: 171px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    top: 98px;
-  }
-  .nav .profile .pic {
-    position: relative;
-    height: 171px;
-    width: 171px;
-    filter: drop-shadow(0px 2px 18px rgba(0, 0, 0, 0.25));
-    border-radius: 24px;
-  }
-  .nav .profile .name {
-    width: 171px;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 21px;
-    line-height: 120%;
-    text-align: center;
+  .goals_title {
+    
   }
 
-  .nav .logo {
-    height: 35px;
-    width: 210px;
-    top: 35px;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
+  .goals {
+    @apply place-content-center place-items-center
+      grid grid-cols-1
+      w-11/12
+      gap-5;
   }
-  .nav .logo .pic {
-    height: 35px;
-    width: 42px;
-  }
-  .nav .logo .text {
-    height: 35px;
-    width: 161px;
-    font-family: "Lato";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 35px;
-    margin: 0px 7px;
+  
+  .text-shadow {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));  
   }
 </style>

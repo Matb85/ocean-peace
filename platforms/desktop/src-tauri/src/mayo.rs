@@ -31,7 +31,7 @@ pub fn run_process() {
                 Ok(active_window) => {
                     if active_window.process_id != prev_window_id {
                         if let Some(process) = sys.process(Pid::from(active_window.process_id as i32)) {
-                            println!("{}", process.exe().display());
+                            println!("{}", process.name());
                         }
                         println!("active window: {:?}", active_window);
                     }

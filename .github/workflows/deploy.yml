@@ -1,0 +1,25 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: [self-hosted, ovh]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Bootstrap dependencies
+        run: pnpm --version && pnpm --filter web i --no-frozen-lockfile
+
+      - name: Lint
+        run: pnpm --filter web check
+
+      - name: Build
+        run: "pnpm --filter web build"
+
+      - name: Copy app files
+        run: |
+          rsync -avh --delete --relative \
+          ./platforms/web/build/* \
+          ${{ secrets.REMOTE_SERVER }}:${{ secrets.REMOTE_TARGET_DEV }}
