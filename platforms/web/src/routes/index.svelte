@@ -44,7 +44,9 @@
           <Goal title={"Some goal here"} info={"something left"} className="Goal" ></Goal>
         </a>
       {/each}
-        <Button secondary=true >Add Goal</Button>
+        <a href="/goaledit">
+          <Button secondary=true >Add Goal</Button>
+        </a>
     </div>
 
   </div>

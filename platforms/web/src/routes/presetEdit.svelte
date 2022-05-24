@@ -3,6 +3,7 @@
     import "@redinnlabs/system/utils/base.css";
     import { BackButton, Button, Icon, Heading, EditButton } from "@redinnlabs/system/Elements";
     import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
+    import { SoundTrack } from "@redinnlabs/system/Units";
     import { mdiPencil } from '@mdi/js';
 
 
@@ -40,6 +41,9 @@
 
         <div class="soundtrack">
             <Heading tag={5} className="!font-normal">Soundtrack</Heading>
+            {#each Array(3) as _, i }
+                <SoundTrack title="Example Soundtrack" info="Chose one"/>
+            {/each}
         </div>
         
         <div class="start">
