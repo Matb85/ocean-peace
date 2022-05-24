@@ -2,13 +2,7 @@
 
     import "@redinnlabs/system/utils/base.css";
     import { BackButton, Button, Icon, Heading, Aquarium, EditButton } from "@redinnlabs/system/Elements";
-    import { Schedule, Preset } from "@redinnlabs/system/Units";
-    import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
     import { PieChart } from "@redinnlabs/system/Charts";
-    import { mdiPencil } from '@mdi/js';
-    import W from "@redinnlabs/system/assets/icon-working.svg";
-    import A from "@redinnlabs/system/assets/icon-add.svg";
-
    
 
 </script>
@@ -69,7 +63,7 @@
     </a>
 </div>
 <div class="edit">
-    <a href="">
+    <a href="/goaledit">
         <EditButton/>
     </a>
 </div>
