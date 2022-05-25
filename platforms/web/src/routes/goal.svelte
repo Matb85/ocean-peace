@@ -105,7 +105,7 @@
         flex flex-col 
         items-center place-content-center
         select-none
-        mb-14 mt-28
+        mb-16 mt-28
         gap-10
         z-10;
     pointer-events: all;

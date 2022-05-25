@@ -47,7 +47,9 @@
         </div>
         
         <div class="start">
-            <Button>Start {presetName}</Button>
+            <a href="/session">
+                <Button>Start {presetName}</Button>
+            </a>
         </div>
     </div>
 
@@ -95,7 +97,7 @@
             flex flex-col 
             items-center place-content-center
             select-none
-            mb-14 mt-28
+            mb-32 mt-28
             gap-10
             ;
         pointer-events: all;

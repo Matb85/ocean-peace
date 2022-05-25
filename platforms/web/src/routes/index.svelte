@@ -75,7 +75,7 @@
         items-center
         place-content-center
         select-none
-        mb-14;
+        mb-16;
   }
 
   .startFocus_btn {

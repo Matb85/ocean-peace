@@ -65,7 +65,7 @@
         
         <div class="save">
             <a href="/index">
-                <Button>save</Button>
+                <Button isFullWidth=true>save</Button>
             </a>
         </div>
     </div>
@@ -94,7 +94,8 @@
 .save {
     @apply 
         fixed
-        bottom-16;
+        bottom-10
+        w-11/12;
 }
 
 /* C O N T E N T   E L E M E N T S */
@@ -105,8 +106,8 @@
         flex flex-col 
         items-center place-content-center
         select-none
-        mb-14 mt-28
-        gap-10
+        mb-32 mt-28
+        gap-8
         z-10;
     pointer-events: all;
 }
