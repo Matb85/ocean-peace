@@ -4,6 +4,7 @@
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
+  import Navbar from "../lib/Navbar.svelte";
 
   function presetPressed() {
     location.href='/presetEdit';
@@ -41,6 +42,8 @@
 
 </div>
 
+<Navbar/>
+
 <div class="back">
   <a href="/index">
     <BackButton/>
@@ -64,6 +67,7 @@
             mb-16 mt-28
             gap-14;
     pointer-events: all;
+    scrollbar-width: none;
   }
   .content .preset_title {
     @apply -mb-10;

@@ -3,6 +3,9 @@
   import "@redinnlabs/system/utils/base.css";
   import { Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
+  import Navbar from "../lib/Navbar.svelte";
+
+  import shape from "../assets/white-shape.svg";
   
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
@@ -13,28 +16,36 @@
   <!-- content -->
   <div class="content">
 
-    <div class="w-full h-96 block ">
-      <Aquarium percent={(maxScreenTime - curScreenTime)/maxScreenTime < 0 ? 0 : (maxScreenTime - curScreenTime)/maxScreenTime * 100}></Aquarium>
+    <!-- aquarium background -->
+    <div class="w-full h-80 block relative">
       
+      <Aquarium percent={(maxScreenTime - curScreenTime)/maxScreenTime < 0 ? 0 : (maxScreenTime - curScreenTime)/maxScreenTime * 100}/>
+      <!-- cut out-->
+      <img src={shape} alt="shape" class="w-full bottom-0 absolute"/>
+
+      <!-- screen time display -->
+      <div class="screentime text-shadow">
+        <Heading tag={5} className="text-white">Your Screen time</Heading>
+        <Heading tag={2} className="text-white text-shadow-sm">
+          {curScreenTime < 59 ? '' : Math.floor(curScreenTime/ 60) + "h"} 
+          {curScreenTime%60 == 0 ? '' : curScreenTime % 60 + 'min'}
+        </Heading>
+        <Heading tag={4} className="text-white">
+          {Math.floor((maxScreenTime - curScreenTime)/ 60) + 'h'} 
+          {(maxScreenTime - curScreenTime)%60 == 0 ? '' : (maxScreenTime - curScreenTime)% 60 +'min'} 
+          left
+        </Heading>
+      </div>
     </div>
-    <div class="screentime text-shadow">
-      <Heading tag={5} className="text-white">Your Screen time</Heading>
-      <Heading tag={2} className="text-white text-shadow-sm">
-        {curScreenTime < 59 ? '' : Math.floor(curScreenTime/ 60) + "h"} 
-        {curScreenTime%60 == 0 ? '' : curScreenTime % 60 + 'min'}
-      </Heading>
-      <Heading tag={4} className="text-white">
-        {Math.floor((maxScreenTime - curScreenTime)/ 60) + 'h'} 
-        {(maxScreenTime - curScreenTime)%60 == 0 ? '' : (maxScreenTime - curScreenTime)% 60 +'min'} 
-        left
-      </Heading>
-    </div>
+
+    <!-- focus button -->
     <div class="startFocus_btn" >
       <a href="/focus">
         <Button>Start a focus session</Button>
       </a>
     </div>
 
+    <!-- goals display -->
     <div class="goals_title">
       <Heading tag={6} className="!font-normal">Your Goals</Heading>
     </div>
@@ -49,7 +60,10 @@
         </a>
     </div>
 
+  <!-- content div-->
   </div>
+
+  <Navbar/>
 
 </main>
 
@@ -61,13 +75,15 @@
 
   .screentime{
     @apply absolute
-      top-44
+      w-full
+      bottom-20
       grid
       grid-cols-1
       place-items-center;
   }
   .content {
     pointer-events: all;
+    scrollbar-width: none;
     @apply 
         flex
         flex-col

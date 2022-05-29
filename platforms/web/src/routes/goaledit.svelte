@@ -82,6 +82,7 @@
         gap-8
         z-10;
     pointer-events: all;
+    scrollbar-width: none;
 }
 .content .name {
     @apply 

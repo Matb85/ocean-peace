@@ -69,6 +69,7 @@
             gap-10
             ;
         pointer-events: all;
+        scrollbar-width: none;
     }
     .content .summary {
         @apply

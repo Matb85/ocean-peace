@@ -22,14 +22,14 @@
         </div>
 
         <div class="graph">
-            <CircleChart/>
+            <CircleChart className="w-full h-full"/>
             <Heading tag={6} className="text-center">{appsCount} {appsCount > 1 ? "apps" : "app"} available</Heading>
             <Heading tag={6} className="text-center !font-normal">You will get 25 points for this session</Heading>
         </div>
 
         <div class="cancel">
             <a href="/summary">
-                <Button secondary=true>Cancel Session</Button>
+                <Button secondary=true isWarning=true>Cancel Session</Button>
             </a>
         </div>
         
@@ -81,10 +81,11 @@
             gap-10
             ;
         pointer-events: all;
+        scrollbar-width: none;
     }
     .content .graph {
         @apply
-            w-10/12;
+            w-9/12;
     }
     .content .todo{
         @apply 
