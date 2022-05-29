@@ -4,7 +4,6 @@
     import { BackButton, Button, Icon, Heading, EditButton } from "@redinnlabs/system/Elements";
     import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
     import { SoundTrack } from "@redinnlabs/system/Units";
-    import { mdiPencil } from '@mdi/js';
 
 
     export let presetName: string = 'Example';
@@ -21,10 +20,12 @@
 
         <div class="duration">
             <Heading tag={5} className="!font-normal">Duration</Heading>
-            <RadioInput options={[
-                { value: 'Pomodoro'}, 
-                { value: 'Continues'}, 
-                { value: 'Stopwatch'}
+            <RadioInput 
+                className="flex-wrap justify-center"
+                options={[
+                    { value: 'Pomodoro'}, 
+                    { value: 'Continues'}, 
+                    { value: 'Stopwatch'}
                 ]}
             />
             <TimeInput/>
@@ -32,9 +33,11 @@
 
         <div class="options">
             <Heading tag={5} className="!font-normal">Options</Heading>
-            <CheckMultiple options= {[
-                { label: 'Hard Limit', isChecked: true },
-                { label: '20:20:20 Rule', isChecked: false },
+            <CheckMultiple 
+                className="flex-wrap justify-center"
+                options= {[
+                    { label: 'Hard Limit', isChecked: true },
+                    { label: '20:20:20 Rule', isChecked: false },
                 ]}
             />
         </div>
@@ -47,7 +50,9 @@
         </div>
         
         <div class="start">
-            <Button>Start {presetName}</Button>
+            <a href="/session">
+                <Button>Start {presetName}</Button>
+            </a>
         </div>
     </div>
 
@@ -95,10 +100,11 @@
             flex flex-col 
             items-center place-content-center
             select-none
-            mb-14 mt-28
+            mb-32 mt-28
             gap-10
             ;
         pointer-events: all;
+        scrollbar-width: none;
     }
     .content .duration {
         @apply  

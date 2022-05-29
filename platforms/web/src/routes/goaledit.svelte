@@ -2,7 +2,7 @@
 
     import "@redinnlabs/system/utils/base.css";
     import { BackButton, Button, Icon, Heading, Aquarium, EditButton } from "@redinnlabs/system/Elements";
-    import { Schedule, Preset } from "@redinnlabs/system/Units";
+    import { SearchBar } from "@redinnlabs/system/Units";
     import { TextInput } from "@redinnlabs/system/Form";
     import { PieChart } from "@redinnlabs/system/Charts";
     import { mdiPencil } from '@mdi/js';
@@ -32,18 +32,19 @@
 
         <div class="apps">
             <Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
+            <SearchBar placeholder="Search..." />
         </div>
         
         <div class="next">
             <a href="/goaledit2">
-                <Button>next</Button>
+                <Button isFullWidth=true >next</Button>
             </a>
         </div>
     </div>
 
 <div class="back">
     <a href="/goal">
-        <BackButton/>
+        <BackButton />
     </a>
 </div>
 
@@ -65,7 +66,8 @@
 .next {
     @apply 
         fixed
-        bottom-16;
+        bottom-10
+        w-11/12;
 }
 
 /* C O N T E N T   E L E M E N T S */
@@ -76,10 +78,11 @@
         flex flex-col 
         items-center place-content-center
         select-none
-        mb-14 mt-28
-        gap-10
+        mb-32 mt-28
+        gap-8
         z-10;
     pointer-events: all;
+    scrollbar-width: none;
 }
 .content .name {
     @apply 

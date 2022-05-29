@@ -2,14 +2,20 @@
 
     import "@redinnlabs/system/utils/base.css";
     import { BackButton, Button, Icon, Heading, Aquarium, EditButton } from "@redinnlabs/system/Elements";
+    import {mdiCheck} from "@mdi/js"
     import { PieChart } from "@redinnlabs/system/Charts";
    
+    import shape from "../assets/white-shape.svg";
 
 </script>
 
     <!-- C O N T E N T -->
-    <div class="aquarium">
-            <Aquarium percent={80} />
+    <div class="w-full h-80 absolute -z-50 top-0">
+        <Aquarium percent={80} />
+        <img src={shape} alt="shape" class="w-full bottom-0 absolute"/>
+        <svg width="full" height="full">
+            <rect width="full" height="full" style="fill: linear-gradient(180deg, rgba(255, 255, 255, 0) 22.4%, #FFFFFF 100%)"/>
+        </svg>
     </div>
     
     <div class="content">
@@ -20,7 +26,7 @@
         </div>
 
         <div class="goal-graph">
-            <Heading tag={5} className="text-center !font-normal">Limit Social Media to 90min a day</Heading>
+            <Heading tag={5} className="text-center !font-normal w-9/12">Limit Social Media to 90min a day</Heading>
             <div class="graph">
                 <PieChart className="w-64 h-64"
                     maxValue = 200
@@ -28,29 +34,46 @@
                         { color: '#3772FF', value: 110 },
                         { color: '#FCBA04', value: 40 },
                     ]}
-                />
-                
+                >
+                    <div class="w-full h-full flex flex-col items-center justify-center gap-2">
+                        <Heading tag={3}>24 min</Heading>
+                        <Heading tag={3} className="!font-normal">left</Heading>
+                    </div>
+                </PieChart>
             </div>
 
-            <div class="text">
-                <Heading tag={5}>24 min</Heading>
-                <Heading tag={5} className="!font-normal">left</Heading>
-            </div>
+            
         </div>  
 
         <div class="last-graph">
             <Heading tag={5} className="text-center !font-normal">Last 7 days</Heading>
             <div class="graphs">
-                {#each Array(7) as _, i }
-                    <PieChart className="w-24 h-24"
+                {#each Array(4) as _, i }
+                    <PieChart className="w-20 h-20"
                         maxValue = 200
                         data= {[
                             { color: '#3772FF', value: 100 },
                             { color: '#FCBA04', value: 30 },
                         ]}
-                    />
-                {/each}
+                    >
+                            
+                    </PieChart>
+                {/each}     
             </div>
+            <div class="graphs">{#each Array(3) as _, i }
+                <PieChart className="w-20 h-20"
+                    maxValue = 200
+                    data= {[
+                        { color: '#3772FF', value: 100 },
+                        { color: '#FCBA04', value: 30 },
+                    ]}
+                >
+                        <div class="w-full h-full bg-[#CFEED1] text-[#03A108] flex items-center justify-center">
+                            <Icon d={mdiCheck} className="fill-current w-32"/>
+                        </div>
+                </PieChart>
+            {/each}
+</div>
         </div> 
         <div class="apps">
             <Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
@@ -88,15 +111,6 @@
     @apply absolute
             top-7;
 }
-.aquarium {
-    @apply 
-        w-full h-96
-        absolute
-        -z-50
-        top-0
-        opacity-50;
-}
-
 /* C O N T E N T   E L E M E N T S */
 
 
@@ -105,10 +119,12 @@
         flex flex-col 
         items-center place-content-center
         select-none
-        mb-14 mt-28
+        mb-16 mt-28
         gap-10
         z-10;
     pointer-events: all;
+    scrollbar-width: none;
+    
 }
 
 .content .goal-graph {
@@ -119,14 +135,6 @@
         place-items-center
         select-none
         w-11/12;
-}
-.content .goal-graph .graph {
-    @aply 
-        flex;   
-}
-.content .goal-graph .text{
-    @aply 
-        absolute;
 }
 
 .content .last-graph {
@@ -140,13 +148,11 @@
 }
 .content .last-graph .graphs {
     @apply 
-        grid
-        grid-cols-4
+        flex
         items-center
-        place-items-center
-        justify-items-center
+        justify-center
         select-none
-        gap-2;
+        gap-0;
 }
 
 .content .apps {
@@ -157,5 +163,10 @@
         place-items-center
         select-none
         w-11/12;
+}
+
+.content .goal-graph .graph {
+    @aply 
+        flex;   
 }
 </style>
