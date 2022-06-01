@@ -1,8 +1,8 @@
 {
-	"appId": "com.example.app",
+	"appId": "ocean.peace.mobile",
 	"appName": "ocean-peace-mobile",
-	"bundledWebRuntime": true,
-	"webDir": "www",
+	"bundledWebRuntime": false,
+	"webDir": "../web/build",
 	"plugins": {
 		"SplashScreen": {
 			"launchShowDuration": 0

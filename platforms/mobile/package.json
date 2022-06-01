@@ -1,7 +1,10 @@
 {
   "name": "ocean-peace-mobile",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "sync": "pnpm --filter web build && cap sync",
+    "open:android": "cap open android"
+  },
   "dependencies": {
     "@capacitor/android": "^3.5.1"
   },
