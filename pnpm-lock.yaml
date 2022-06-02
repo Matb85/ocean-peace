@@ -21,12 +21,14 @@ importers:
   platforms/mobile:
     specifiers:
       '@capacitor/android': ^3.5.1
+      '@capacitor/app': 1.1.1
       '@capacitor/camera': ^1.3.1
       '@capacitor/cli': ^3.5.1
       '@capacitor/core': ^3.5.1
       '@capacitor/splash-screen': ^1.2.2
     dependencies:
       '@capacitor/android': 3.5.1_@capacitor+core@3.5.1
+      '@capacitor/app': 1.1.1_@capacitor+core@3.5.1
     devDependencies:
       '@capacitor/camera': 1.3.1_@capacitor+core@3.5.1
       '@capacitor/cli': 3.5.1
@@ -51,7 +53,7 @@ importers:
       vite: 2.9.9
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/fbf9c54b4651c37990140132fb6f44d8e49cf61f
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/a0d05d18a2768f3f7e866fa8cead0f125e213240
     devDependencies:
       '@roxi/routify': 3.0.0-next.90
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.45_svelte@3.48.0+vite@2.9.9
@@ -96,6 +98,14 @@ packages:
     resolution: {integrity: sha512-rjehS0+BQBlwoN8hUyrMuzexn/9QJsONb1kmN5uXcL8JuTEbv35fa7z0tSD4x1LKwUFd+3Zeuwt60QRuwijlmw==}
     peerDependencies:
       '@capacitor/core': ^3.5.0
+    dependencies:
+      '@capacitor/core': 3.5.1
+    dev: false
+
+  /@capacitor/app/1.1.1_@capacitor+core@3.5.1:
+    resolution: {integrity: sha512-8ADkldHnoE1xkWvPUsGlERVGm6/Zvcxy6hCI80AxydIKyaCG7kbDAvUclebbnw/eFRxj2zBoVatGLjmJNvTbYw==}
+    peerDependencies:
+      '@capacitor/core': ^3.0.0
     dependencies:
       '@capacitor/core': 3.5.1
     dev: false
@@ -2474,13 +2484,13 @@ packages:
     dev: true
 
   /pify/2.3.0:
-    resolution: {integrity: sha1-7RQaasBDqEnqWISY59yosVMw6Qw=}
+    resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: false
     optional: true
 
   /pify/3.0.0:
-    resolution: {integrity: sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=}
+    resolution: {integrity: sha512-C3FsVNH1udSEX48gGX1xfvwTWfsYWj5U+8/uK15BGzIGrKoUpghX8hWZwa/OFnakBiiVNmBvemTJR5mcy7iPcg==}
     engines: {node: '>=4'}
     dev: false
     optional: true
@@ -2600,7 +2610,7 @@ packages:
     optional: true
 
   /q/1.5.1:
-    resolution: {integrity: sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=}
+    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     dev: false
     optional: true
@@ -3479,10 +3489,10 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/fbf9c54b4651c37990140132fb6f44d8e49cf61f:
-    resolution: {commit: fbf9c54b4651c37990140132fb6f44d8e49cf61f, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/a0d05d18a2768f3f7e866fa8cead0f125e213240:
+    resolution: {commit: a0d05d18a2768f3f7e866fa8cead0f125e213240, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.10.0
+    version: 1.11.0
     dependencies:
       '@mdi/js': 6.7.96
       modular-slider: 0.10.0
