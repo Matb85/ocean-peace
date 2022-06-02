@@ -23,6 +23,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/secondaryLight</item>
 
+        <item name="android:overScrollMode">never</item>
     </style>
 
 
