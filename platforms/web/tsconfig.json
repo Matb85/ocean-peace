@@ -13,6 +13,7 @@
      * Note that setting allowJs false does not prevent the use
      * of JS in `.svelte` files.
      */
+    "outDir": "./build",
     "allowJs": true,
     "checkJs": true
   },

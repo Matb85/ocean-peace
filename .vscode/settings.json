@@ -1,5 +1,6 @@
 {
   "npm.packageManager": "pnpm",
   "eslint.packageManager": "pnpm",
-  "stylelint.packageManager": "pnpm"
+  "stylelint.packageManager": "pnpm",
+  "ionic.previewInEditor": true
 }
