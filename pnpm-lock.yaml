@@ -40,7 +40,7 @@ importers:
       '@mdi/js': 6.7.96
       '@redinnlabs/system': github:Redinn-Labs/design-system#release
       '@roxi/routify': 3.0.0-next.90
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.45
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.47
       '@tsconfig/svelte': 3.0.0
       autoprefixer: 10.4.7
       postcss: 8.4.14
@@ -53,10 +53,10 @@ importers:
       vite: 2.9.9
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/a0d05d18a2768f3f7e866fa8cead0f125e213240
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/4c95add9f9c6392ff0e18f39b380496bd9e680a7
     devDependencies:
       '@roxi/routify': 3.0.0-next.90
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.45_svelte@3.48.0+vite@2.9.9
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.47_svelte@3.48.0+vite@2.9.9
       '@tsconfig/svelte': 3.0.0
       autoprefixer: 10.4.7_postcss@8.4.14
       postcss: 8.4.14
@@ -315,8 +315,8 @@ packages:
       svelte: 3.48.0
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.45_svelte@3.48.0+vite@2.9.9:
-    resolution: {integrity: sha512-WLschM2qpa4lSpKR4zTVDJ2AW48u3Gjs3BX5s6aZvLRC3bjBjKcOcGmOG9pLu07C869wdMwZFZ+GroVcx7ZKpw==}
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.47_svelte@3.48.0+vite@2.9.9:
+    resolution: {integrity: sha512-J6n8UN51aq/TEZGQ89/EtdXTtca3cRcTJGzi6fi+xK8LkgsHQLCZhRj+PJ+swktRSWTX9IOmQS55SqVg6bz5fA==}
     engines: {node: ^14.13.1 || >= 16}
     peerDependencies:
       diff-match-patch: ^1.0.5
@@ -332,7 +332,7 @@ packages:
       kleur: 4.1.4
       magic-string: 0.26.2
       svelte: 3.48.0
-      svelte-hmr: 0.14.11_svelte@3.48.0
+      svelte-hmr: 0.14.12_svelte@3.48.0
       vite: 2.9.9
     transitivePeerDependencies:
       - supports-color
@@ -3110,8 +3110,8 @@ packages:
       - sugarss
     dev: true
 
-  /svelte-hmr/0.14.11_svelte@3.48.0:
-    resolution: {integrity: sha512-R9CVfX6DXxW1Kn45Jtmx+yUe+sPhrbYSUp7TkzbW0jI5fVPn6lsNG9NEs5dFg5qRhFNAoVdRw5qQDLALNKhwbQ==}
+  /svelte-hmr/0.14.12_svelte@3.48.0:
+    resolution: {integrity: sha512-4QSW/VvXuqVcFZ+RhxiR8/newmwOCTlbYIezvkeN6302YFRE8cXy0naamHcjz8Y9Ce3ITTZtrHrIL0AGfyo61w==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
     peerDependencies:
       svelte: '>=3.19.0'
@@ -3489,10 +3489,10 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/a0d05d18a2768f3f7e866fa8cead0f125e213240:
-    resolution: {commit: a0d05d18a2768f3f7e866fa8cead0f125e213240, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/4c95add9f9c6392ff0e18f39b380496bd9e680a7:
+    resolution: {commit: 4c95add9f9c6392ff0e18f39b380496bd9e680a7, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.11.0
+    version: 1.12.0
     dependencies:
       '@mdi/js': 6.7.96
       modular-slider: 0.10.0
