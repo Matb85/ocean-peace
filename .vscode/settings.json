@@ -3,5 +3,16 @@
   "eslint.packageManager": "pnpm",
   "stylelint.packageManager": "pnpm",
   "ionic.previewInEditor": true,
-  "conventionalCommits.scopes": ["web", ",mobile", "desktop", "android", "ios", "macos", "windows", "linux"]
+  "conventionalCommits.scopes": ["web", "mobile", "desktop", "android", "ios", "macos", "windows", "linux"],
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    "svelte"
+  ],
+  "eslint.workingDirectories": ["platforms/web"]
 }
