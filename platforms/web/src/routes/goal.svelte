@@ -1,9 +1,7 @@
 <script lang="ts">
-  import "@redinnlabs/system/utils/base.css";
   import { BackButton, Icon, Heading, Aquarium, EditButton } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart } from "@redinnlabs/system/Charts";
-
   import shape from "../assets/white-pointy-cutout.svg";
 </script>
 

@@ -3,8 +3,7 @@
   import { Button, Heading } from "@redinnlabs/system/Elements";
   import background from "../assets/summary.svg";
 
-  //export let points: number = 45;
-  export let minutes: number = 148;
+  const minutes: number = 148;
 </script>
 
 <!-- C O N T E N T -->

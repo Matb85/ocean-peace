@@ -5,10 +5,6 @@
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
   import Navbar from "../lib/Navbar.svelte";
-
-  function presetPressed() {
-    location.href='/presetEdit';
-  }
 </script>
 
 <!-- C O N T E N T -->
@@ -25,9 +21,13 @@
   </div>
   <div class="presets">
     {#each Array(3) as _, i}
-      <Preset src={W} label="Bottom text {i}" onClick={presetPressed}/>
+      <a href="/presetEdit">
+        <Preset src={W} label="Bottom text {i}" />
+      </a>
     {/each}
-    <Preset src={A} noShadowWrapper="true" onClick={presetPressed}/>
+    <a href="/presetEdit">
+      <Preset src={A} noShadowWrapper="true" />
+    </a>
   </div>
 
   <div class="schedule_title">
@@ -39,14 +39,13 @@
     {/each}
     <Button secondary="true">Add a Rule</Button>
   </div>
-
 </div>
 
-<Navbar/>
+<Navbar />
 
 <div class="back">
   <a href="/index">
-    <BackButton/>
+    <BackButton />
   </a>
 </div>
 

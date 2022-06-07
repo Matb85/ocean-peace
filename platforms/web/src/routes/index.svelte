@@ -1,9 +1,7 @@
 <script lang="ts">
-  import "@redinnlabs/system/utils/base.css";
   import { Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import Navbar from "../lib/Navbar.svelte";
-
   import shape from "../assets/white-pointy-cutout.svg";
 
   export let curScreenTime: number = 100;
