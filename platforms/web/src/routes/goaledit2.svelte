@@ -44,7 +44,7 @@
   </div>
 
   <div class="save">
-    <a href="/index">
+    <a href="/">
       <Button isFullWidth="true">save</Button>
     </a>
   </div>

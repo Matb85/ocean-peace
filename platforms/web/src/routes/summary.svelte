@@ -22,10 +22,10 @@
     <Heading tag={6} className="text-center !font-normal text-white">of focus</Heading>
   </div>
 
-  <div class="notification">
+  <a href="/" class="notification">
     <Heading tag={5} className="text-center">Notification received</Heading>
     <Button>continue</Button>
-  </div>
+  </a>
 </div>
 
 <div class="waves">

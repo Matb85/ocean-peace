@@ -1,88 +1,36 @@
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
-  import { BackButton, Button, Heading } from "@redinnlabs/system/Elements";
+  import { Button, Heading } from "@redinnlabs/system/Elements";
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
   import Navbar from "../lib/Navbar.svelte";
+  import FullHeading from "$lib/FullHeading.svelte";
 </script>
 
-<!-- C O N T E N T -->
+<FullHeading href="/">Focus</FullHeading>
 
-<div class="content">
-  <!-- svelte-ignore component-name-lowercase -->
-
-  <div class="title">
-    <Heading tag={3}>Focus</Heading>
-  </div>
-
-  <div class="preset_title">
-    <Heading tag={5} className="!font-normal">Presets</Heading>
-  </div>
-  <div class="presets">
-    {#each Array(3) as _, i}
-      <a href="/presetEdit">
-        <Preset src={W} label="Bottom text {i}" />
-      </a>
-    {/each}
-    <a href="/presetEdit">
-      <Preset src={A} noShadowWrapper="true" />
-    </a>
-  </div>
-
-  <div class="schedule_title">
-    <Heading tag={5} className="!font-normal">Schedule</Heading>
-  </div>
-  <div class="schedule">
-    {#each Array(3) as _, i}
-      <Schedule src={W} title="Event example" />
-    {/each}
-    <Button secondary="true">Add a Rule</Button>
-  </div>
+<div class="grid grid-cols-2 gap-4">
+  <Heading tag={5} className="!font-normal">Presets</Heading>
 </div>
-
-<Navbar />
-
-<div class="back">
-  <a href="/index">
-    <BackButton />
+<div class="grid grid-cols-2 gap-4">
+  {#each Array(3) as _, i}
+    <a href="/presetedit">
+      <Preset src={W} label="Bottom text {i}" />
+    </a>
+  {/each}
+  <a href="/presetedit">
+    <Preset src={A} noShadowWrapper="true" />
   </a>
 </div>
 
-<style lang="postcss">
-  .back {
-    @apply fixed
-            top-5 left-3
-            min-h-fit min-w-fit;
-  }
-  .title {
-    @apply absolute
-            top-7;
-  }
-  .content {
-    @apply flex flex-col 
-            items-center place-content-center
-            select-none
-            mb-16 mt-28
-            gap-14;
-    pointer-events: all;
-    scrollbar-width: none;
-  }
-  .content .preset_title {
-    @apply -mb-10;
-  }
-  .content .presets {
-    @apply grid
-            grid-cols-2
-            gap-4;
-  }
+<Heading tag={5} className="!font-normal">Schedule</Heading>
 
-  .content .schedule_title {
-    @apply -mb-10;
-  }
-  .content .schedule {
-    @apply w-11/12 mx-auto
-        grid grid-cols-1 gap-4
-            place-items-center;
-  }
-</style>
+<div class="w-11/12 mx-auto grid grid-cols-1 gap-4 place-items-center">
+  {#each Array(3) as _, i}
+    <Schedule src={W} title="Event example" />
+  {/each}
+  <Button secondary="true">Add a Rule</Button>
+</div>
+
+<Navbar />

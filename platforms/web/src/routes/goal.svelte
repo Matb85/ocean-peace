@@ -79,7 +79,7 @@
 </div>
 
 <div class="back">
-  <a href="/index">
+  <a href="/">
     <BackButton />
   </a>
 </div>
