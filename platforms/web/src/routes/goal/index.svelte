@@ -40,7 +40,7 @@
 </div>
 
 <Heading tag={5} className="text-center !font-normal">Last 7 days</Heading>
-<div class="flex flex-wrap items-center justify-center">
+<div class="flex flex-wrap items-center justify-center max-w-xs">
   {#each Array(7) as _, i}
     <PieChart
       className="w-20 h-20"

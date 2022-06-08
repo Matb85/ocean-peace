@@ -25,7 +25,7 @@
 <Heading tag={5} className="text-center !font-normal">Select Days</Heading>
 
 <CheckMultiple
-  className="flex-wrap justify-center"
+  className="flex-wrap justify-center max-w-sm"
   options={[
     { label: "Mon", isChecked: true },
     { label: "Tue", isChecked: false },

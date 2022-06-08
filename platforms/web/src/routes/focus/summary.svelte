@@ -14,9 +14,20 @@
   <Heading tag={6} className="!font-normal">of focus</Heading>
 </div>
 
+<Heading tag={5} className="text-center text-white">Notifications received</Heading>
 <a sveltekit:prefetch href="/">
-  <Heading tag={5} className="text-center">Notifications received</Heading>
   <Button>continue</Button>
 </a>
 
-<Background className="absolute -z-0" />
+<div class="background">
+  <Background className="background-svg" x={50} y={100} />
+</div>
+
+<style>
+  .background {
+    @apply w-full h-2/3 absolute -z-10;
+  }
+  .background :global(.background-svg) {
+    transform: scale(2) rotate(180deg);
+  }
+</style>

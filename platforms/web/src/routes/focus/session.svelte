@@ -18,13 +18,15 @@
 </div>
 
 <a sveltekit:prefetch href="/focus/summary">
-  <Button secondary="true" isWarning="true">Cancel Session</Button>
+  <Button secondary="true" size="small" isWarning="true">Cancel Session</Button>
 </a>
 
-<div class="flex flex-col w-11/12 gap-4">
+<div class="flex flex-col items-center w-11/12 gap-4">
   <Heading tag={5} className="text-center">Things to do later</Heading>
   {#each Array(5) as _, i}
     <ToDo title="Example" info="Example info" />
   {/each}
-  <Button>Add a todo</Button>
+  <div>
+    <Button>Add a todo</Button>
+  </div>
 </div>

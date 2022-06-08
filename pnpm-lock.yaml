@@ -59,7 +59,7 @@ importers:
       typescript: 4.7.3
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/1756bb7181602dbfa5f9661e6ac7be27ccb53b24
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/89d95b983504c7cc1378ac3df2f66f8c4e4a5a07
     devDependencies:
       '@sveltejs/adapter-static': 1.0.0-next.34
       '@sveltejs/kit': 1.0.0-next.310_svelte@3.48.0
@@ -4401,10 +4401,10 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/1756bb7181602dbfa5f9661e6ac7be27ccb53b24:
-    resolution: {commit: 1756bb7181602dbfa5f9661e6ac7be27ccb53b24, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/89d95b983504c7cc1378ac3df2f66f8c4e4a5a07:
+    resolution: {commit: 89d95b983504c7cc1378ac3df2f66f8c4e4a5a07, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.13.4
+    version: 1.13.5
     dependencies:
       '@mdi/js': 6.7.96
       modular-slider: 0.10.0
