@@ -21,3 +21,7 @@ body {
   @apply w-full select-none flex flex-col items-center gap-4 pb-8;
   scrollbar-width: none;
 }
+
+.text-shadow {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
+}

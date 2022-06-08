@@ -52,9 +52,3 @@
 </div>
 
 <Navbar />
-
-<style lang="postcss">
-  .text-shadow {
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
-  }
-</style>
