@@ -15,11 +15,11 @@
 </div>
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
-    <a href="/focus/presetedit">
+    <a sveltekit:prefetch href="/focus/presetedit">
       <Preset src={W} label="Bottom text {i}" />
     </a>
   {/each}
-  <a href="/focus/presetedit">
+  <a sveltekit:prefetch href="/focus/presetedit">
     <Preset src={A} noShadowWrapper="true" />
   </a>
 </div>

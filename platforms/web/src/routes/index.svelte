@@ -34,7 +34,7 @@
 </div>
 
 <!-- focus button -->
-<a href="/focus">
+<a sveltekit:prefetch href="/focus">
   <Button>Start a focus session</Button>
 </a>
 
@@ -42,11 +42,11 @@
 <Heading tag={6} className="!font-normal">Your Goals</Heading>
 <div class="place-content-center place-items-center grid grid-cols-1 w-11/12 gap-5">
   {#each Array(4) as _, i}
-    <a href="/goal" class="w-full">
+    <a sveltekit:prefetch href="/goal" class="w-full">
       <Goal title={"Some goal here"} info={"something left"} className="Goal" />
     </a>
   {/each}
-  <a href="/goaledit">
+  <a sveltekit:prefetch href="/goaledit">
     <Button secondary="true">Add Goal</Button>
   </a>
 </div>

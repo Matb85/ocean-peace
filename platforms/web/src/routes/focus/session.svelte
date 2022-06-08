@@ -17,7 +17,7 @@
   <Heading tag={6} className="text-center !font-normal">You will get 25 points for this session</Heading>
 </div>
 
-<a href="/focus/summary">
+<a sveltekit:prefetch href="/focus/summary">
   <Button secondary="true" isWarning="true">Cancel Session</Button>
 </a>
 

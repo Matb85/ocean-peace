@@ -45,5 +45,5 @@
 <Heading tag={5} className="text-center !font-normal">Limit Type</Heading>
 <RadioInput bind:chosen={type} options={[{ value: "Soft" }, { value: "Hard" }]} />
 
-<a href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">save</Button> </a>
-<a href="/goal" class="absolute top-5 left-3"><BackButton /></a>
+<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">save</Button> </a>
+<a sveltekit:prefetch href="/goal" class="absolute top-5 left-3"><BackButton /></a>

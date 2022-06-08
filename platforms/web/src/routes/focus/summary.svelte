@@ -14,7 +14,7 @@
   <Heading tag={6} className="!font-normal">of focus</Heading>
 </div>
 
-<a href="/">
+<a sveltekit:prefetch href="/">
   <Heading tag={5} className="text-center">Notifications received</Heading>
   <Button>continue</Button>
 </a>

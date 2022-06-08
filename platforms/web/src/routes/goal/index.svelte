@@ -59,5 +59,5 @@
 
 <Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
 
-<a href="/" class="absolute top-5 left-3"><BackButton /></a>
-<a href="/goal/edit/1" class="absolute top-5 right-3"><EditButton /> </a>
+<a sveltekit:prefetch href="/" class="absolute top-5 left-3"><BackButton /></a>
+<a sveltekit:prefetch href="/goal/edit/1" class="absolute top-5 right-3"><EditButton /> </a>
