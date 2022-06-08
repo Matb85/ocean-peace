@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
-  import Navbar from "../lib/Navbar.svelte";
+  import Navbar from "$lib/Navbar.svelte";
+  import Cutout from "$lib/Cutout.svelte";
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
@@ -15,7 +16,7 @@
       : ((maxScreenTime - curScreenTime) / maxScreenTime) * 100}
   />
   <!-- cut out-->
-  <img src="/white-pointy-cutout.svg" alt="shape" class="w-full bottom-0 absolute" />
+  <Cutout className="w-full bottom-0 absolute" />
 
   <!-- screen time display -->
   <div class="text-shadow  absolute w-full bottom-20 grid grid-cols-1 place-items-center">
