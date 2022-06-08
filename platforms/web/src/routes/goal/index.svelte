@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { BackButton, Icon, Heading, Aquarium, EditButton } from "@redinnlabs/system/Elements";
+  import { Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
+  import FullHeading from "$lib/FullHeading.svelte";
 </script>
 
-<!-- C O N T E N T -->
+<FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
+
 <div class="w-full h-80 absolute -z-50 top-0">
   <Aquarium percent={80} />
   <Cutout className="w-full bottom-0 absolute" />
@@ -17,8 +19,6 @@
     />
   </svg>
 </div>
-
-<Heading tag={3} className="mt-7">Goal</Heading>
 
 <div class="grid grid-cols-1 items-center place-items-center select-none w-11/12">
   <Heading tag={5} className="text-center !font-normal w-9/12">Limit Social Media to 90min a day</Heading>
@@ -58,6 +58,3 @@
 </div>
 
 <Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
-
-<a sveltekit:prefetch href="/" class="absolute top-5 left-3"><BackButton /></a>
-<a sveltekit:prefetch href="/goal/edit/1" class="absolute top-5 right-3"><EditButton /> </a>

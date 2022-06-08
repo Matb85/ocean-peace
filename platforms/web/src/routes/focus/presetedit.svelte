@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Heading, EditButton } from "@redinnlabs/system/Elements";
+  import { Button, Heading } from "@redinnlabs/system/Elements";
   import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import FullHeading from "$lib/FullHeading.svelte";
@@ -10,7 +10,7 @@
 <!-- C O N T E N T -->
 
 <!-- svelte-ignore component-name-lowercase -->
-<FullHeading href="/focus">{presetName}</FullHeading>
+<FullHeading backHref="/focus" editHref="">{presetName}</FullHeading>
 
 <div class="grid gap-3 place-items-center w-full">
   <Heading tag={5} className="!font-normal">Duration</Heading>
@@ -42,10 +42,6 @@
 <a sveltekit:prefetch href="/focus/session" class="fixed bottom-10 min-h-fit min-w-fit">
   <Button>Start {presetName}</Button>
 </a>
-
-<div class="absolute top-5 right-3 min-h-fit min-w-fit">
-  <EditButton />
-</div>
 
 <style lang="postcss">
   .custom_grid {

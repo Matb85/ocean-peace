@@ -46,7 +46,7 @@
       <Goal title={"Some goal here"} info={"something left"} className="Goal" />
     </a>
   {/each}
-  <a sveltekit:prefetch href="/goaledit">
+  <a sveltekit:prefetch href="/goale/dit/1">
     <Button secondary="true">Add Goal</Button>
   </a>
 </div>

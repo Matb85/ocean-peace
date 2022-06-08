@@ -1,10 +1,17 @@
 <script lang="ts">
-  import { BackButton, Heading } from "@redinnlabs/system/Elements";
-  export let href = "/";
+  import { BackButton, EditButton, Heading } from "@redinnlabs/system/Elements";
+  export let backHref = "/";
+  export let editHref = null;
 </script>
 
-<Heading className="mt-7 mx-auto" tag={3}><slot /></Heading>
+<Heading className="mt-5 mx-auto" tag={3}><slot /></Heading>
 
-<a sveltekit:prefetch {href} class="fixed top-5 left-3 min-h-fit min-w-fit">
+<a sveltekit:prefetch href={backHref} class="fixed top-5 left-3">
   <BackButton />
 </a>
+
+{#if editHref}
+  <a href={editHref} class="absolute top-5 right-3">
+    <EditButton />
+  </a>
+{/if}

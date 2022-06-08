@@ -1,5 +1,4 @@
 <script lang="ts">
-  import "@redinnlabs/system/utils/base.css";
   import { Button, Heading } from "@redinnlabs/system/Elements";
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import W from "@redinnlabs/system/assets/icon-working.svg";
@@ -8,7 +7,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
 </script>
 
-<FullHeading href="/">Focus</FullHeading>
+<FullHeading backHref="/">Focus</FullHeading>
 
 <div class="grid grid-cols-2 gap-4">
   <Heading tag={5} className="!font-normal">Presets</Heading>

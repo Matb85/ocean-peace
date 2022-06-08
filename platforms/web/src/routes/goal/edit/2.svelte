@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { BackButton, Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Button, Heading } from "@redinnlabs/system/Elements";
   import { RadioInput, TimeInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
+  import FullHeading from "$lib/FullHeading.svelte";
 
   const hours = timeInputConfig.hoursConfig();
   const minutes = timeInputConfig.minutesConfig();
@@ -15,12 +16,7 @@
   let limit;
 </script>
 
-<!-- C O N T E N T -->
-<div class="aquarium">
-  <Aquarium percent={80} />
-</div>
-
-<Heading tag={3} className="mt-7">Goal - Edit</Heading>
+<FullHeading backHref="/goal">Goal - Edit</FullHeading>
 
 <Heading tag={5} className="text-center !font-normal">Select Days</Heading>
 
@@ -45,5 +41,4 @@
 <Heading tag={5} className="text-center !font-normal">Limit Type</Heading>
 <RadioInput bind:chosen={type} options={[{ value: "Soft" }, { value: "Hard" }]} />
 
-<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">save</Button> </a>
-<a sveltekit:prefetch href="/goal" class="absolute top-5 left-3"><BackButton /></a>
+<a sveltekit:prefetch href="/" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">save</Button> </a>
