@@ -39,7 +39,8 @@
 </a>
 
 <!-- goals display -->
-<Heading tag={6} className="!font-normal">Your Goals</Heading>
+<Heading tag={5} className="!font-normal">Your Goals</Heading>
+
 <div class="place-content-center place-items-center grid grid-cols-1 w-11/12 gap-5">
   {#each Array(4) as _, i}
     <a sveltekit:prefetch href="/goal" class="w-full">

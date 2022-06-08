@@ -9,9 +9,8 @@
 
 <FullHeading backHref="/">Focus</FullHeading>
 
-<div class="grid grid-cols-2 gap-4">
-  <Heading tag={5} className="!font-normal">Presets</Heading>
-</div>
+<Heading tag={5} className="!font-normal">Presets</Heading>
+
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
     <a sveltekit:prefetch href="/focus/presetedit">
