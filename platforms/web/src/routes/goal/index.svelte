@@ -4,6 +4,7 @@
   import { PieChart } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
+  import SelectedApps from "$lib/SelectedApps.svelte";
 </script>
 
 <FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
@@ -32,8 +33,8 @@
       ]}
     >
       <div class="w-full h-full flex flex-col items-center justify-center gap-2">
-        <Heading tag={3}>24 min</Heading>
-        <Heading tag={3} className="!font-normal">left</Heading>
+        <Heading tag={2}>24 min</Heading>
+        <Heading tag={2} className="!font-normal">left</Heading>
       </div>
     </PieChart>
   </div>
@@ -58,3 +59,5 @@
 </div>
 
 <Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
+
+<SelectedApps />

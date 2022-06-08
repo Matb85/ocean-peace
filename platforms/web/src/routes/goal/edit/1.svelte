@@ -3,6 +3,7 @@
   import { SearchBar } from "@redinnlabs/system/Units";
   import { TextInput } from "@redinnlabs/system/Form";
   import FullHeading from "$lib/FullHeading.svelte";
+  import SelectedApps from "$lib/SelectedApps.svelte";
 </script>
 
 <FullHeading backHref="/goal">Goal - Edit</FullHeading>
@@ -16,3 +17,5 @@
 </div>
 
 <a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">next</Button> </a>
+
+<SelectedApps />
