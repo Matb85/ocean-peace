@@ -25,7 +25,7 @@
   </div>
 
   <div class="next">
-    <a href="/goaledit2">
+    <a href="/goal/edit/2">
       <Button isFullWidth="true">next</Button>
     </a>
   </div>

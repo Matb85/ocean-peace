@@ -39,7 +39,7 @@
   {/each}
 </div>
 
-<a href="/session" class="fixed bottom-10 min-h-fit min-w-fit">
+<a href="/focus/session" class="fixed bottom-10 min-h-fit min-w-fit">
   <Button>Start {presetName}</Button>
 </a>
 

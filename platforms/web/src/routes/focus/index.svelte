@@ -4,7 +4,7 @@
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
-  import Navbar from "../lib/Navbar.svelte";
+  import Navbar from "../../lib/Navbar.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
 </script>
 
@@ -15,11 +15,11 @@
 </div>
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
-    <a href="/presetedit">
+    <a href="/focus/presetedit">
       <Preset src={W} label="Bottom text {i}" />
     </a>
   {/each}
-  <a href="/presetedit">
+  <a href="/focus/presetedit">
     <Preset src={A} noShadowWrapper="true" />
   </a>
 </div>

@@ -2,13 +2,13 @@
   import { BackButton, Icon, Heading, Aquarium, EditButton } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart } from "@redinnlabs/system/Charts";
-  import shape from "../assets/white-pointy-cutout.svg";
+  import Cutout from "$lib/Cutout.svelte";
 </script>
 
 <!-- C O N T E N T -->
 <div class="w-full h-80 absolute -z-50 top-0">
   <Aquarium percent={80} />
-  <img src={shape} alt="shape" class="w-full bottom-0 absolute" />
+  <Cutout className="w-full bottom-0 absolute" />
   <svg width="full" height="full">
     <rect
       width="full"
@@ -84,7 +84,7 @@
   </a>
 </div>
 <div class="edit">
-  <a href="/goaledit">
+  <a href="/goal/edit/1">
     <EditButton />
   </a>
 </div>

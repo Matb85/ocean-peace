@@ -51,7 +51,7 @@
 </div>
 
 <div class="back">
-  <a href="/goaledit">
+  <a href="/goal/edit/1">
     <BackButton />
   </a>
 </div>
