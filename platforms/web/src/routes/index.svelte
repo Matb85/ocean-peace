@@ -9,7 +9,7 @@
 </script>
 
 <!-- aquarium background -->
-<div class="w-full h-80 block relative">
+<a sveltekit:prefetch href="/insights" class="w-full h-80 block relative">
   <Aquarium
     percent={(maxScreenTime - curScreenTime) / maxScreenTime < 0
       ? 0
@@ -31,7 +31,7 @@
       left
     </Heading>
   </div>
-</div>
+</a>
 
 <!-- focus button -->
 <a sveltekit:prefetch href="/focus">

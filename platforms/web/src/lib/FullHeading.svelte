@@ -6,7 +6,7 @@
 
 <Heading className="mt-5 mx-auto" tag={3}><slot /></Heading>
 
-<a sveltekit:prefetch href={backHref} class="fixed top-5 left-3">
+<a sveltekit:prefetch href={backHref} class="fixed z-50 top-5 left-3">
   <BackButton />
 </a>
 
