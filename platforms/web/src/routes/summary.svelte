@@ -1,7 +1,6 @@
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
   import { Button, Heading } from "@redinnlabs/system/Elements";
-  import background from "../assets/summary.svg";
 
   const minutes: number = 148;
 </script>
@@ -29,7 +28,7 @@
 </div>
 
 <div class="waves">
-  <img src={background} alt="wave" />
+  <img src="/summary.svg" alt="wave" />
 </div>
 
 <style lang="postcss">
