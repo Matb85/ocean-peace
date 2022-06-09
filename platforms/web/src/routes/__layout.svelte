@@ -4,11 +4,14 @@
 </script>
 
 <script lang="ts">
-  import { Router } from "@roxi/routify";
-  import routes from "../.routify/routes.default.js";
+  import "../app.css";
   import GlobalGradient from "@redinnlabs/system/utils/GlobalGradient.svelte";
 </script>
 
-<Router {routes} />
+<slot />
 
 <GlobalGradient />
+
+<style global>
+  @import "@redinnlabs/system/utils/base.css";
+</style>
