@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Aquarium } from "@redinnlabs/system/Elements";
   import { PieChart, LineChart } from "@redinnlabs/system/Charts";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
+  import H from "$lib/H.svelte";
 </script>
 
 <FullHeading backHref="/">Screen Time</FullHeading>
@@ -24,14 +25,14 @@
       ]}
     >
       <div class="w-full h-full flex flex-col items-center justify-center gap-2">
-        <Heading tag={2}>24 min</Heading>
-        <Heading tag={3} className="!font-normal">left</Heading>
+        <H tag={2}>24 min</H>
+        <H tag={3} className="!font-normal">left</H>
       </div>
     </PieChart>
   </div>
 </div>
 
-<Heading tag={5} className="text-center !font-normal">Usage Intensity</Heading>
+<H thin>Usage Intensity</H>
 
 <LineChart
   axisX={["8am", "10am", "12am", "2pm", "4pm", "6pm"]}
@@ -50,7 +51,7 @@
   ]}
 />
 
-<Heading tag={5} className="text-center !font-normal">Apps used today</Heading>
+<H thin>Apps used today</H>
 
 <PieChart
   className="w-64 h-64"
@@ -61,8 +62,8 @@
   ]}
 >
   <div class="w-full h-full flex flex-col items-center justify-center gap-2">
-    <Heading tag={2}>17 apps</Heading>
-    <Heading tag={3} className="!font-normal">opened</Heading>
+    <H tag={2}>17 apps</H>
+    <H tag={3} thin>opened</H>
   </div>
 </PieChart>
 

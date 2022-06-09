@@ -25,7 +25,7 @@
 
 <H thin>Schedule</H>
 
-<div class="w-11/12 mx-auto grid grid-cols-1 gap-4 place-items-center">
+<div class="card-flex-col">
   {#each Array(3) as _, i}
     <Schedule src={W} title="Event example" />
   {/each}

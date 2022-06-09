@@ -21,12 +21,12 @@
 
   <!-- screen time display -->
   <div class="text-shadow text-white absolute w-full bottom-20 grid grid-cols-1 place-items-center">
-    <H>Your Screen time</H>
-    <H tag={2} className="text-shadow-sm">
+    <H noMargins>Your Screen time</H>
+    <H tag={2} noMargins className="text-shadow-sm">
       {curScreenTime < 59 ? "" : Math.floor(curScreenTime / 60) + "h"}
       {curScreenTime % 60 == 0 ? "" : (curScreenTime % 60) + "min"}
     </H>
-    <H tag={4}>
+    <H tag={4} noMargins>
       {Math.floor((maxScreenTime - curScreenTime) / 60) + "h"}
       {(maxScreenTime - curScreenTime) % 60 == 0 ? "" : ((maxScreenTime - curScreenTime) % 60) + "min"}
       left
@@ -41,8 +41,7 @@
 
 <!-- goals display -->
 <H thin>Your Goals</H>
-
-<div class="place-content-center place-items-center grid grid-cols-1 w-11/12 gap-5">
+<div class="card-flex-col">
   {#each Array(4) as _, i}
     <a sveltekit:prefetch href="/goal" class="w-full">
       <Goal title={"Some goal here"} info={"something left"} className="Goal" />

@@ -9,14 +9,15 @@
 
 <FullHeading backHref="/goal">Goal - Edit</FullHeading>
 
-<div class="flex flex-col gap-4 w-10/12">
-  <H thin>Name</H>
+<H thin>Name</H>
+<div class="w-11/12">
   <TextInput placeholder="Name of your goal" />
-
-  <H thin>Selected apps</H>
-  <SearchBar placeholder="Search..." />
 </div>
 
+<H thin>Selected apps</H>
+<div class="w-11/12">
+  <SearchBar placeholder="Search..." />
+</div>
 <a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">next</Button> </a>
 
 <SelectedApps />

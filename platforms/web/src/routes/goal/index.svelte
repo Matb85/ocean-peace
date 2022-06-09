@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon, Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
@@ -16,7 +16,7 @@
 </section>
 
 <section class="grid grid-cols-1 items-center place-items-center select-none w-11/12">
-  <Heading tag={5} className="text-center !font-normal w-9/12">Limit Social Media to 90min a day</Heading>
+  <H tag={5} thin className="w-9/12">Limit Social Media to 90min a day</H>
   <div class="graph">
     <PieChart
       className="w-64 h-64"
@@ -34,7 +34,7 @@
   </div>
 </section>
 
-<H>Last 7 days</H>
+<H thin>Last 7 days</H>
 <section class="flex flex-wrap items-center justify-center max-w-xs">
   {#each ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as day}
     <div class="text-center">
@@ -55,6 +55,6 @@
   {/each}
 </section>
 
-<H>Selected apps</H>
+<H thin>Selected apps</H>
 
 <SelectedApps />

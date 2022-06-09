@@ -17,12 +17,12 @@
   <H tag={6} thin>of focus</H>
 </div>
 
-<div class="flex gap-1 items-end">
-  <H tag={2} className="text-white">+45</H>
-  <H tag={4} className="text-white">points</H>
+<div class="flex gap-1 items-end text-white">
+  <H tag={2}>+45</H>
+  <H tag={4}>points</H>
 </div>
 
-<H tag={5} className="mt-24">Notifications received</H>
+<H tag={5} className="mt-36">Notifications received</H>
 
 <SelectedApps />
 
@@ -39,7 +39,7 @@
     @apply w-full h-full absolute -z-10 overflow-hidden;
   }
   .background :global(.background-svg) {
-    @apply absolute -top-1/2;
+    @apply absolute -top-[43%];
     transform: translate(15%, 5%) scale(2.5) rotate(180deg);
   }
 </style>

@@ -20,32 +20,22 @@
 />
 <TimeInput />
 
-<div class="custom_grid">
-  <H thin>Options</H>
-  <CheckMultiple
-    className="flex-wrap justify-center"
-    options={[
-      { label: "Hard Limit", isChecked: true },
-      { label: "20:20:20 Rule", isChecked: false },
-    ]}
-  />
-</div>
+<H thin>Options</H>
+<CheckMultiple
+  className="flex-wrap justify-center"
+  options={[
+    { label: "Hard Limit", isChecked: true },
+    { label: "20:20:20 Rule", isChecked: false },
+  ]}
+/>
 
-<div class="custom_grid">
-  <H thin>Soundtrack</H>
+<H thin>Soundtrack</H>
+<div class="card-flex-col">
   {#each Array(3) as _, i}
     <SoundTrack title="Example Soundtrack" info="Chose one" />
   {/each}
 </div>
 
-<a sveltekit:prefetch href="/focus/session" class="fixed bottom-10 min-h-fit min-w-fit">
+<a sveltekit:prefetch href="/focus/session" class="fixed bottom-10">
   <Button>Start {presetName}</Button>
 </a>
-
-<style lang="postcss">
-  .custom_grid {
-    @apply flex flex-col items-center gap-3
-            place-items-center
-            w-11/12 mx-auto;
-  }
-</style>
