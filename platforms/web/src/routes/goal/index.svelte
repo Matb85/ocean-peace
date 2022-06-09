@@ -5,23 +5,17 @@
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
+  import H from "$lib/H.svelte";
 </script>
 
 <FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
 
-<div class="w-full h-80 absolute -z-50 top-0">
+<section class="w-full h-80 absolute -z-50 top-0">
   <Aquarium percent={80} />
   <Cutout className="w-full bottom-0 absolute" />
-  <svg width="full" height="full">
-    <rect
-      width="full"
-      height="full"
-      style="fill: linear-gradient(180deg, rgba(255, 255, 255, 0) 22.4%, #FFFFFF 100%)"
-    />
-  </svg>
-</div>
+</section>
 
-<div class="grid grid-cols-1 items-center place-items-center select-none w-11/12">
+<section class="grid grid-cols-1 items-center place-items-center select-none w-11/12">
   <Heading tag={5} className="text-center !font-normal w-9/12">Limit Social Media to 90min a day</Heading>
   <div class="graph">
     <PieChart
@@ -33,31 +27,34 @@
       ]}
     >
       <div class="w-full h-full flex flex-col items-center justify-center gap-2">
-        <Heading tag={2}>24 min</Heading>
-        <Heading tag={2} className="!font-normal">left</Heading>
+        <H tag={2}>24 min</H>
+        <H tag={2} thin>left</H>
       </div>
     </PieChart>
   </div>
-</div>
+</section>
 
-<Heading tag={5} className="text-center !font-normal">Last 7 days</Heading>
-<div class="flex flex-wrap items-center justify-center max-w-xs">
-  {#each Array(7) as _, i}
-    <PieChart
-      className="w-20 h-20"
-      maxValue="200"
-      data={[
-        { color: "#3772FF", value: 100 },
-        { color: "#FCBA04", value: 30 },
-      ]}
-    >
-      <div class="w-full h-full bg-[#CFEED1] text-[#03A108] flex items-center justify-center">
-        <Icon d={mdiCheck} className="fill-current w-32" />
-      </div>
-    </PieChart>
+<H>Last 7 days</H>
+<section class="flex flex-wrap items-center justify-center max-w-xs">
+  {#each ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as day}
+    <div class="text-center">
+      <PieChart
+        className="w-20 h-20"
+        maxValue="200"
+        data={[
+          { color: "#3772FF", value: 100 },
+          { color: "#FCBA04", value: 30 },
+        ]}
+      >
+        <div class="w-full h-full bg-[#CFEED1] text-[#03A108] flex items-center justify-center">
+          <Icon d={mdiCheck} className="fill-current w-32" />
+        </div>
+      </PieChart>
+      <p>{day}</p>
+    </div>
   {/each}
-</div>
+</section>
 
-<Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
+<H>Selected apps</H>
 
 <SelectedApps />

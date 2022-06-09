@@ -1,20 +1,21 @@
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
-  import { Button, Heading } from "@redinnlabs/system/Elements";
+  import { Button } from "@redinnlabs/system/Elements";
   import { ToDo } from "@redinnlabs/system/Units";
   import { CircleChart } from "@redinnlabs/system/Charts";
+  import H from "$lib/H.svelte";
 
   export let presetName: string = "Example";
   export let appsCount: number = 16;
 </script>
 
 <!-- C O N T E N T -->
-<Heading tag={3} className="mt-7">{presetName} Session</Heading>
+<H tag={3} className="mt-7">{presetName} Session</H>
 
 <div class="w-3/4 max-w-md">
   <CircleChart className="w-full h-full" />
-  <Heading tag={6} className="text-center">{appsCount} {appsCount > 1 ? "apps" : "app"} available</Heading>
-  <Heading tag={6} className="text-center !font-normal">You will get 25 points for this session</Heading>
+  <H tag={6}>{appsCount} {appsCount > 1 ? "apps" : "app"} available</H>
+  <H tag={6}>You will get 25 points for this session</H>
 </div>
 
 <a sveltekit:prefetch href="/focus/summary">
@@ -22,7 +23,7 @@
 </a>
 
 <div class="flex flex-col items-center w-11/12 gap-4">
-  <Heading tag={5} className="text-center">Things to do later</Heading>
+  <H thin>Things to do later</H>
   {#each Array(5) as _, i}
     <ToDo title="Example" info="Example info" />
   {/each}

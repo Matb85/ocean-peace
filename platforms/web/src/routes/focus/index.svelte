@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { Button, Heading } from "@redinnlabs/system/Elements";
+  import { Button } from "@redinnlabs/system/Elements";
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
   import Navbar from "../../lib/Navbar.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
+  import H from "$lib/H.svelte";
 </script>
 
 <FullHeading backHref="/">Focus</FullHeading>
 
-<Heading tag={5} className="!font-normal">Presets</Heading>
+<H thin>Presets</H>
 
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
@@ -22,7 +23,7 @@
   </a>
 </div>
 
-<Heading tag={5} className="!font-normal">Schedule</Heading>
+<H thin>Schedule</H>
 
 <div class="w-11/12 mx-auto grid grid-cols-1 gap-4 place-items-center">
   {#each Array(3) as _, i}

@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { Button, Heading, Aquarium } from "@redinnlabs/system/Elements";
+  import { Button, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import Navbar from "$lib/Navbar.svelte";
   import Cutout from "$lib/Cutout.svelte";
+  import H from "$lib/H.svelte";
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
@@ -19,17 +20,17 @@
   <Cutout className="w-full bottom-0 absolute" />
 
   <!-- screen time display -->
-  <div class="text-shadow  absolute w-full bottom-20 grid grid-cols-1 place-items-center">
-    <Heading tag={5} className="text-white">Your Screen time</Heading>
-    <Heading tag={2} className="text-white text-shadow-sm">
+  <div class="text-shadow text-white absolute w-full bottom-20 grid grid-cols-1 place-items-center">
+    <H>Your Screen time</H>
+    <H tag={2} className="text-shadow-sm">
       {curScreenTime < 59 ? "" : Math.floor(curScreenTime / 60) + "h"}
       {curScreenTime % 60 == 0 ? "" : (curScreenTime % 60) + "min"}
-    </Heading>
-    <Heading tag={4} className="text-white">
+    </H>
+    <H tag={4}>
       {Math.floor((maxScreenTime - curScreenTime) / 60) + "h"}
       {(maxScreenTime - curScreenTime) % 60 == 0 ? "" : ((maxScreenTime - curScreenTime) % 60) + "min"}
       left
-    </Heading>
+    </H>
   </div>
 </a>
 
@@ -39,7 +40,7 @@
 </a>
 
 <!-- goals display -->
-<Heading tag={5} className="!font-normal">Your Goals</Heading>
+<H thin>Your Goals</H>
 
 <div class="place-content-center place-items-center grid grid-cols-1 w-11/12 gap-5">
   {#each Array(4) as _, i}

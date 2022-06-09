@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { AppIcon } from "@redinnlabs/system/Units";
+  import { AppStatus } from "@redinnlabs/system/Units";
 </script>
 
-<section class="w-11/12 max-w-sm flex flex-wrap justify-center gap-2">
+<section class="w-11/12 max-w-sm flex flex-wrap justify-center gap-x-2 gap-y-6">
   {#each Array(7) as _}
-    <AppIcon src="/instagram.svg" label="Instagram" alt="app icon" />
+    <AppStatus src="/instagram.svg" isSelected label="Instagram" alt="app icon" />
   {/each}
 </section>

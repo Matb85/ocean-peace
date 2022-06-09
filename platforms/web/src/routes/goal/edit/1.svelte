@@ -1,18 +1,19 @@
 <script lang="ts">
-  import { Button, Heading } from "@redinnlabs/system/Elements";
+  import { Button } from "@redinnlabs/system/Elements";
   import { SearchBar } from "@redinnlabs/system/Units";
   import { TextInput } from "@redinnlabs/system/Form";
   import FullHeading from "$lib/FullHeading.svelte";
+  import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
 </script>
 
 <FullHeading backHref="/goal">Goal - Edit</FullHeading>
 
 <div class="flex flex-col gap-4 w-10/12">
-  <Heading tag={5} className="text-center !font-normal">Name</Heading>
+  <H thin>Name</H>
   <TextInput placeholder="Name of your goal" />
 
-  <Heading tag={5} className="text-center !font-normal">Selected apps</Heading>
+  <H thin>Selected apps</H>
   <SearchBar placeholder="Search..." />
 </div>
 

@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { Button, Heading } from "@redinnlabs/system/Elements";
+  import { Button } from "@redinnlabs/system/Elements";
   import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import FullHeading from "$lib/FullHeading.svelte";
+  import H from "$lib/H.svelte";
 
   export let presetName: string = "Example";
 </script>
@@ -12,17 +13,15 @@
 <!-- svelte-ignore component-name-lowercase -->
 <FullHeading backHref="/focus" editHref="">{presetName}</FullHeading>
 
-<div class="grid gap-3 place-items-center w-full">
-  <Heading tag={5} className="!font-normal">Duration</Heading>
-  <RadioInput
-    className="flex-wrap justify-center"
-    options={[{ value: "Pomodoro" }, { value: "Continues" }, { value: "Stopwatch" }]}
-  />
-  <TimeInput />
-</div>
+<H thin>Duration</H>
+<RadioInput
+  className="flex-wrap justify-center"
+  options={[{ value: "Pomodoro" }, { value: "Continues" }, { value: "Stopwatch" }]}
+/>
+<TimeInput />
 
 <div class="custom_grid">
-  <Heading tag={5} className="!font-normal">Options</Heading>
+  <H thin>Options</H>
   <CheckMultiple
     className="flex-wrap justify-center"
     options={[
@@ -33,7 +32,7 @@
 </div>
 
 <div class="custom_grid">
-  <Heading tag={5} className="!font-normal mt-3">Soundtrack</Heading>
+  <H thin>Soundtrack</H>
   {#each Array(3) as _, i}
     <SoundTrack title="Example Soundtrack" info="Chose one" />
   {/each}

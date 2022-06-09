@@ -18,7 +18,7 @@ label {
 
 html,
 body {
-  @apply w-full select-none flex flex-col items-center gap-4 pb-8;
+  @apply w-full select-none flex flex-col items-center pb-8;
   scrollbar-width: none;
 }
 
