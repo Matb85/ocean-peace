@@ -1,4 +1,4 @@
-package com.example.app;
+package com.oceanpeace.redinn;
 
 import com.getcapacitor.BridgeActivity;
 
