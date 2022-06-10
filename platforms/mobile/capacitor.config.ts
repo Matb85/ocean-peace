@@ -7,7 +7,12 @@ const config: CapacitorConfig = {
   webDir: "../web/build",
   plugins: {
     SplashScreen: {
-      launchShowDuration: 0,
+      launchAutoHide: false,
+      backgroundColor: "#ffffffff",
+      androidScaleType: "CENTER_CROP",
+      showSpinner: false,
+      splashFullScreen: true,
+      splashImmersive: true,
     },
   },
 };
