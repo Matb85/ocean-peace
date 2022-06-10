@@ -8,6 +8,5 @@ export default {
   kit: {
     floc: true,
     adapter: adapter({ fallback: "index.html" }),
-    prerender: { enabled: false },
   },
 };

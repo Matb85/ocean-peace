@@ -42,7 +42,7 @@ importers:
       '@mdi/js': 6.7.96
       '@redinnlabs/system': github:Redinn-Labs/design-system#release
       '@sveltejs/adapter-static': 1.0.0-next.34
-      '@sveltejs/kit': 1.0.0-next.310
+      '@sveltejs/kit': 1.0.0-next.350
       '@typescript-eslint/eslint-plugin': 5.27.1
       '@typescript-eslint/parser': 5.27.1
       autoprefixer: 10.4.7
@@ -61,10 +61,10 @@ importers:
       typescript: 4.7.3
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/3390d0ed0b4a2f0017d75f42d2a9d3b8cc55290f
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/fa362a48c24dca7e31e03d89f1d1e60be6803fb5
     devDependencies:
       '@sveltejs/adapter-static': 1.0.0-next.34
-      '@sveltejs/kit': 1.0.0-next.310_svelte@3.48.0
+      '@sveltejs/kit': 1.0.0-next.350_svelte@3.48.0
       '@typescript-eslint/eslint-plugin': 5.27.1_aq7uryhocdbvbqum33pitcm3y4
       '@typescript-eslint/parser': 5.27.1_ud6rd4xtew5bv4yhvkvu24pzm4
       autoprefixer: 10.4.7_postcss@8.4.14
@@ -365,14 +365,15 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.310_svelte@3.48.0:
-    resolution: {integrity: sha512-pTyMyaoyHS+V5cQZIQMfQXmLkhw1VaRwT9avOSgwDc0QBpnNw2LdzwoPYsUr96ca5B6cfT3SMUNolxErTNHmPQ==}
-    engines: {node: '>=14.13'}
+  /@sveltejs/kit/1.0.0-next.350_svelte@3.48.0:
+    resolution: {integrity: sha512-qkZNjp7yIj6t91+wMhmMtGJH0Lb89OaKdVXUDy92CS5/4OHRTKcQPdfOKs4no/upkS3RiFb+rEpOkYqTMcPUXg==}
+    engines: {node: '>=16.7'}
     hasBin: true
     peerDependencies:
       svelte: ^3.44.0
     dependencies:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.47_svelte@3.48.0+vite@2.9.10
+      chokidar: 3.5.3
       sade: 1.8.1
       svelte: 3.48.0
       vite: 2.9.10
@@ -3998,7 +3999,7 @@ packages:
     dev: true
 
   /through/2.3.8:
-    resolution: {integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=}
+    resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: false
     optional: true
 
@@ -4312,10 +4313,10 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/3390d0ed0b4a2f0017d75f42d2a9d3b8cc55290f:
-    resolution: {commit: 3390d0ed0b4a2f0017d75f42d2a9d3b8cc55290f, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/fa362a48c24dca7e31e03d89f1d1e60be6803fb5:
+    resolution: {commit: fa362a48c24dca7e31e03d89f1d1e60be6803fb5, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.14.0
+    version: 1.14.1
     dependencies:
       '@mdi/js': 6.7.96
       modular-slider: 0.10.0
