@@ -31,7 +31,7 @@
 
 <H thin>Soundtrack</H>
 <div class="card-flex-col">
-  {#each Array(3) as _, i}
+  {#each Array(3) as _}
     <SoundTrack title="Example Soundtrack" info="Chose one" />
   {/each}
 </div>

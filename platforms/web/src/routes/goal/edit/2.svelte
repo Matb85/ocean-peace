@@ -6,15 +6,15 @@
 
   const hours = timeInputConfig.hoursConfig();
   const minutes = timeInputConfig.minutesConfig();
-  let h;
-  let m;
+  let h: number;
+  let m: number;
   h = hours.current;
   m = minutes.current;
   Object.defineProperty(hours, "current", { set: val => (h = val), get: () => h });
   Object.defineProperty(minutes, "current", { set: val => (m = val), get: () => m });
 
-  let type;
-  let limit;
+  let type: { value: string };
+  let limit: { value: string };
 </script>
 
 <FullHeading backHref="/goal">Goal - Edit</FullHeading>
@@ -42,4 +42,4 @@
 <H thin>Limit Type</H>
 <RadioInput bind:chosen={type} options={[{ value: "Soft" }, { value: "Hard" }]} />
 
-<a sveltekit:prefetch href="/" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">save</Button> </a>
+<a sveltekit:prefetch href="/" class="fixed bottom-10 w-11/12"><Button isFullWidth>save</Button> </a>

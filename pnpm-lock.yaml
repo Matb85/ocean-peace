@@ -61,7 +61,7 @@ importers:
       typescript: 4.7.3
     dependencies:
       '@mdi/js': 6.7.96
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/fa362a48c24dca7e31e03d89f1d1e60be6803fb5
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/b543b3c7a9d9e7033e58750b0fa0e45b7f1f760d
     devDependencies:
       '@sveltejs/adapter-static': 1.0.0-next.34
       '@sveltejs/kit': 1.0.0-next.350_svelte@3.48.0
@@ -2335,7 +2335,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.15.5
+      uglify-js: 3.16.0
     dev: false
     optional: true
 
@@ -4078,7 +4078,7 @@ packages:
     dev: true
 
   /tunnel-agent/0.6.0:
-    resolution: {integrity: sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0=}
+    resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
     dependencies:
       safe-buffer: 5.2.1
 
@@ -4118,7 +4118,7 @@ packages:
     dev: false
 
   /typedarray/0.0.6:
-    resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
+    resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
     dev: false
     optional: true
 
@@ -4128,8 +4128,8 @@ packages:
     hasBin: true
     dev: true
 
-  /uglify-js/3.15.5:
-    resolution: {integrity: sha512-hNM5q5GbBRB5xB+PMqVRcgYe4c8jbyZ1pzZhS6jbq54/4F2gFK869ZheiE5A8/t+W5jtTNpWef/5Q9zk639FNQ==}
+  /uglify-js/3.16.0:
+    resolution: {integrity: sha512-FEikl6bR30n0T3amyBh3LoiBdqHRy/f4H80+My34HOesOKyHfOsxAPAxOoqC0JUnC1amnO0IwkYC3sko51caSw==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
@@ -4313,10 +4313,10 @@ packages:
     dev: false
     optional: true
 
-  github.com/Redinn-Labs/design-system/fa362a48c24dca7e31e03d89f1d1e60be6803fb5:
-    resolution: {commit: fa362a48c24dca7e31e03d89f1d1e60be6803fb5, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/b543b3c7a9d9e7033e58750b0fa0e45b7f1f760d:
+    resolution: {commit: b543b3c7a9d9e7033e58750b0fa0e45b7f1f760d, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.14.1
+    version: 1.14.2
     dependencies:
       '@mdi/js': 6.7.96
       modular-slider: 0.10.0

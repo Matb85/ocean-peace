@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
   import { setupObserver } from "@redinnlabs/system/utils/Photo.svelte";
+
   setupObserver();
 </script>
 

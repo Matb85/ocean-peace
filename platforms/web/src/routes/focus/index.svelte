@@ -19,17 +19,17 @@
     </a>
   {/each}
   <a sveltekit:prefetch href="/focus/presetedit">
-    <Preset src={A} noShadowWrapper="true" />
+    <Preset src={A} noShadowWrapper />
   </a>
 </div>
 
 <H thin>Schedule</H>
 
 <div class="card-flex-col">
-  {#each Array(3) as _, i}
+  {#each Array(3) as _}
     <Schedule src={W} title="Event example" />
   {/each}
-  <Button secondary="true">Add a Rule</Button>
+  <Button secondary>Add a Rule</Button>
 </div>
 
 <Navbar />
