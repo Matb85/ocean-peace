@@ -23,14 +23,13 @@
         </receiver>
 
         <service
-            android:name=".Mayo"
+            android:name="Mayo"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-            android:name="com.oceanpeace.redinn.MainActivity"
+            android:name="MainActivity"
             android:label="@string/title_activity_main"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBarLaunch">

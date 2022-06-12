@@ -1,4 +1,4 @@
-package com.example.app;
+package com.oceanpeace.redinn;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;

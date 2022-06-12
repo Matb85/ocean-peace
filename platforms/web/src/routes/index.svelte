@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Button, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
+  import { onMount } from "svelte";
   import Navbar from "$lib/Navbar.svelte";
   import Cutout from "$lib/Cutout.svelte";
   import H from "$lib/H.svelte";
@@ -8,17 +9,14 @@
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
 
-  import { registerPlugin } from '../../../mobile/node_modules/@capacitor/core';
+  import Api from "$api";
 
-  interface EchoPlugin {
-    echo(options: { value: string }): Promise<{ value: string }>;
-  }
-
-  const Echo = registerPlugin<EchoPlugin>('Echo');
-
-  const value = Echo.echo({ value: 'Hello World!' });
-
-  console.log('Response from native:', value);
+  let value;
+  onMount(async () => {
+    const res = await Api.getAppIcon("facebook");
+    console.log(res);
+    value = res.src;
+  });
 </script>
 
 <!-- aquarium background -->

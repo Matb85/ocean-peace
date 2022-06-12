@@ -1,5 +1,10 @@
 import sveltePreprocess from "svelte-preprocess";
 import adapter from "@sveltejs/adapter-static";
+import path from "path";
+
+const alias = {
+  $api: path.resolve(process.cwd(), "../mobile/api"),
+};
 
 export default {
   // Consult https://github.com/sveltejs/svelte-preprocess
@@ -8,5 +13,8 @@ export default {
   kit: {
     floc: true,
     adapter: adapter({ fallback: "index.html" }),
+    vite: {
+      resolve: { alias },
+    },
   },
 };
