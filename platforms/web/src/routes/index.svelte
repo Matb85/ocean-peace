@@ -7,6 +7,18 @@
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
+
+  import { registerPlugin } from '../../../mobile/node_modules/@capacitor/core';
+
+  interface EchoPlugin {
+    echo(options: { value: string }): Promise<{ value: string }>;
+  }
+
+  const Echo = registerPlugin<EchoPlugin>('Echo');
+
+  const value = Echo.echo({ value: 'Hello World!' });
+
+  console.log('Response from native:', value);
 </script>
 
 <!-- aquarium background -->
@@ -21,7 +33,7 @@
 
   <!-- screen time display -->
   <div class="text-shadow text-white absolute w-full bottom-20 grid grid-cols-1 place-items-center">
-    <H noMargins>Your Screen time</H>
+    <H noMargins>Your Screen time {value}</H>
     <H tag={2} noMargins className="text-shadow-sm">
       {curScreenTime < 59 ? "" : Math.floor(curScreenTime / 60) + "h"}
       {curScreenTime % 60 == 0 ? "" : (curScreenTime % 60) + "min"}
