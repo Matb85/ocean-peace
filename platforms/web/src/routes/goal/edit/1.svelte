@@ -18,6 +18,6 @@
 <div class="w-11/12">
   <SearchBar placeholder="Search..." />
 </div>
-<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth="true">next</Button> </a>
+<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth>next</Button> </a>
 
 <SelectedApps />

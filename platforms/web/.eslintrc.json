@@ -20,7 +20,7 @@
       {
         "requireReturnType": false,
         "requireParamType": false,
-        "prefer": { "arg": "param", "argument": "param", "return": "return" }
+        "prefer": { "arg": "param", "argument": "param", "return": "returns", "returns": "returns" }
       }
     ]
   },

@@ -34,7 +34,7 @@
   <Background className="background-svg" x={50} y={100} />
 </div>
 
-<style>
+<style lang="postcss">
   .background {
     @apply w-full h-full absolute -z-10 overflow-hidden;
   }

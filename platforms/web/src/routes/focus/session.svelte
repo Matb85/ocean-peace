@@ -22,12 +22,12 @@
 </div>
 
 <a sveltekit:prefetch href="/focus/summary" class="mt-4">
-  <Button secondary="true" size="small" isWarning="true">Cancel Session</Button>
+  <Button secondary size="small" isWarning>Cancel Session</Button>
 </a>
 
 <H thin>Things to do later</H>
 <div class="card-flex-col">
-  {#each Array(5) as _, i}
+  {#each Array(5) as _}
     <ToDo title="Example" info="Example info" />
   {/each}
   <div>

@@ -18,7 +18,7 @@
   <div class="graph">
     <PieChart
       className="w-64 h-64"
-      maxValue="200"
+      maxValue={200}
       data={[
         { color: "#3772FF", value: 110 },
         { color: "#FCBA04", value: 40 },
@@ -55,7 +55,7 @@
 
 <PieChart
   className="w-64 h-64"
-  maxValue="200"
+  maxValue={200}
   data={[
     { color: "#3772FF", value: 110 },
     { color: "#FCBA04", value: 40 },

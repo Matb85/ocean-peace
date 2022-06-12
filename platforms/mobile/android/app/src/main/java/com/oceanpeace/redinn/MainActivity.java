@@ -1,4 +1,4 @@
-package com.example.app;
+package com.oceanpeace.redinn;
 
 import android.os.Bundle;
 

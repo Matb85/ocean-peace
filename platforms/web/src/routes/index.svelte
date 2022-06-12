@@ -54,13 +54,13 @@
 <!-- goals display -->
 <H thin>Your Goals</H>
 <div class="card-flex-col">
-  {#each Array(4) as _, i}
+  {#each Array(4) as _}
     <a sveltekit:prefetch href="/goal" class="w-full">
-      <Goal title={"Some goal here"} info={"something left"} className="Goal" />
+      <Goal title={"Some goal here"} info={"something left"} />
     </a>
   {/each}
   <a sveltekit:prefetch href="/goale/dit/1">
-    <Button secondary="true">Add Goal</Button>
+    <Button secondary>Add Goal</Button>
   </a>
 </div>
 
