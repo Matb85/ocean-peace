@@ -1,10 +1,16 @@
 import { registerPlugin } from "@capacitor/core";
-import Schema, { AppIconI } from "../../web/api/index";
+import Schema, { AppIconI, AppsUsage } from "../../web/api/index";
 
 interface EchoPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
 }
+interface MayoPlugin {
+  callMayo(): Promise<{ stats: string }>;
+}
+
 const Echo = registerPlugin<EchoPlugin>("Echo");
+const Mayo = registerPlugin<MayoPlugin>("Mayo");
+
 
 const AndroidApi: Schema = {
   async getAppIcon(name: string): Promise<AppIconI> {
@@ -20,6 +26,11 @@ const AndroidApi: Schema = {
     console.log("Response from native:", value);
     return [{ src: value, name }];
   },
+  async getAppsUsage(): Promise<AppsUsage> {
+    const { stats } = await Mayo.callMayo();
+
+    return { stats };
+  }
 };
 
 export default AndroidApi;

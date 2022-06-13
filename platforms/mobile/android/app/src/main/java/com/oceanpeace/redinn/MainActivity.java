@@ -11,5 +11,6 @@ public class MainActivity extends BridgeActivity {
     {
         super.onCreate(savedInstanceState);
         registerPlugin(TestPlugin.class);
+        registerPlugin(MayoPlugin.class);
     }
 }

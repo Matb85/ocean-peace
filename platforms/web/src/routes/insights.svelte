@@ -5,6 +5,23 @@
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
+  import { onMount } from "svelte";
+
+  import Api from "$api";
+
+  interface AppStats{
+    value: number,
+    color: string,
+  }
+  let usageStats: Array<AppStats> = [];
+  onMount(async () => {
+    const t = await Api.getAppsUsage();
+    let obj = JSON.parse(t.stats);
+    for (var i in obj)
+    {
+      usageStats.push({value: obj[i].timeSpent as number, color: "#3772FF"})
+    }
+  });
 </script>
 
 <FullHeading backHref="/">Screen Time</FullHeading>
@@ -56,10 +73,7 @@
 <PieChart
   className="w-64 h-64"
   maxValue={200}
-  data={[
-    { color: "#3772FF", value: 110 },
-    { color: "#FCBA04", value: 40 },
-  ]}
+  data={usageStats}
 >
   <div class="w-full h-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>
