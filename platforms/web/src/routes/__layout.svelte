@@ -8,12 +8,13 @@
   import "../app.css";
   import GlobalGradient from "@redinnlabs/system/utils/GlobalGradient.svelte";
   import { beforeNavigate, goto } from "$app/navigation";
+  import { page } from "$app/stores";
   import { onMount } from "svelte";
-
+  import Navbar from "$lib/Navbar.svelte";
   let body;
   let tempTo: string;
   onMount(() => {
-    body = document.getElementById("svelte");
+    body = document.getElementById("main");
   });
   beforeNavigate(({ from, cancel, to }) => {
     if (from) {
@@ -22,10 +23,11 @@
         if (tempTo != to.pathname) {
           cancel();
           setTimeout(() => {
-            console.log(to.pathname);
             goto(to.pathname);
-            body.classList.remove("during-transition");
-            resolve();
+            setTimeout(() => {
+              body.classList.remove("during-transition");
+              resolve();
+            }, 50);
           }, 300);
         }
         tempTo = to.pathname;
@@ -34,21 +36,27 @@
   });
 </script>
 
-<slot />
+<main id="main">
+  <slot />
+</main>
+
+{#if ["/", "/focus", "/profile"].includes($page.url.pathname)}
+  <Navbar />
+{/if}
 
 <GlobalGradient />
 
 <style global>
   @import "@redinnlabs/system/utils/base.css";
 
-  :global(body) {
+  :global(#main) {
     transition-duration: 300ms;
     transition-property: transform, opacity;
     transform: translateY(0rem);
     opacity: 1;
   }
 
-  :global(body.during-transition) {
+  :global(#main.during-transition) {
     transform: translateY(-5rem);
     opacity: 0;
   }

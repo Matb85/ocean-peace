@@ -10,7 +10,7 @@
   ];
 </script>
 
-<nav class="fixed bottom-0 w-full bg-white h-12 shadow-md shadow-black flex justify-around items-center">
+<nav class="fixed bottom-0 w-full bg-white h-12 shadow-md border-t-2 flex justify-around items-center">
   {#each links as link}
     <a sveltekit:prefetch href={link.href} class="flex items-center gap-1">
       <Icon className="w-6" d={link.icon} fill={svgGradients.primary} />
