@@ -1,51 +1,44 @@
 package com.oceanpeace.redinn;
 
-import android.app.Service;
+import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.IBinder;
-import android.provider.Settings;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import android.app.Fragment;
+import android.util.Log;
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.Plugin;
-import com.getcapacitor.PluginCall;
-import com.getcapacitor.PluginMethod;
-import com.getcapacitor.annotation.CapacitorPlugin;
 
 import org.json.JSONArray;
 
 import java.util.List;
 
-public class Mayo extends Service {
+public class Mayo {
     public Mayo() {
     }
 
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 
     public String GetUsageData() {
 
+
         long time = System.currentTimeMillis();
-        UsageStatsManager manager = (UsageStatsManager)getSystemService(Context.USAGE_STATS_SERVICE);
+        UsageStatsManager manager = (UsageStatsManager)MainActivity.getAppContext().getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> stats = manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                                                 time - 1000 * 100, time);
         JSONArray appsUsage = new JSONArray();
 
-
+        long total=0;
 
         for (UsageStats stat: stats) {
             String packageName = stat.getPackageName();
             // Blocks OceanPeace from appearing in stats
-            if (manager.isAppInactive(packageName))
+            if (manager.isAppInactive(packageName) || stat.getTotalTimeInForeground()<1)
                 continue;
 
             long appTime = stat.getTotalTimeInForeground();
+            total += appTime;
 
             JSObject app = new JSObject();
             app.put("timeSpent", appTime);
@@ -53,6 +46,7 @@ public class Mayo extends Service {
             appsUsage.put(app);
         }
 
+        Log.d("Mayo", "GetUsageData: " + appsUsage.toString() + "}," + total);
         return appsUsage.toString();
     }
 }

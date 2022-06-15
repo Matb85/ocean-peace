@@ -19,7 +19,7 @@
     let obj = JSON.parse(t.stats);
     for (var i in obj)
     {
-      usageStats.push({value: obj[i].timeSpent as number, color: "#3772FF"})
+      usageStats.push({value: obj[i].timeSpent, color: "#3772FF"})
     }
   });
 </script>
@@ -72,7 +72,7 @@
 
 <PieChart
   className="w-64 h-64"
-  maxValue={200}
+  maxValue={3000000}
   data={usageStats}
 >
   <div class="w-full h-full flex flex-col items-center justify-center gap-2">

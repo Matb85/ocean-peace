@@ -25,10 +25,14 @@
             </intent-filter>
         </receiver>
 
-        <service
+        <activity
             android:name=".Mayo"
+            android:permission="android.permission.PACKAGE_USAGE_STATS"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            tools:ignore="InvalidPermission"
+
+            />
 
 
         <activity
