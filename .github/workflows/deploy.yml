@@ -14,7 +14,7 @@ jobs:
         run: source ~/.nvm/nvm.sh && nvm use && echo $PATH >>"${GITHUB_PATH}"
 
       - name: Bootstrap dependencies
-        run: node --version && pnpm --version && pnpm --filter web i --no-frozen-lockfile
+        run: node --version && pnpm --version && pnpm i --no-frozen-lockfile
 
       - name: Build
         run: "pnpm --filter web build"
