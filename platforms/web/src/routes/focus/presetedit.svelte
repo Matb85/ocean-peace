@@ -1,11 +1,22 @@
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
-  import { TimeInput, RadioInput, CheckMultiple } from "@redinnlabs/system/Form";
+  import { TimeInput, RadioInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
 
   export let presetName: string = "Example";
+
+  const hours = timeInputConfig.hoursConfig();
+  const minutes = timeInputConfig.minutesConfig();
+  let h: number;
+  let m: number;
+  h = hours.current;
+  m = minutes.current;
+  Object.defineProperty(hours, "current", { set: val => (h = val), get: () => h });
+  Object.defineProperty(minutes, "current", { set: val => (m = val), get: () => m });
+
+  let limit: { value: string };
 </script>
 
 <!-- C O N T E N T -->
@@ -16,9 +27,10 @@
 <H thin>Duration</H>
 <RadioInput
   className="flex-wrap justify-center"
+  bind:chosen={limit}
   options={[{ value: "Pomodoro" }, { value: "Continues" }, { value: "Stopwatch" }]}
 />
-<TimeInput />
+<TimeInput columns={[hours, minutes]} />
 
 <H thin>Options</H>
 <CheckMultiple
