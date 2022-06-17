@@ -6,21 +6,26 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import { onMount } from "svelte";
+  import type { ChartColumnI } from "@redinnlabs/system/utils";
 
   import Api from "$api";
 
-  interface AppStats{
-    value: number,
-    color: string,
-  }
-  let usageStats: Array<AppStats> = [];
+
+  let usageStats: Array<ChartColumnI> = [];
+
+  let updateDataForAppsChart;
+
   onMount(async () => {
-    const t = await Api.getAppsUsage();
-    let obj = JSON.parse(t.stats);
-    for (var i in obj)
-    {
-      usageStats.push({value: obj[i].timeSpent, color: "#3772FF"})
+    const t = (await Api.getAppsUsage()).stats;
+    let i: number = 0;
+    for ( let app in t) {
+      let a: ChartColumnI = {value: 0, color: "#3772FF"};
+      a.value = t[app].timeSpent as number;
+      usageStats.push(a);
+      i++;
+      
     }
+    updateDataForAppsChart(usageStats);
   });
 </script>
 
@@ -31,7 +36,8 @@
   <Cutout className="w-full bottom-0 absolute" />
 </div>
 
-<div class="grid grid-cols-1 items-center place-items-center mt-4 w-11/12">
+
+<!-- <div class="grid grid-cols-1 items-center place-items-center mt-4 w-11/12">
   <div class="graph">
     <PieChart
       className="w-64 h-64"
@@ -47,7 +53,7 @@
       </div>
     </PieChart>
   </div>
-</div>
+</div> -->
 
 <H thin>Usage Intensity</H>
 
@@ -72,8 +78,8 @@
 
 <PieChart
   className="w-64 h-64"
-  maxValue={3000000}
-  data={usageStats}
+  maxValue={1000}
+  bind:updateData={updateDataForAppsChart}
 >
   <div class="w-full h-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>

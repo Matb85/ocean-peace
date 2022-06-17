@@ -5,7 +5,7 @@ interface EchoPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
 }
 interface MayoPlugin {
-  callMayo(): Promise<{ stats: string }>;
+  callMayo(): Promise<{ stats: JSON }>;
 }
 
 const Echo = registerPlugin<EchoPlugin>("Echo");

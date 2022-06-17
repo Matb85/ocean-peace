@@ -3,7 +3,7 @@ export interface AppIconI {
   name: string;
 }
 export interface AppsUsage {
-  stats: string;
+  stats: JSON;
 }
 
 export default interface Schema {

@@ -20,33 +20,36 @@ public class Mayo {
     }
 
 
-    public String GetUsageData() {
+    public JSObject GetUsageData() {
 
 
         long time = System.currentTimeMillis();
         UsageStatsManager manager = (UsageStatsManager)MainActivity.getAppContext().getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> stats = manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                                                 time - 1000 * 100, time);
-        JSONArray appsUsage = new JSONArray();
+        JSObject appsUsage = new JSObject();
 
         long total=0;
-
+        int it = 0;
         for (UsageStats stat: stats) {
             String packageName = stat.getPackageName();
             // Blocks OceanPeace from appearing in stats
-            if (manager.isAppInactive(packageName) || stat.getTotalTimeInForeground()<1)
+
+            int appTime = (int)(stat.getTotalTimeInForeground()/1000 /60);
+
+            if (manager.isAppInactive(packageName) || appTime<1)
                 continue;
 
-            long appTime = stat.getTotalTimeInForeground();
             total += appTime;
 
             JSObject app = new JSObject();
             app.put("timeSpent", appTime);
-            app.put("appName", packageName);
-            appsUsage.put(app);
+            app.put("packageName", packageName);
+            appsUsage.put("" + it, app);
+            it++;
         }
 
         Log.d("Mayo", "GetUsageData: " + appsUsage.toString() + "}," + total);
-        return appsUsage.toString();
+        return appsUsage;
     }
 }
