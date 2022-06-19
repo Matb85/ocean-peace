@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Icon, Aquarium } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
-  import { PieChart } from "@redinnlabs/system/Charts";
+  import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
@@ -17,9 +17,9 @@
 </section>
 
 <H tag={5} thin className="w-9/12">Limit Social Media to 90min a day</H>
-<div class="graph">
+<section class="w-11/12 grid grid-cols-6 gap-2">
   <PieChart
-    className="w-64 h-64"
+    className="w-full col-span-4"
     maxValue={200}
     data={[
       { color: "#3772FF", value: 110 },
@@ -31,7 +31,16 @@
       <H tag={2} thin>left</H>
     </div>
   </PieChart>
-</div>
+  <ChartKey
+    isVertical
+    className="col-span-2 self-center flex-col flex-none"
+    data={[
+      { color: "#3772FF", text: "Samsung", bold: "1h 27min" },
+      { color: "#FCBA04", text: "Macbook", bold: "0h 16min" },
+      { color: "#F8F5FA", text: "Time left", bold: "3h 37min" },
+    ]}
+  />
+</section>
 
 <H thin>Last 7 days</H>
 <section class="flex flex-wrap items-center justify-center max-w-xs">
@@ -45,7 +54,7 @@
           { color: "#FCBA04", value: 30 },
         ]}
       >
-        <div class="wh-full bg-[#CFEED1] text-[#03A108] flex items-center justify-center">
+        <div class="wh-full bg-green-light text-green-dark flex items-center justify-center">
           <Icon d={mdiCheck} className="fill-current w-32" />
         </div>
       </PieChart>

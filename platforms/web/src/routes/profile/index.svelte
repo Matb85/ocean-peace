@@ -3,7 +3,7 @@
   import H from "$lib/H.svelte";
   import { mdiCog } from "@mdi/js";
   import { IconButton, Button } from "@redinnlabs/system/Elements";
-  import { Barchart, CircleChart, FlatChart } from "@redinnlabs/system/Charts";
+  import { BarChart, CircleChart, FlatChart, ChartKey } from "@redinnlabs/system/Charts";
 </script>
 
 <FullHeading backHref="/">Profile</FullHeading>
@@ -12,19 +12,19 @@
   <IconButton secondary d={mdiCog} />
 </a>
 
-<img class="shadow-wrapper w-1/2 aspect-square object-cover rounded-2xl" src="/profile.jpg" alt="profile" />
+<img class="shadow-wrapper w-1/2 aspect-square object-cover rounded-2xl mt-8" src="/profile.jpg" alt="profile" />
 <H noMargins thin>John Doe</H>
 
-<section class="shadow-wrapper card-flex-col w-11/12 py-4 gap-2">
+<section class="shadow-wrapper card-flex-col py-4 gap-2">
   <H noMargins thin>Your balance</H>
   <h2 class="score">425 points</h2>
   <Button>see the leaderboard</Button>
 </section>
 
-<H noMargins thin>Performance</H>
+<H thin>Performance</H>
 <p class="-mt-3">last 7 days</p>
 
-<Barchart
+<BarChart
   maxTime={200}
   data={[
     [{ color: "#BAEEBD", value: 60 }],
@@ -37,7 +37,7 @@
   ]}
 />
 
-<H noMargins thin>Average Success</H>
+<H thin>Average Success</H>
 <section class="w-11/12 grid grid-cols-2 gap-2">
   <CircleChart className="w-full" color="#BAEEBD">
     <H tag={3} className="wh-full flex flex-col gap-0 items-center justify-center opacity-60">77%</H>
@@ -51,7 +51,7 @@
 <H noMargins thin>Screen Time</H>
 <p class="-mt-3">last 7 days</p>
 
-<Barchart
+<BarChart
   maxTime={200}
   data={[
     [
@@ -90,6 +90,16 @@
     columns={[
       { color: "#3772FF", value: 60 },
       { color: "#FCBA04", value: 40 },
+    ]}
+  />
+</div>
+<div class="w-10/12">
+  <ChartKey
+    isVertical
+    data={[
+      { color: "#F8F5FA", text: "Your Screen Time limit" },
+      { color: "#3772FF", text: "Samsung" },
+      { color: "#FCBA04", text: "Macbook" },
     ]}
   />
 </div>
