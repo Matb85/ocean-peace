@@ -10,6 +10,7 @@
 <FullHeading backHref="/">Screen Time</FullHeading>
 
 <div class="w-full h-80 absolute -z-50 top-0">
+  <div class="w-full h-full block absolute z-10 bg-gradient-to-t from-white" />
   <Aquarium percent={80} />
   <Cutout className="w-full bottom-0 absolute" />
 </div>
