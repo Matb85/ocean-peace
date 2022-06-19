@@ -11,7 +11,7 @@
 <FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
 
 <section class="w-full h-80 absolute -z-50 top-0">
-  <div class="w-full h-full block absolute z-10 bg-gradient-to-t from-white" />
+  <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />
   <Aquarium percent={80} />
   <Cutout className="w-full bottom-0 absolute" />
 </section>
@@ -26,7 +26,7 @@
       { color: "#FCBA04", value: 40 },
     ]}
   >
-    <div class="w-full h-full flex flex-col items-center justify-center gap-2">
+    <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>24 min</H>
       <H tag={2} thin>left</H>
     </div>
@@ -45,7 +45,7 @@
           { color: "#FCBA04", value: 30 },
         ]}
       >
-        <div class="w-full h-full bg-[#CFEED1] text-[#03A108] flex items-center justify-center">
+        <div class="wh-full bg-[#CFEED1] text-[#03A108] flex items-center justify-center">
           <Icon d={mdiCheck} className="fill-current w-32" />
         </div>
       </PieChart>

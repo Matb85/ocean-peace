@@ -40,7 +40,7 @@
 <H noMargins thin>Average Success</H>
 <section class="w-11/12 grid grid-cols-2 gap-2">
   <CircleChart className="w-full" color="#BAEEBD">
-    <H tag={3} className="w-full h-full flex flex-col gap-0 items-center justify-center opacity-60">77%</H>
+    <H tag={3} className="wh-full flex flex-col gap-0 items-center justify-center opacity-60">77%</H>
   </CircleChart>
   <div class="shadow-wrapper block w-full h-min p-4 text-center self-center">
     <p>Most difficult Goal</p>

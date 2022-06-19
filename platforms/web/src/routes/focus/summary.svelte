@@ -36,7 +36,7 @@
 
 <style lang="postcss">
   .background {
-    @apply w-full h-full absolute -z-10 overflow-hidden;
+    @apply wh-full absolute -z-10 overflow-hidden;
   }
   .background :global(.background-svg) {
     @apply absolute -top-[43%];
