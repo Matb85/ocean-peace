@@ -39,7 +39,7 @@
     @apply wh-full absolute -z-10 overflow-hidden;
   }
   .background :global(.background-svg) {
-    @apply absolute -top-[43%];
-    transform: translate(15%, 5%) scale(2.5) rotate(180deg);
+    @apply absolute -top-[60%];
+    transform: translate(15%, 5%) scale(3) rotate(72deg);
   }
 </style>
