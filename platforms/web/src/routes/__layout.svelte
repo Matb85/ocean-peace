@@ -16,6 +16,9 @@
   beforeNavigate(({ from, cancel, to }) => {
     if (from) {
       new Promise<void>(resolve => {
+        if (from.pathname == to.pathname) {
+          return;
+        }
         className = "during-transition";
         if (tempTo != to.pathname) {
           cancel();
@@ -51,11 +54,11 @@
     scrollbar-width: none;
     transition-duration: 200ms;
     transition-property: transform, opacity;
-    transform: translateY(0rem);
+    /*transform: translateY(0rem);*/
     opacity: 1;
   }
   #main.during-transition {
-    transform: translateY(-5rem);
+    /*transform: translateY(-5rem);*/
     opacity: 0;
   }
 </style>
