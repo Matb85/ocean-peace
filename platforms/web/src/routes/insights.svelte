@@ -10,22 +10,19 @@
 
   import Api from "$api";
 
-
   let usageStats: Array<ChartColumnI> = [];
-
-  let updateDataForAppsChart;
 
   onMount(async () => {
     const t = (await Api.getAppsUsage()).stats;
-    let i: number = 0;
-    for ( let app in t) {
-      let a: ChartColumnI = {value: 0, color: "#3772FF"};
-      a.value = t[app].timeSpent as number;
-      usageStats.push(a);
-      i++;
-      
+    let counter: number = 0;
+    for (const app in t) {
+      if (Object.prototype.hasOwnProperty.call(t, app)) {
+        const a: ChartColumnI = { value: 0, color: "#3772FF" };
+        a.value = t[app].timeSpent as number;
+        usageStats = [...usageStats, a];
+        counter = counter + 1;
+      }
     }
-    //updateDataForAppsChart(usageStats);
   });
 </script>
 
@@ -35,7 +32,6 @@
   <Aquarium percent={80} />
   <Cutout className="w-full bottom-0 absolute" />
 </div>
-
 
 <div class="grid grid-cols-1 items-center place-items-center mt-4 w-11/12">
   <div class="graph">
@@ -76,11 +72,7 @@
 
 <H thin>Apps used today</H>
 
-<PieChart
-  className="w-64 h-64"
-  maxValue={600}
-  data={usageStats}
->
+<PieChart className="w-64 h-64" maxValue={600} data={usageStats}>
   <div class="w-full h-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>
     <H tag={3} thin>opened</H>
