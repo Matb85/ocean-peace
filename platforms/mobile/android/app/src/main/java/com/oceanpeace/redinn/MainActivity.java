@@ -7,7 +7,7 @@ import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
 
-    private static Context contex;
+    private static Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -15,13 +15,13 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
         registerPlugin(TestPlugin.class);
         registerPlugin(MayoPlugin.class);
-        MainActivity.contex= getApplicationContext();
+        MainActivity.context = getApplicationContext();
 
 
     }
 
     public static Context getAppContext()
     {
-        return MainActivity.contex;
+        return MainActivity.context;
     }
 }

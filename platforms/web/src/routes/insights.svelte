@@ -25,7 +25,7 @@
       i++;
       
     }
-    updateDataForAppsChart(usageStats);
+    //updateDataForAppsChart(usageStats);
   });
 </script>
 
@@ -37,7 +37,7 @@
 </div>
 
 
-<!-- <div class="grid grid-cols-1 items-center place-items-center mt-4 w-11/12">
+<div class="grid grid-cols-1 items-center place-items-center mt-4 w-11/12">
   <div class="graph">
     <PieChart
       className="w-64 h-64"
@@ -53,7 +53,7 @@
       </div>
     </PieChart>
   </div>
-</div> -->
+</div>
 
 <H thin>Usage Intensity</H>
 
@@ -78,8 +78,8 @@
 
 <PieChart
   className="w-64 h-64"
-  maxValue={1000}
-  bind:updateData={updateDataForAppsChart}
+  maxValue={600}
+  data={usageStats}
 >
   <div class="w-full h-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>
