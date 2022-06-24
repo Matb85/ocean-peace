@@ -3,7 +3,6 @@
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import W from "@redinnlabs/system/assets/icon-working.svg";
   import A from "@redinnlabs/system/assets/icon-add.svg";
-  import Navbar from "../../lib/Navbar.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
 </script>
@@ -31,5 +30,3 @@
   {/each}
   <Button secondary>Add a Rule</Button>
 </div>
-
-<Navbar />

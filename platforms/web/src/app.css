@@ -17,17 +17,21 @@ label {
 }
 
 html,
+main,
 body {
-  @apply w-full select-none flex flex-col items-center gap-4 pb-8;
-  scrollbar-width: none;
+  @apply w-full select-none;
 }
 
-.text-shadow {
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
-}
-
-.card-flex-col {
-  @apply flex flex-col items-center w-11/12 gap-4;
+@layer base {
+  .wh-full {
+    @apply w-full h-full;
+  }
+  .text-shadow {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
+  }
+  .card-flex-col {
+    @apply flex flex-col items-center w-11/12 gap-4;
+  }
 }
 
 /* latin-ext */

@@ -4,14 +4,14 @@
   export let editHref = null;
 </script>
 
-<Heading className="mt-7 mx-auto" tag={3}><slot /></Heading>
+<Heading className="mt-5 mx-auto" tag={3}><slot /></Heading>
 
-<a sveltekit:prefetch href={backHref} class="fixed z-50 top-5 left-3">
+<a sveltekit:prefetch href={backHref} class="fixed z-50 top-3 left-3">
   <BackButton />
 </a>
 
 {#if editHref}
-  <a href={editHref} class="absolute top-5 right-3">
+  <a href={editHref} class="absolute top-3 right-3">
     <EditButton />
   </a>
 {/if}

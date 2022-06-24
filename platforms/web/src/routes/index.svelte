@@ -2,7 +2,6 @@
   import { Button, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import { onMount } from "svelte";
-  import Navbar from "$lib/Navbar.svelte";
   import Cutout from "$lib/Cutout.svelte";
   import H from "$lib/H.svelte";
 
@@ -61,5 +60,3 @@
     <Button secondary>Add Goal</Button>
   </a>
 </div>
-
-<Navbar />

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Aquarium } from "@redinnlabs/system/Elements";
-  import { PieChart, LineChart } from "@redinnlabs/system/Charts";
+  import { PieChart, LineChart, ChartKey } from "@redinnlabs/system/Charts";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
@@ -29,27 +29,35 @@
 <FullHeading backHref="/">Screen Time</FullHeading>
 
 <div class="w-full h-80 absolute -z-50 top-0">
+  <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />
   <Aquarium percent={80} />
   <Cutout className="w-full bottom-0 absolute" />
 </div>
 
-<div class="grid grid-cols-1 items-center place-items-center mt-4 w-11/12">
-  <div class="graph">
-    <PieChart
-      className="w-64 h-64"
-      maxValue={200}
-      data={[
-        { color: "#3772FF", value: 110 },
-        { color: "#FCBA04", value: 40 },
-      ]}
-    >
-      <div class="w-full h-full flex flex-col items-center justify-center gap-2">
-        <H tag={2}>24 min</H>
-        <H tag={3} className="!font-normal">left</H>
-      </div>
-    </PieChart>
-  </div>
-</div>
+<section class="w-11/12 grid grid-cols-6 gap-2 mt-12">
+  <PieChart
+    className="w-full col-span-4"
+    maxValue={200}
+    data={[
+      { color: "#3772FF", value: 110 },
+      { color: "#FCBA04", value: 40 },
+    ]}
+  >
+    <div class="wh-full flex flex-col items-center justify-center gap-2">
+      <H tag={2}>24 min</H>
+      <H tag={3} className="!font-normal">left</H>
+    </div>
+  </PieChart>
+  <ChartKey
+    isVertical
+    className="col-span-2 self-center flex-col flex-none"
+    data={[
+      { color: "#3772FF", text: "Samsung", bold: "1h 27min" },
+      { color: "#FCBA04", text: "Macbook", bold: "0h 16min" },
+      { color: "#F8F5FA", text: "Time left", bold: "3h 37min" },
+    ]}
+  />
+</section>
 
 <H thin>Usage Intensity</H>
 
@@ -72,8 +80,12 @@
 
 <H thin>Apps used today</H>
 
-<PieChart className="w-64 h-64" maxValue={600} data={usageStats}>
-  <div class="w-full h-full flex flex-col items-center justify-center gap-2">
+<PieChart
+  className="w-64 h-64"
+  maxValue={600}
+  data={usageStats}
+>
+  <div class="wh-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>
     <H tag={3} thin>opened</H>
   </div>
