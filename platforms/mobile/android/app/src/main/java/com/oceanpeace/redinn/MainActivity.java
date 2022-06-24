@@ -8,6 +8,7 @@ import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
 
 public class MainActivity extends BridgeActivity {
+    private static Context context;
 
     private static Context context;
 
@@ -19,12 +20,10 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(MayoPlugin.class);
         registerPlugin(FocusPlugin.class);
         MainActivity.context = getApplicationContext();
-
-
+        registerPlugin(AppIcons.class);
+        this.context = getApplicationContext();
     }
-
-    public static Context getAppContext()
-    {
+    public static Context getAppContext(){
         return MainActivity.context;
     }
 }
