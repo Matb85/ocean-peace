@@ -12,7 +12,7 @@
 <H tag={3} className="mt-7">{presetName} Session</H>
 
 <div class="w-3/4 max-w-md">
-  <CircleChart className="w-full h-full" />
+  <CircleChart className="wh-full" />
   <H tag={6}>
     {appsCount}
     {appsCount > 1 ? "apps" : "app"} available

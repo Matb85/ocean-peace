@@ -7,6 +7,6 @@
   export let noMargins = false;
 </script>
 
-<Heading {tag} className="{noMargins ? '' : 'mt-2 -mb-2 '}text-center{thin ? ' !font-normal' : ''} {className}">
+<Heading {tag} className="{noMargins ? '' : 'mt-4 -mb-1 '}text-center{thin ? ' !font-normal' : ''} {className}">
   <slot />
 </Heading>
