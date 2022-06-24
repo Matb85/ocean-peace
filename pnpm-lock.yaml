@@ -9,11 +9,11 @@ importers:
     specifiers:
       '@tauri-apps/api': 1.0.0-rc.6
       '@tauri-apps/cli': 1.0.0-rc.13
-      pnpm: 7.1.9
+      pnpm: 7.2.1
       sirv-cli: 2.0.2
     dependencies:
       '@tauri-apps/api': 1.0.0-rc.6
-      pnpm: 7.1.9
+      pnpm: 7.2.1
       sirv-cli: 2.0.2
     devDependencies:
       '@tauri-apps/cli': 1.0.0-rc.13
@@ -3220,9 +3220,9 @@ packages:
       xmlbuilder: 9.0.7
     dev: true
 
-  /pnpm/7.1.9:
-    resolution: {integrity: sha512-YWA+iqayHb0MndHTyqvVPKQVYVCOoBYlQNLP3hAf2DT/Iw2EHVcP18yCT+xnsPNvkC4VYfQepE6AZvySQue1TA==}
-    engines: {node: '>=14.19'}
+  /pnpm/7.2.1:
+    resolution: {integrity: sha512-Z2Wg7YHxeit2U+0aSj+doBPF9+ER0e3VLOGuJOQbk8rzIxK6zMtrQ0ICieCUGPWRM0Vbwj8yIcTKzO22Yhs/Cg==}
+    engines: {node: '>=14.6'}
     hasBin: true
     dev: false
 
@@ -3813,7 +3813,7 @@ packages:
       ansi-regex: 5.0.1
 
   /strip-bom/3.0.0:
-    resolution: {integrity: sha1-IzTBjpx1n3vdVv3vfprj1YjmjtM=}
+    resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
 
   /strip-indent/3.0.0:
@@ -4259,7 +4259,7 @@ packages:
       strip-ansi: 6.0.1
 
   /wrappy/1.0.2:
-    resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
+    resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
   /xml2js/0.4.23:
     resolution: {integrity: sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==}

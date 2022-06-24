@@ -4,9 +4,16 @@
   import { ToDo } from "@redinnlabs/system/Units";
   import { CircleChart } from "@redinnlabs/system/Charts";
   import H from "$lib/H.svelte";
+  import { onMount } from "svelte";
+
+  import Api from '$api';
 
   export let presetName: string = "Example";
   export let appsCount: number = 16;
+
+  onMount(async () => {
+    const t:boolean = (await Api.startFocus()).started;
+  });
 </script>
 
 <H tag={3} className="mt-7">{presetName} Session</H>

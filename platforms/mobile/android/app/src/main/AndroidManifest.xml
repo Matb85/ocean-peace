@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.oceanpeace.redinn">
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +19,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <receiver
+            android:name=".Broadcast"
+            android:enabled="true"
+            android:exported="true">
+                <intent-filter>
+                    <action android:name="com.oceanpeace.broadcasts.FOCUS_END"/>
+
+                </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".focus.Focus"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
             android:name=".Autostart"
             android:enabled="false"
             android:exported="true">
@@ -22,14 +42,9 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="Mayo"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-            android:name="MainActivity"
             android:label="@string/title_activity_main"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBarLaunch">

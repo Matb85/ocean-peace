@@ -5,6 +5,25 @@
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
+  import { onMount } from "svelte";
+  import type { ChartColumnI } from "@redinnlabs/system/utils";
+
+  import Api from "$api";
+
+  let usageStats: Array<ChartColumnI> = [];
+
+  onMount(async () => {
+    const t = (await Api.getAppsUsage()).stats;
+    let counter: number = 0;
+    for (const app in t) {
+      if (Object.prototype.hasOwnProperty.call(t, app)) {
+        const a: ChartColumnI = { value: 0, color: "#3772FF" };
+        a.value = t[app].timeSpent as number;
+        usageStats = [...usageStats, a];
+        counter = counter + 1;
+      }
+    }
+  });
 </script>
 
 <FullHeading backHref="/">Screen Time</FullHeading>
@@ -63,11 +82,8 @@
 
 <PieChart
   className="w-64 h-64"
-  maxValue={200}
-  data={[
-    { color: "#3772FF", value: 110 },
-    { color: "#FCBA04", value: 40 },
-  ]}
+  maxValue={600}
+  data={usageStats}
 >
   <div class="wh-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>

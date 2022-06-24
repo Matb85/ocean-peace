@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import com.oceanpeace.redinn.mayo.Mayo;
+
 public class Autostart extends BroadcastReceiver {
 
     @Override
