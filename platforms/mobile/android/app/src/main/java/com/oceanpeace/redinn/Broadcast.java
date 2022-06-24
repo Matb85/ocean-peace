@@ -4,6 +4,10 @@ import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.oceanpeace.redinn.focus.Focus;
 
 public class Broadcast extends BroadcastReceiver {
 
@@ -14,6 +18,10 @@ public class Broadcast extends BroadcastReceiver {
         {
             case AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED:
 
+                break;
+                //focus time has come to an end case
+            case "com.oceanpeace.broadcasts.FOCUS_END":
+                Toast.makeText(MainActivity.getAppContext(), "Focus has ended!", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");

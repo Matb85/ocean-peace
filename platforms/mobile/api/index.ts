@@ -1,5 +1,5 @@
 import { registerPlugin } from "@capacitor/core";
-import Schema, { AppIconI, AppsUsage } from "../../web/api/index";
+import Schema, { AppIconI, AppsUsage, FocusStartedI } from "../../web/api/index";
 
 interface EchoPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
@@ -7,9 +7,13 @@ interface EchoPlugin {
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
 }
+interface FocusPlugin {
+  startContinuous(): Promise<{ started: boolean }>;
+}
 
 const Echo = registerPlugin<EchoPlugin>("Echo");
 const Mayo = registerPlugin<MayoPlugin>("Mayo");
+const Focus = registerPlugin<FocusPlugin>("Focus");
 
 
 const AndroidApi: Schema = {
@@ -30,6 +34,11 @@ const AndroidApi: Schema = {
     const { stats } = await Mayo.callMayo();
 
     return { stats };
+  },
+  async startFocus() {
+    const { started } = await Focus.startContinuous();
+
+    return { started };
   }
 };
 

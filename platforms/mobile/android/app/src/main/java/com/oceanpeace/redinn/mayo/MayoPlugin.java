@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.oceanpeace.redinn.mayo;
 
 
 
@@ -12,9 +12,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PermissionState;
@@ -24,6 +21,7 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
+import com.oceanpeace.redinn.MainActivity;
 
 @CapacitorPlugin(
         name="Mayo",

@@ -22,11 +22,14 @@
             android:name=".Broadcast"
             android:enabled="true"
             android:exported="true">
+                <intent-filter>
+                    <action android:name="com.oceanpeace.broadcasts.FOCUS_END"/>
 
+                </intent-filter>
         </receiver>
 
         <service
-            android:name=".Focus"
+            android:name=".focus.Focus"
             android:enabled="true"
             android:exported="true" />
 

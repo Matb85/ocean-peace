@@ -1,15 +1,12 @@
-package com.oceanpeace.redinn;
+package com.oceanpeace.redinn.focus;
 
-import android.Manifest;
-import android.app.AlarmManager;
 import android.os.Build;
-import android.provider.Settings;
 
+import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.getcapacitor.annotation.Permission;
 
 @CapacitorPlugin(
         name="Focus"
@@ -19,7 +16,8 @@ public class FocusPlugin extends Plugin {
 
 
     @PluginMethod
-    public void callFocus(PluginCall call) {
+    public void startContinuous(PluginCall call) {
+        JSObject ret = new JSObject();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if(!Focus.getInstance().alarmManager.canScheduleExactAlarms()) {
 
@@ -27,7 +25,9 @@ public class FocusPlugin extends Plugin {
         }
         else
         {
-
+            boolean started = Focus.getInstance().startContinues(1000*10);
+            ret.put("started", started);
         }
+        call.resolve(ret);
     }
 }

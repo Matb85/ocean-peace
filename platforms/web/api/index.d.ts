@@ -5,9 +5,13 @@ export interface AppIconI {
 export interface AppsUsage {
   stats: JSON;
 }
+export interface FocusStartedI {
+  started: boolean;
+}
 
 export default interface Schema {
   getAppIcon(name: string): Promise<AppIconI>;
   getAllAppIcons(): Promise<AppIconI[]>;
   getAppsUsage(): Promise<AppsUsage>;
+  startFocus(): Promise<FocusStartedI>;
 }

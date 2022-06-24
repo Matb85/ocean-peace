@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.oceanpeace.redinn.mayo;
 
 import android.app.Activity;
 import android.app.usage.UsageStats;
@@ -7,9 +7,11 @@ import android.content.Context;
 
 import androidx.activity.result.ActivityResultLauncher;
 import android.app.Fragment;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
+import com.oceanpeace.redinn.MainActivity;
 
 import org.json.JSONArray;
 
@@ -22,9 +24,8 @@ public class Mayo {
 
     public JSObject GetUsageData() {
 
-
         long time = System.currentTimeMillis();
-        UsageStatsManager manager = (UsageStatsManager)MainActivity.getAppContext().getSystemService(Context.USAGE_STATS_SERVICE);
+        UsageStatsManager manager = (UsageStatsManager) MainActivity.getAppContext().getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> stats = manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                                                 time - 1000 * 100, time);
         JSObject appsUsage = new JSObject();

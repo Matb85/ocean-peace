@@ -49,5 +49,6 @@
 </div>
 
 <a sveltekit:prefetch href="/focus/session" class="fixed bottom-10">
-  <Button>Start {presetName}</Button>
+  <Button
+  >Start {presetName}</Button>
 </a>
