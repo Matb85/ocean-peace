@@ -11,7 +11,6 @@ public class MainActivity extends BridgeActivity {
     private static Context context;
 
     private static Context context;
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
