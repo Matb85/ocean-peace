@@ -12,7 +12,7 @@
   export let appsCount: number = 16;
 
   onMount(async () => {
-    const t:boolean = (await Api.startFocus()).started;
+    const t:boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
   });
 </script>
 
