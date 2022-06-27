@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
-  import { SearchBar } from "@redinnlabs/system/Units";
   import { TextInput } from "@redinnlabs/system/Form";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
@@ -15,9 +14,11 @@
 </div>
 
 <H thin>Selected apps</H>
-<div class="w-11/12">
-  <SearchBar placeholder="Search..." />
-</div>
-<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 w-11/12"><Button isFullWidth>next</Button> </a>
 
 <SelectedApps />
+
+<a sveltekit:prefetch href="/goal/edit/select">
+  <Button>Add or edit</Button>
+</a>
+
+<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 z-50 w-11/12"><Button isFullWidth>next</Button> </a>
