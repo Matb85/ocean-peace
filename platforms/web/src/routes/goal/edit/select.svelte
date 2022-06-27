@@ -11,10 +11,9 @@
 
   let allApps: AppIconI[] = [];
   onMount(async () => {
-    const res = await Api.getAllAppIcons();
+    allApps = await Api.getAllAppIcons();
     console.log("logging the result");
-    console.log("result" + Object.keys(res));
-    allApps = Object.values(res);
+    console.log("result" + Object.keys(allApps));
   });
 </script>
 

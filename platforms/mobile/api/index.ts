@@ -1,8 +1,9 @@
 import { registerPlugin, Capacitor } from "@capacitor/core";
-import Schema, { AppIconI, AppsUsage, FocusStartedI } from "../../web/api/index";
+import type Schema from "../../web/api/index";
+import type { AppIconI, AppsUsage } from "../../web/api/index";
 
 interface IconsPlugin {
-  getAllIcons(): Promise<Record<string, AppIconI>>;
+  getAllIcons(): Promise<{ apps: AppIconI[] }>;
 }
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
@@ -19,10 +20,10 @@ const AndroidApi: Schema = {
   async getAppIcon(name: string): Promise<AppIconI> {
     return new Promise(resolve => resolve({ src: name, name }));
   },
-  async getAllAppIcons(): Promise<Record<string, AppIconI>> {
-    const val = await Icons.getAllIcons();
-    for (const key in val) {
-      val[key].src = Capacitor.convertFileSrc(val[key].src);
+  async getAllAppIcons(): Promise<AppIconI[]> {
+    const val = (await Icons.getAllIcons()).apps;
+    for (const key of val) {
+      key.src = Capacitor.convertFileSrc(key.src);
     }
     console.log("watchout", val);
 
