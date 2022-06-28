@@ -8,19 +8,21 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.oceanpeace.redinn.Broadcast;
-import com.oceanpeace.redinn.MainActivity;
 
 import java.util.Calendar;
 
 public class Focus extends Service {
     private static Focus instance;
-
-    public static Focus getInstance()
-    {
+    public static Focus getInstance() {
         if (instance == null)
             instance = new Focus();
         return instance;
     }
+
+    public void setContextElements(Context context) {
+            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    }
+
     public static final int CONTINUOUS_CODE = 2001;
     public static final int POMODORO_CODE = 2002;
     public static final int STOPWATCH_CODE = 2003;
@@ -29,27 +31,26 @@ public class Focus extends Service {
     public static final int CODE_BREAK = 2005;
 
 
-    public int POMODORO_CYCLE_COUNTER = 0;
-    public void incrementPomodoroCounter() {
+    public static int POMODORO_CYCLE_COUNTER = 0;
+    public static void incrementPomodoroCounter() {
         POMODORO_CYCLE_COUNTER ++;
     }
 
 
     // encapsulated Focus state variable
-    private boolean isRunning = false;
-    public boolean getIsRunning() {
+    private static boolean isRunning = false;
+    public static boolean getIsRunning() {
         return isRunning;
     }
-    private void setIsRunning(boolean state) {
+    private static void setIsRunning(boolean state) {
         isRunning = state;
     }
 
 
     // Alarm namespace or sth
-    public AlarmManager alarmManager
-            = (AlarmManager) MainActivity.getAppContext().getSystemService(Context.ALARM_SERVICE);
-    PendingIntent piWork = null;
-    PendingIntent piBreak = null;
+    public AlarmManager alarmManager;
+    static PendingIntent piWork = null;
+    static PendingIntent piBreak = null;
 
 
     public void stopFocus() {
@@ -75,13 +76,13 @@ public class Focus extends Service {
      * @param wakeDevice        boolean if user wants to wake device on start of every phase
      * @return                  returns boolean if starting pomodoro mode succeeded
      */
-    public boolean startContinuous(long continuousDuration, boolean wakeDevice) {
+    public boolean startContinuous(long continuousDuration, boolean wakeDevice, Context context) {
         try {
             piWork = PendingIntent.getBroadcast(
-                    MainActivity.getAppContext(),
+                    context,
                     CODE_END,
-                    new Intent().setAction("com.oceanpeace.broadcasts.CONTINUOUS_END").setClass(MainActivity.getAppContext(), Broadcast.class),
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    new Intent().setAction("com.oceanpeace.broadcasts.CONTINUOUS_END").setClass(context, Broadcast.class),
+                    PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
             );
 
 
@@ -119,19 +120,19 @@ public class Focus extends Service {
      * @param wakeDevice        boolean if user wants to wake device on start of every phase
      * @return                  returns boolean if starting pomodoro mode succeeded
      */
-    public boolean startPomodoro(long workDuration, long breakDuration, boolean wakeDevice) {
+    public boolean startPomodoro(long workDuration, long breakDuration, boolean wakeDevice, Context context) {
         try {
             piWork = PendingIntent.getBroadcast(
-                    MainActivity.getAppContext(),
+                    context,
                     CODE_WORK,
-                    new Intent().setAction("com.oceanpeace.broadcasts.POMODORO_START_WORK").setClass(MainActivity.getAppContext(), Broadcast.class),
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    new Intent().setAction("com.oceanpeace.broadcasts.POMODORO_START_WORK").setClass(context, Broadcast.class),
+                    PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
             );
             piBreak = PendingIntent.getBroadcast(
-                    MainActivity.getAppContext(),
+                    context,
                     CODE_BREAK,
-                    new Intent().setAction("com.oceanpeace.broadcasts.POMODORO_START_BREAK").setClass(MainActivity.getAppContext(), Broadcast.class),
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    new Intent().setAction("com.oceanpeace.broadcasts.POMODORO_START_BREAK").setClass(context, Broadcast.class),
+                    PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
             );
 
             // setting up alarms

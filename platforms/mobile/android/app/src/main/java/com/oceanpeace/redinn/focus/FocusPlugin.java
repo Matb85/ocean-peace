@@ -8,8 +8,6 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
-import org.json.JSONException;
-
 @CapacitorPlugin(
         name="Focus"
 )
@@ -32,7 +30,7 @@ public class FocusPlugin extends Plugin {
         }
         else
         {
-            boolean started = Focus.getInstance().startContinuous(duration, false);
+            boolean started = Focus.getInstance().startContinuous(duration, wake, getActivity().getApplicationContext());
             ret.put("started", started);
         }
         call.resolve(ret);
@@ -56,7 +54,7 @@ public class FocusPlugin extends Plugin {
         }
         else
         {
-            boolean started = Focus.getInstance().startPomodoro(workDuration, breakDuration, wake);
+            boolean started = Focus.getInstance().startPomodoro(workDuration, breakDuration, wake, getActivity().getApplicationContext());
             ret.put("started", started);
         }
         call.resolve(ret);

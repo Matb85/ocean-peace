@@ -1,7 +1,8 @@
 package com.oceanpeace.redinn.goals;
 
+import android.content.Context;
+
 import com.getcapacitor.JSObject;
-import com.oceanpeace.redinn.MainActivity;
 import com.oceanpeace.redinn.PropertiesManager;
 
 import org.json.JSONObject;
@@ -10,8 +11,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Goals {
-    public Goals() {
-
+    Context context;
+    public Goals(Context context) {
+        this.context = context;
     }
 
     /**
@@ -27,7 +29,7 @@ public class Goals {
      *
      */
     public boolean createGoal(String name, JSObject appsAsJSON, JSObject weekDaysASJSON, long limitInMin) throws IOException {
-        PropertiesManager goalsProperties = new PropertiesManager("goals.properties");
+        PropertiesManager goalsProperties = new PropertiesManager("goals.properties", context);
         Integer _int = Integer.getInteger(goalsProperties.Read("int"), null);
         Integer limit = Integer.getInteger(goalsProperties.Read("limit"), null);
         Integer used = Integer.getInteger(goalsProperties.Read("used"), null);
@@ -37,8 +39,9 @@ public class Goals {
 
 
         PropertiesManager propertiesManager = new PropertiesManager(
-                MainActivity.getAppContext().getFilesDir() + "/goals",
-                _int == null ? "0" : _int + ".properties");
+                context.getFilesDir() + "/goals",
+                _int == null ? "0" : _int + ".properties"
+        );
 
         propertiesManager.Create();
         propertiesManager.Write(
@@ -53,7 +56,7 @@ public class Goals {
 
     public void edit(String fileName, String name, JSObject appsAsJSON, JSObject weekDaysASJSON, long limitInMin) {
         PropertiesManager propertiesManager = new PropertiesManager(
-                MainActivity.getAppContext().getFilesDir() + "/goals",
+                context.getFilesDir() + "/goals",
                 fileName
         );
         propertiesManager.Write(
@@ -63,7 +66,7 @@ public class Goals {
     }
 
     public JSObject getAllGoals(){
-        File[] files = new File(MainActivity.getAppContext().getFilesDir() + "/goals").listFiles();
+        File[] files = new File(context.getFilesDir() + "/goals").listFiles();
 
         if (files == null)
             return null;
@@ -82,7 +85,7 @@ public class Goals {
 
     public JSObject getGoal(String fileName) {
         PropertiesManager propertiesManager = new PropertiesManager(
-                MainActivity.getAppContext().getFilesDir() + "/goals",
+                context.getFilesDir() + "/goals",
                 fileName
         );
         JSObject ret = new JSObject();
@@ -97,7 +100,7 @@ public class Goals {
 
 
     public void delete(String fileName) {
-        File file = new File(MainActivity.getAppContext().getFilesDir() + "/goals", fileName);
+        File file = new File(context.getFilesDir() + "/goals", fileName);
         file.delete();
     }
 }

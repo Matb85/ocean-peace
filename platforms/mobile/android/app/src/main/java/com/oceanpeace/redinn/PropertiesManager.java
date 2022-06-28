@@ -1,5 +1,7 @@
 package com.oceanpeace.redinn;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,10 +13,11 @@ import java.util.Properties;
 
 public class PropertiesManager {
 
-    private String path = MainActivity.getAppContext().getFilesDir().getPath();
 
-    public PropertiesManager(String fileName) {
-        path += "/" + fileName;
+    private final String path;
+
+    public PropertiesManager(String fileName, Context context) {
+        path = context.getFilesDir().getPath() + "/" + fileName;
     }
     public PropertiesManager(String differentLocalization, String fileName) {
         path = differentLocalization + "/" + fileName;

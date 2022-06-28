@@ -1,14 +1,14 @@
 package com.oceanpeace.redinn;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.getcapacitor.BridgeActivity;
+import com.oceanpeace.redinn.focus.Focus;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
-import com.oceanpeace.redinn.mayo.MayoPlugin;
 import com.oceanpeace.redinn.icons.IconsPlugin;
+import com.oceanpeace.redinn.mayo.MayoPlugin;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,29 +17,25 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class MainActivity extends BridgeActivity {
-    private static Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        MainActivity.context = getApplicationContext();
         checkData();
-        context = getApplicationContext();
         super.onCreate(savedInstanceState);
+        Focus.getInstance().setContextElements(this.getApplicationContext());
+
         registerPlugin(MayoPlugin.class);
         registerPlugin(FocusPlugin.class);
         registerPlugin(GoalsPlugin.class);
         registerPlugin(IconsPlugin.class);
 
     }
-    public static Context getAppContext(){
-        return MainActivity.context;
-    }
 
 
 
     private void checkData() {
-        String propertiesDir = context.getFilesDir().getPath();
+        String propertiesDir = getApplicationContext().getFilesDir().getPath();
         Log.d("PROP", "checkData: " + propertiesDir);
 
         // Checking goals files

@@ -28,12 +28,12 @@ public class IconsPlugin extends Plugin {
      * get the package manager
      */
     private PackageManager getPM() {
-        return MainActivity.getAppContext().getPackageManager();
+        return getActivity().getApplicationContext().getPackageManager();
     }
 
     private String getAppDataDir() {
         PackageManager pm = getPM();
-        String s = MainActivity.getAppContext().getPackageName();
+        String s = getActivity().getApplicationContext().getPackageName();
         try {
             ApplicationInfo info = pm.getApplicationInfo(s, PackageManager.GET_META_DATA);
             s = info.dataDir;
@@ -51,7 +51,7 @@ public class IconsPlugin extends Plugin {
         JSONArray responseArray = new JSONArray();
         PackageManager pm = getPM();
         // https://github.com/zhanghai/AppIconLoader
-        AppIconLoader loader = new AppIconLoader(128,false,MainActivity.getAppContext());
+        AppIconLoader loader = new AppIconLoader(128,false,getActivity().getApplicationContext());
 
         /* prepare a folder for the icons */
         String iconFolder = getAppDataDir() + "/app_icons";

@@ -1,7 +1,6 @@
 package com.oceanpeace.redinn.mayo;
 
 
-
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.Manifest;
@@ -21,7 +20,6 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
-import com.oceanpeace.redinn.MainActivity;
 
 @CapacitorPlugin(
         name="Mayo",
@@ -41,7 +39,7 @@ public class MayoPlugin extends Plugin {
         if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
 
             requestPermissionForAlias("usage", call, "usagePermsCallback");
-            startActivity(MainActivity.getAppContext(), new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), Bundle.EMPTY);
+            startActivity(getActivity().getApplicationContext(), new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), Bundle.EMPTY);
 
         } else {
             runMayo(call);
@@ -58,7 +56,7 @@ public class MayoPlugin extends Plugin {
     }
 
     void runMayo(PluginCall call) {
-        Mayo mayo = new Mayo();
+        Mayo mayo = new Mayo(getActivity().getApplicationContext());
         JSObject ret = new JSObject();
         ret.put("stats", mayo.GetUsageData());
         call.resolve(ret);
@@ -66,11 +64,11 @@ public class MayoPlugin extends Plugin {
 
     boolean hasPermission()
     {
-        AppOpsManager opsManager = (AppOpsManager) MainActivity.getAppContext().getSystemService(Context.APP_OPS_SERVICE);
-        int mode = opsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(),MainActivity.getAppContext().getPackageName());
+        AppOpsManager opsManager = (AppOpsManager) getActivity().getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
+        int mode = opsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(),getActivity().getApplicationContext().getPackageName());
 
         if (mode == AppOpsManager.MODE_DEFAULT) {
-             return MainActivity.getAppContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
+             return getActivity().getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
         }
         else {
             return mode == AppOpsManager.MODE_ALLOWED;

@@ -6,19 +6,20 @@ import android.content.Context;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
-import com.oceanpeace.redinn.MainActivity;
 
 import java.util.List;
 
 public class Mayo {
-    public Mayo() {
+    Context context;
+    public Mayo(Context context) {
+        this.context = context;
     }
 
 
     public JSObject GetUsageData() {
 
         long time = System.currentTimeMillis();
-        UsageStatsManager manager = (UsageStatsManager) MainActivity.getAppContext().getSystemService(Context.USAGE_STATS_SERVICE);
+        UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> stats = manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                                                 time - 1000 * 100, time);
         JSObject appsUsage = new JSObject();
