@@ -8,7 +8,7 @@ import com.getcapacitor.BridgeActivity;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
-import com.oceanpeace.redinn.Icons.IconsPlugin;
+import com.oceanpeace.redinn.icons.IconsPlugin;
 
 import java.io.File;
 import java.io.FileInputStream;
