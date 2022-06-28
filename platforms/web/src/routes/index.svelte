@@ -1,21 +1,11 @@
 <script lang="ts">
   import { Button, Aquarium } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
-  import { onMount } from "svelte";
   import Cutout from "$lib/Cutout.svelte";
   import H from "$lib/H.svelte";
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
-
-  import Api from "$api";
-
-  let value;
-  onMount(async () => {
-    const res = await Api.getAppIcon("facebook");
-    console.log(res);
-    value = res.src;
-  });
 </script>
 
 <!-- aquarium background -->
@@ -30,7 +20,7 @@
 
   <!-- screen time display -->
   <div class="text-shadow text-white absolute w-full bottom-20 grid grid-cols-1 place-items-center">
-    <H noMargins>Your Screen time {value}</H>
+    <H noMargins>Your Screen time</H>
     <H tag={2} noMargins className="text-shadow-sm">
       {curScreenTime < 59 ? "" : Math.floor(curScreenTime / 60) + "h"}
       {curScreenTime % 60 == 0 ? "" : (curScreenTime % 60) + "min"}
