@@ -1,7 +1,6 @@
 package com.oceanpeace.redinn.Icons;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
@@ -12,8 +11,6 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.oceanpeace.redinn.MainActivity;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -25,7 +22,6 @@ public class IconsPlugin extends Plugin {
 
     public IconsPlugin() {
         super();
-
         Log.d("IconPlugin", "Starting the instance");
         this.ctx = MainActivity.getAppContext();
         this.im = new IconManager(ctx);
@@ -41,23 +37,10 @@ public class IconsPlugin extends Plugin {
         Properties iconDB = im.getIconsData();
         Enumeration<String> props = (Enumeration<String>) iconDB.propertyNames();
         while (props.hasMoreElements()) {
-            JSONObject appIcon = new JSONObject();
             /* get the app's package name */
             String packageName = props.nextElement();
-            /* the data is stored in a single string for simplicity
-            * one has to split it to separate values first - order matters! */
-            String[] data = iconDB.getProperty(packageName).split(";");
-            String label = data[0], iconPath = data[1], version = data[2];
-            Log.e("AppData", packageName + " " + label + " " + iconPath + " " + version);
-            try {
-                appIcon.put("packageName", packageName);
-                appIcon.put("name", label);
-                appIcon.put("src", iconPath);
-                appIcon.put("version", version);
-            } catch (JSONException err) {
-                Log.e("IconsPlugin", err.toString());
-            }
-            apps.put(appIcon);
+            String data = iconDB.getProperty(packageName);
+            apps.put((new AppIconData(packageName, data)).toJSON());
         }
         res.put("apps", apps);
 

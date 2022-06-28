@@ -2,6 +2,7 @@ package com.oceanpeace.redinn.Icons;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -11,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 import me.zhanghai.android.appiconloader.AppIconLoader;
@@ -37,56 +39,68 @@ public class IconManager {
         try {
             FileInputStream iconDBFile = ctx.openFileInput("iconDB.properties");
             iconDB.load(iconDBFile);
-            for (Object key : iconDB.keySet()) {
-                Log.d("IconManager", "iconDBFile: " + key + ": " + iconDB.getProperty(key.toString()));
-            }
         } catch (IOException e) {
-            Log.e("IconManager", "could not open the iconDB file" + e);
+            Log.e("IconManager", "could not open the iconDB file " + e);
         }
         return iconDB;
     }
 
     public void regenerateIcons() {
-        Log.e("IconManager", "regenerating icons...");
+        Log.i("IconManager", "regenerating icons...");
 
         /* prepare a folder for the icons */
         File iconFolderFile = new File(ICONS_FOLDER);
         if (!iconFolderFile.isDirectory()) {
-            Log.e("IconManager", "creating the app_icons folder");
+            Log.i("IconManager", "creating the app_icons folder");
             iconFolderFile.mkdir();
         }
-        Properties iconDB = new Properties();
+        /* create a new DB from the ground up to prevent persisting the data of uninstalled apps */
+        Properties existingIconDB = getIconsData();
+        Properties newIconDB = new Properties();
 
         /* get a list of ALL the installed apps - including system utilities.
          * https://developer.android.com/reference/android/content/pm/ApplicationInfo
          * */
-        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo packageInfo : packages) {
-            /* filter out unwanted system utils */
-            if (!packageInfo.sourceDir.startsWith("/data/app/") || pm.getLaunchIntentForPackage(packageInfo.packageName) == null)
+        final List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_META_DATA);
+        for (PackageInfo packageInfo : packages) {
+            ApplicationInfo appInfo = packageInfo.applicationInfo;
+            /* filter out unwanted system utilities */
+            if (!appInfo.sourceDir.startsWith("/data/app/") || pm.getLaunchIntentForPackage(appInfo.packageName) == null)
                 continue;
+            /* compare the version of the app from iconDB with the retrieved one
+             * if they are equal, skip generating
+             * if not, generate the icon  */
+            String existingIconData = existingIconDB.getProperty(appInfo.packageName);
+            if (existingIconData != null) {
+                AppIconData parsedIconData = new AppIconData(appInfo.packageName, existingIconData);
+                if (Objects.equals(parsedIconData.version, packageInfo.versionName)){
+                    Log.i("IconManager", "icon for "+appInfo.packageName+" already exists, skipping generation");
+                    /* before skipping rewrite the entry from the outdated DB to the new one for data compliance */
+                    newIconDB.setProperty(appInfo.packageName,parsedIconData.stringifyData());
+                    existingIconDB.remove(appInfo.packageName);
+                    continue;
+                }
+            }
+            Log.i("IconManager", "icon for "+appInfo.packageName+" DOES NOT exists, generating");
 
             /* generate a file path for each icon */
-            String iconPath = ICONS_FOLDER + "/" + packageInfo.packageName + ".png";
+            String iconPath = ICONS_FOLDER + "/" + appInfo.packageName + ".png";
             /* log stuff */
-            Log.d("IconManager-" + packageInfo.packageName, "name: " + pm.getApplicationLabel(packageInfo));
-            Log.d("IconManager-" + packageInfo.packageName, "icon path: " + iconPath);
-            File f = new File(iconPath);
-            if (!f.isFile()) {
-                Log.d("IconManager-" + packageInfo.packageName, "icon does not exist - generating a new one: " + iconPath);
-                Bitmap bitmap = loader.loadIcon(packageInfo);
-                bitmapDrawableToFile(bitmap, iconPath);
-            }
+            Log.i("IconManager-" + appInfo.packageName, "name: " + pm.getApplicationLabel(appInfo));
+            Log.i("IconManager-" + appInfo.packageName, "icon path: " + iconPath);
+            Bitmap bitmap = loader.loadIcon(appInfo);
+            bitmapDrawableToFile(bitmap, iconPath);
+
             /* push the data to the main properties object
-            * the data is stored in an array, values are separated with ';' characters */
-            final String data = pm.getApplicationLabel(packageInfo) + ";" + iconPath + ";" + packageInfo.sourceDir;
-            iconDB.setProperty(packageInfo.packageName, data);
+             * the data is stored in an array, values are separated with ';' characters */
+            final String data = pm.getApplicationLabel(appInfo) + ";" + iconPath + ";" + packageInfo.versionName;
+            newIconDB.setProperty(appInfo.packageName, data);
         }
 
         try {
             FileOutputStream iconDBFile = ctx.openFileOutput("iconDB.properties", Context.MODE_PRIVATE);
-            Log.d("IconManager", "saving icon data to iconDB.properties in "+ctx.getFileStreamPath("iconDB.properties").getAbsolutePath());
-            iconDB.store(iconDBFile, "");
+            Log.d("IconManager", "saving icon data to iconDB.properties in " + ctx.getFileStreamPath("iconDB.properties").getAbsolutePath());
+            newIconDB.store(iconDBFile, "");
         } catch (IOException e) {
             Log.e("IconManager", "could not open the iconDB file" + e);
         }
@@ -94,8 +108,8 @@ public class IconManager {
 
     // http://www.carbonrider.com/2016/01/01/extract-app-icon-in-android/
     private void bitmapDrawableToFile(Bitmap icon, String iconPath) {
-        /* try to save the icon */
         try {
+            /* try to save the icon */
             FileOutputStream out = new FileOutputStream(iconPath);
             icon.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();
