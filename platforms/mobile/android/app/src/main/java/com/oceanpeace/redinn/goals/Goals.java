@@ -40,7 +40,7 @@ public class Goals {
 
         PropertiesManager propertiesManager = new PropertiesManager(
                 context.getFilesDir() + "/goals",
-                _int == null ? "0" : _int + ".properties"
+                (_int == null ? "0" : _int) + ".properties"
         );
 
         propertiesManager.Create();

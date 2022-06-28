@@ -49,9 +49,43 @@ export default interface Schema {
    * 
    */
   stopFocus();
+  /**
+   * Returns JSON with each goal JSON as described below
+   * 
+   * @return                    JSON: "1": ("name", "apps" (JSON), "weekDays" (JSON), "limit" (number)), ...
+   */
   getAllGoals(): Promise<{ goals: JSON }>;
+  /**
+   * Returns goal JSON as described below
+   * 
+   * @param fileName            goal fileName "1.properties"
+   * 
+   * @return                    JSON: "name", "apps" (JSON), "weekDays" (JSON), "limit" (number)
+   */
   getGoal(fileName: string): Promise<{ goal: JSON }>;
+  /**
+   * Creates a goal and save it's to file.
+   * 
+   * @param goalName            goal's title as string
+   * @param apps                JSON of selected apps
+   * @param weekDays            JSON of selected days ("true", "false", ....)
+   * @param limit               daily time limit as number
+   */
   createGoal(goalName: string, apps: JSON, weekDays: JSON, limit: number);
+  /**
+   * Updates and saves data to existing goal's file
+   * 
+   * @param fileName            file name of the goal
+   * @param goalName            the goal title
+   * @param apps                JSON of selected apps
+   * @param weekDays            JSON of selected days ("true", "false", ....)
+   * @param limit               daily time limit as number
+   */
   editGoal(fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number);
+  /**
+   * Deletes selected goal and it's file
+   * 
+   * @param fileName            file name of the goal
+   */
   deleteGoal(fileName: string);
 }

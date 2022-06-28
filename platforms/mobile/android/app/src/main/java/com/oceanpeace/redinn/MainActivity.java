@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.getcapacitor.BridgeActivity;
+import com.getcapacitor.JSObject;
 import com.oceanpeace.redinn.focus.Focus;
 import com.oceanpeace.redinn.focus.FocusPlugin;
+import com.oceanpeace.redinn.goals.Goals;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
@@ -30,6 +32,17 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(GoalsPlugin.class);
         registerPlugin(IconsPlugin.class);
 
+        Goals goals = new Goals(this.getApplicationContext());
+        try {
+            goals.createGoal(
+                    "example",
+                    new JSObject().put("app", "com.example"),
+                    new JSObject().put("MON", "true"),
+                    120);
+        }
+        catch (IOException ex) {
+
+        }
     }
 
 
