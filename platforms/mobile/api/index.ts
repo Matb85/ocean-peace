@@ -1,8 +1,9 @@
-import { registerPlugin } from "@capacitor/core";
-import Schema, { AppIconI, AppsUsage, FocusStartedI } from "../../web/api/index";
+import { registerPlugin, Capacitor } from "@capacitor/core";
+import type Schema from "../../web/api/index";
+import type { AppIconI, AppsUsage } from "../../web/api/index";
 
-interface EchoPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+interface IconsPlugin {
+  getAllIcons(): Promise<{ apps: AppIconI[] }>;
 }
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
@@ -21,25 +22,23 @@ interface GoalsPlugin {
   deleteGoal(options: {fileName: string});
 }
 
-const Echo = registerPlugin<EchoPlugin>("Echo");
+const Icons = registerPlugin<IconsPlugin>("Icons");
 const Mayo = registerPlugin<MayoPlugin>("Mayo");
 const Focus = registerPlugin<FocusPlugin>("Focus");
 const Goal = registerPlugin<GoalsPlugin>("Goal")
 
-
 const AndroidApi: Schema = {
   async getAppIcon(name: string): Promise<AppIconI> {
-    const { value } = await Echo.echo({ value: name });
-
-    console.log("Response from native:", value);
-    return { src: value, name };
+    return new Promise(resolve => resolve({ src: name, name }));
   },
   async getAllAppIcons(): Promise<AppIconI[]> {
-    const name = "facebook";
-    const { value } = await Echo.echo({ value: name });
+    const val = (await Icons.getAllIcons()).apps;
+    for (const key of val) {
+      key.src = Capacitor.convertFileSrc(key.src);
+    }
+    console.log("watchout", val);
 
-    console.log("Response from native:", value);
-    return [{ src: value, name }];
+    return val;
   },
   async getAppsUsage(): Promise<AppsUsage> {
     const { stats } = await Mayo.callMayo();

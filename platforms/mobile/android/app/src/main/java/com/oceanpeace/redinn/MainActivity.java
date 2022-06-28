@@ -8,6 +8,7 @@ import com.getcapacitor.BridgeActivity;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
+import com.oceanpeace.redinn.Icons.IconsPlugin;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,24 +17,22 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class MainActivity extends BridgeActivity {
-
     private static Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        MainActivity.context = getApplicationContext();
+        checkData();
+        context = getApplicationContext();
         super.onCreate(savedInstanceState);
-        registerPlugin(TestPlugin.class);
         registerPlugin(MayoPlugin.class);
         registerPlugin(FocusPlugin.class);
         registerPlugin(GoalsPlugin.class);
-        MainActivity.context = getApplicationContext();
+        registerPlugin(IconsPlugin.class);
 
-        checkData();
     }
-
-    public static Context getAppContext()
-    {
+    public static Context getAppContext(){
         return MainActivity.context;
     }
 
