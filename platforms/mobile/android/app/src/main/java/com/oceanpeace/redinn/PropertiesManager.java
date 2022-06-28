@@ -1,5 +1,6 @@
 package com.oceanpeace.redinn;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,20 +9,26 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-public class Config {
-    private static Config instance = null;
-    public static Config getInstance()
-    {
-        if (instance == null)
-            instance = new Config();
-        return instance;
+public class PropertiesManager {
+
+    private String path = MainActivity.getAppContext().getFilesDir().getPath();
+
+    public PropertiesManager(String fileName) {
+        path += "/" + fileName;
+    }
+    public PropertiesManager(String differentLocalization, String fileName) {
+        path = differentLocalization + "/" + fileName;
     }
 
 
 
+    public void Create() throws IOException {
+        new File(path).createNewFile();
+    }
+
     //Write config file
     public void Write(String key, String value) {
-        try (OutputStream output = new FileOutputStream("config.properties")) {
+        try (OutputStream output = new FileOutputStream(path)) {
 
             Properties prop = new Properties();
 
@@ -31,13 +38,14 @@ public class Config {
             // save properties to project root folder
             prop.store(output, null);
 
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
     public void Write(String[] keys, String[] values) {
-        try (OutputStream output = new FileOutputStream("config.properties")) {
+        try (OutputStream output = new FileOutputStream(path)) {
 
             Properties prop = new Properties();
 
@@ -59,7 +67,7 @@ public class Config {
     //Read config file
     public String Read(String key) {
         String reading=null;
-        try (InputStream input = new FileInputStream("config.properties")) {
+        try (InputStream input = new FileInputStream(path)) {
 
             Properties prop = new Properties();
 
@@ -79,7 +87,7 @@ public class Config {
 
     public String[] Read(String[] keys) {
         String[] readings = new String[keys.length];
-        try (InputStream input = new FileInputStream("config.properties")) {
+        try (InputStream input = new FileInputStream(path)) {
 
             Properties prop = new Properties();
 

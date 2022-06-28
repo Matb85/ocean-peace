@@ -1,19 +1,12 @@
 package com.oceanpeace.redinn.mayo;
 
-import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
-
-import androidx.activity.result.ActivityResultLauncher;
-import android.app.Fragment;
-import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
 import com.oceanpeace.redinn.MainActivity;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
@@ -51,6 +44,8 @@ public class Mayo {
         }
 
         Log.d("Mayo", "GetUsageData: " + appsUsage.toString() + "}," + total);
+
+
         return appsUsage;
     }
 }

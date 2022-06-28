@@ -14,40 +14,44 @@ export default interface Schema {
   getAllAppIcons(): Promise<AppIconI[]>;
   getAppsUsage(): Promise<AppsUsage>;
   /**
-   * Start Continuous mode of Focus. 
-   * Part of Focus singleton class.
+   * Start Continuous mode of Focus.
+   * It is working only for chosen time.
    * 
    * @param continuousDuration  Duration in milliseconds of whole focus mode
-   * @param wakeDevice          Boolean if user wants the device to wake up at the end of every phase
-   * @param twentyRule      Boolean if user wants to activate 20:20:20 rule
+   * @param wakeDevice          (moblie only) Boolean if user wants the device to wake up at the end of every phase
+   * @param twentyRule          Boolean if user wants to activate 20:20:20 rule
    * 
-   * @return                Returns boolean if mode start was successful
+   * @return                    Returns boolean if mode start was successful
    */
   startContinuous(continuousDuration: number, twentyRule: boolean, wakeDevice: boolean): Promise<FocusStartedI>;
   /**
    * Start Pomodoro mode of Focus. 
    * 
-   * @param workDuration    Duration in milliseconds of work phase 
-   * @param breakDuration   Duration in milliseconds of break phase
-   * @param wakeDevice      Boolean if user wants the device to wake up at the end of every phase
-   * @param twentyRule      Boolean if user wants to activate 20:20:20 rule
+   * @param workDuration        Duration in milliseconds of work phase 
+   * @param breakDuration       Duration in milliseconds of break phase
+   * @param wakeDevice          (mobile only) Boolean if user wants the device to wake up at the end of every phase
+   * @param twentyRule          Boolean if user wants to activate 20:20:20 rule
    * 
-   * @return                Returns boolean if mode start was successful
+   * @return                    Returns boolean if mode start was successful
    */
   startPomodoro(workDuration: number, breakDuration: number, twentyRule: boolean ,wakeDevice: boolean): Promise<FocusStartedI>;
   /**
    * Start Stopwatch mode of Focus. You don't need to provide anny additional parameters as to date. 
-   * Part of Focus singleton class.
-   * @param twentyRule      Boolean if user wants to activate 20:20:20 rule
    * 
-   * @return                Returns boolean if mode start was successful
+   * @param twentyRule          Boolean if user wants to activate 20:20:20 rule
+   * 
+   * @return                    Returns boolean if mode start was successful
    */
   startStopwatch(twentyRule: boolean): Promise<FocusStartedI>;
   /**
    * Stops the running Focus.
-   * Part of Focus singleton class.
    * 
    * 
    */
   stopFocus();
+  getAllGoals(): Promise<{ goals: JSON }>;
+  getGoal(fileName: string): Promise<{ goal: JSON }>;
+  createGoal(goalName: string, apps: JSON, weekDays: JSON, limit: number);
+  editGoal(fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number);
+  deleteGoal(fileName: string);
 }

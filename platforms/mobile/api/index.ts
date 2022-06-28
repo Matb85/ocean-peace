@@ -13,10 +13,18 @@ interface FocusPlugin {
   startStopwatch(options: { twentyRule: boolean }): Promise<{ started: boolean }>;
   stopFocus();
 }
+interface GoalsPlugin {
+  getAllGoals(): Promise<{goals: JSON}>;
+  getGoal(options: {fileName: string}): Promise<{goal: JSON}>;
+  createGoal(options: {goalName: string, apps: JSON, weekDays: JSON, limit: number});
+  editGoal(options: {fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number});
+  deleteGoal(options: {fileName: string});
+}
 
 const Echo = registerPlugin<EchoPlugin>("Echo");
 const Mayo = registerPlugin<MayoPlugin>("Mayo");
 const Focus = registerPlugin<FocusPlugin>("Focus");
+const Goal = registerPlugin<GoalsPlugin>("Goal")
 
 
 const AndroidApi: Schema = {
@@ -55,6 +63,28 @@ const AndroidApi: Schema = {
   },
   async stopFocus() {
     await Focus.stopFocus();
+    return;
+  },
+  async getAllGoals() {
+    const { goals } = await Goal.getAllGoals();
+
+    return { goals }
+  },
+  async getGoal(fileName: string) {
+    const { goal } = await Goal.getGoal({fileName});
+
+    return { goal };
+  },
+  async createGoal(goalName: string, apps: JSON, weekDays: JSON, limit: number) {
+    await Goal.createGoal({goalName, apps, weekDays, limit});
+    return;
+  },
+  async editGoal(fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number) {
+    await Goal.editGoal({fileName, goalName, apps, weekDays, limit});
+    return;
+  },
+  async deleteGoal(fileName: string) {
+    await Goal.deleteGoal({fileName});
     return;
   }
 };
