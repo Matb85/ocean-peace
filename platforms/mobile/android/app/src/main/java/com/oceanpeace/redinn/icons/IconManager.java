@@ -55,7 +55,8 @@ public class IconManager {
         final List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_META_DATA);
         for (PackageInfo packageInfo : packages) {
             ApplicationInfo appInfo = packageInfo.applicationInfo;
-            /* filter out unwanted system utilities */
+            /* filter out unwanted system utilities
+            * https://stackoverflow.com/questions/8784505/how-do-i-check-if-an-app-is-a-non-system-app-in-android */
             if (!appInfo.sourceDir.startsWith("/data/app/") || pm.getLaunchIntentForPackage(appInfo.packageName) == null)
                 continue;
             /* compare the version of the app from iconDB with the retrieved one
