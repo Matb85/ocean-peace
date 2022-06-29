@@ -47,7 +47,7 @@
   @import "@redinnlabs/system/utils/base.css";
 
   #main {
-    @apply flex flex-col items-center gap-4 pb-16;
+    @apply flex flex-col items-center gap-4 pb-32;
     scrollbar-width: none;
     transition-duration: 200ms;
     transition-property: transform, opacity;

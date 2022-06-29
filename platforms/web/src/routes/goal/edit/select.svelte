@@ -33,7 +33,7 @@
 
 <H thin className="mt-8">Selected Apps ({selectedApps.length})</H>
 
-<section class="w-full flex flex-wrap justify-center gap-x-2 gap-y-4">
+<section class="app-group-con">
   {#each allApps.filter(x => selectedApps.includes(x.packageName)) as app}
     <AppStatus
       on:click={() => toggleApp(app)}
@@ -50,7 +50,7 @@
 
 <H thin>All Apps ({allApps.length})</H>
 
-<section class="w-full flex flex-wrap justify-center gap-x-2 gap-y-4">
+<section class="app-group-con">
   {#each allApps as app}
     <AppStatus
       on:click={() => toggleApp(app)}

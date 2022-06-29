@@ -14,7 +14,7 @@
   Object.defineProperty(minutes, "current", { set: val => (m = val), get: () => m });
 
   let type = "";
-  let limit = "";
+  // let limit = "";
 </script>
 
 <FullHeading backHref="/goal/edit/1">Goal - Edit</FullHeading>
@@ -35,8 +35,9 @@
 />
 
 <H thin>Time Limit</H>
+<!--
 <RadioInput bind:chosen={limit} options={["Time period", "Times opened"]} />
-
+-->
 <TimeInput columns={[hours, minutes]} />
 
 <H thin>Limit Type</H>

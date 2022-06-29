@@ -8,7 +8,7 @@
   export let apps: SelctableAppIconI[] = [];
 </script>
 
-<section class="w-full flex flex-wrap justify-center gap-x-2 gap-y-4">
+<section class="app-group-con">
   {#each apps as app}
     <AppStatus
       on:click={() => {
