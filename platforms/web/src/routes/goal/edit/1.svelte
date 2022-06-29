@@ -18,7 +18,15 @@
 <SelectedApps />
 
 <a sveltekit:prefetch href="/goal/edit/select">
-  <Button>Add or edit</Button>
+  <Button secondary size="small">edit</Button>
+</a>
+
+<H thin>Selected Websites</H>
+
+<SelectedApps />
+
+<a sveltekit:prefetch href="/goal/edit/select">
+  <Button secondary size="small">edit</Button>
 </a>
 
 <a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 z-50 w-11/12"><Button isFullWidth>next</Button> </a>
