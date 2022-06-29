@@ -13,13 +13,13 @@
   Object.defineProperty(hours, "current", { set: val => (h = val), get: () => h });
   Object.defineProperty(minutes, "current", { set: val => (m = val), get: () => m });
 
-  let type: { value: string };
-  let limit: { value: string };
+  let type = "";
+  let limit = "";
 </script>
 
-<FullHeading backHref="/goal">Goal - Edit</FullHeading>
+<FullHeading backHref="/goal/edit/1">Goal - Edit</FullHeading>
 
-<H thin>Select Days</H>
+<H thin>Active days</H>
 
 <CheckMultiple
   className="flex-wrap justify-center max-w-sm"
@@ -34,12 +34,12 @@
   ]}
 />
 
-<H thin>Select Limit</H>
-<RadioInput bind:chosen={limit} options={[{ value: "Time period" }, { value: "Times opened" }]} />
+<H thin>Time Limit</H>
+<RadioInput bind:chosen={limit} options={["Time period", "Times opened"]} />
 
 <TimeInput columns={[hours, minutes]} />
 
 <H thin>Limit Type</H>
-<RadioInput bind:chosen={type} options={[{ value: "Soft" }, { value: "Hard" }]} />
+<RadioInput bind:chosen={type} options={["Notification", "Close app"]} />
 
 <a sveltekit:prefetch href="/" class="fixed bottom-10 w-11/12"><Button isFullWidth>save</Button> </a>

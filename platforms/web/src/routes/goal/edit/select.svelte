@@ -9,7 +9,8 @@
   import Api from "$api";
 
   let allApps: AppIconI[] = [];
-  let selectedApps: string[] = [];
+  let selectedApps: string[] = JSON.parse(sessionStorage.getItem("edit_goal_apps") || "[]");
+
   onMount(async () => {
     allApps = await Api.getAllAppIcons();
   });
@@ -19,11 +20,12 @@
    * @returns {void}
    */
   function toggleApp(app: AppIconI) {
-    if (!selectedApps.includes(app.label)) {
-      selectedApps = [...selectedApps, app.label];
+    if (!selectedApps.includes(app.packageName)) {
+      selectedApps = [...selectedApps, app.packageName];
     } else {
-      selectedApps = selectedApps.filter(x => x != app.label);
+      selectedApps = selectedApps.filter(x => x != app.packageName);
     }
+    sessionStorage.setItem("edit_goal_apps", JSON.stringify(selectedApps));
   }
 </script>
 
@@ -32,16 +34,16 @@
 <H thin className="mt-8">Selected Apps ({selectedApps.length})</H>
 
 <section class="w-full flex flex-wrap justify-center gap-x-2 gap-y-4">
-  {#each allApps.filter(x => selectedApps.includes(x.label)) as app}
+  {#each allApps.filter(x => selectedApps.includes(x.packageName)) as app}
     <AppStatus
       on:click={() => toggleApp(app)}
       src={app.iconPath}
       label={app.label}
-      isSelected={selectedApps.includes(app.label)}
+      isSelected={selectedApps.includes(app.packageName)}
       alt="app icon"
     />
   {/each}
-  {#if allApps.length <= 0}
+  {#if selectedApps.length <= 0}
     <p>0 selected</p>
   {/if}
 </section>
@@ -54,13 +56,12 @@
       on:click={() => toggleApp(app)}
       src={app.iconPath}
       label={app.label}
-      isSelected={selectedApps.includes(app.label)}
+      isSelected={selectedApps.includes(app.packageName)}
       alt="app icon"
     />
   {/each}
-  {#if allApps.length <= 0}
-    <p>0 selected</p>
-  {/if}
 </section>
 
-<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 z-50 w-10/12"><Button isFullWidth>Save</Button></a>
+<a href="/goal/edit/1" sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+  <Button isFullWidth>Save</Button>
+</a>
