@@ -4,37 +4,49 @@ import type { AppIconI, AppsUsage } from "../../web/api/index";
 
 interface IconsPlugin {
   getAllIcons(): Promise<{ apps: AppIconI[] }>;
+  getIcon(options: { packageName: string }): Promise<{ app: AppIconI }>;
 }
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
 }
 interface FocusPlugin {
-  startContinuous(options: { continuousDuration: number, twentyRule: boolean, wakeDevice: boolean }): Promise<{ started: boolean }>;
-  startPomodoro(options: { workDuration: number, breakDuration: number, twentyRule: boolean, wakeDevice: boolean }): Promise<{ started: boolean }>;
+  startContinuous(options: {
+    continuousDuration: number;
+    twentyRule: boolean;
+    wakeDevice: boolean;
+  }): Promise<{ started: boolean }>;
+  startPomodoro(options: {
+    workDuration: number;
+    breakDuration: number;
+    twentyRule: boolean;
+    wakeDevice: boolean;
+  }): Promise<{ started: boolean }>;
   startStopwatch(options: { twentyRule: boolean }): Promise<{ started: boolean }>;
   stopFocus();
 }
 interface GoalsPlugin {
-  getAllGoals(): Promise<{goals: JSON}>;
-  getGoal(options: {fileName: string}): Promise<{goal: JSON}>;
-  createGoal(options: {goalName: string, apps: JSON, weekDays: string, limit: number});
-  editGoal(options: {fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number});
-  deleteGoal(options: {fileName: string});
+  getAllGoals(): Promise<{ goals: JSON }>;
+  getGoal(options: { fileName: string }): Promise<{ goal: JSON }>;
+  createGoal(options: { goalName: string; apps: JSON; weekDays: string; limit: number });
+  editGoal(options: { fileName: string; goalName: string; apps: JSON; weekDays: string; limit: number });
+  deleteGoal(options: { fileName: string });
 }
 
 const Icons = registerPlugin<IconsPlugin>("Icons");
 const Mayo = registerPlugin<MayoPlugin>("Mayo");
 const Focus = registerPlugin<FocusPlugin>("Focus");
-const Goal = registerPlugin<GoalsPlugin>("Goal")
+const Goal = registerPlugin<GoalsPlugin>("Goal");
 
 const AndroidApi: Schema = {
-  async getAppIcon(name: string): Promise<AppIconI> {
-    return new Promise(resolve => resolve({ src: name, name }));
+  async getAppIcon(packageName: string): Promise<AppIconI> {
+    const val = (await Icons.getIcon({ packageName })).app;
+    val.iconPath = Capacitor.convertFileSrc(val.iconPath);
+    return val;
   },
   async getAllAppIcons(): Promise<AppIconI[]> {
     const val = (await Icons.getAllIcons()).apps;
     for (const key of val) {
-      key.src = Capacitor.convertFileSrc(key.src);
+      key.iconPath = Capacitor.convertFileSrc(key.iconPath);
     }
     console.log("watchout", val);
 
@@ -46,17 +58,26 @@ const AndroidApi: Schema = {
     return { stats };
   },
   async startContinuous(continuousDuration: number, twentyRule: boolean, wakeDevice: boolean) {
-    const { started } = await Focus.startContinuous({ continuousDuration: continuousDuration, twentyRule: twentyRule, wakeDevice: wakeDevice });
+    const { started } = await Focus.startContinuous({
+      continuousDuration: continuousDuration,
+      twentyRule: twentyRule,
+      wakeDevice: wakeDevice,
+    });
 
     return { started };
   },
   async startPomodoro(workDuration: number, breakDuration: number, twentyRule: boolean, wakeDevice: boolean) {
-    const { started } = await Focus.startPomodoro({ workDuration: workDuration, breakDuration: breakDuration, twentyRule: twentyRule, wakeDevice: wakeDevice });
+    const { started } = await Focus.startPomodoro({
+      workDuration: workDuration,
+      breakDuration: breakDuration,
+      twentyRule: twentyRule,
+      wakeDevice: wakeDevice,
+    });
 
     return { started };
   },
   async startStopwatch(twentyRule: boolean) {
-    const { started } = await Focus.startStopwatch({twentyRule: twentyRule});
+    const { started } = await Focus.startStopwatch({ twentyRule: twentyRule });
 
     return { started };
   },
@@ -67,25 +88,25 @@ const AndroidApi: Schema = {
   async getAllGoals() {
     const { goals } = await Goal.getAllGoals();
 
-    return { goals }
+    return { goals };
   },
   async getGoal(fileName: string) {
-    const { goal } = await Goal.getGoal({fileName});
+    const { goal } = await Goal.getGoal({ fileName });
 
     return { goal };
   },
   async createGoal(goalName: string, apps: JSON, weekDays: string, limit: number) {
-    await Goal.createGoal({goalName, apps, weekDays, limit});
+    await Goal.createGoal({ goalName, apps, weekDays, limit });
     return;
   },
   async editGoal(fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number) {
-    await Goal.editGoal({fileName, goalName, apps, weekDays, limit});
+    await Goal.editGoal({ fileName, goalName, apps, weekDays, limit });
     return;
   },
   async deleteGoal(fileName: string) {
-    await Goal.deleteGoal({fileName});
+    await Goal.deleteGoal({ fileName });
     return;
-  }
+  },
 };
 
 export default AndroidApi;
