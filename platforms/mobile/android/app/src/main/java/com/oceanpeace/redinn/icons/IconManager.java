@@ -18,6 +18,7 @@ import java.util.Properties;
 import me.zhanghai.android.appiconloader.AppIconLoader;
 
 public class IconManager {
+
     public static Properties getIconsData(Context ctx) {
         Properties iconDB = new Properties();
         try {

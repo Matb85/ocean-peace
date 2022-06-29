@@ -19,7 +19,6 @@ public class IconsPlugin extends Plugin {
     @Override
     public void load() {
         Log.d("IconPlugin", "Starting the instance");
-        IconManager.regenerateIcons(getActivity().getApplicationContext());
     }
 
     @PluginMethod
