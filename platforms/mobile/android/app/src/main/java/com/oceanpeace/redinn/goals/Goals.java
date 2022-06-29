@@ -1,7 +1,6 @@
 package com.oceanpeace.redinn.goals;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.getcapacitor.JSObject;
 import com.oceanpeace.redinn.PropertiesManager;
@@ -53,8 +52,6 @@ public class Goals {
                 new String[] {name, appsAsJSON.toString(), weekDaysAsString, String.valueOf(limitInMin), ""}
                 );
         goalsProperties.Write("int", (_int + 1) + "");
-        Log.d("TEST", "int: " + (_int + 1) + "");
-        Log.d("TEST", "used: " + (used + 1) + "");
         goalsProperties.Write("used", (used + 1) + "");
         return true;
     }
