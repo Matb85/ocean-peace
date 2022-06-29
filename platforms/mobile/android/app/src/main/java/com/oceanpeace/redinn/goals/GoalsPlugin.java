@@ -17,7 +17,7 @@ public class GoalsPlugin extends Plugin {
     public void create(PluginCall call) {
         String name = call.getString("name", "Not named goal");
         JSObject apps = call.getObject("apps", null);
-        JSObject weekDays = call.getObject("weekDays");
+        String weekDays = call.getString("weekDays", "1000000");
         if (weekDays == null)
             call.reject("Error occurred: weekDays empty");
         long limit = call.getLong("limit", 120l);
@@ -40,7 +40,7 @@ public class GoalsPlugin extends Plugin {
             call.reject("fileName cannot be null");
         String name = call.getString("name", "Not named goal");
         JSObject apps = call.getObject("apps", null);
-        JSObject weekDays = call.getObject("weekDays");
+        String weekDays = call.getString("weekDays");
         if (weekDays == null)
             call.reject("Error occurred: weekDays empty");
         long limit = call.getLong("limit", 120l);

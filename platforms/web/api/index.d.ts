@@ -13,6 +13,10 @@ export default interface Schema {
   getAppIcon(name: string): Promise<AppIconI>;
   getAllAppIcons(): Promise<AppIconI[]>;
   getAppsUsage(): Promise<AppsUsage>;
+
+
+  // F O C U S   A P I
+
   /**
    * Start Continuous mode of Focus.
    * It is working only for chosen time.
@@ -49,10 +53,15 @@ export default interface Schema {
    * 
    */
   stopFocus();
+
+
+  
+  // G O A L S   A P I
+
   /**
    * Returns JSON with each goal JSON as described below
    * 
-   * @return                    JSON: "1": ("name", "apps" (JSON), "weekDays" (JSON), "limit" (number)), ...
+   * @return                    "0.properties": {"name": "example", "apps": {"1": "com.example", ...}, "weekDays": "1010101", "limit": (number), "history": "0101000...."}, ...
    */
   getAllGoals(): Promise<{ goals: JSON }>;
   /**
@@ -60,32 +69,35 @@ export default interface Schema {
    * 
    * @param fileName            goal fileName "1.properties"
    * 
-   * @return                    JSON: "name", "apps" (JSON), "weekDays" (JSON), "limit" (number)
+   * @return                    {"name": "example", "apps": {"1": "com.example", ...}, "weekDays": "1010101", "limit": (number), "history": "0101000...."}
    */
   getGoal(fileName: string): Promise<{ goal: JSON }>;
   /**
    * Creates a goal and save it's to file.
    * 
    * @param goalName            goal's title as string
-   * @param apps                JSON of selected apps
-   * @param weekDays            JSON of selected days ("true", "false", ....)
+   * @param apps                JSON of selected apps {"1": "com.example", ...}
+   * @param weekDays            string of 1/0 values ("1001001")
    * @param limit               daily time limit as number
    */
-  createGoal(goalName: string, apps: JSON, weekDays: JSON, limit: number);
+  createGoal(goalName: string, apps: JSON, weekDays: string, limit: number);
   /**
    * Updates and saves data to existing goal's file
    * 
    * @param fileName            file name of the goal
    * @param goalName            the goal title
    * @param apps                JSON of selected apps
-   * @param weekDays            JSON of selected days ("true", "false", ....)
+   * @param weekDays            string of 1/0 values ("1001001")
    * @param limit               daily time limit as number
    */
-  editGoal(fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number);
+  editGoal(fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number);
   /**
    * Deletes selected goal and it's file
    * 
    * @param fileName            file name of the goal
    */
   deleteGoal(fileName: string);
+
+
+
 }

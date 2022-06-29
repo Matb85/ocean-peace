@@ -17,8 +17,8 @@ interface FocusPlugin {
 interface GoalsPlugin {
   getAllGoals(): Promise<{goals: JSON}>;
   getGoal(options: {fileName: string}): Promise<{goal: JSON}>;
-  createGoal(options: {goalName: string, apps: JSON, weekDays: JSON, limit: number});
-  editGoal(options: {fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number});
+  createGoal(options: {goalName: string, apps: JSON, weekDays: string, limit: number});
+  editGoal(options: {fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number});
   deleteGoal(options: {fileName: string});
 }
 
@@ -74,11 +74,11 @@ const AndroidApi: Schema = {
 
     return { goal };
   },
-  async createGoal(goalName: string, apps: JSON, weekDays: JSON, limit: number) {
+  async createGoal(goalName: string, apps: JSON, weekDays: string, limit: number) {
     await Goal.createGoal({goalName, apps, weekDays, limit});
     return;
   },
-  async editGoal(fileName: string, goalName: string, apps: JSON, weekDays: JSON, limit: number) {
+  async editGoal(fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number) {
     await Goal.editGoal({fileName, goalName, apps, weekDays, limit});
     return;
   },

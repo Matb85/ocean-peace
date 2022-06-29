@@ -1,6 +1,7 @@
 package com.oceanpeace.redinn.goals;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.getcapacitor.JSObject;
 import com.oceanpeace.redinn.PropertiesManager;
@@ -21,47 +22,51 @@ public class Goals {
      *
      * @param name              name of the goal
      * @param appsAsJSON        {"0": "com.example.one", "1", "com.example.two", ...}
-     * @param weekDaysASJSON    {"MON": "false", "TUE", "true", ...}
+     * @param weekDaysAsString  "0100101"
      * @param limitInMin        time limit in minutes
      * @return                  true if creating file was successful
      *                          false if limit of goals was reached
      * @throws IOException      throws expectation if IO fails
      *
      */
-    public boolean createGoal(String name, JSObject appsAsJSON, JSObject weekDaysASJSON, long limitInMin) throws IOException {
+    public boolean createGoal(String name, JSObject appsAsJSON, String weekDaysAsString, long limitInMin) throws IOException {
         PropertiesManager goalsProperties = new PropertiesManager("goals.properties", context);
-        Integer _int = Integer.getInteger(goalsProperties.Read("int"), null);
-        Integer limit = Integer.getInteger(goalsProperties.Read("limit"), null);
-        Integer used = Integer.getInteger(goalsProperties.Read("used"), null);
+        String tempIO = goalsProperties.Read("int");
+        int _int = Integer.parseInt(tempIO == null ? "0" : tempIO);
+        tempIO = goalsProperties.Read("limit");
+        int limit = Integer.parseInt(tempIO == null ? "0" : tempIO);
+        tempIO = goalsProperties.Read("used");
+        int used = Integer.parseInt(tempIO == null ? "0" : tempIO);
 
-        if ((used == null ? 0 : used) >= (limit == null ? 3 : limit))
+        if (used >= limit)
             return false;
 
 
         PropertiesManager propertiesManager = new PropertiesManager(
                 context.getFilesDir() + "/goals",
-                (_int == null ? "0" : _int) + ".properties"
+                _int + ".properties"
         );
 
         propertiesManager.Create();
         propertiesManager.Write(
-                new String[] {"name", "apps", "weekDays", "limit"},
-                new String[] {name, appsAsJSON.toString(), weekDaysASJSON.toString(), String.valueOf(limitInMin)}
+                new String[] {"name", "apps", "weekDays", "limit", "history"},
+                new String[] {name, appsAsJSON.toString(), weekDaysAsString, String.valueOf(limitInMin), ""}
                 );
-        goalsProperties.Write("int", _int == null ? "1" : String.valueOf(_int + 1));
-
-        goalsProperties.Write("used", used == null ? "1" : String.valueOf(used + 1));
+        goalsProperties.Write("int", (_int + 1) + "");
+        Log.d("TEST", "int: " + (_int + 1) + "");
+        Log.d("TEST", "used: " + (used + 1) + "");
+        goalsProperties.Write("used", (used + 1) + "");
         return true;
     }
 
-    public void edit(String fileName, String name, JSObject appsAsJSON, JSObject weekDaysASJSON, long limitInMin) {
+    public void edit(String fileName, String name, JSObject appsAsJSON, String weekDaysAsString, long limitInMin) {
         PropertiesManager propertiesManager = new PropertiesManager(
                 context.getFilesDir() + "/goals",
                 fileName
         );
         propertiesManager.Write(
                 new String[] {"name", "apps", "weekDays", "limit"},
-                new String[] {name, appsAsJSON.toString(), weekDaysASJSON.toString(), String.valueOf(limitInMin)}
+                new String[] {name, appsAsJSON.toString(), weekDaysAsString.toString(), String.valueOf(limitInMin)}
         );
     }
 
@@ -73,10 +78,9 @@ public class Goals {
 
         JSObject ret = new JSObject();
 
-        int i=0;
 
         for (File file: files) {
-            ret.put(i + "", getGoal(file.getPath()));
+            ret.put(file.getName(), getGoal(file.getPath()));
         }
 
         return ret;
@@ -92,8 +96,9 @@ public class Goals {
 
         ret.put("name", propertiesManager.Read("name"));
         ret.put("apps", JSONObject.quote(propertiesManager.Read("apps")));
-        ret.put("weekDays", JSONObject.quote(propertiesManager.Read("weekDays")));
+        ret.put("weekDays", propertiesManager.Read("weekDays"));
         ret.put("limit", Long.valueOf(propertiesManager.Read("limit")));
+        ret.put("history",propertiesManager.Read("history"));
 
         return ret;
     }

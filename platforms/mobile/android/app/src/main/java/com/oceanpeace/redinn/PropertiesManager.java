@@ -31,10 +31,14 @@ public class PropertiesManager {
 
     //Write config file
     public void Write(String key, String value) {
-        try (OutputStream output = new FileOutputStream(path)) {
+        try {
 
+            FileInputStream IN = new FileInputStream(path);
             Properties prop = new Properties();
+            prop.load(IN);
+            IN.close();
 
+            OutputStream output = new FileOutputStream(path);
             // set the properties value
             prop.setProperty(key, value);
 
@@ -48,9 +52,14 @@ public class PropertiesManager {
     }
 
     public void Write(String[] keys, String[] values) {
-        try (OutputStream output = new FileOutputStream(path)) {
+        try {
 
+            FileInputStream IN = new FileInputStream(path);
             Properties prop = new Properties();
+            prop.load(IN);
+            IN.close();
+
+            OutputStream output = new FileOutputStream(path);
 
             // set the properties values
             for(int i=0; i<keys.length && i<values.length; i++) {
@@ -69,16 +78,17 @@ public class PropertiesManager {
 
     //Read config file
     public String Read(String key) {
-        String reading=null;
-        try (InputStream input = new FileInputStream(path)) {
-
+        String reading = "";
+        try {
+            InputStream input = new FileInputStream(path);
             Properties prop = new Properties();
 
             // Load the config file
             prop.load(input);
+            input.close();
 
             // get the properties value
-            reading = prop.getProperty(key);
+            return prop.getProperty(key);
 
         } catch (FileNotFoundException ex) {
             return null;
@@ -90,12 +100,14 @@ public class PropertiesManager {
 
     public String[] Read(String[] keys) {
         String[] readings = new String[keys.length];
-        try (InputStream input = new FileInputStream(path)) {
+        try {
 
+            InputStream input = new FileInputStream(path);
             Properties prop = new Properties();
 
             // Load the config file
             prop.load(input);
+            input.close();
 
             // set the properties values
             for(int i=0; i<keys.length; i++) {
