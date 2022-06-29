@@ -1,6 +1,5 @@
 package com.oceanpeace.redinn.Icons;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
@@ -8,7 +7,6 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.oceanpeace.redinn.MainActivity;
 
 import org.json.JSONArray;
 
@@ -17,15 +15,11 @@ import java.util.Properties;
 
 @CapacitorPlugin(name = "Icons")
 public class IconsPlugin extends Plugin {
-    final private Context ctx;
-    final private IconManager im;
 
-    public IconsPlugin() {
-        super();
+    @Override
+    public void load() {
         Log.d("IconPlugin", "Starting the instance");
-        this.ctx = MainActivity.getAppContext();
-        this.im = new IconManager(ctx);
-        im.regenerateIcons();
+        IconManager.regenerateIcons(getActivity().getApplicationContext());
     }
 
     @PluginMethod
@@ -34,7 +28,8 @@ public class IconsPlugin extends Plugin {
         JSObject res = new JSObject();
         JSONArray apps = new JSONArray();
         /* retrieve data */
-        Properties iconDB = im.getIconsData();
+        Properties iconDB = IconManager.getIconsData(getActivity().getApplicationContext());
+
         Enumeration<String> props = (Enumeration<String>) iconDB.propertyNames();
         while (props.hasMoreElements()) {
             /* get the app's package name */
@@ -47,4 +42,11 @@ public class IconsPlugin extends Plugin {
         call.resolve(res);
     }
 
+    @PluginMethod
+    public void getIcons(PluginCall call) {
+    }
+
+    @PluginMethod
+    public void getIcon(PluginCall call) {
+    }
 }

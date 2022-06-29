@@ -18,23 +18,7 @@ import java.util.Properties;
 import me.zhanghai.android.appiconloader.AppIconLoader;
 
 public class IconManager {
-    final private Context ctx;
-    final private PackageManager pm;
-    // https://github.com/zhanghai/AppIconLoader
-    final private AppIconLoader loader;
-    final public String ICONS_FOLDER;
-    final public String APP_DATA_FOLDER;
-
-
-    public IconManager(Context ctx) {
-        this.ctx = ctx;
-        this.pm = ctx.getPackageManager();
-        this.loader = new AppIconLoader(128, false, ctx);
-        this.APP_DATA_FOLDER = ctx.getDataDir().getAbsolutePath();
-        this.ICONS_FOLDER = this.APP_DATA_FOLDER + "/app_icons";
-    }
-
-    public Properties getIconsData() {
+    public static Properties getIconsData(Context ctx) {
         Properties iconDB = new Properties();
         try {
             FileInputStream iconDBFile = ctx.openFileInput("iconDB.properties");
@@ -45,8 +29,14 @@ public class IconManager {
         return iconDB;
     }
 
-    public void regenerateIcons() {
+    public static void regenerateIcons(Context ctx) {
+        PackageManager pm = ctx.getPackageManager();
+        String APP_DATA_FOLDER = ctx.getDataDir().getAbsolutePath();
+        String ICONS_FOLDER = APP_DATA_FOLDER + "/app_icons";
+
         Log.i("IconManager", "regenerating icons...");
+        // https://github.com/zhanghai/AppIconLoader
+        final AppIconLoader loader= new AppIconLoader(128, false, ctx);
 
         /* prepare a folder for the icons */
         File iconFolderFile = new File(ICONS_FOLDER);
@@ -55,7 +45,7 @@ public class IconManager {
             iconFolderFile.mkdir();
         }
         /* create a new DB from the ground up to prevent persisting the data of uninstalled apps */
-        Properties existingIconDB = getIconsData();
+        Properties existingIconDB = IconManager.getIconsData(ctx);
         Properties newIconDB = new Properties();
 
         /* get a list of ALL the installed apps - including system utilities.
@@ -73,15 +63,15 @@ public class IconManager {
             String existingIconData = existingIconDB.getProperty(appInfo.packageName);
             if (existingIconData != null) {
                 AppIconData parsedIconData = new AppIconData(appInfo.packageName, existingIconData);
-                if (Objects.equals(parsedIconData.version, packageInfo.versionName)){
-                    Log.i("IconManager", "icon for "+appInfo.packageName+" already exists, skipping generation");
+                if (Objects.equals(parsedIconData.version, packageInfo.versionName)) {
+                    Log.i("IconManager", "icon for " + appInfo.packageName + " already exists, skipping generation");
                     /* before skipping rewrite the entry from the outdated DB to the new one for data compliance */
-                    newIconDB.setProperty(appInfo.packageName,parsedIconData.stringifyData());
+                    newIconDB.setProperty(appInfo.packageName, parsedIconData.stringifyData());
                     existingIconDB.remove(appInfo.packageName);
                     continue;
                 }
             }
-            Log.i("IconManager", "icon for "+appInfo.packageName+" DOES NOT exists, generating");
+            Log.i("IconManager", "icon for " + appInfo.packageName + " DOES NOT exists, generating");
 
             /* generate a file path for each icon */
             String iconPath = ICONS_FOLDER + "/" + appInfo.packageName + ".png";
@@ -107,7 +97,7 @@ public class IconManager {
     }
 
     // http://www.carbonrider.com/2016/01/01/extract-app-icon-in-android/
-    private void bitmapDrawableToFile(Bitmap icon, String iconPath) {
+    private static void bitmapDrawableToFile(Bitmap icon, String iconPath) {
         try {
             /* try to save the icon */
             FileOutputStream out = new FileOutputStream(iconPath);
