@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.getcapacitor.BridgeActivity;
-import com.oceanpeace.redinn.Icons.IconsPlugin;
+import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
 

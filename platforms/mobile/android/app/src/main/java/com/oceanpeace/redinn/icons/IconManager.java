@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.Icons;
+package com.oceanpeace.redinn.icons;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
