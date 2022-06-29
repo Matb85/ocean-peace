@@ -38,18 +38,30 @@ const Focus = registerPlugin<FocusPlugin>("Focus");
 const Goal = registerPlugin<GoalsPlugin>("Goal");
 
 const AndroidApi: Schema = {
-  async getAppIcon(packageName: string): Promise<AppIconI> {
-    const val = (await Icons.getIcon({ packageName })).app;
-    val.iconPath = Capacitor.convertFileSrc(val.iconPath);
-    return val;
+  async getAppIcon(packageName: string): Promise<AppIconI | null> {
+    try {
+      const res = await Icons.getIcon({ packageName });
+      res.app.iconPath = Capacitor.convertFileSrc(res.app.iconPath);
+      return res.app;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  },
+  async getAppIcons(packageNames: string[]): Promise<AppIconI[]> {
+    const iconsPromises: Promise<any>[] = [];
+    const icons: AppIconI[] = [];
+    for (const packageName of packageNames) {
+      iconsPromises.push(Icons.getIcon({ packageName }).then(data => icons.push(data.app)));
+    }
+    await Promise.all(iconsPromises);
+    return icons;
   },
   async getAllAppIcons(): Promise<AppIconI[]> {
     const val = (await Icons.getAllIcons()).apps;
     for (const key of val) {
       key.iconPath = Capacitor.convertFileSrc(key.iconPath);
     }
-    console.log("watchout", val);
-
     return val;
   },
   async getAppsUsage(): Promise<AppsUsage> {
@@ -87,12 +99,10 @@ const AndroidApi: Schema = {
   },
   async getAllGoals() {
     const { goals } = await Goal.getAllGoals();
-
     return { goals };
   },
   async getGoal(fileName: string) {
     const { goal } = await Goal.getGoal({ fileName });
-
     return { goal };
   },
   async createGoal(goalName: string, apps: JSON, weekDays: string, limit: number) {

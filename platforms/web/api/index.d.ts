@@ -12,7 +12,8 @@ export interface FocusStartedI {
 }
 
 export default interface Schema {
-  getAppIcon(name: string): Promise<AppIconI>;
+  getAppIcon(name: string): Promise<AppIconI | null>;
+  getAppIcons(packageNames: string[]): Promise<AppIconI[]>;
   getAllAppIcons(): Promise<AppIconI[]>;
   getAppsUsage(): Promise<AppsUsage>;
 
