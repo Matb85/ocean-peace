@@ -52,7 +52,12 @@ const AndroidApi: Schema = {
     const iconsPromises: Promise<any>[] = [];
     const icons: AppIconI[] = [];
     for (const packageName of packageNames) {
-      iconsPromises.push(Icons.getIcon({ packageName }).then(data => icons.push(data.app)));
+      iconsPromises.push(
+        Icons.getIcon({ packageName }).then(({ app }) => {
+          app.iconPath = Capacitor.convertFileSrc(app.iconPath);
+          icons.push(app);
+        })
+      );
     }
     await Promise.all(iconsPromises);
     return icons;
