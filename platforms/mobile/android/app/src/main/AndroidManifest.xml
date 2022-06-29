@@ -26,8 +26,9 @@
             android:enabled="true"
             android:exported="true">
                 <intent-filter>
-                    <action android:name="com.oceanpeace.broadcasts.FOCUS_END"/>
-
+                    <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END"/>
+                    <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK"/>
+                    <action android:name="com.oceanpeace.broadcasts.POMODORO_START_BREAK"/>
                 </intent-filter>
         </receiver>
 
