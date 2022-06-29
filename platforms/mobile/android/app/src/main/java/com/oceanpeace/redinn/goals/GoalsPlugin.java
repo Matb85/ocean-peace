@@ -22,6 +22,8 @@ public class GoalsPlugin extends Plugin {
             call.reject("Error occurred: weekDays empty");
         long limit = call.getLong("limit", 120l);
 
+
+
         Goals goals = new Goals(getActivity().getApplicationContext());
         try {
             if(!goals.createGoal(name, apps, weekDays, limit))

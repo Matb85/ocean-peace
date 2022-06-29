@@ -21,15 +21,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".SetupMayo"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".GoalMayo"
+            android:enabled="true"
+            android:exported="true" />
+
         <receiver
             android:name=".Broadcast"
             android:enabled="true"
             android:exported="true">
-                <intent-filter>
-                    <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END"/>
-                    <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK"/>
-                    <action android:name="com.oceanpeace.broadcasts.POMODORO_START_BREAK"/>
-                </intent-filter>
+            <intent-filter>
+                <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END" />
+                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK" />
+                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_BREAK" />
+            </intent-filter>
         </receiver>
 
         <service
