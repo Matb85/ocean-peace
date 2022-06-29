@@ -2,19 +2,26 @@
   import { AppStatus } from "@redinnlabs/system/Units";
   import type { AppIconI } from "$lib/../../api/index";
 
-  export let apps: AppIconI[] = [];
+  interface SelctableAppIconI extends AppIconI {
+    isSelected?: boolean;
+  }
+  export let apps: SelctableAppIconI[] = [];
 </script>
 
-{apps.length}
-<section class="w-full max-w-sm flex flex-wrap justify-center gap-x-2 gap-y-2 mt-4">
+<section class="w-full max-w-sm flex flex-wrap justify-center gap-x-2 gap-y-4">
   {#each apps as app}
-    <div class="app_status_con mt-2 self-start">
-      <AppStatus src={app.src} alt="app icon" />
-      <p class="text-center w-20 text-xs text-wrap">{app.name}</p>
+    <div
+      on:click={() => {
+        if (!app.isSelected) app.isSelected = true;
+        else app.isSelected = false;
+      }}
+      class="app_status_con self-start"
+    >
+      <AppStatus src={app.src} label={app.name} isSelected={app.isSelected} alt="app icon" />
     </div>
   {/each}
   {#if apps.length <= 0}
-    <p>No apps selected</p>
+    <p>0 selected</p>
   {/if}
 </section>
 

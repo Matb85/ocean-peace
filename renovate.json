@@ -1,4 +1,10 @@
 {
   "extends": ["config:base"],
-  "ignoreDeps": ["@redinnlabs/system"]
+  "ignoreDeps": ["@redinnlabs/system"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
 }

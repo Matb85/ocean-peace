@@ -5,6 +5,9 @@ import android.util.Log;
 
 import com.getcapacitor.BridgeActivity;
 import com.oceanpeace.redinn.focus.Focus;
+
+import com.getcapacitor.BridgeActivity;
+import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.icons.IconsPlugin;
