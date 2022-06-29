@@ -25,20 +25,25 @@
   <TextInput placeholder="Name of your goal" bind:value={name} />
 </div>
 
-<H thin>Blocked apps</H>
+<H thin>Selected apps</H>
 
 <SelectedApps apps={selectedApps} />
 
-<a sveltekit:prefetch href="/goal/edit/select">
+<a sveltekit:prefetch href="./select">
   <Button secondary size="small">edit</Button>
 </a>
 
-<H thin>Blocked Websites</H>
+<H thin>Selected Websites</H>
 
 <SelectedApps />
 
-<a sveltekit:prefetch href="/goal/edit/select">
+<a sveltekit:prefetch href="./select">
   <Button secondary size="small">edit</Button>
 </a>
 
-<a sveltekit:prefetch href="/goal/edit/2" class="fixed bottom-10 z-50 w-11/12"><Button isFullWidth>next</Button> </a>
+<a
+  sveltekit:prefetch
+  class="fixed-bottom-button"
+  href={selectedApps.length > 0 && name.length > 0 ? "./2" : ""}
+  style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}><Button isFullWidth>next</Button></a
+>
