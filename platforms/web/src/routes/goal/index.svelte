@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon, Aquarium } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium, Button } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
@@ -20,23 +20,18 @@
     goalData = await Api.getGoal(goalId);
 
     selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
-  });
 
-  import { beforeNavigate } from "$app/navigation";
-  beforeNavigate(({ to }) => {
-    if (to.pathname == "/goal/edit/1") {
-      const timeInMinutes = parseInt(goalData.limit);
+    const timeInMinutes = parseInt(goalData.limit);
 
-      sessionStorage.setItem("edit_goal_id", goalData.id);
-      sessionStorage.setItem("edit_goal_name", goalData.name);
-      sessionStorage.setItem("edit_goal_apps", goalData.apps);
-      sessionStorage.setItem("edit_goal_time_minutes", (timeInMinutes % 60) + "");
-      sessionStorage.setItem("edit_goal_time_hours", Math.floor(timeInMinutes / 60) + "");
-      sessionStorage.setItem("edit_goal_active_days", goalData.activeDays);
-      sessionStorage.setItem("edit_goal_limit_action_type", goalData.limitActionType);
-      sessionStorage.setItem("edit_goal_action_type", "Edit");
-      sessionStorage.setItem("edit_goal_action_back", $page.url.pathname + $page.url.search);
-    }
+    sessionStorage.setItem("edit_goal_id", goalData.id);
+    sessionStorage.setItem("edit_goal_name", goalData.name);
+    sessionStorage.setItem("edit_goal_apps", goalData.apps);
+    sessionStorage.setItem("edit_goal_time_minutes", (timeInMinutes % 60) + "");
+    sessionStorage.setItem("edit_goal_time_hours", Math.floor(timeInMinutes / 60) + "");
+    sessionStorage.setItem("edit_goal_active_days", goalData.activeDays);
+    sessionStorage.setItem("edit_goal_limit_action_type", goalData.limitActionType);
+    sessionStorage.setItem("edit_goal_action_type", "Edit");
+    sessionStorage.setItem("edit_goal_action_back", $page.url.pathname + $page.url.search);
   });
 </script>
 
@@ -98,3 +93,10 @@
 <H thin>Selected apps</H>
 
 <SelectedApps apps={selectedApps} />
+
+<hr class="border-0 border-b-2 border-gray w-9/12 mt-32 mb-8" />
+<H thin>Danger zone</H>
+
+<a sveltekit:prefetch href="/goal/delete">
+  <Button isWarning>Delete Goal</Button>
+</a>
