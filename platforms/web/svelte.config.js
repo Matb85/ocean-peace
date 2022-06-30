@@ -3,7 +3,7 @@ import adapter from "@sveltejs/adapter-static";
 import path from "path";
 
 const alias = {
-  $api: path.resolve(process.cwd(), "../mobile/api"),
+  $schema: path.resolve(process.cwd(), "./api"),
 };
 
 export default {

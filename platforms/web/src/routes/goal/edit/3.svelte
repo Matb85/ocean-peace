@@ -6,7 +6,7 @@
   import SelectedApps from "$lib/SelectedApps.svelte";
 
   import { onMount } from "svelte";
-  import Api from "$api";
+  import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI, GoalI } from "$schema";
   import { fly } from "svelte/transition";
   import { goto } from "$app/navigation";

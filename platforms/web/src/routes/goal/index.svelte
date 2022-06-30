@@ -8,7 +8,7 @@
   import H from "$lib/H.svelte";
 
   import { page } from "$app/stores";
-  import Api from "$api";
+  import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI, AppIconI } from "$schema";
   import { onMount } from "svelte";
 

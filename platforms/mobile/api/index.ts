@@ -1,14 +1,16 @@
 import { registerPlugin, Capacitor } from "@capacitor/core";
-import type Schema from "../../web/api/index";
-import type { AppIconI, AppsUsage, GoalI } from "../../web/api/index";
+import type Schema from "@redinn/oceanpeace-web/api";
+import type { AppIconI, AppsUsage, GoalI } from "@redinn/oceanpeace-web/api";
 
 interface IconsPlugin {
   getAllIcons(): Promise<{ apps: AppIconI[] }>;
   getIcon(options: { packageName: string }): Promise<{ app: AppIconI }>;
 }
+
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
 }
+
 interface FocusPlugin {
   startContinuous(options: {
     continuousDuration: number;

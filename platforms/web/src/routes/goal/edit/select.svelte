@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
 
   import type { AppIconI } from "$schema";
-  import Api from "$api";
+  import Api from "@redinn/oceanpeace-mobile/api";
 
   let allApps: AppIconI[] = [];
   let selectedApps: string[] = JSON.parse(sessionStorage.getItem("edit_goal_apps") || "[]");

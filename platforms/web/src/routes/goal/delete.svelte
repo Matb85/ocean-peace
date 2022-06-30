@@ -2,7 +2,7 @@
   import H from "$lib/H.svelte";
   import { Button } from "@redinnlabs/system/Elements";
 
-  import Api from "$api";
+  import Api from "@redinn/oceanpeace-mobile/api";
   import { goto } from "$app/navigation";
 
   /** delete a given goal

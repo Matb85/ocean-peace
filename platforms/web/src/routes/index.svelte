@@ -22,7 +22,7 @@
     }
   });
 
-  import Api from "$api";
+  import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
   let allGoals: GoalI[] = [];
