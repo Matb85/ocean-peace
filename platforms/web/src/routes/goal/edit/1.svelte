@@ -18,7 +18,7 @@
   $: name, sessionStorage.setItem("edit_goal_name", name);
 </script>
 
-<FullHeading backHref="./back">
+<FullHeading backHref="./0">
   {sessionStorage.getItem("edit_goal_action_type")} goal
 </FullHeading>
 
