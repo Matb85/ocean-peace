@@ -5,7 +5,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import { onMount } from "svelte";
 
-  import type { AppIconI } from "$lib/../../api/index";
+  import type { AppIconI } from "$schema";
   import Api from "$api";
 
   let allApps: AppIconI[] = [];

@@ -7,7 +7,7 @@
 
   import { onMount } from "svelte";
   import Api from "$api";
-  import type { AppIconI } from "$lib/../../api/index";
+  import type { AppIconI } from "$schema";
   import { fly } from "svelte/transition";
   import { goto } from "$app/navigation";
 
@@ -16,7 +16,15 @@
   onMount(async () => {
     selectedApps = await Api.getAppIcons(JSON.parse(sessionStorage.getItem("edit_goal_apps")));
   });
-
+  /** save goal to a file
+   * @returns {void}
+   */
+  function saveGoal() {
+    isComplete = true;
+    setTimeout(() => {
+      goto("/");
+    }, 1500);
+  }
   let isComplete = false;
 </script>
 
@@ -50,16 +58,7 @@
 
 <H tag={6} thin>Selected Websites</H>
 
-<div
-  on:click={() => {
-    isComplete = true;
-    setTimeout(() => {
-      goto("/");
-    }, 1500);
-  }}
-  class="fixed-bottom-button"
-  href="/"
->
+<div on:click={saveGoal} class="fixed-bottom-button" href="/">
   <Button isFullWidth>save</Button>
 </div>
 

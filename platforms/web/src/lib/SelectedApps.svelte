@@ -1,6 +1,6 @@
 <script lang="ts">
   import { AppStatus } from "@redinnlabs/system/Units";
-  import type { AppIconI } from "$lib/../../api/index";
+  import type { AppIconI } from "$schema";
 
   interface SelctableAppIconI extends AppIconI {
     isSelected?: boolean;

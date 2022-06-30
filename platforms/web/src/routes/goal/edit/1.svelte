@@ -7,7 +7,7 @@
 
   import { onMount } from "svelte";
   import Api from "$api";
-  import type { AppIconI } from "$lib/../../api/index";
+  import type { AppIconI } from "$schema";
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
