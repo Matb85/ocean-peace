@@ -16,6 +16,8 @@ const config: CapacitorConfig = {
       splashImmersive: true,
     },
   },
+  // comment out this line for production
+  // adjust for development whenever necessary
   server: { url: "http://192.168.2.13:3000", cleartext: true },
 };
 
