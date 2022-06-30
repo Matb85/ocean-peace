@@ -55,7 +55,7 @@
 <div class="flex flex-wrap justify-center gap-2 items-center">
   <H tag={4} className="mt-0 mb-0" thin>
     {sessionStorage.getItem("edit_goal_time_hours")}h
-    {parseInt(sessionStorage.getItem("edit_goal_time_minutes")) * 5}min
+    {parseInt(sessionStorage.getItem("edit_goal_time_minutes"))}min
   </H>
   <!---->
   <Button size="small">Time Period</Button>

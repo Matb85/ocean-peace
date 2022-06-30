@@ -66,9 +66,12 @@
 <div class="card-flex-col">
   {#each allGoals as goal}
     <a sveltekit:prefetch href="/goal?id={goal.id}" class="w-full">
-      <Goal title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
+      <Goal percentage={Math.random() * 100} title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
     </a>
   {/each}
+  {#if allGoals.length == 0}
+    <p>No goals</p>
+  {/if}
   <a sveltekit:prefetch href="/goal/edit/1">
     <Button>Add Goal</Button>
   </a>
