@@ -10,7 +10,7 @@
   import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/goal/edit/1") {
-      sessionStorage.setItem("edit_goal_id", Date.now() + "");
+      sessionStorage.setItem("edit_goal_id", "goal" + Date.now());
       sessionStorage.setItem("edit_goal_name", "");
       sessionStorage.setItem("edit_goal_apps", "[]");
       sessionStorage.setItem("edit_goal_time_minutes", "15");
