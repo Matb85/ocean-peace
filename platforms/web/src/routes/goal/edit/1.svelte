@@ -18,7 +18,9 @@
   $: name, sessionStorage.setItem("edit_goal_name", name);
 </script>
 
-<FullHeading backHref="/goal">Goal - Edit</FullHeading>
+<FullHeading backHref="./back">
+  {sessionStorage.getItem("edit_goal_action_type")} goal
+</FullHeading>
 
 <H thin>Name</H>
 <div class="w-11/12">
@@ -41,11 +43,12 @@
   <Button secondary size="small">edit</Button>
 </a>
 
-<a
-  sveltekit:prefetch
-  class="fixed-bottom-button"
-  href={selectedApps.length > 0 && name.length > 0 ? "./2" : ""}
-  style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}
->
-  <Button isFullWidth>next</Button>
-</a>
+<div class="fixed-bottom-button bg-white">
+  <a
+    sveltekit:prefetch
+    href={selectedApps.length > 0 && name.length > 0 ? "./2" : ""}
+    style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}
+  >
+    <Button isFullWidth>next</Button>
+  </a>
+</div>

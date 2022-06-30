@@ -41,7 +41,7 @@
   $: type, sessionStorage.setItem("edit_goal_limit_type", type);
 </script>
 
-<FullHeading backHref="./1">Goal - Edit</FullHeading>
+<FullHeading backHref="./1">{sessionStorage.getItem("edit_goal_action_type")} goal</FullHeading>
 
 <H thin>Active days</H>
 
@@ -56,11 +56,8 @@
 <H thin>Limit Type</H>
 <RadioInput bind:chosen={type} options={limitTypes} />
 
-<a
-  sveltekit:prefetch
-  href={activeDays.length > 0 ? "./3" : ""}
-  class="fixed-bottom-button"
-  style:opacity={activeDays.length > 0 ? "1" : "0.5"}
->
-  <Button isFullWidth>next</Button>
-</a>
+<div class="fixed-bottom-button bg-white">
+  <a sveltekit:prefetch href={activeDays.length > 0 ? "./3" : ""} style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
+    <Button isFullWidth>next</Button>
+  </a>
+</div>
