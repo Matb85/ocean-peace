@@ -36,6 +36,9 @@ public class Broadcast extends BroadcastReceiver {
                 Log.d("Pomodoro", Calendar.getInstance().getTime().toString() + " break started!");
                 Toast.makeText(context,"Break started!", Toast.LENGTH_SHORT).show();
                 break;
+            case "com.oceanpeace.broadcasts.GOAL_MAYO_START":
+
+                break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }

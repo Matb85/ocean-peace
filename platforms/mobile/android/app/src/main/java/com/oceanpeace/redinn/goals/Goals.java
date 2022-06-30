@@ -2,8 +2,13 @@ package com.oceanpeace.redinn.goals;
 
 import android.content.Context;
 
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import com.getcapacitor.JSObject;
 import com.oceanpeace.redinn.PropertiesManager;
+import com.oceanpeace.redinn.mayo.GoalMayo;
 
 import org.json.JSONObject;
 
@@ -53,6 +58,9 @@ public class Goals {
                 );
         goalsProperties.Write("int", (_int + 1) + "");
         goalsProperties.Write("used", (used + 1) + "");
+
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+
         return true;
     }
 
@@ -65,6 +73,9 @@ public class Goals {
                 new String[] {"name", "apps", "weekDays", "limit"},
                 new String[] {name, appsAsJSON.toString(), weekDaysAsString.toString(), String.valueOf(limitInMin)}
         );
+
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+
     }
 
     public JSObject getAllGoals(){
@@ -77,7 +88,7 @@ public class Goals {
 
 
         for (File file: files) {
-            ret.put(file.getName(), getGoal(file.getPath()));
+            ret.put(file.getName(), getGoal(file.getName()));
         }
 
         return ret;
@@ -104,5 +115,8 @@ public class Goals {
     public void delete(String fileName) {
         File file = new File(context.getFilesDir() + "/goals", fileName);
         file.delete();
+
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+
     }
 }
