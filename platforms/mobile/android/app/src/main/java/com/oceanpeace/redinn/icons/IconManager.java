@@ -18,6 +18,7 @@ import java.util.Properties;
 import me.zhanghai.android.appiconloader.AppIconLoader;
 
 public class IconManager {
+
     public static Properties getIconsData(Context ctx) {
         Properties iconDB = new Properties();
         try {
@@ -30,11 +31,11 @@ public class IconManager {
     }
 
     public static void regenerateIcons(Context ctx) {
+        Log.i("IconManager", "regenerating icons...");
+        /* initial setup */
         PackageManager pm = ctx.getPackageManager();
         String APP_DATA_FOLDER = ctx.getDataDir().getAbsolutePath();
         String ICONS_FOLDER = APP_DATA_FOLDER + "/app_icons";
-
-        Log.i("IconManager", "regenerating icons...");
         // https://github.com/zhanghai/AppIconLoader
         final AppIconLoader loader= new AppIconLoader(128, false, ctx);
 
@@ -54,7 +55,8 @@ public class IconManager {
         final List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_META_DATA);
         for (PackageInfo packageInfo : packages) {
             ApplicationInfo appInfo = packageInfo.applicationInfo;
-            /* filter out unwanted system utilities */
+            /* filter out unwanted system utilities
+            * https://stackoverflow.com/questions/8784505/how-do-i-check-if-an-app-is-a-non-system-app-in-android */
             if (!appInfo.sourceDir.startsWith("/data/app/") || pm.getLaunchIntentForPackage(appInfo.packageName) == null)
                 continue;
             /* compare the version of the app from iconDB with the retrieved one

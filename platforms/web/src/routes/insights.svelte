@@ -8,7 +8,7 @@
   import { onMount } from "svelte";
   import type { ChartColumnI } from "@redinnlabs/system/utils";
 
-  import Api from "$api";
+  import Api from "@redinn/oceanpeace-mobile/api";
 
   let usageStats: Array<ChartColumnI> = [];
 
@@ -80,11 +80,7 @@
 
 <H thin>Apps used today</H>
 
-<PieChart
-  className="w-64 h-64"
-  maxValue={600}
-  data={usageStats}
->
+<PieChart className="w-64 h-64" maxValue={600} data={usageStats}>
   <div class="wh-full flex flex-col items-center justify-center gap-2">
     <H tag={2}>17 apps</H>
     <H tag={3} thin>opened</H>

@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@redinn/oceanpeace-web",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -12,6 +12,13 @@
     "lint": "pnpm lint:eslint && pnpm lint:svelte",
     "tauri": "tauri",
     "redinn": "pnpm add Redinn-Labs/design-system#release"
+  },
+  "main": "dist/index.d.ts",
+  "files": [
+    "api/*"
+  ],
+  "exports": {
+    ".": "./api/index.d.ts"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "1.0.0-next.34",
@@ -35,6 +42,7 @@
   },
   "dependencies": {
     "@mdi/js": "6.8.96",
+    "@redinn/oceanpeace-mobile": "workspace:^1.0.0",
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release"
   }
 }

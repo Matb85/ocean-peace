@@ -34,8 +34,8 @@ public class AppIconData {
         JSONObject appIcon = new JSONObject();
         try {
             appIcon.put("packageName", packageName);
-            appIcon.put("name", label);
-            appIcon.put("src", iconPath);
+            appIcon.put("label", label);
+            appIcon.put("iconPath", iconPath);
             appIcon.put("version", version);
         } catch (JSONException err) {
             Log.e("IconsPlugin", err.toString());

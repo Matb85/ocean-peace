@@ -1,11 +1,38 @@
 <script lang="ts">
-  import { Icon, Aquarium } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium, Button } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
+
+  import { page } from "$app/stores";
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import type { GoalI, AppIconI } from "$schema";
+  import { onMount } from "svelte";
+
+  const goalId = $page.url.searchParams.get("id");
+  let goalData: GoalI;
+  let selectedApps: AppIconI[] = [];
+  onMount(async () => {
+    console.log(goalId);
+    goalData = await Api.getGoal(goalId);
+
+    selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
+
+    const timeInMinutes = parseInt(goalData.limit);
+
+    sessionStorage.setItem("edit_goal_id", goalData.id);
+    sessionStorage.setItem("edit_goal_name", goalData.name);
+    sessionStorage.setItem("edit_goal_apps", goalData.apps);
+    sessionStorage.setItem("edit_goal_time_minutes", (timeInMinutes % 60) + "");
+    sessionStorage.setItem("edit_goal_time_hours", Math.floor(timeInMinutes / 60) + "");
+    sessionStorage.setItem("edit_goal_active_days", goalData.activeDays);
+    sessionStorage.setItem("edit_goal_limit_action_type", goalData.limitActionType);
+    sessionStorage.setItem("edit_goal_action_type", "Edit");
+    sessionStorage.setItem("edit_goal_action_back", $page.url.pathname + $page.url.search);
+  });
 </script>
 
 <FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
@@ -16,7 +43,7 @@
   <Cutout className="w-full bottom-0 absolute" />
 </section>
 
-<H tag={5} thin className="w-9/12">Limit Social Media to 90min a day</H>
+<H tag={5} thin className="w-9/12">{goalData?.name || ""}</H>
 <section class="w-11/12 grid grid-cols-6 gap-2">
   <PieChart
     className="w-full col-span-4"
@@ -65,4 +92,11 @@
 
 <H thin>Selected apps</H>
 
-<SelectedApps />
+<SelectedApps apps={selectedApps} />
+
+<hr class="border-0 border-b-2 border-gray w-9/12 mt-32 mb-8" />
+<H thin>Danger zone</H>
+
+<a sveltekit:prefetch href="/goal/delete">
+  <Button isWarning>Delete Goal</Button>
+</a>

@@ -1,79 +1,74 @@
 package com.oceanpeace.redinn.goals;
 
+import android.util.Log;
+
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
-@CapacitorPlugin(
-        name = "Goal"
-)
+@CapacitorPlugin(name = "Goal")
 public class GoalsPlugin extends Plugin {
 
     @PluginMethod
-    public void create(PluginCall call) {
-        String name = call.getString("name", "Not named goal");
-        JSObject apps = call.getObject("apps", null);
-        String weekDays = call.getString("weekDays", "1000000");
-        if (weekDays == null)
-            call.reject("Error occurred: weekDays empty");
-        long limit = call.getLong("limit", 120l);
+    public void saveGoal(PluginCall call) {
+        /* get data */
+        String id = call.getString("id");
+        String name = call.getString("name");
+        String apps = call.getString("apps");
+        String limit = call.getString("limit");
+        String activeDays = call.getString("activeDays");
+        String limitActionType = call.getString("limitActionType");
+        if (id == null || name == null || apps == null || limit == null || activeDays == null || limitActionType == null) {
+            call.reject("not enough data"+id+" "+name+" "+apps+" "+limit+" "+activeDays+" "+limitActionType);
+            return;
+        }
 
         Goals goals = new Goals(getActivity().getApplicationContext());
         try {
-            if(!goals.createGoal(name, apps, weekDays, limit))
-              call.reject("Limit reached");
-        }
-        catch (IOException ex) {
-            call.reject("IO error");
+            goals.createGoal(id, name, apps, limit, activeDays, limitActionType);
+        } catch (IOException e) {
+            call.reject("IO error" + e);
         }
         call.resolve();
     }
 
     @PluginMethod
-    public void edit(PluginCall call) {
-        String fileName = call.getString("fileName");
-        if (fileName == null)
-            call.reject("fileName cannot be null");
-        String name = call.getString("name", "Not named goal");
-        JSObject apps = call.getObject("apps", null);
-        String weekDays = call.getString("weekDays");
-        if (weekDays == null)
-            call.reject("Error occurred: weekDays empty");
-        long limit = call.getLong("limit", 120l);
+    public void deleteGoal(PluginCall call) {
+        String id = call.getString("id");
+        if (id == null)
+            call.reject("id cannot be null");
 
         Goals goal = new Goals(getActivity().getApplicationContext());
-        goal.edit(fileName, name, apps, weekDays, limit);
+        goal.deleteGoal(id);
         call.resolve();
     }
 
     @PluginMethod
-    public void delete(PluginCall call) {
-        String fileName = call.getString("fileName");
-        if (fileName == null)
+    public void getGoal(PluginCall call) {
+        String id = call.getString("id");
+        if (id == null)
             call.reject("fileName cannot be null");
 
-        Goals goal = new Goals(getActivity().getApplicationContext());
-        goal.delete(fileName);
-        call.resolve();
+        JSObject res = new JSObject();
+        JSONObject goalData = new Goals(getActivity().getApplicationContext()).getGoal(id);
+
+        res.put("goal", goalData);
+        call.resolve(res);
     }
 
     @PluginMethod
-    public void get(PluginCall call) {
-        String fileName = call.getString("fileName");
-        if (fileName == null)
-            call.reject("fileName cannot be null");
+    public void getAllGoals(PluginCall call) {
+        JSONArray allGoals = new Goals(getActivity().getApplicationContext()).getAllGoals();
+        JSObject res = new JSObject();
 
-        JSObject ret = new Goals(getActivity().getApplicationContext()).getGoal(fileName);
-        call.resolve(ret);
-    }
-
-    @PluginMethod
-    public void getAll(PluginCall call) {
-        JSObject ret = new Goals(getActivity().getApplicationContext()).getAllGoals();
-        call.resolve(ret);
+        res.put("goals", allGoals);
+        call.resolve(res);
     }
 }

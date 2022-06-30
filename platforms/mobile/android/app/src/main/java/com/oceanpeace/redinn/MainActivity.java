@@ -3,13 +3,13 @@ package com.oceanpeace.redinn;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.getcapacitor.BridgeActivity;
-import com.oceanpeace.redinn.focus.Focus;
+import androidx.work.WorkManager;
 
 import com.getcapacitor.BridgeActivity;
-import com.oceanpeace.redinn.icons.IconsPlugin;
+import com.oceanpeace.redinn.focus.Focus;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
+import com.oceanpeace.redinn.icons.IconWorker;
 import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
 
@@ -28,6 +28,8 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
         checkData();
         Focus.getInstance().setContextElements(this.getApplicationContext());
+
+        WorkManager.getInstance(getApplicationContext()).enqueue(IconWorker.regenerateIcons);
 
         registerPlugin(MayoPlugin.class);
         registerPlugin(FocusPlugin.class);
