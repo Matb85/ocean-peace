@@ -41,6 +41,9 @@ img {
   .app-group-con > * {
     @apply self-start;
   }
+  .fixed-bottom-button {
+    @apply fixed bottom-10 w-3/4 z-50;
+  }
 }
 
 /* latin-ext */

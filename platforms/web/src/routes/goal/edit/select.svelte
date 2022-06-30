@@ -62,6 +62,6 @@
   {/each}
 </section>
 
-<a href="/goal/edit/1" sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+<a href="./1" sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
   <Button isFullWidth>Save</Button>
 </a>
