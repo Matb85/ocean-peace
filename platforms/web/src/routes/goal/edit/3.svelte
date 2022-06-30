@@ -7,7 +7,7 @@
 
   import { onMount } from "svelte";
   import Api from "$api";
-  import type { AppIconI } from "$schema";
+  import type { AppIconI, GoalI } from "$schema";
   import { fly } from "svelte/transition";
   import { goto } from "$app/navigation";
 
@@ -22,6 +22,17 @@
   function saveGoal() {
     isComplete = true;
     setTimeout(() => {
+      Api.saveGoal({
+        id: Date.now() + "",
+        name: sessionStorage.getItem("edit_goal_name"),
+        apps: sessionStorage.getItem("edit_goal_apps"),
+        limit:
+          parseInt(sessionStorage.getItem("edit_goal_time_hours")) * 60 +
+          parseInt(sessionStorage.getItem("edit_goal_time_minutes")) +
+          "",
+        activeDays: sessionStorage.getItem("edit_goal_active_days"),
+        limitActionType: sessionStorage.getItem("edit_goal_limit_action_type"),
+      } as GoalI);
       goto("/");
     }, 1500);
   }
@@ -51,7 +62,7 @@
 </div>
 
 <H tag={6} thin>Limit type</H>
-<Button size="small">{sessionStorage.getItem("edit_goal_limit_type")}</Button>
+<Button size="small">{sessionStorage.getItem("edit_goal_limit_action_type")}</Button>
 
 <H tag={6} thin>Selected apps</H>
 <SelectedApps apps={selectedApps} />

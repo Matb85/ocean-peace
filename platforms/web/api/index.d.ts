@@ -11,10 +11,29 @@ export interface FocusStartedI {
   started: boolean;
 }
 
+export interface GoalI {
+  id: string;
+  name: string;
+  apps: string;
+  limit: string;
+  activeDays: string;
+  limitActionType: string;
+}
+
 export default interface Schema {
-  getAppIcon(name: string): Promise<AppIconI | null>;
-  getAppIcons(packageNames: string[]): Promise<AppIconI[]>;
+  /** returns the data of all the app icons installed on the device
+   * @returns all icons
+   */
   getAllAppIcons(): Promise<AppIconI[]>;
+  /** returns the data of specified icons
+   * @returns specified icons
+   */
+  getAppIcons(packageNames: string[]): Promise<AppIconI[]>;
+  /** returns a single app icon data object
+   * @returns a single icon
+   */
+  getAppIcon(name: string): Promise<AppIconI | null>;
+
   getAppsUsage(): Promise<AppsUsage>;
 
   // F O C U S   A P I
@@ -63,43 +82,20 @@ export default interface Schema {
 
   // G O A L S   A P I
 
-  /**
-   * Returns JSON with each goal JSON as described below
-   *
-   * @return                    "0.properties": {"name": "example", "apps": {"1": "com.example", ...}, "weekDays": "1010101", "limit": (number), "history": "0101000...."}, ...
+  /** Returns JSON with each goal JSON as described below
+   * @returns all goals
    */
-  getAllGoals(): Promise<{ goals: JSON }>;
-  /**
-   * Returns goal JSON as described below
-   *
-   * @param fileName            goal fileName "1.properties"
-   *
-   * @return                    {"name": "example", "apps": {"1": "com.example", ...}, "weekDays": "1010101", "limit": (number), "history": "0101000...."}
+  getAllGoals(): Promise<GoalI[]>;
+  /** Returns goal JSON as described below
+   * @param id the id of the goal
    */
-  getGoal(fileName: string): Promise<{ goal: JSON }>;
-  /**
-   * Creates a goal and save it's to file.
-   *
-   * @param goalName            goal's title as string
-   * @param apps                JSON of selected apps {"1": "com.example", ...}
-   * @param weekDays            string of 1/0 values ("1001001")
-   * @param limit               daily time limit as number
+  getGoal(id: string): Promise<GoalI | null>;
+  /** Creates a goal and saves it to a file.
+   * @param {GoalI} data data
    */
-  createGoal(goalName: string, apps: JSON, weekDays: string, limit: number);
-  /**
-   * Updates and saves data to existing goal's file
-   *
-   * @param fileName            file name of the goal
-   * @param goalName            the goal title
-   * @param apps                JSON of selected apps
-   * @param weekDays            string of 1/0 values ("1001001")
-   * @param limit               daily time limit as number
+  saveGoal(data: GoalI): Promise<void>;
+  /** Deletes selected goal and its file
+   * @param id the id of the goal
    */
-  editGoal(fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number);
-  /**
-   * Deletes selected goal and it's file
-   *
-   * @param fileName            file name of the goal
-   */
-  deleteGoal(fileName: string);
+  deleteGoal(id: string): Promise<void>;
 }

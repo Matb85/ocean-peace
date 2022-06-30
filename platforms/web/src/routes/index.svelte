@@ -3,22 +3,30 @@
   import { Goal } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
   import H from "$lib/H.svelte";
-  import { beforeNavigate } from "$app/navigation";
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
 
+  import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/goal/edit/1") {
       sessionStorage.setItem("edit_goal_apps", "[]");
       sessionStorage.setItem("edit_goal_name", "");
-      sessionStorage.setItem("edit_goal_time_minutes", "3");
+      sessionStorage.setItem("edit_goal_time_minutes", "15");
       sessionStorage.setItem("edit_goal_time_hours", "1");
       sessionStorage.setItem("edit_goal_active_days", "[]");
-      sessionStorage.setItem("edit_goal_limit_type", "Notification");
+      sessionStorage.setItem("edit_goal_limit_action_type", "Notification");
       sessionStorage.setItem("edit_goal_action_type", "Add");
       sessionStorage.setItem("edit_goal_action_back", "/");
     }
+  });
+
+  import Api from "$api";
+  import type { GoalI } from "$schema";
+  import { onMount } from "svelte";
+  let allGoals: GoalI[] = [];
+  onMount(async () => {
+    allGoals = await Api.getAllGoals();
   });
 </script>
 
@@ -55,9 +63,9 @@
 <!-- goals display -->
 <H thin>Your Goals</H>
 <div class="card-flex-col">
-  {#each Array(4) as _}
+  {#each allGoals as goal}
     <a sveltekit:prefetch href="/goal" class="w-full">
-      <Goal title={"Some goal here"} info={"something left"} />
+      <Goal title={goal.name} info={"something left"} />
     </a>
   {/each}
   <a sveltekit:prefetch href="/goal/edit/1">

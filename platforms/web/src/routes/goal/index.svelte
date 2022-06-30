@@ -15,7 +15,7 @@
       sessionStorage.setItem("edit_goal_time_minutes", "3");
       sessionStorage.setItem("edit_goal_time_hours", "1");
       sessionStorage.setItem("edit_goal_active_days", "[]");
-      sessionStorage.setItem("edit_goal_limit_type", "Notification");
+      sessionStorage.setItem("edit_goal_limit_action_type", "Notification");
       sessionStorage.setItem("edit_goal_action_type", "Edit");
       sessionStorage.setItem("edit_goal_action_back", "/goal");
     }

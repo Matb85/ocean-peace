@@ -1,6 +1,6 @@
 import { registerPlugin, Capacitor } from "@capacitor/core";
 import type Schema from "../../web/api/index";
-import type { AppIconI, AppsUsage } from "../../web/api/index";
+import type { AppIconI, AppsUsage, GoalI } from "../../web/api/index";
 
 interface IconsPlugin {
   getAllIcons(): Promise<{ apps: AppIconI[] }>;
@@ -24,12 +24,12 @@ interface FocusPlugin {
   startStopwatch(options: { twentyRule: boolean }): Promise<{ started: boolean }>;
   stopFocus();
 }
+
 interface GoalsPlugin {
-  getAllGoals(): Promise<{ goals: JSON }>;
-  getGoal(options: { fileName: string }): Promise<{ goal: JSON }>;
-  createGoal(options: { goalName: string; apps: JSON; weekDays: string; limit: number });
-  editGoal(options: { fileName: string; goalName: string; apps: JSON; weekDays: string; limit: number });
-  deleteGoal(options: { fileName: string });
+  getAllGoals(): Promise<{ goals: GoalI[] }>;
+  getGoal(data: { id: string }): Promise<{ goal: GoalI }>;
+  saveGoal(data: GoalI): void;
+  deleteGoal(data: { id: string }): void;
 }
 
 const Icons = registerPlugin<IconsPlugin>("Icons");
@@ -102,25 +102,19 @@ const AndroidApi: Schema = {
     await Focus.stopFocus();
     return;
   },
-  async getAllGoals() {
+  async getAllGoals(): Promise<GoalI[]> {
     const { goals } = await Goal.getAllGoals();
-    return { goals };
+    return goals;
   },
-  async getGoal(fileName: string) {
-    const { goal } = await Goal.getGoal({ fileName });
-    return { goal };
+  async getGoal(id: string): Promise<GoalI | null> {
+    const { goal } = await Goal.getGoal({ id });
+    return goal;
   },
-  async createGoal(goalName: string, apps: JSON, weekDays: string, limit: number) {
-    await Goal.createGoal({ goalName, apps, weekDays, limit });
-    return;
+  async saveGoal(data: GoalI): Promise<void> {
+    await Goal.saveGoal(data);
   },
-  async editGoal(fileName: string, goalName: string, apps: JSON, weekDays: string, limit: number) {
-    await Goal.editGoal({ fileName, goalName, apps, weekDays, limit });
-    return;
-  },
-  async deleteGoal(fileName: string) {
-    await Goal.deleteGoal({ fileName });
-    return;
+  async deleteGoal(id: string): Promise<void> {
+    await Goal.deleteGoal({ id });
   },
 };
 

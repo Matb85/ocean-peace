@@ -11,7 +11,7 @@
     current: parseInt(sessionStorage.getItem("edit_goal_time_hours")) || 1,
     multiplier: 1,
   };
-  const minutes = timeInputConfig.minutesConfig(parseInt(sessionStorage.getItem("edit_goal_time_minutes")) || 3);
+  const minutes = timeInputConfig.minutesConfig(parseInt(sessionStorage.getItem("edit_goal_time_minutes")) / 5);
   let h: number;
   let m: number;
   h = hours.current;
@@ -26,7 +26,7 @@
   Object.defineProperty(minutes, "current", {
     set: val => {
       m = val;
-      sessionStorage.setItem("edit_goal_time_minutes", m.toString());
+      sessionStorage.setItem("edit_goal_time_minutes", (m * minutes.multiplier).toString());
     },
     get: () => m,
   });
@@ -37,8 +37,8 @@
     sessionStorage.setItem("edit_goal_active_days", JSON.stringify(days.filter(x => activeDays.includes(x))));
 
   const limitTypes = ["Notification", "Close app"];
-  let type = sessionStorage.getItem("edit_goal_limit_type");
-  $: type, sessionStorage.setItem("edit_goal_limit_type", type);
+  let type = sessionStorage.getItem("edit_goal_limit_action_type");
+  $: type, sessionStorage.setItem("edit_goal_limit_action_type", type);
 </script>
 
 <FullHeading backHref="./1">{sessionStorage.getItem("edit_goal_action_type")} goal</FullHeading>
