@@ -1,5 +1,7 @@
 package com.oceanpeace.redinn.goals;
 
+import android.util.Log;
+
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -44,7 +46,7 @@ public class GoalsPlugin extends Plugin {
             call.reject("id cannot be null");
 
         Goals goal = new Goals(getActivity().getApplicationContext());
-        goal.delete(id);
+        goal.deleteGoal(id);
         call.resolve();
     }
 

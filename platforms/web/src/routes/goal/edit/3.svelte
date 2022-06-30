@@ -23,7 +23,7 @@
     isComplete = true;
     setTimeout(() => {
       Api.saveGoal({
-        id: Date.now() + "",
+        id: sessionStorage.getItem("edit_goal_id"),
         name: sessionStorage.getItem("edit_goal_name"),
         apps: sessionStorage.getItem("edit_goal_apps"),
         limit:

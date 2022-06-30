@@ -6,18 +6,36 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
-  import { beforeNavigate } from "$app/navigation";
 
+  import { page } from "$app/stores";
+  import Api from "$api";
+  import type { GoalI, AppIconI } from "$schema";
+  import { onMount } from "svelte";
+
+  const goalId = $page.url.searchParams.get("id");
+  let goalData: GoalI;
+  let selectedApps: AppIconI[] = [];
+  onMount(async () => {
+    console.log(goalId);
+    goalData = await Api.getGoal(goalId);
+
+    selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
+  });
+
+  import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/goal/edit/1") {
-      sessionStorage.setItem("edit_goal_apps", "[]");
-      sessionStorage.setItem("edit_goal_name", "");
-      sessionStorage.setItem("edit_goal_time_minutes", "3");
-      sessionStorage.setItem("edit_goal_time_hours", "1");
-      sessionStorage.setItem("edit_goal_active_days", "[]");
-      sessionStorage.setItem("edit_goal_limit_action_type", "Notification");
+      const timeInMinutes = parseInt(goalData.limit);
+
+      sessionStorage.setItem("edit_goal_id", goalData.id);
+      sessionStorage.setItem("edit_goal_name", goalData.name);
+      sessionStorage.setItem("edit_goal_apps", goalData.apps);
+      sessionStorage.setItem("edit_goal_time_minutes", (timeInMinutes % 60) + "");
+      sessionStorage.setItem("edit_goal_time_hours", Math.floor(timeInMinutes / 60) + "");
+      sessionStorage.setItem("edit_goal_active_days", goalData.activeDays);
+      sessionStorage.setItem("edit_goal_limit_action_type", goalData.limitActionType);
       sessionStorage.setItem("edit_goal_action_type", "Edit");
-      sessionStorage.setItem("edit_goal_action_back", "/goal");
+      sessionStorage.setItem("edit_goal_action_back", $page.url.pathname + $page.url.search);
     }
   });
 </script>
@@ -30,7 +48,7 @@
   <Cutout className="w-full bottom-0 absolute" />
 </section>
 
-<H tag={5} thin className="w-9/12">Limit Social Media to 90min a day</H>
+<H tag={5} thin className="w-9/12">{goalData?.name || ""}</H>
 <section class="w-11/12 grid grid-cols-6 gap-2">
   <PieChart
     className="w-full col-span-4"
@@ -79,4 +97,4 @@
 
 <H thin>Selected apps</H>
 
-<SelectedApps />
+<SelectedApps apps={selectedApps} />

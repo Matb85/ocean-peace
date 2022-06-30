@@ -74,21 +74,33 @@ public class Goals {
         /* put data from each goal the the final array */
         JSONArray ret = new JSONArray();
 
+        Log.d("GoalsPlugin","iterating through all files...");
+
         for (File file : files) {
-            JSONObject goal = getGoal(file.getName());
+            Log.d("GoalsPlugin","reading file "+ removeFileExtension(file.getName(),true));
+
+            JSONObject goal = getGoal(removeFileExtension(file.getName(),true));
             ret.put(goal);
         }
 
         return ret;
     }
 
+    private static String removeFileExtension(String filename, boolean removeAllExtensions) {
+        if (filename == null || filename.isEmpty()) {
+            return filename;
+        }
+
+        String extPattern = "(?<!^)[.]" + (removeAllExtensions ? ".*" : "[^.]*$");
+        return filename.replaceAll(extPattern, "");
+    }
 
     public JSONObject getGoal(String id) {
         JSONObject res = new JSONObject();
 
         PropertiesManager goalData = new PropertiesManager(
                 context.getFilesDir() + "/goals",
-                id
+                id + ".properties"
         );
 
         try {
@@ -105,7 +117,7 @@ public class Goals {
     }
 
 
-    public void delete(String id) {
+    public void deleteGoal(String id) {
         PropertiesManager goalsProperties = new PropertiesManager("goals.properties", context);
         /* get the list of all goals ids */
         String tempGoalsIdsString = goalsProperties.Read("goalsIds");

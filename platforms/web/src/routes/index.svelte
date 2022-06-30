@@ -10,8 +10,9 @@
   import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/goal/edit/1") {
-      sessionStorage.setItem("edit_goal_apps", "[]");
+      sessionStorage.setItem("edit_goal_id", Date.now() + "");
       sessionStorage.setItem("edit_goal_name", "");
+      sessionStorage.setItem("edit_goal_apps", "[]");
       sessionStorage.setItem("edit_goal_time_minutes", "15");
       sessionStorage.setItem("edit_goal_time_hours", "1");
       sessionStorage.setItem("edit_goal_active_days", "[]");
@@ -64,8 +65,8 @@
 <H thin>Your Goals</H>
 <div class="card-flex-col">
   {#each allGoals as goal}
-    <a sveltekit:prefetch href="/goal" class="w-full">
-      <Goal title={goal.name} info={"something left"} />
+    <a sveltekit:prefetch href="/goal?id={goal.id}" class="w-full">
+      <Goal title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
     </a>
   {/each}
   <a sveltekit:prefetch href="/goal/edit/1">
