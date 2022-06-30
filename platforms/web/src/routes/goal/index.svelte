@@ -6,6 +6,18 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
+  import { beforeNavigate } from "$app/navigation";
+
+  beforeNavigate(({ to }) => {
+    if ((to.pathname = "/goal/edit/1")) {
+      sessionStorage.setItem("edit_goal_apps", "[]");
+      sessionStorage.setItem("edit_goal_name", "");
+      sessionStorage.setItem("edit_goal_time_minutes", "3");
+      sessionStorage.setItem("edit_goal_time_hours", "1");
+      sessionStorage.setItem("edit_goal_active_days", "[]");
+      sessionStorage.setItem("edit_goal_limit_type", "Notification");
+    }
+  });
 </script>
 
 <FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>

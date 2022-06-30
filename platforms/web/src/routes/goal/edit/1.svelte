@@ -11,10 +11,10 @@
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    selectedApps = await Api.getAppIcons(JSON.parse(sessionStorage.getItem("edit_goal_apps") || "[]"));
+    selectedApps = await Api.getAppIcons(JSON.parse(sessionStorage.getItem("edit_goal_apps")));
   });
 
-  let name = sessionStorage.getItem("edit_goal_name") || "";
+  let name = sessionStorage.getItem("edit_goal_name");
   $: name, sessionStorage.setItem("edit_goal_name", name);
 </script>
 
@@ -45,5 +45,7 @@
   sveltekit:prefetch
   class="fixed-bottom-button"
   href={selectedApps.length > 0 && name.length > 0 ? "./2" : ""}
-  style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}><Button isFullWidth>next</Button></a
+  style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}
 >
+  <Button isFullWidth>next</Button>
+</a>

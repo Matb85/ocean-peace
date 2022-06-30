@@ -32,11 +32,12 @@
   });
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  let activeDays = JSON.parse(sessionStorage.getItem("edit_goal_active_days") || "[]");
-  $: activeDays, sessionStorage.setItem("edit_goal_active_days", JSON.stringify(activeDays));
+  let activeDays = JSON.parse(sessionStorage.getItem("edit_goal_active_days"));
+  $: activeDays /** filter days when saving to maintain order*/,
+    sessionStorage.setItem("edit_goal_active_days", JSON.stringify(days.filter(x => activeDays.includes(x))));
 
   const limitTypes = ["Notification", "Close app"];
-  let type = sessionStorage.getItem("edit_goal_limit_type") || limitTypes[0];
+  let type = sessionStorage.getItem("edit_goal_limit_type");
   $: type, sessionStorage.setItem("edit_goal_limit_type", type);
 </script>
 
@@ -57,9 +58,9 @@
 
 <a
   sveltekit:prefetch
-  href={activeDays.length > 0 ? "/" : ""}
+  href={activeDays.length > 0 ? "./3" : ""}
   class="fixed-bottom-button"
   style:opacity={activeDays.length > 0 ? "1" : "0.5"}
 >
-  <Button isFullWidth>save</Button>
+  <Button isFullWidth>next</Button>
 </a>
