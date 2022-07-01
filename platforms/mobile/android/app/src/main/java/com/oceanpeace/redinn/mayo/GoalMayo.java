@@ -18,16 +18,16 @@ import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.getcapacitor.JSObject;
-import com.oceanpeace.redinn.PropertiesManager;
+import com.getcapacitor.JSArray;
 import com.oceanpeace.redinn.R;
 import com.oceanpeace.redinn.goals.Goals;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,7 +40,7 @@ public class GoalMayo extends Worker {
 
     }
 
-    JSObject goals = new JSObject();
+    JSONArray goals = new JSArray();
 
     private NotificationManager notificationManager;
 
@@ -76,18 +76,18 @@ public class GoalMayo extends Worker {
                                             .build()
                             );
 
-                    Iterator<String> iterator = goals.keys();
-                    while (iterator.hasNext()) {
-                        PropertiesManager manager = new PropertiesManager(
-                                getApplicationContext().getFilesDir() + "/goals",
-                                iterator.next()
-                        );
-                        String history = manager.Read("history");
-                        if (history.length() == 7) {
-                            history = history.substring(1,6);
-                        }
-                       manager.Write("history", history + "1");
-                    }
+//                    Iterator<String> iterator = goals.keys();
+//                    while (iterator.hasNext()) {
+//                        PropertiesManager manager = new PropertiesManager(
+//                                getApplicationContext().getFilesDir() + "/goals",
+//                                iterator.next()
+//                        );
+//                        String history = manager.Read("history");
+//                        if (history.length() == 7) {
+//                            history = history.substring(1,6);
+//                        }
+//                       manager.Write("history", history + "1");
+//                    }
                 }
             }
         };
@@ -97,12 +97,12 @@ public class GoalMayo extends Worker {
     }
 
 
-    private JSObject getGoals(int DAY_OF_WEEK) {
+    private JSONArray getGoals(int DAY_OF_WEEK) {
         Goals manager = new Goals(getApplicationContext());
-        JSObject allGoals = manager.getAllGoals();
-        JSObject ret = new JSObject();
+        JSONArray allGoals = manager.getAllGoals();
+        JSONArray ret = new JSONArray();
 
-        Iterator<String> iterator = allGoals.keys();
+
 
         int dayIndex;
         switch (DAY_OF_WEEK) {
@@ -134,21 +134,25 @@ public class GoalMayo extends Worker {
         }
 
 
-        int i=0;
-        JSObject current = new JSObject();
-        while (iterator.hasNext()) {
-            current = allGoals.getJSObject(iterator.next());
-            if (current.getString("weekDays").charAt(dayIndex) == '1') {
-                ret.put(i+ "", current);
+
+        JSONObject current = new JSONObject();
+        for (int i = 0; i < allGoals.length(); i++) {
+            try {
+                current = allGoals.getJSONObject(i);
+                if (current.getString("weekDays").charAt(dayIndex) == '1') {
+                    ret.put(current);
+                }
+            } catch (JSONException e) {
+                Log.e("MAYO", "getting goal JSON failed");
             }
         }
 
-        return current;
+        return ret;
     }
 
 
 
-    public void goalMayo(JSObject goals) {
+    public void goalMayo(JSONArray goals) {
 
         UsageStatsManager manager = (UsageStatsManager) getApplicationContext().getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> usageStats = manager.queryUsageStats(
@@ -156,58 +160,69 @@ public class GoalMayo extends Worker {
                 Calendar.getInstance().getTimeInMillis() - (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 * 60 * 1000 + (Calendar.getInstance().get(Calendar.MINUTE) - 1)* 60 * 1000),
                 Calendar.getInstance().getTimeInMillis());
 
-        Iterator<String> iterator = goals.keys();
 
-        while (iterator.hasNext()) {
-            String _iterator = iterator.next();
-            JSObject _goal = goals.getJSObject(_iterator);
-            JSObject apps = _goal.getJSObject("apps");
-            if (apps == null)
+        for (int i=0; i<goals.length(); i++) {
+
+            JSONObject _goal = null;
+            String _apps = "";
+            try {
+                _goal = goals.getJSONObject(i);
+                _apps = _goal.getString("apps");
+            } catch (JSONException e) {
+                e.printStackTrace();
                 continue;
+            }
+
+            if (_apps.length() < 1)
+                continue;
+
 
 
             long limit = 0;
             try {
-                limit = _goal.getLong("limit");
-            } catch (JSONException e) {
+                limit = Long.getLong(_goal.getString("limit"));
+            } catch (NullPointerException e) {
+                e.printStackTrace();
                 continue;
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
             long tTime = 0;
 
-            for (UsageStats stats: usageStats) {
-                Iterator<String> _it = apps.keys();
-                while (_it.hasNext()) {
-                    if (apps.getString(_it.next()) == stats.getPackageName())
-                        tTime += stats.getTotalTimeInForeground();
-                }
-            }
-            if (tTime >= limit * 60 * 1000) {
-                NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(getApplicationContext(), "ocean");
-                nBuilder.setContentTitle("Goal met")
-                        .setContentText(_goal.getString("name") + "limit was reached")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .setBigContentTitle(_goal.getString("name"))
-                                .bigText("Limit of " +
-                                        ((int)(limit/1000/60/60) < 1 ? "" : (int)(limit/1000/60/60) + "h ") +
-                                        ((int)(limit/1000/60) < 1 ? "" : (int)(limit/1000/60) + "min ") +
-                                        "was reached")
-                        )
-                        .setPriority(NotificationCompat.PRIORITY_MAX)
-                        .setAutoCancel(true);
-
-                Log.i("Err", "goalMayo: elo koniec mordo!");
-
-                PropertiesManager pm = new PropertiesManager(getApplicationContext().getFilesDir() + "/goals", "0.properties");
-                String history = pm.Read("history");
-                if (history.length() == 7) {
-                    history = history.substring(1,6);
-                }
-                    pm.Write("history", history + "0");
-
-
-                goals.remove(_iterator);
-            }
-            Log.i("MAYO", "goalMayo: " + _goal.getString("name") + ": " + tTime);
+//            for (UsageStats stats: usageStats) {
+//                for (int j=0; j< apps.length(); j++) {
+//                    if ( == stats.getPackageName())
+//                        tTime += stats.getTotalTimeInForeground();
+//                }
+//            }
+//            if (tTime >= limit * 60 * 1000) {
+//                NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(getApplicationContext(), "ocean");
+//                nBuilder.setContentTitle("Goal met")
+//                        .setContentText(_goal.getString("name") + "limit was reached")
+//                        .setStyle(new NotificationCompat.BigTextStyle()
+//                                .setBigContentTitle(_goal.getString("name"))
+//                                .bigText("Limit of " +
+//                                        ((int)(limit/1000/60/60) < 1 ? "" : (int)(limit/1000/60/60) + "h ") +
+//                                        ((int)(limit/1000/60) < 1 ? "" : (int)(limit/1000/60) + "min ") +
+//                                        "was reached")
+//                        )
+//                        .setPriority(NotificationCompat.PRIORITY_MAX)
+//                        .setAutoCancel(true);
+//
+//                Log.i("Err", "goalMayo: elo koniec mordo!");
+//
+//                PropertiesManager pm = new PropertiesManager(getApplicationContext().getFilesDir() + "/goals", "0.properties");
+//                String history = pm.Read("history");
+//                if (history.length() == 7) {
+//                    history = history.substring(1,6);
+//                }
+//                    pm.Write("history", history + "0");
+//
+//
+//                goals.remove(_iterator);
+//            }
+//            Log.i("MAYO", "goalMayo: " + _goal.getString("name") + ": " + tTime);
         }
 
     }
