@@ -41,7 +41,7 @@
     "typescript": "4.7.4"
   },
   "dependencies": {
-    "@mdi/js": "6.8.96",
+    "@mdi/js": "6.9.96",
     "@redinn/oceanpeace-mobile": "workspace:^1.0.0",
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release"
   }
