@@ -1,8 +1,5 @@
 package com.oceanpeace.redinn.icons;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.getcapacitor.JSObject;
@@ -10,105 +7,96 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.oceanpeace.redinn.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.List;
-
-import me.zhanghai.android.appiconloader.AppIconLoader;
+import java.util.Properties;
 
 @CapacitorPlugin(name = "Icons")
 public class IconsPlugin extends Plugin {
-    /**
-     * get the package manager
-     */
-    private PackageManager getPM() {
-        return getActivity().getApplicationContext().getPackageManager();
+
+    @Override
+    public void load() {
+        Log.d("IconPlugin", "Starting the instance");
     }
 
-    private String getAppDataDir() {
-        PackageManager pm = getPM();
-        String s = getActivity().getApplicationContext().getPackageName();
-        try {
-            ApplicationInfo info = pm.getApplicationInfo(s, PackageManager.GET_META_DATA);
-            s = info.dataDir;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.w("Package", "Error Package name not found ", e);
-            return null;
+    private JSONArray sortListToJSON(List<JSONObject> list) {
+        list.sort(new Comparator<JSONObject>() {
+            // You can change "Name" with "ID" if you want to sort by ID
+            private static final String KEY_NAME = "label";
+
+            @Override
+            public int compare(JSONObject a, JSONObject b) {
+                String valA = "";
+                String valB = "";
+
+                try {
+                    valA = (String) a.get(KEY_NAME);
+                    valB = (String) b.get(KEY_NAME);
+                } catch (JSONException e) {
+                    Log.e("IconsPlugin", "error white sorting data");
+                }
+
+                return valA.compareTo(valB);
+                // if you want to change the sort order, simply use the following:
+                // return -valA.compareTo(valB);
+            }
+        });
+
+        JSONArray sorted = new JSONArray();
+
+        for (int i = 0; i < list.size(); i++) {
+            sorted.put(list.get(i));
         }
-        return s;
+        return sorted;
     }
 
     @PluginMethod
     public void getAllIcons(PluginCall call) {
         /* note: one cannot access actual files! */
-        JSObject ret = new JSObject();
-        JSONArray responseArray = new JSONArray();
-        PackageManager pm = getPM();
-        // https://github.com/zhanghai/AppIconLoader
-        AppIconLoader loader = new AppIconLoader(128,false,getActivity().getApplicationContext());
+        JSObject res = new JSObject();
+        List<JSONObject> sortable = new ArrayList<>();
 
-        /* prepare a folder for the icons */
-        String iconFolder = getAppDataDir() + "/app_icons";
-        File iconFolderFile = new File(iconFolder);
-        if (iconFolderFile.isDirectory()) {
-            Log.e("IconsPlugin", "deleting the app_icons folder");
-            iconFolderFile.delete();
+        /* retrieve data */
+        Properties iconDB = IconManager.getIconsData(getActivity().getApplicationContext());
+
+        Enumeration<String> props = (Enumeration<String>) iconDB.propertyNames();
+        while (props.hasMoreElements()) {
+            /* get the app's package name */
+            String packageName = props.nextElement();
+            String data = iconDB.getProperty(packageName);
+            sortable.add((new AppIconData(packageName, data)).toJSON());
         }
+        res.put("apps", sortListToJSON(sortable));
 
-        iconFolderFile.mkdir();
-        /* get a list of ALL the installed apps - including system utilities. */
-        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        for (ApplicationInfo packageInfo : packages) {
-            /* filter out unwanted system utils */
-            if (!packageInfo.sourceDir.startsWith("/data/app/") || pm.getLaunchIntentForPackage(packageInfo.packageName) == null)
-                continue;
-
-            /* generate a file path for each icon */
-            String iconPath = iconFolder + "/" + packageInfo.packageName + ".png";
-            /* log stuff */
-            Log.d("IconsPlugin-" + packageInfo.packageName, "name: " + pm.getApplicationLabel(packageInfo));
-            Log.d("IconsPlugin-" + packageInfo.packageName, "icon path: " + iconPath);
-            File f = new File(iconPath);
-            if (!f.isFile()) {
-                Log.d("IconsPlugin-" + packageInfo.packageName, "icon does not exist - generating a new one: " + iconPath);
-                Bitmap bitmap = loader.loadIcon(packageInfo);
-                bitmapDrawableToFile(bitmap, iconPath);
-            }
-            /* push the data to the main object that is returned */
-            JSONObject appIcon = new JSONObject();
-            try {
-                appIcon.put("name", pm.getApplicationLabel(packageInfo));
-                appIcon.put("src", iconPath);
-            } catch (JSONException err) {
-                Log.e("IconsPlugin-" + packageInfo.packageName, err.toString());
-            }
-            responseArray.put(appIcon);
-        }
-
-        ret.put("apps", responseArray);
-
-        call.resolve(ret);
+        call.resolve(res);
     }
 
-    // http://www.carbonrider.com/2016/01/01/extract-app-icon-in-android/
-    private static void bitmapDrawableToFile(Bitmap icon, String iconPath) {
-        /* try to save the icon */
-        FileOutputStream out;
-        try {
-            out = new FileOutputStream(iconPath);
-            icon.compress(Bitmap.CompressFormat.PNG, 100, out);
-            try {
-                out.close();
-            } catch (Throwable ignore) {
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @PluginMethod
+    public void getIcon(PluginCall call) {
+        String packageName = call.getString("packageName");
+        if (packageName == null) {
+            call.reject("no packageName provided");
+            return;
         }
+        JSObject res = new JSObject();
+        /* retrieve data */
+        Properties iconDB = IconManager.getIconsData(getActivity().getApplicationContext());
+        String data = iconDB.getProperty(packageName);
+        if (data == null) {
+            call.reject("no data for packageName " + packageName + " found");
+            return;
+        }
+        AppIconData parsedData = new AppIconData(packageName, data);
+
+        res.put("app", parsedData.toJSON());
+
+        call.resolve(res);
     }
 }

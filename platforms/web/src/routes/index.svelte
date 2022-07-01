@@ -6,6 +6,29 @@
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
+
+  import { beforeNavigate } from "$app/navigation";
+  beforeNavigate(({ to }) => {
+    if (to.pathname == "/goal/edit/1") {
+      sessionStorage.setItem("edit_goal_id", "goal" + Date.now());
+      sessionStorage.setItem("edit_goal_name", "");
+      sessionStorage.setItem("edit_goal_apps", "[]");
+      sessionStorage.setItem("edit_goal_time_minutes", "15");
+      sessionStorage.setItem("edit_goal_time_hours", "1");
+      sessionStorage.setItem("edit_goal_active_days", "[]");
+      sessionStorage.setItem("edit_goal_limit_action_type", "Notification");
+      sessionStorage.setItem("edit_goal_action_type", "Add");
+      sessionStorage.setItem("edit_goal_action_back", "/");
+    }
+  });
+
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import type { GoalI } from "$schema";
+  import { onMount } from "svelte";
+  let allGoals: GoalI[] = [];
+  onMount(async () => {
+    allGoals = await Api.getAllGoals();
+  });
 </script>
 
 <!-- aquarium background -->
@@ -41,12 +64,15 @@
 <!-- goals display -->
 <H thin>Your Goals</H>
 <div class="card-flex-col">
-  {#each Array(4) as _}
-    <a sveltekit:prefetch href="/goal" class="w-full">
-      <Goal title={"Some goal here"} info={"something left"} />
+  {#each allGoals as goal}
+    <a sveltekit:prefetch href="/goal?id={goal.id}" class="w-full">
+      <Goal percentage={Math.random() * 100} title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
     </a>
   {/each}
-  <a sveltekit:prefetch href="/goale/dit/1">
-    <Button secondary>Add Goal</Button>
+  {#if allGoals.length == 0}
+    <p>No goals</p>
+  {/if}
+  <a sveltekit:prefetch href="/goal/edit/1">
+    <Button>Add Goal</Button>
   </a>
 </div>

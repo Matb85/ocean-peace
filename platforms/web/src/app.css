@@ -22,6 +22,9 @@ body {
   @apply w-full select-none;
 }
 
+img {
+  @apply object-cover;
+}
 @layer base {
   .wh-full {
     @apply w-full h-full;
@@ -31,6 +34,15 @@ body {
   }
   .card-flex-col {
     @apply flex flex-col items-center w-11/12 gap-4;
+  }
+  .app-group-con {
+    @apply w-full flex flex-wrap justify-center gap-x-2 gap-y-4;
+  }
+  .app-group-con > * {
+    @apply self-start;
+  }
+  .fixed-bottom-button {
+    @apply fixed bottom-10 w-3/4 z-50;
   }
 }
 

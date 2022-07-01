@@ -26,8 +26,8 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$api": ["../mobile/api"],
-      "$api/*": ["../mobile/api/*"]
+      "$schema": ["./api"],
+      "$schema/*": ["./api/*"]
     }
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]

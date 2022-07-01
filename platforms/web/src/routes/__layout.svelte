@@ -15,23 +15,20 @@
 
   beforeNavigate(({ from, cancel, to }) => {
     if (from) {
-      new Promise<void>(resolve => {
-        if (from.pathname == to.pathname) {
-          return;
-        }
-        className = "during-transition";
-        if (tempTo != to.pathname) {
-          cancel();
+      if (from.pathname == to.pathname) {
+        return;
+      }
+      className = "during-transition";
+      if (tempTo != to.pathname + to.search) {
+        cancel();
+        setTimeout(() => {
+          goto(to.pathname + to.search);
           setTimeout(() => {
-            goto(to.pathname);
-            setTimeout(() => {
-              className = "";
-              resolve();
-            }, 200);
+            className = "";
           }, 200);
-        }
-        tempTo = to.pathname;
-      });
+        }, 200);
+      }
+      tempTo = to.pathname + to.search;
     }
   });
 </script>
@@ -50,7 +47,7 @@
   @import "@redinnlabs/system/utils/base.css";
 
   #main {
-    @apply flex flex-col items-center gap-4 pb-16;
+    @apply flex flex-col items-center gap-4 pb-32;
     scrollbar-width: none;
     transition-duration: 200ms;
     transition-property: transform, opacity;

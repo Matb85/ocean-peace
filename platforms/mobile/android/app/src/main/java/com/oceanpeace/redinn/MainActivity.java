@@ -11,6 +11,7 @@ import com.getcapacitor.BridgeActivity;
 import com.oceanpeace.redinn.focus.Focus;
 import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
+import com.oceanpeace.redinn.icons.IconWorker;
 import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.mayo.GoalMayo;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
@@ -41,6 +42,7 @@ public class MainActivity extends BridgeActivity {
 
         WorkManager.getInstance(getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE,new OneTimeWorkRequest.Builder(GoalMayo.class).build());
 
+        WorkManager.getInstance(getApplicationContext()).enqueue(IconWorker.regenerateIcons);
 
         registerPlugin(MayoPlugin.class);
         registerPlugin(FocusPlugin.class);

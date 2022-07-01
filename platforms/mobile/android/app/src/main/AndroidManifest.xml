@@ -38,6 +38,10 @@
             android:name=".focus.Focus"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".icons.IconManager"
+            android:enabled="true"
+            android:exported="true" />
 
         <receiver
             android:name=".Autostart"

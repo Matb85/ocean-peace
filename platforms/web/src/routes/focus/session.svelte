@@ -6,13 +6,13 @@
   import H from "$lib/H.svelte";
   import { onMount } from "svelte";
 
-  import Api from '$api';
+  import Api from "@redinn/oceanpeace-mobile/api";
 
   export let presetName: string = "Example";
   export let appsCount: number = 16;
 
   onMount(async () => {
-    const t:boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
+    const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
   });
 </script>
 
