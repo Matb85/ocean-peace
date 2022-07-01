@@ -9,6 +9,7 @@ interface IconsPlugin {
 
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
+  stopBackgroundMayo();
 }
 
 interface FocusPlugin {
@@ -75,6 +76,9 @@ const AndroidApi: Schema = {
     const { stats } = await Mayo.callMayo();
 
     return { stats };
+  },
+  async stopBackgroundMayo() {
+    await Mayo.stopBackgroundMayo();
   },
   async startContinuous(continuousDuration: number, twentyRule: boolean, wakeDevice: boolean) {
     const { started } = await Focus.startContinuous({

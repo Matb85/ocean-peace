@@ -19,6 +19,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.getcapacitor.JSArray;
+import com.oceanpeace.redinn.PropertiesManager;
 import com.oceanpeace.redinn.R;
 import com.oceanpeace.redinn.goals.Goals;
 
@@ -56,6 +57,7 @@ public class GoalMayo extends Worker {
         int DAY_OF_WEEK = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 
         goals = getGoals(DAY_OF_WEEK);
+        Log.i("DEBUG", "doWork: " + goals.toString());
 
         setForegroundAsync(createForegroundInfo("Mayo running"));
 
@@ -76,22 +78,28 @@ public class GoalMayo extends Worker {
                                             .build()
                             );
 
-//                    Iterator<String> iterator = goals.keys();
-//                    while (iterator.hasNext()) {
-//                        PropertiesManager manager = new PropertiesManager(
-//                                getApplicationContext().getFilesDir() + "/goals",
-//                                iterator.next()
-//                        );
-//                        String history = manager.Read("history");
-//                        if (history.length() == 7) {
-//                            history = history.substring(1,6);
-//                        }
-//                       manager.Write("history", history + "1");
-//                    }
+
+                    for (int i=0; i < goals.length(); i++) {
+                        PropertiesManager manager = null;
+                        try {
+                            manager = new PropertiesManager(
+                                    getApplicationContext().getFilesDir() + "/goals",
+                                    goals.getJSONObject(i).getString("id")
+                                    );
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        String history = manager.Read("history");
+                        if (history.length() == 7) {
+                            history = history.substring(1,6);
+                        }
+                       manager.Write("history", history + "1");
+                    }
                 }
             }
         };
-        timer.schedule(timerTask, 1000 * 2, 1000 * 2);
+        timer.schedule(timerTask, 0, 1000 * 60 * 5);
 
         return Result.success();
     }
@@ -104,44 +112,46 @@ public class GoalMayo extends Worker {
 
 
 
-        int dayIndex;
+        String dayIndex;
         switch (DAY_OF_WEEK) {
             case Calendar.MONDAY:
-                dayIndex = 0;
+                dayIndex = "Mon";
                 break;
             case Calendar.TUESDAY:
-                dayIndex = 1;
+                dayIndex = "Tue";
                 break;
             case Calendar.WEDNESDAY:
-                dayIndex = 2;
+                dayIndex = "Wed";
                 break;
             case Calendar.THURSDAY:
-                dayIndex = 3;
+                dayIndex = "Thu";
                 break;
             case Calendar.FRIDAY:
-                dayIndex = 4;
+                dayIndex = "Fri";
                 break;
             case Calendar.SATURDAY:
-                dayIndex = 5;
+                dayIndex = "Sat";
                 break;
             case Calendar.SUNDAY:
-                dayIndex = 6;
+                dayIndex = "Sun";
                 break;
             default:
                 Log.e("MAYO", "getGoals: day don't exist");
-                dayIndex = 10;
+                dayIndex = "Mon";
                 break;
         }
 
 
 
-        JSONObject current = new JSONObject();
+
+        Log.i("DEBUG", "getGoals: " + allGoals.toString());
         for (int i = 0; i < allGoals.length(); i++) {
             try {
-                current = allGoals.getJSONObject(i);
-                if (current.getString("weekDays").charAt(dayIndex) == '1') {
-                    ret.put(current);
-                }
+                String days = allGoals.getJSONObject(i).getString("activeDays");
+                Log.i("DEBUG", "getGoals: " + days);
+
+                if (days.contains(dayIndex))
+                    ret.put(allGoals.getJSONObject(i));
             } catch (JSONException e) {
                 Log.e("MAYO", "getting goal JSON failed");
             }
@@ -157,8 +167,8 @@ public class GoalMayo extends Worker {
         UsageStatsManager manager = (UsageStatsManager) getApplicationContext().getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> usageStats = manager.queryUsageStats(
                 UsageStatsManager.INTERVAL_DAILY,
-                Calendar.getInstance().getTimeInMillis() - (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60 * 60 * 1000 + (Calendar.getInstance().get(Calendar.MINUTE) - 1)* 60 * 1000),
-                Calendar.getInstance().getTimeInMillis());
+                System.currentTimeMillis() -  60 * 60 * 1000,
+                System.currentTimeMillis());
 
 
         for (int i=0; i<goals.length(); i++) {
@@ -173,56 +183,86 @@ public class GoalMayo extends Worker {
                 continue;
             }
 
+            Log.i("DEBUG", "goalMayo: " + _goal.toString());
+
             if (_apps.length() < 1)
                 continue;
 
-
+            JSONArray apps = new JSONArray();
+            try {
+                apps = new JSONArray(_apps);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.i("DEBUG", "goalMayo: " + apps.toString());
 
             long limit = 0;
             try {
-                limit = Long.getLong(_goal.getString("limit"));
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                continue;
+                limit = Long.parseLong(_goal.getString("limit"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             long tTime = 0;
 
-//            for (UsageStats stats: usageStats) {
-//                for (int j=0; j< apps.length(); j++) {
-//                    if ( == stats.getPackageName())
-//                        tTime += stats.getTotalTimeInForeground();
-//                }
-//            }
-//            if (tTime >= limit * 60 * 1000) {
-//                NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(getApplicationContext(), "ocean");
-//                nBuilder.setContentTitle("Goal met")
-//                        .setContentText(_goal.getString("name") + "limit was reached")
-//                        .setStyle(new NotificationCompat.BigTextStyle()
-//                                .setBigContentTitle(_goal.getString("name"))
-//                                .bigText("Limit of " +
-//                                        ((int)(limit/1000/60/60) < 1 ? "" : (int)(limit/1000/60/60) + "h ") +
-//                                        ((int)(limit/1000/60) < 1 ? "" : (int)(limit/1000/60) + "min ") +
-//                                        "was reached")
-//                        )
-//                        .setPriority(NotificationCompat.PRIORITY_MAX)
-//                        .setAutoCancel(true);
-//
-//                Log.i("Err", "goalMayo: elo koniec mordo!");
-//
-//                PropertiesManager pm = new PropertiesManager(getApplicationContext().getFilesDir() + "/goals", "0.properties");
-//                String history = pm.Read("history");
-//                if (history.length() == 7) {
-//                    history = history.substring(1,6);
-//                }
-//                    pm.Write("history", history + "0");
-//
-//
-//                goals.remove(_iterator);
-//            }
-//            Log.i("MAYO", "goalMayo: " + _goal.getString("name") + ": " + tTime);
+            for (UsageStats stats: usageStats) {
+                Log.i("DEBUG", "goalMayo: " + stats.getPackageName());
+                for (int j=0; j < apps.length(); j++) {
+                    try {
+                        Log.i("DEBUG", "goalMayo: " + j);
+                        if ( apps.getString(j).equalsIgnoreCase(stats.getPackageName()))
+                            tTime += stats.getTotalTimeInForeground();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (tTime >= (limit * 60 * 1000)) {
+                NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(getApplicationContext(), "ocean");
+                try {
+                    nBuilder.setContentTitle("Goal met")
+                            .setContentText(_goal.getString("name") + "limit was reached")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .setBigContentTitle(_goal.getString("name"))
+                                    .bigText("Limit of " +
+                                            ((int)(limit/1000/60/60) < 1 ? "" : (int)(limit/1000/60/60) + "h ") +
+                                            ((int)(limit/1000/60) < 1 ? "" : (int)(limit/1000/60) + "min ") +
+                                            "was reached")
+                            )
+                            .setPriority(NotificationCompat.PRIORITY_MAX)
+                            .setAutoCancel(true);
+                } catch (JSONException e) {
+                    nBuilder.setContentTitle("Goal met")
+                            .setContentText("Goal limit was reached")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .setBigContentTitle("Goal was met!")
+                                    .bigText("Limit of " +
+                                            ((int)(limit/1000/60/60) < 1 ? "" : (int)(limit/1000/60/60) + "h ") +
+                                            ((int)(limit/1000/60) < 1 ? "" : (int)(limit/1000/60) + "min ") +
+                                            "was reached")
+                            )
+                            .setPriority(NotificationCompat.PRIORITY_MAX)
+                            .setAutoCancel(true);
+                    e.printStackTrace();
+                }
+
+                Log.i("Err", "goalMayo: elo koniec mordo!");
+
+                PropertiesManager pm = new PropertiesManager(getApplicationContext().getFilesDir() + "/goals", "0.properties");
+                String history = pm.Read("history");
+                if (history != null && history.length() == 7) {
+                    history = history.substring(1,6);
+                }
+                    pm.Write("history", history + "0");
+
+
+                goals.remove(i);
+            }
+            try {
+                Log.i("MAYO", "goalMayo: " + _goal.getString("name") + ": " + tTime);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -247,6 +287,8 @@ public class GoalMayo extends Worker {
                 // be used to cancel the worker
                 .setAutoCancel(true)
                 .build();
+
+        notificationManager.notify(6002, notification);
 
         return new ForegroundInfo(6001 ,notification);
     }
