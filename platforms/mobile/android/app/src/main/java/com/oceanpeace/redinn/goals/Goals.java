@@ -3,7 +3,13 @@ package com.oceanpeace.redinn.goals;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
+import com.getcapacitor.JSObject;
 import com.oceanpeace.redinn.PropertiesManager;
+import com.oceanpeace.redinn.mayo.GoalMayo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +69,9 @@ public class Goals {
                 new String[]{"id", "name", "apps", "activeDays", "limit", "limitActionType"},
                 new String[]{id, name, apps, activeDays, limit, limitActionType}
         );
+
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+
     }
 
     public JSONArray getAllGoals() {
@@ -129,5 +138,8 @@ public class Goals {
         /* delete the id from the database */
         File file = new File(context.getFilesDir() + "/goals", id + ".properties");
         file.delete();
+
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+
     }
 }

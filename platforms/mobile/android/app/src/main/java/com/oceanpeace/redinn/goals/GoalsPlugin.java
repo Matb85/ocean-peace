@@ -30,6 +30,8 @@ public class GoalsPlugin extends Plugin {
             return;
         }
 
+
+
         Goals goals = new Goals(getActivity().getApplicationContext());
         try {
             goals.createGoal(id, name, apps, limit, activeDays, limitActionType);

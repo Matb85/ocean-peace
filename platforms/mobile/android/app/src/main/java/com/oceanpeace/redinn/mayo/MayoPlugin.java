@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
 
+import androidx.work.WorkManager;
+
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
@@ -73,5 +75,11 @@ public class MayoPlugin extends Plugin {
         else {
             return mode == AppOpsManager.MODE_ALLOWED;
         }
+    }
+
+
+    @PluginMethod
+    public void stopBackgroundMayo() {
+        WorkManager.getInstance(getActivity().getApplicationContext()).cancelUniqueWork(6002+"");
     }
 }

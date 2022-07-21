@@ -7,6 +7,10 @@ export interface FocusStartedI {
 
 export interface FocusMethods {
   getAppsUsage(): Promise<AppsUsage>;
+  /**
+   * Stops running Mayo in background
+   */
+  stopBackgroundMayo();
   // F O C U S   A P I
 
   /**
