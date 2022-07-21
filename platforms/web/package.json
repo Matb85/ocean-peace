@@ -21,12 +21,12 @@
     ".": "./api/index.d.ts"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "1.0.0-next.34",
-    "@sveltejs/kit": "1.0.0-next.355",
+    "@sveltejs/adapter-static": "1.0.0-next.38",
+    "@sveltejs/kit": "1.0.0-next.386",
     "@typescript-eslint/eslint-plugin": "5.30.0",
     "@typescript-eslint/parser": "5.30.0",
     "autoprefixer": "10.4.7",
-    "eslint": "8.18.0",
+    "eslint": "8.20.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
@@ -34,10 +34,10 @@
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-svelte3": "4.0.0",
     "postcss": "8.4.14",
-    "svelte": "3.48.0",
+    "svelte": "3.49.0",
     "svelte-check": "2.8.0",
     "svelte-preprocess": "4.10.7",
-    "tailwindcss": "3.1.4",
+    "tailwindcss": "3.1.6",
     "typescript": "4.7.4"
   },
   "dependencies": {

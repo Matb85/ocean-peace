@@ -10,10 +10,10 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.0.0"
+    "@tauri-apps/cli": "1.0.4"
   },
   "dependencies": {
-    "@tauri-apps/api": "1.0.1",
+    "@tauri-apps/api": "1.0.2",
     "pnpm": "7.5.2",
     "sirv-cli": "2.0.2"
   }
