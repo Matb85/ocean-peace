@@ -4,16 +4,15 @@ version = 3
 
 [[package]]
 name = "active-win-pos-rs"
-version = "0.4.1"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e833f1acebf5107063f8158d0a1587f0495ab44f0b539b2108fede9bee93366f"
+checksum = "9ef056ea13a0bc1fd347eeba240b20720e8a7ad4e2dbf1489c611f715536605e"
 dependencies = [
  "appkit-nsworkspace-bindings",
  "core-foundation",
  "core-graphics",
  "winapi",
  "xcb",
- "xcb-util",
 ]
 
 [[package]]
@@ -4028,23 +4027,13 @@ dependencies = [
 
 [[package]]
 name = "xcb"
-version = "0.10.1"
+version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "771e2b996df720cd1c6dd9ff90f62d91698fd3610cc078388d0564bdd6622a9c"
+checksum = "b127bf5bfe9dbb39118d6567e3773d4bbc795411a8e1ef7b7e056bccac0011a9"
 dependencies = [
+ "bitflags",
  "libc",
- "log",
  "quick-xml",
-]
-
-[[package]]
-name = "xcb-util"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d7c12d11589c9af0a90ca45e6177571be37d61c981c49c40e1bbd6c5867181e0"
-dependencies = [
- "libc",
- "xcb",
 ]
 
 [[package]]
