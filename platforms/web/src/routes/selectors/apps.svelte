@@ -36,7 +36,7 @@
 <FullHeading>Select apps</FullHeading>
 
 <H thin className="mt-8">Selected Apps ({selectedApps.length})</H>
-{goBackUrl}
+
 <section class="app-group-con">
   {#each allApps.filter(x => selectedApps.includes(x.packageName)) as app}
     <AppStatus

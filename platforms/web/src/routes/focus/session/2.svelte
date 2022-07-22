@@ -1,44 +1,45 @@
-<!-- displays the ongoing session -->
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
-  import { Button } from "@redinnlabs/system/Elements";
-  import { ToDo } from "@redinnlabs/system/Units";
-  import { CircleChart } from "@redinnlabs/system/Charts";
+  import { Button, Background } from "@redinnlabs/system/Elements";
+  import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
-  import { onMount } from "svelte";
 
-  import Api from "@redinn/oceanpeace-mobile/api";
-
-  export let presetName: string = "Example";
-  export let appsCount: number = 16;
-
-  onMount(async () => {
-    const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
-  });
+  const minutes: number = 148;
 </script>
 
-<H tag={3} className="mt-7">{presetName} Session</H>
+<H tag={3} className="mt-5 text-white">Summary</H>
 
-<div class="w-3/4 max-w-md">
-  <CircleChart className="wh-full" />
-  <H tag={6}>
-    {appsCount}
-    {appsCount > 1 ? "apps" : "app"} available
-    <br />
-    You will get 25 points for this session
+<div class="w-10/12 text-center text-white mt-16">
+  <H tag={1}>
+    {minutes < 59 ? "" : Math.floor(minutes / 60) + "h"}
+    {minutes % 60 == 0 ? "" : (minutes % 60) + "min"}
   </H>
+  <H tag={6} thin>of focus</H>
 </div>
 
-<a sveltekit:prefetch href="./3" class="mt-4">
-  <Button secondary size="small" isWarning>Cancel Session</Button>
+<div class="flex gap-1 items-end text-white">
+  <H tag={2}>+45</H>
+  <H tag={4}>points</H>
+</div>
+
+<H tag={5} className="mt-36">Notifications received</H>
+
+<SelectedApps />
+
+<a sveltekit:prefetch href="/" class="fixed bottom-10">
+  <Button>continue</Button>
 </a>
 
-<H thin>Things to do later</H>
-<div class="card-flex-col">
-  {#each Array(5) as _}
-    <ToDo title="Example" info="Example info" />
-  {/each}
-  <div>
-    <Button>Add a todo</Button>
-  </div>
+<div class="background">
+  <Background className="background-svg" x={50} y={100} />
 </div>
+
+<style lang="postcss">
+  .background {
+    @apply w-full h-full absolute -z-10 overflow-hidden;
+  }
+  .background :global(.background-svg) {
+    @apply absolute -top-[60%];
+    transform: translate(15%, 5%) scale(3) rotate(72deg);
+  }
+</style>

@@ -1,55 +1,44 @@
-<!-- set the timer before starting -->
+<!-- displays the ongoing session -->
 <script lang="ts">
+  import "@redinnlabs/system/utils/base.css";
   import { Button } from "@redinnlabs/system/Elements";
-  import { TimeInput, RadioInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
-  import { SoundTrack } from "@redinnlabs/system/Units";
-  import FullHeading from "$lib/FullHeading.svelte";
+  import { ToDo } from "@redinnlabs/system/Units";
+  import { CircleChart } from "@redinnlabs/system/Charts";
   import H from "$lib/H.svelte";
+  import { onMount } from "svelte";
+
+  import Api from "@redinn/oceanpeace-mobile/api";
 
   export let presetName: string = "Example";
+  export let appsCount: number = 16;
 
-  const hoursTime = timeInputConfig.hoursConfig(1);
-  const minutesTime = timeInputConfig.minutesConfig(3);
-  const focusTime = timeInputConfig.minutesConfig(5);
-  const breakTime = timeInputConfig.minutesConfig(1);
-  let h: number;
-  let m: number;
-  h = hoursTime.current;
-  m = minutesTime.current;
-  Object.defineProperty(hoursTime, "current", { set: val => (h = val), get: () => h });
-  Object.defineProperty(minutesTime, "current", { set: val => (m = val), get: () => m });
-
-  let limit = "Pomodoro";
+  onMount(async () => {
+    const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
+  });
 </script>
 
-<FullHeading backHref="/focus" editHref="/focus/editpreset/1">{presetName}</FullHeading>
+<H tag={3} className="mt-7">{presetName} Session</H>
 
-<H thin>Duration</H>
-<RadioInput className="flex-wrap justify-center" bind:chosen={limit} options={["Pomodoro", "Continued", "Stopwatch"]} />
-{#if limit == "Pomodoro"}
-  <div class="flex justify-center gap-16">
-    <span>Focus</span>
-    <span>Break</span>
-  </div>
-  <TimeInput columns={[focusTime, breakTime]} />
-{:else if limit == "Continued"}
-  <div class="flex justify-center gap-16">
-    <span>Hours</span>
-    <span>Minutes</span>
-  </div>
-  <TimeInput columns={[hoursTime, minutesTime]} />
-{/if}
-
-<H thin>Options</H>
-<CheckMultiple className="flex-wrap justify-center" options={["Hard Limit", "20:20:20 Rule"]} />
-
-<H thin>Soundtrack</H>
-<div class="card-flex-col">
-  {#each Array(3) as _}
-    <SoundTrack title="Example Soundtrack" info="Chose one" />
-  {/each}
+<div class="w-3/4 max-w-md">
+  <CircleChart className="wh-full" />
+  <H tag={6}>
+    {appsCount}
+    {appsCount > 1 ? "apps" : "app"} available
+    <br />
+    You will get 25 points for this session
+  </H>
 </div>
 
-<a sveltekit:prefetch href="./2" class="fixed bottom-10">
-  <Button>Start {presetName}</Button>
+<a sveltekit:prefetch href="./2" class="mt-4">
+  <Button secondary size="small" isWarning>Cancel Session</Button>
 </a>
+
+<H thin>Things to do later</H>
+<div class="card-flex-col">
+  {#each Array(5) as _}
+    <ToDo title="Example" info="Example info" />
+  {/each}
+  <div>
+    <Button>Add a todo</Button>
+  </div>
+</div>
