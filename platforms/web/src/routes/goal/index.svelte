@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { Icon, Aquarium, Button } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
+  import DangerZone from "$lib/DangerZone.svelte";
 
   import { page } from "$app/stores";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -94,9 +95,4 @@
 
 <SelectedApps apps={selectedApps} />
 
-<hr class="border-0 border-b-2 border-gray w-9/12 mt-32 mb-8" />
-<H thin>Danger zone</H>
-
-<a sveltekit:prefetch href="/goal/delete">
-  <Button isWarning>Delete Goal</Button>
-</a>
+<DangerZone deleteUrl="/goal/delete" label="Delete Goal" />

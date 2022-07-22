@@ -5,7 +5,7 @@
   import { SoundTrack } from "@redinnlabs/system/Units";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
-
+  import DangerZone from "$lib/DangerZone.svelte";
   import { page } from "$app/stores";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { PresetI } from "$schema";
@@ -68,6 +68,8 @@
   {/each}
 </div>
 
-<a sveltekit:prefetch href="./2" class="fixed bottom-10">
+<a sveltekit:prefetch href="/focus/session/1" class="fixed bottom-10">
   <Button>Start {presetData?.name || ""}</Button>
 </a>
+
+<DangerZone deleteUrl="/focus/delete" label="Delete Preset" />
