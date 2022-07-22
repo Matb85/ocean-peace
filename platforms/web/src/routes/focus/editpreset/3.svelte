@@ -9,8 +9,8 @@
 
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import type { AppIconI } from "$schema";
   import { goto } from "$app/navigation";
+  import type { AppIconI, PresetI } from "$schema";
   import SM from "$lib/sessionManager";
 
   let selectedApps: AppIconI[] = [];
@@ -24,6 +24,13 @@
   function saveGoal() {
     isComplete = true;
     setTimeout(() => {
+      const data: PresetI = {
+        id: SM.preset.id,
+        name: SM.preset.name,
+        icon: SM.preset.icon,
+        apps: SM.selectors.apps,
+      };
+      Api.savePreset(data);
       goto("/");
     }, 1500);
   }

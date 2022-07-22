@@ -10,7 +10,7 @@
   import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/focus/editpreset/1") {
-      SM.preset.id = "goal" + Date.now();
+      SM.preset.id = "1";
       SM.preset.name = "";
       SM.preset.icon = "";
 
@@ -20,6 +20,15 @@
       SM.selectors.apps = "[]";
     }
   });
+
+  import { onMount } from "svelte";
+  import type { PresetI } from "$schema";
+  import Api from "@redinn/oceanpeace-mobile/api";
+
+  let allPresets: PresetI[] = [];
+  onMount(async () => {
+    allPresets = await Api.getAllPresets();
+  });
 </script>
 
 <FullHeading backHref="/">Focus</FullHeading>
@@ -27,14 +36,16 @@
 <H thin>Presets</H>
 
 <div class="grid grid-cols-2 gap-4">
-  {#each Array(3) as _, i}
+  {#each allPresets as preset}
     <a sveltekit:prefetch href="/focus/preset">
-      <Preset src={W} label="Bottom text {i}" />
+      <Preset src={preset.icon} label={preset.name} />
     </a>
   {/each}
-  <a sveltekit:prefetch href="/focus/editpreset/1">
-    <Preset src={A} noShadowWrapper />
-  </a>
+  {#each new Array(Math.abs(4 - allPresets.length)) as _}
+    <a sveltekit:prefetch href="/focus/editpreset/1">
+      <Preset src={A} noShadowWrapper />
+    </a>
+  {/each}
 </div>
 
 <H thin>Schedule</H>
