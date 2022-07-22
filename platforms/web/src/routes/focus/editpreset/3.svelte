@@ -13,10 +13,10 @@
   import type { AppIconI, PresetI } from "$schema";
   import SM from "$lib/sessionManager";
 
-  let selectedApps: AppIconI[] = [];
+  let allowedApps: AppIconI[] = [];
 
   onMount(async () => {
-    selectedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
+    allowedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
   });
   /** save goal to a file
    * @returns {void}
@@ -48,7 +48,7 @@
   <AppStatus className="scale-[0.75]" src={SM.preset.icon} />
 </div>
 <H tag={6} thin>Allowed apps</H>
-<SelectedApps apps={selectedApps} />
+<SelectedApps apps={allowedApps} />
 
 <H tag={6} thin>Allowed Websites</H>
 
