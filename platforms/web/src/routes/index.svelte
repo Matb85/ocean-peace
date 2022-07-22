@@ -15,7 +15,7 @@
       SM.goal.name = "";
       SM.goal.timeMinutes = "15";
       SM.goal.timeHours = "1";
-      SM.goal.activeDays = "[";
+      SM.goal.activeDays = "[]";
       SM.goal.limitActionType = "Notification";
       SM.action.type = "Add";
       SM.action.backUrl = "/";

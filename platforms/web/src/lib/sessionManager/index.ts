@@ -1,6 +1,9 @@
 import goal from "./goal";
+import preset from "./preset";
+
 export default {
   goal,
+  preset,
   selectors: {
     set apps(value: string) {
       sessionStorage.setItem("selectors_apps", value);

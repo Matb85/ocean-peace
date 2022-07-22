@@ -5,6 +5,21 @@
   import A from "@redinnlabs/system/assets/icon-add.svg";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
+
+  import SM from "$lib/sessionManager";
+  import { beforeNavigate } from "$app/navigation";
+  beforeNavigate(({ to }) => {
+    if (to.pathname == "/focus/editpreset/1") {
+      SM.preset.id = "goal" + Date.now();
+      SM.preset.name = "";
+      SM.preset.icon = "";
+
+      SM.action.type = "Add";
+      SM.action.backUrl = "/focus";
+
+      SM.selectors.apps = "[]";
+    }
+  });
 </script>
 
 <FullHeading backHref="/">Focus</FullHeading>
@@ -13,13 +28,13 @@
 
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
-    <a sveltekit:prefetch href="/focus/session/1">
+    <a sveltekit:prefetch href="/focus/preset">
       <Preset src={W} label="Bottom text {i}" />
     </a>
   {/each}
-  <div>
+  <a sveltekit:prefetch href="/focus/editpreset/1">
     <Preset src={A} noShadowWrapper />
-  </div>
+  </a>
 </div>
 
 <H thin>Schedule</H>
