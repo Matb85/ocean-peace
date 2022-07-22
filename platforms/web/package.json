@@ -42,7 +42,7 @@
     "vite": "^3.0.2"
   },
   "dependencies": {
-    "@mdi/js": "6.9.96",
+    "@mdi/js": "7.0.96",
     "@redinn/oceanpeace-mobile": "workspace:^1.0.0",
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release"
   }
