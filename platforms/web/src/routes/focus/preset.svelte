@@ -6,7 +6,25 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
 
-  export let presetName: string = "Example";
+  import { page } from "$app/stores";
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import type { PresetI } from "$schema";
+  import { onMount } from "svelte";
+  import SM from "$lib/sessionManager";
+  const presetId = $page.url.searchParams.get("id");
+
+  let presetData: PresetI;
+  onMount(async () => {
+    presetData = await Api.getPreset(presetId);
+
+    SM.preset.id = presetData.id;
+    SM.preset.name = presetData.name;
+    SM.preset.icon = presetData.icon;
+
+    SM.selectors.apps = presetData.apps;
+    SM.action.type = "Edit";
+    SM.action.backUrl = $page.url.pathname + $page.url.search;
+  });
 
   const hoursTime = timeInputConfig.hoursConfig(1);
   const minutesTime = timeInputConfig.minutesConfig(3);
@@ -22,7 +40,7 @@
   let limit = "Pomodoro";
 </script>
 
-<FullHeading backHref="/focus" editHref="/focus/editpreset/1">{presetName}</FullHeading>
+<FullHeading backHref="/focus" editHref="/focus/editpreset/1">{presetData?.name || ""}</FullHeading>
 
 <H thin>Duration</H>
 <RadioInput className="flex-wrap justify-center" bind:chosen={limit} options={["Pomodoro", "Continued", "Stopwatch"]} />
@@ -51,5 +69,5 @@
 </div>
 
 <a sveltekit:prefetch href="./2" class="fixed bottom-10">
-  <Button>Start {presetName}</Button>
+  <Button>Start {presetData?.name || ""}</Button>
 </a>

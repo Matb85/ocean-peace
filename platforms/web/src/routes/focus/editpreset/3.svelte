@@ -31,7 +31,7 @@
         apps: SM.selectors.apps,
       };
       Api.savePreset(data);
-      goto("/");
+      goto("/focus");
     }, 1500);
   }
   let isComplete = false;
@@ -52,7 +52,7 @@
 
 <H tag={6} thin>Allowed Websites</H>
 
-<div on:click={saveGoal} class="fixed-bottom-button" href="/">
+<div on:click={saveGoal} class="fixed-bottom-button">
   <Button isFullWidth>save</Button>
 </div>
 

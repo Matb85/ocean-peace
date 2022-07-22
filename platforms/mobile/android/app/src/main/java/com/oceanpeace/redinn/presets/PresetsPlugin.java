@@ -43,7 +43,7 @@ public class PresetsPlugin extends Plugin {
             Log.d("PresetsPlugin", fileName + " " + data.toString(0));
 
             JSONManager.writeFile(data, fileName);
-        }catch (Exception err) {
+        } catch (Exception err) {
             Log.e("PresetsPlugin", err.toString());
         }
         call.resolve();
@@ -58,29 +58,29 @@ public class PresetsPlugin extends Plugin {
 
     @PluginMethod
     public void getPreset(PluginCall call) {
-        String id = call.getString("id");
+        Context ctx = getActivity().getApplicationContext();
+        JSObject res = new JSObject();
 
-        call.resolve();
+        File file = new File(getPresetsFolder(ctx) + "/" + call.getString("id") + ".json");
+        try {
+            res.put("preset", JSONManager.readFile(file));
+        } catch (Exception err) {
+            Log.e("PresetsPlugin", err.toString());
+        }
+        call.resolve(res);
     }
 
     @PluginMethod
     public void getAllPresets(PluginCall call) {
-        Log.d("PresetsPlugin", "hello");
-
         Context ctx = getActivity().getApplicationContext();
 
-
         JSObject res = new JSObject();
-
         File[] files = new File(getPresetsFolder(ctx)).listFiles();
-
-
-
         /* put data from each goal the the final array */
         JSONArray arr = new JSONArray();
 
         if (files == null) {
-            Log.d("PresetsPlugin", "no files, aborting");
+            Log.d("PresetsPlugin", "no presets, aborting");
 
             res.put("presets", arr);
             call.resolve(res);

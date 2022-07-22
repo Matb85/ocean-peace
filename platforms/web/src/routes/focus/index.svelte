@@ -6,11 +6,20 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
 
+  import { onMount } from "svelte";
+  import type { PresetI } from "$schema";
+  import Api from "@redinn/oceanpeace-mobile/api";
+
+  let allPresets: PresetI[] = [];
+  onMount(async () => {
+    allPresets = await Api.getAllPresets();
+  });
+
   import SM from "$lib/sessionManager";
   import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/focus/editpreset/1") {
-      SM.preset.id = "1";
+      SM.preset.id = "" + allPresets.length + 1;
       SM.preset.name = "";
       SM.preset.icon = "";
 
@@ -20,15 +29,6 @@
       SM.selectors.apps = "[]";
     }
   });
-
-  import { onMount } from "svelte";
-  import type { PresetI } from "$schema";
-  import Api from "@redinn/oceanpeace-mobile/api";
-
-  let allPresets: PresetI[] = [];
-  onMount(async () => {
-    allPresets = await Api.getAllPresets();
-  });
 </script>
 
 <FullHeading backHref="/">Focus</FullHeading>
@@ -37,7 +37,7 @@
 
 <div class="grid grid-cols-2 gap-4">
   {#each allPresets as preset}
-    <a sveltekit:prefetch href="/focus/preset">
+    <a sveltekit:prefetch href="/focus/preset?id={preset.id}">
       <Preset src={preset.icon} label={preset.name} />
     </a>
   {/each}
