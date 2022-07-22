@@ -8,20 +8,12 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.oceanpeace.redinn.JSONManager;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.nio.file.Files;
 
 @CapacitorPlugin(name = "Presets")
 public class PresetsPlugin extends Plugin {
@@ -40,29 +32,6 @@ public class PresetsPlugin extends Plugin {
         }
     }
 
-    private String getFileContents(final File file) throws IOException {
-        final InputStream inputStream = new FileInputStream(file);
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        boolean done = false;
-
-        while (!done) {
-            final String line = reader.readLine();
-            done = (line == null);
-
-            if (line != null) {
-                stringBuilder.append(line);
-            }
-        }
-
-        reader.close();
-        inputStream.close();
-
-        return stringBuilder.toString();
-    }
-
     @PluginMethod
     public void savePreset(PluginCall call) {
         /* get data */
@@ -73,15 +42,10 @@ public class PresetsPlugin extends Plugin {
             String fileName = getPresetsFolder(ctx) + "/" + data.getString("id") + ".json";
             Log.d("PresetsPlugin", fileName + " " + data.toString(0));
 
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(fileName));
-            outputStreamWriter.write(data.toString(0));
-            outputStreamWriter.close();
-        } catch (IOException err) {
-            Log.e("PresetsPlugin", err.toString());
-        } catch (JSONException err) {
+            JSONManager.writeFile(data, fileName);
+        }catch (Exception err) {
             Log.e("PresetsPlugin", err.toString());
         }
-
         call.resolve();
     }
 
@@ -127,16 +91,12 @@ public class PresetsPlugin extends Plugin {
         for (File file : files) {
             Log.d("PresetsPlugin", "reading file " + file.getName());
             try {
-                String content = getFileContents(file);
-                Log.d("PresetsPlugin", "file data: "+ content);
-                arr.put(new JSONObject(content));
-            } catch (IOException err) {
-                Log.e("PresetsPlugin", err.toString());
-            } catch (JSONException err) {
+                arr.put(JSONManager.readFile(file));
+            } catch (Exception err) {
                 Log.e("PresetsPlugin", err.toString());
             }
         }
-        
+
         res.put("presets", arr);
         call.resolve(res);
     }
