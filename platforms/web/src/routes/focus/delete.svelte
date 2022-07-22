@@ -6,23 +6,23 @@
   import { goto } from "$app/navigation";
   import SM from "$lib/sessionManager";
 
-  /** delete a given goal
+  /** delete a given preset
    * @returns {void}
    */
-  async function deleteGoal() {
-    await Api.deleteGoal(SM.goal.id);
-    goto("/");
+  async function deletePreset() {
+    await Api.deletePreset(SM.preset.id);
+    goto("/focus");
   }
 </script>
 
 <div class="absolute top-1/4 text-center px-4">
   <H tag={3}>Are you sure?</H>
-  <H thin className="mt-4">You're about to delete goal<br />{SM.goal.name}</H>
+  <H thin className="mt-4">You're about to delete preset<br />{SM.preset.name}</H>
 </div>
 
 <div class="w-3/4 absolute top-2/3 flex flex-col gap-4">
-  <a sveltekit:prefetch href="/goal?id={SM.goal.id}">
+  <a sveltekit:prefetch href="/focus/preset?id={SM.preset.id}">
     <Button isFullWidth>No, don't do this</Button>
   </a>
-  <Button on:click={deleteGoal} isFullWidth isWarning>Yes, delete it</Button>
+  <Button on:click={deletePreset} isFullWidth isWarning>Yes, delete it</Button>
 </div>

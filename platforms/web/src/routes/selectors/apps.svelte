@@ -1,15 +1,19 @@
+<!-- allows to select apps -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { AppStatus } from "@redinnlabs/system/Units";
   import H from "$lib/H.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import { onMount } from "svelte";
+  import SM from "$lib/sessionManager";
+
+  const goBackUrl = SM.selectors.backUrl;
 
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
 
   let allApps: AppIconI[] = [];
-  let selectedApps: string[] = JSON.parse(sessionStorage.getItem("edit_goal_apps") || "[]");
+  let selectedApps: string[] = JSON.parse(SM.selectors.apps);
 
   onMount(async () => {
     allApps = await Api.getAllAppIcons();
@@ -25,7 +29,7 @@
     } else {
       selectedApps = selectedApps.filter(x => x != app.packageName);
     }
-    sessionStorage.setItem("edit_goal_apps", JSON.stringify(selectedApps));
+    SM.selectors.apps = JSON.stringify(selectedApps);
   }
 </script>
 
@@ -62,6 +66,6 @@
   {/each}
 </section>
 
-<a href="./1" sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+<a href={goBackUrl} sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
   <Button isFullWidth>Save</Button>
 </a>

@@ -44,6 +44,9 @@ img {
   .fixed-bottom-button {
     @apply fixed bottom-10 w-3/4 z-50;
   }
+  .shadow-wrapper-sm {
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  }
 }
 
 /* latin-ext */

@@ -15,6 +15,7 @@ import com.oceanpeace.redinn.icons.IconWorker;
 import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.mayo.GoalMayo;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
+import com.oceanpeace.redinn.presets.PresetsPlugin;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,6 +49,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FocusPlugin.class);
         registerPlugin(GoalsPlugin.class);
         registerPlugin(IconsPlugin.class);
+        registerPlugin(PresetsPlugin.class);
     }
 
     @Override

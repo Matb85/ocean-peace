@@ -13,16 +13,16 @@
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    SM.selectors.backUrl = "/goal/edit/1";
+    SM.selectors.backUrl = "/focus/editpreset/1";
     selectedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
   });
 
-  let name = SM.goal.name;
-  $: SM.goal.name = name;
+  let name = SM.preset.name;
+  $: SM.preset.name = name;
 </script>
 
 <FullHeading backHref="./0">
-  {SM.action.type} goal
+  {SM.action.type} preset
 </FullHeading>
 
 <H thin>Name</H>
@@ -30,7 +30,7 @@
   <TextInput placeholder="Name of your goal" bind:value={name} />
 </div>
 
-<H thin>Selected apps</H>
+<H thin>Allowed apps</H>
 
 <SelectedApps apps={selectedApps} />
 
@@ -38,7 +38,7 @@
   <Button secondary size="small">edit</Button>
 </a>
 
-<H thin>Selected Websites</H>
+<H thin>Allowed websites</H>
 
 <SelectedApps />
 

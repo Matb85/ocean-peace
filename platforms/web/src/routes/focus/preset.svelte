@@ -1,11 +1,30 @@
+<!-- set the timer before starting -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { TimeInput, RadioInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
+  import DangerZone from "$lib/DangerZone.svelte";
+  import { page } from "$app/stores";
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import type { PresetI } from "$schema";
+  import { onMount } from "svelte";
+  import SM from "$lib/sessionManager";
+  const presetId = $page.url.searchParams.get("id");
 
-  export let presetName: string = "Example";
+  let presetData: PresetI;
+  onMount(async () => {
+    presetData = await Api.getPreset(presetId);
+
+    SM.preset.id = presetData.id;
+    SM.preset.name = presetData.name;
+    SM.preset.icon = presetData.icon;
+
+    SM.selectors.apps = presetData.apps;
+    SM.action.type = "Edit";
+    SM.action.backUrl = $page.url.pathname + $page.url.search;
+  });
 
   const hoursTime = timeInputConfig.hoursConfig(1);
   const minutesTime = timeInputConfig.minutesConfig(3);
@@ -21,10 +40,7 @@
   let limit = "Pomodoro";
 </script>
 
-<!-- C O N T E N T -->
-
-<!-- svelte-ignore component-name-lowercase -->
-<FullHeading backHref="/focus" editHref="">{presetName}</FullHeading>
+<FullHeading backHref="/focus" editHref="/focus/editpreset/1">{presetData?.name || ""}</FullHeading>
 
 <H thin>Duration</H>
 <RadioInput className="flex-wrap justify-center" bind:chosen={limit} options={["Pomodoro", "Continued", "Stopwatch"]} />
@@ -43,13 +59,7 @@
 {/if}
 
 <H thin>Options</H>
-<CheckMultiple
-  className="flex-wrap justify-center"
-  options={[
-    { label: "Hard Limit", isChecked: true },
-    { label: "20:20:20 Rule", isChecked: false },
-  ]}
-/>
+<CheckMultiple className="flex-wrap justify-center" options={["Hard Limit", "20:20:20 Rule"]} />
 
 <H thin>Soundtrack</H>
 <div class="card-flex-col">
@@ -58,6 +68,8 @@
   {/each}
 </div>
 
-<a sveltekit:prefetch href="/focus/session" class="fixed bottom-10">
-  <Button>Start {presetName}</Button>
+<a sveltekit:prefetch href="/focus/session/1" class="fixed bottom-10">
+  <Button>Start {presetData?.name || ""}</Button>
 </a>
+
+<DangerZone deleteUrl="/focus/delete" label="Delete Preset" />
