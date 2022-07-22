@@ -5,14 +5,15 @@
   import H from "$lib/H.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import { onMount } from "svelte";
+  import SM from "$lib/sessionManager";
 
-  const goBackUrl = sessionStorage.getItem("selectors_back_url") || "";
+  const goBackUrl = SM.selectors.backUrl;
 
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
 
   let allApps: AppIconI[] = [];
-  let selectedApps: string[] = JSON.parse(sessionStorage.getItem("edit_goal_apps") || "[]");
+  let selectedApps: string[] = JSON.parse(SM.selectors.apps);
 
   onMount(async () => {
     allApps = await Api.getAllAppIcons();
@@ -28,14 +29,14 @@
     } else {
       selectedApps = selectedApps.filter(x => x != app.packageName);
     }
-    sessionStorage.setItem("edit_goal_apps", JSON.stringify(selectedApps));
+    SM.selectors.apps = JSON.stringify(selectedApps);
   }
 </script>
 
 <FullHeading>Select apps</FullHeading>
 
 <H thin className="mt-8">Selected Apps ({selectedApps.length})</H>
-
+{goBackUrl}
 <section class="app-group-con">
   {#each allApps.filter(x => selectedApps.includes(x.packageName)) as app}
     <AppStatus

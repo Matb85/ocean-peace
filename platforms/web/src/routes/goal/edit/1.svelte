@@ -9,19 +9,20 @@
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI } from "$schema";
+  import SM from "$lib/sessionManager";
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    sessionStorage.setItem("selectors_back_url", "/goal/edit/1");
-    selectedApps = await Api.getAppIcons(JSON.parse(sessionStorage.getItem("edit_goal_apps")));
+    SM.selectors.backUrl = "/goal/edit/1";
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
   });
 
-  let name = sessionStorage.getItem("edit_goal_name");
-  $: name, sessionStorage.setItem("edit_goal_name", name);
+  let name = SM.goal.name;
+  $: SM.goal.name = name;
 </script>
 
 <FullHeading backHref="./0">
-  {sessionStorage.getItem("edit_goal_action_type")} goal
+  {SM.action.type} goal
 </FullHeading>
 
 <H thin>Name</H>

@@ -22,7 +22,7 @@
   let limit = "Pomodoro";
 </script>
 
-<FullHeading backHref="/focus" editHref="">{presetName}</FullHeading>
+<FullHeading backHref="/focus" editHref="/focus/editpreset/1">{presetName}</FullHeading>
 
 <H thin>Duration</H>
 <RadioInput className="flex-wrap justify-center" bind:chosen={limit} options={["Pomodoro", "Continued", "Stopwatch"]} />

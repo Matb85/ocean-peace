@@ -11,27 +11,27 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI, AppIconI } from "$schema";
   import { onMount } from "svelte";
-
+  import SM from "$lib/sessionManager";
   const goalId = $page.url.searchParams.get("id");
   let goalData: GoalI;
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    console.log(goalId);
     goalData = await Api.getGoal(goalId);
 
     selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
 
     const timeInMinutes = parseInt(goalData.limit);
 
-    sessionStorage.setItem("edit_goal_id", goalData.id);
-    sessionStorage.setItem("edit_goal_name", goalData.name);
-    sessionStorage.setItem("edit_goal_apps", goalData.apps);
-    sessionStorage.setItem("edit_goal_time_minutes", (timeInMinutes % 60) + "");
-    sessionStorage.setItem("edit_goal_time_hours", Math.floor(timeInMinutes / 60) + "");
-    sessionStorage.setItem("edit_goal_active_days", goalData.activeDays);
-    sessionStorage.setItem("edit_goal_limit_action_type", goalData.limitActionType);
-    sessionStorage.setItem("edit_goal_action_type", "Edit");
-    sessionStorage.setItem("edit_goal_action_back", $page.url.pathname + $page.url.search);
+    SM.goal.id = goalData.id;
+    SM.goal.name = goalData.name;
+    SM.goal.timeMinutes = (timeInMinutes % 60) + "";
+    SM.goal.timeHours = Math.floor(timeInMinutes / 60) + "";
+    SM.goal.activeDays = goalData.activeDays;
+    SM.goal.limitActionType = goalData.limitActionType;
+
+    SM.selectors.apps = goalData.apps;
+    SM.action.type = "Edit";
+    SM.action.backUrl = $page.url.pathname + $page.url.search;
   });
 </script>
 

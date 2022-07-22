@@ -3,6 +3,7 @@
   import { Goal } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
   import H from "$lib/H.svelte";
+  import SM from "$lib/sessionManager";
 
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
@@ -10,15 +11,16 @@
   import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/goal/edit/1") {
-      sessionStorage.setItem("edit_goal_id", "goal" + Date.now());
-      sessionStorage.setItem("edit_goal_name", "");
-      sessionStorage.setItem("edit_goal_apps", "[]");
-      sessionStorage.setItem("edit_goal_time_minutes", "15");
-      sessionStorage.setItem("edit_goal_time_hours", "1");
-      sessionStorage.setItem("edit_goal_active_days", "[]");
-      sessionStorage.setItem("edit_goal_limit_action_type", "Notification");
-      sessionStorage.setItem("edit_goal_action_type", "Add");
-      sessionStorage.setItem("edit_goal_action_back", "/");
+      SM.goal.id = "goal" + Date.now();
+      SM.goal.name = "";
+      SM.goal.timeMinutes = "15";
+      SM.goal.timeHours = "1";
+      SM.goal.activeDays = "[";
+      SM.goal.limitActionType = "Notification";
+      SM.action.type = "Add";
+      SM.action.backUrl = "/";
+
+      SM.selectors.apps = "[]";
     }
   });
 
