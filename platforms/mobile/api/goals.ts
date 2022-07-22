@@ -1,5 +1,5 @@
 import { registerPlugin } from "@capacitor/core";
-import type { GoalI } from "@redinn/oceanpeace-web/api";
+import type { GoalI, GoalsMethods } from "@redinn/oceanpeace-web/api/goals";
 
 interface GoalsPlugin {
   getAllGoals(): Promise<{ goals: GoalI[] }>;
@@ -10,7 +10,7 @@ interface GoalsPlugin {
 
 const Goal = registerPlugin<GoalsPlugin>("Goal");
 
-export default {
+const plugin: GoalsMethods = {
   async getAllGoals(): Promise<GoalI[]> {
     const { goals } = await Goal.getAllGoals();
     return goals;
@@ -26,3 +26,5 @@ export default {
     await Goal.deleteGoal({ id });
   },
 };
+
+export default plugin;

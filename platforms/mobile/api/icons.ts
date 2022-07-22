@@ -1,5 +1,5 @@
 import { registerPlugin, Capacitor } from "@capacitor/core";
-import type { AppIconI } from "@redinn/oceanpeace-web/api";
+import type { AppIconI, IconsMethods } from "@redinn/oceanpeace-web/api/icons";
 
 interface IconsPlugin {
   getAllIcons(): Promise<{ apps: AppIconI[] }>;
@@ -8,7 +8,7 @@ interface IconsPlugin {
 
 const Icons = registerPlugin<IconsPlugin>("Icons");
 
-export default {
+const plugin: IconsMethods = {
   async getAppIcon(packageName: string): Promise<AppIconI | null> {
     try {
       const res = await Icons.getIcon({ packageName });
@@ -41,3 +41,5 @@ export default {
     return val;
   },
 };
+
+export default plugin;

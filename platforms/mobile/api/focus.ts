@@ -1,5 +1,5 @@
 import { registerPlugin } from "@capacitor/core";
-
+import type { FocusMethods } from "@redinn/oceanpeace-web/api/focus";
 interface FocusPlugin {
   startContinuous(options: {
     continuousDuration: number;
@@ -18,7 +18,7 @@ interface FocusPlugin {
 
 const Focus = registerPlugin<FocusPlugin>("Focus");
 
-export default {
+const plugin: FocusMethods = {
   async startContinuous(continuousDuration: number, twentyRule: boolean, wakeDevice: boolean) {
     const { started } = await Focus.startContinuous({
       continuousDuration: continuousDuration,
@@ -48,3 +48,5 @@ export default {
     return;
   },
 };
+
+export default plugin;

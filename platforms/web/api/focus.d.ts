@@ -1,18 +1,8 @@
-export interface AppsUsage {
-  stats: JSON;
-}
 export interface FocusStartedI {
   started: boolean;
 }
 
 export interface FocusMethods {
-  getAppsUsage(): Promise<AppsUsage>;
-  /**
-   * Stops running Mayo in background
-   */
-  stopBackgroundMayo();
-  // F O C U S   A P I
-
   /**
    * Start Continuous mode of Focus.
    * It is working only for chosen time.

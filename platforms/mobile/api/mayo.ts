@@ -1,5 +1,5 @@
 import { registerPlugin } from "@capacitor/core";
-import type { AppsUsage } from "@redinn/oceanpeace-web/api";
+import type { AppsUsage, MayoMethods } from "@redinn/oceanpeace-web/api/mayo";
 
 interface MayoPlugin {
   callMayo(): Promise<{ stats: JSON }>;
@@ -8,7 +8,7 @@ interface MayoPlugin {
 
 const Mayo = registerPlugin<MayoPlugin>("Mayo");
 
-export default {
+const plugin: MayoMethods = {
   async getAppsUsage(): Promise<AppsUsage> {
     const { stats } = await Mayo.callMayo();
 
@@ -18,3 +18,5 @@ export default {
     await Mayo.stopBackgroundMayo();
   },
 };
+
+export default plugin;
