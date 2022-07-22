@@ -19,7 +19,7 @@
   import { beforeNavigate } from "$app/navigation";
   beforeNavigate(({ to }) => {
     if (to.pathname == "/focus/editpreset/1") {
-      SM.preset.id = "" + allPresets.length + 1;
+      SM.preset.id = "" + (allPresets.length + 1);
       SM.preset.name = "";
       SM.preset.icon = "";
 

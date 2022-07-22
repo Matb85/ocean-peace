@@ -50,13 +50,6 @@ public class PresetsPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void deletePreset(PluginCall call) {
-        String id = call.getString("id");
-
-        call.resolve();
-    }
-
-    @PluginMethod
     public void getPreset(PluginCall call) {
         Context ctx = getActivity().getApplicationContext();
         JSObject res = new JSObject();
@@ -99,5 +92,17 @@ public class PresetsPlugin extends Plugin {
 
         res.put("presets", arr);
         call.resolve(res);
+    }
+
+    @PluginMethod
+    public void deletePreset(PluginCall call) {
+        Context ctx = getActivity().getApplicationContext();
+        String filePath = getPresetsFolder(ctx) + "/" + call.getString("id") + ".json";
+        File file = new File(filePath);
+        Log.d("PresetsPlugin", "deleting file " + filePath);
+
+        file.delete();
+
+        call.resolve();
     }
 }
