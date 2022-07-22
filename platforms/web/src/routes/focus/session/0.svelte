@@ -1,3 +1,4 @@
+<!-- set the timer before starting -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { TimeInput, RadioInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
@@ -21,9 +22,6 @@
   let limit = "Pomodoro";
 </script>
 
-<!-- C O N T E N T -->
-
-<!-- svelte-ignore component-name-lowercase -->
 <FullHeading backHref="/focus" editHref="">{presetName}</FullHeading>
 
 <H thin>Duration</H>
@@ -43,13 +41,7 @@
 {/if}
 
 <H thin>Options</H>
-<CheckMultiple
-  className="flex-wrap justify-center"
-  options={[
-    { label: "Hard Limit", isChecked: true },
-    { label: "20:20:20 Rule", isChecked: false },
-  ]}
-/>
+<CheckMultiple className="flex-wrap justify-center" options={["Hard Limit", "20:20:20 Rule"]} />
 
 <H thin>Soundtrack</H>
 <div class="card-flex-col">
@@ -58,6 +50,6 @@
   {/each}
 </div>
 
-<a sveltekit:prefetch href="/focus/session" class="fixed bottom-10">
+<a sveltekit:prefetch href="./1" class="fixed bottom-10">
   <Button>Start {presetName}</Button>
 </a>

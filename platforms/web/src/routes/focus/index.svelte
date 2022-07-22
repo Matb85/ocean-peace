@@ -13,13 +13,13 @@
 
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
-    <a sveltekit:prefetch href="/focus/presetedit">
+    <a sveltekit:prefetch href="/focus/session/0">
       <Preset src={W} label="Bottom text {i}" />
     </a>
   {/each}
-  <a sveltekit:prefetch href="/focus/presetedit">
+  <div>
     <Preset src={A} noShadowWrapper />
-  </a>
+  </div>
 </div>
 
 <H thin>Schedule</H>

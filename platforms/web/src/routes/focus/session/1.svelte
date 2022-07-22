@@ -1,3 +1,4 @@
+<!-- displays the ongoing session -->
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
   import { Button } from "@redinnlabs/system/Elements";
@@ -28,7 +29,7 @@
   </H>
 </div>
 
-<a sveltekit:prefetch href="/focus/summary" class="mt-4">
+<a sveltekit:prefetch href="./2" class="mt-4">
   <Button secondary size="small" isWarning>Cancel Session</Button>
 </a>
 
