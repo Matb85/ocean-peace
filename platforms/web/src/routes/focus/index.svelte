@@ -13,7 +13,7 @@
 
 <div class="grid grid-cols-2 gap-4">
   {#each Array(3) as _, i}
-    <a sveltekit:prefetch href="/focus/session/0">
+    <a sveltekit:prefetch href="/focus/session/1">
       <Preset src={W} label="Bottom text {i}" />
     </a>
   {/each}
