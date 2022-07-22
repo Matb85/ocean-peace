@@ -1,3 +1,4 @@
+<!-- allows to select active days & set time limit -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { RadioInput, TimeInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";

@@ -1,3 +1,4 @@
+<!-- allows to go back or return to editing -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import H from "$lib/H.svelte";

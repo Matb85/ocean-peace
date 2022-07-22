@@ -1,3 +1,4 @@
+<!-- displays the summary -->
 <script lang="ts">
   import { Button, Icon } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";

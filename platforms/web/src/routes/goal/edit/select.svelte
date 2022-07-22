@@ -1,3 +1,4 @@
+<!-- allows to select apps -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { AppStatus } from "@redinnlabs/system/Units";

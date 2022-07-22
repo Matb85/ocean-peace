@@ -1,3 +1,4 @@
+<!-- allows to set the name & add apps 7websites -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
