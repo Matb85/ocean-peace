@@ -1,4 +1,4 @@
-<!-- allows to set the name & add apps 7websites -->
+<!-- allows to set the name and select apps & websites -->
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
@@ -12,6 +12,7 @@
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
+    sessionStorage.setItem("selectors_back_url", "/goal/edit/1");
     selectedApps = await Api.getAppIcons(JSON.parse(sessionStorage.getItem("edit_goal_apps")));
   });
 
@@ -32,7 +33,7 @@
 
 <SelectedApps apps={selectedApps} />
 
-<a sveltekit:prefetch href="./select">
+<a sveltekit:prefetch href="/selectors/apps">
   <Button secondary size="small">edit</Button>
 </a>
 
@@ -40,7 +41,7 @@
 
 <SelectedApps />
 
-<a sveltekit:prefetch href="./select">
+<a sveltekit:prefetch href="/selectors/apps">
   <Button secondary size="small">edit</Button>
 </a>
 

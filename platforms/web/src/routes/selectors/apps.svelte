@@ -6,6 +6,8 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import { onMount } from "svelte";
 
+  const goBackUrl = sessionStorage.getItem("selectors_back_url") || "";
+
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
 
@@ -63,6 +65,6 @@
   {/each}
 </section>
 
-<a href="./1" sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+<a href={goBackUrl} sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
   <Button isFullWidth>Save</Button>
 </a>
