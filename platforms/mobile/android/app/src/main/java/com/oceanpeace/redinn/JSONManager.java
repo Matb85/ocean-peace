@@ -58,4 +58,8 @@ public class JSONManager {
         return stringBuilder.toString();
     }
 
+    static public boolean deleteFile(String fileName) {
+        File file = new File(fileName);
+        return file.delete();
+    }
 }

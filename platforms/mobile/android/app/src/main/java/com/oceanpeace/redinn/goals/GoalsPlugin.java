@@ -1,7 +1,5 @@
 package com.oceanpeace.redinn.goals;
 
-import android.util.Log;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -34,9 +32,12 @@ public class GoalsPlugin extends Plugin {
 
         Goals goals = new Goals(getActivity().getApplicationContext());
         try {
-            goals.createGoal(id, name, apps, limit, activeDays, limitActionType);
+            goals.saveGoal(id, name, apps, limit, activeDays, limitActionType);
         } catch (IOException e) {
-            call.reject("IO error" + e);
+            call.reject("IO error " + e);
+        } catch (Exception e) {
+            call.reject("JSON error " + e);
+            e.printStackTrace();
         }
         call.resolve();
     }
