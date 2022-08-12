@@ -1,4 +1,4 @@
-export interface FocusStartedI {
+interface FocusStartedI {
   started: boolean;
 }
 
@@ -8,7 +8,7 @@ export interface FocusMethods {
    * It is working only for chosen time.
    *
    * @param continuousDuration  Duration in milliseconds of whole focus mode
-   * @param wakeDevice          (moblie only) Boolean if user wants the device to wake up at the end of every phase
+   * @param wakeDevice          (mobile only) Boolean if user wants the device to wake up at the end of every phase
    * @param twentyRule          Boolean if user wants to activate 20:20:20 rule
    *
    * @return                    Returns boolean if mode start was successful
@@ -31,7 +31,7 @@ export interface FocusMethods {
     wakeDevice: boolean
   ): Promise<FocusStartedI>;
   /**
-   * Start Stopwatch mode of Focus. You don't need to provide anny additional parameters as to date.
+   * Start Stopwatch mode of Focus. You don't need to provide any additional parameters as to date.
    *
    * @param twentyRule          Boolean if user wants to activate 20:20:20 rule
    *

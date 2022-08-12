@@ -12,7 +12,6 @@ const Presets = registerPlugin<PresetsPlugin>("Presets");
 
 const plugin: PresetsMethods = {
   async getAllPresets(): Promise<PresetI[]> {
-    console.log("hi");
     const { presets } = await Presets.getAllPresets();
     return presets;
   },

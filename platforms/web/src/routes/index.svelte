@@ -19,8 +19,9 @@
       SM.goal.limitActionType = "Notification";
       SM.action.type = "Add";
       SM.action.backUrl = "/";
+      SM.action.continueUrl = "/goal/edit/1";
 
-      SM.selectors.apps = "[]";
+      SM.dialogs.apps = "[]";
     }
   });
 

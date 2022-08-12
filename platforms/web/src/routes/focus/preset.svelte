@@ -21,9 +21,10 @@
     SM.preset.name = presetData.name;
     SM.preset.icon = presetData.icon;
 
-    SM.selectors.apps = presetData.apps;
+    SM.dialogs.apps = presetData.apps;
     SM.action.type = "Edit";
     SM.action.backUrl = $page.url.pathname + $page.url.search;
+    SM.action.continueUrl = "/focus/editpreset/1";
   });
 
   const hoursTime = timeInputConfig.hoursConfig(1);
@@ -72,4 +73,4 @@
   <Button>Start {presetData?.name || ""}</Button>
 </a>
 
-<DangerZone deleteUrl="/focus/delete" label="Delete Preset" />
+<DangerZone deleteUrl="/focus/editpreset/delete" label="Delete Preset" />

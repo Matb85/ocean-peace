@@ -47,7 +47,7 @@
   $: SM.preset.icon = chosen;
 </script>
 
-<FullHeading backHref="./1">{SM.action.type} goal</FullHeading>
+<FullHeading backHref="./1">{SM.action.type} preset</FullHeading>
 
 <H thin>Choose Icon</H>
 

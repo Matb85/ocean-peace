@@ -15,7 +15,7 @@
   let selectedApps: AppIconI[] = [];
 
   onMount(async () => {
-    selectedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.apps));
   });
   /** save goal to a file
    * @returns {void}
@@ -26,7 +26,7 @@
       Api.saveGoal({
         id: SM.goal.id,
         name: SM.goal.name,
-        apps: SM.selectors.apps,
+        apps: SM.dialogs.apps,
         limit: parseInt(SM.goal.timeHours) * 60 + parseInt(SM.goal.timeMinutes) + "",
         activeDays: SM.goal.activeDays,
         limitActionType: SM.goal.limitActionType,
