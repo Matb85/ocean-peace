@@ -4,7 +4,7 @@ import type { GoalI, GoalsMethods } from "@redinn/oceanpeace-web/api/goals";
 interface GoalsPlugin {
   getAllGoals(): Promise<{ goals: GoalI[] }>;
   getGoal(data: { id: string }): Promise<{ goal: GoalI }>;
-  saveGoal(data: GoalI): void;
+  saveGoal(data: { data: GoalI }): void;
   deleteGoal(data: { id: string }): void;
 }
 
@@ -20,7 +20,7 @@ const plugin: GoalsMethods = {
     return goal;
   },
   async saveGoal(data: GoalI): Promise<void> {
-    await Goal.saveGoal(data);
+    await Goal.saveGoal({ data });
   },
   async deleteGoal(id: string): Promise<void> {
     await Goal.deleteGoal({ id });

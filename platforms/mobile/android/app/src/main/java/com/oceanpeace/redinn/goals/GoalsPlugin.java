@@ -16,23 +16,9 @@ public class GoalsPlugin extends Plugin {
 
     @PluginMethod
     public void saveGoal(PluginCall call) {
-        /* get data */
-        String id = call.getString("id");
-        String name = call.getString("name");
-        String apps = call.getString("apps");
-        String limit = call.getString("limit");
-        String activeDays = call.getString("activeDays");
-        String limitActionType = call.getString("limitActionType");
-        if (id == null || name == null || apps == null || limit == null || activeDays == null || limitActionType == null) {
-            call.reject("not enough data"+id+" "+name+" "+apps+" "+limit+" "+activeDays+" "+limitActionType);
-            return;
-        }
-
-
-
         Goals goals = new Goals(getActivity().getApplicationContext());
         try {
-            goals.saveGoal(id, name, apps, limit, activeDays, limitActionType);
+            goals.saveGoal(call.getObject("data"));
         } catch (IOException e) {
             call.reject("IO error " + e);
         } catch (Exception e) {
@@ -57,7 +43,7 @@ public class GoalsPlugin extends Plugin {
     public void getGoal(PluginCall call) {
         String id = call.getString("id");
         if (id == null)
-            call.reject("fileName cannot be null");
+            call.reject("id cannot be null");
 
         JSObject res = new JSObject();
         JSONObject goalData = new Goals(getActivity().getApplicationContext()).getGoal(id);

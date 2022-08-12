@@ -27,30 +27,10 @@ public class Goals {
         return context.getFilesDir().getAbsolutePath();
     }
 
-    /**
-     * Creates a goal file and saves all passed data
-     *
-     * @param name  name of the goal
-     * @param id    {"0": "com.example.one", "1", "com.example.two", ...}
-     * @param apps  "0100101"
-     * @param limit time limit in minutes
-     * @throws IOException throws expectation if IO fails
-     */
-    public void saveGoal(String id, String name, String apps, String limit, String activeDays, String limitActionType) throws Exception {
-
-        JSONObject goal = new JSONObject();
-
-        goal.put("id", id);
-        goal.put("name", name);
-        goal.put("apps", apps);
-        goal.put("limit", limit);
-        goal.put("activeDays", activeDays);
-        goal.put("limitActionType", limitActionType);
-
-        JSONManager.writeFile(goal, getDir(context.getApplicationContext()) + "/goals/" + id + ".json");
+    public void saveGoal(JSONObject goal) throws Exception {
+        JSONManager.writeFile(goal, getDir(context.getApplicationContext()) + "/goals/" + goal.getString("id") + ".json");
 
         WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
-
     }
 
     public JSONArray getAllGoals() {
@@ -92,12 +72,10 @@ public class Goals {
 
 
     public void deleteGoal(String id) {
-
         /* delete the id from the database */
         File file = new File(getDir(context.getApplicationContext()) + "/goals/" + id + ".json");
         file.delete();
 
         WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
-
     }
 }
