@@ -22,6 +22,7 @@
     SM.preset.icon = presetData.icon;
 
     SM.dialogs.apps = presetData.apps;
+    SM.dialogs.websites = presetData.websites;
     SM.action.type = "Edit";
     SM.action.backUrl = $page.url.pathname + $page.url.search;
     SM.action.continueUrl = "/focus/editpreset/1";

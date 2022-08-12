@@ -6,6 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
+  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
 
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -29,6 +30,7 @@
         name: SM.preset.name,
         icon: SM.preset.icon,
         apps: SM.dialogs.apps,
+        websites: SM.dialogs.apps,
       };
       Api.savePreset(data);
       goto("/focus");
@@ -51,6 +53,7 @@
 <SelectedApps apps={allowedApps} />
 
 <H tag={6} thin>Allowed Websites</H>
+<SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
 
 <div on:click={saveGoal} class="fixed-bottom-button">
   <Button isFullWidth>save</Button>

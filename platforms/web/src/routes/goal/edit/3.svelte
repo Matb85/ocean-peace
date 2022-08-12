@@ -5,6 +5,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
+  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
 
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -22,15 +23,17 @@
    */
   function saveGoal() {
     isComplete = true;
+    const data: GoalI = {
+      id: SM.goal.id,
+      name: SM.goal.name,
+      apps: SM.dialogs.apps,
+      websites: SM.dialogs.websites,
+      limit: parseInt(SM.goal.timeHours) * 60 + parseInt(SM.goal.timeMinutes) + "",
+      activeDays: SM.goal.activeDays,
+      limitActionType: SM.goal.limitActionType,
+    };
     setTimeout(() => {
-      Api.saveGoal({
-        id: SM.goal.id,
-        name: SM.goal.name,
-        apps: SM.dialogs.apps,
-        limit: parseInt(SM.goal.timeHours) * 60 + parseInt(SM.goal.timeMinutes) + "",
-        activeDays: SM.goal.activeDays,
-        limitActionType: SM.goal.limitActionType,
-      } as GoalI);
+      Api.saveGoal(data);
       goto("/");
     }, 1500);
   }
@@ -65,7 +68,8 @@
 <H tag={6} thin>Selected apps</H>
 <SelectedApps apps={selectedApps} />
 
-<H tag={6} thin>Selected Websites</H>
+<H tag={6} thin>Allowed Websites</H>
+<SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
 
 <div on:click={saveGoal} class="fixed-bottom-button" href="/">
   <Button isFullWidth>save</Button>

@@ -14,7 +14,7 @@
   let tempTo: string;
 
   beforeNavigate(({ from, cancel, to }) => {
-    if (from) {
+    if (from && to) {
       if (from.pathname == to.pathname) {
         return;
       }

@@ -13,6 +13,12 @@ export default {
     get apps() {
       return sessionStorage.getItem("dialogs_apps");
     },
+    set websites(value: string) {
+      sessionStorage.setItem("dialogs_websites", value);
+    },
+    get websites() {
+      return sessionStorage.getItem("dialogs_websites");
+    },
     set backUrl(value: string) {
       sessionStorage.setItem("dialogs_backUrl", value);
     },

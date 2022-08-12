@@ -2,9 +2,11 @@
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
+
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
+  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
 
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -40,9 +42,9 @@
 
 <H thin>Allowed websites</H>
 
-<SelectedApps />
+<SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
 
-<a sveltekit:prefetch href="/dialogs/apps">
+<a sveltekit:prefetch href="/dialogs/websites">
   <Button secondary size="small">edit</Button>
 </a>
 

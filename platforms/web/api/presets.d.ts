@@ -3,6 +3,7 @@ export interface PresetI {
   name: string;
   icon: string;
   apps: string;
+  websites: string;
 }
 
 export interface PresetsMethods {

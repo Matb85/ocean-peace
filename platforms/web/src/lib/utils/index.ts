@@ -15,3 +15,5 @@ export function stringTimeFromNumber(stringTime: string): string {
   const time = timeFromNumber(stringTime);
   return time[0] + ":" + time[1];
 }
+
+export const WebsiteTypes = ["single website", "all subdomains", "all domains"];

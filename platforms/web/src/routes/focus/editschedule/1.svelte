@@ -12,16 +12,18 @@
   import type { PresetI } from "$schema";
   import SM from "$lib/sessionManager";
 
-  let presets: PresetI[] = [];
-  onMount(async () => {
-    presets = await Api.getAllPresets();
-  });
-
   let name = SM.schedule.name;
   $: SM.schedule.name = name;
 
   let preset = SM.schedule.preset;
   $: SM.schedule.preset = preset;
+
+  let presets: PresetI[] = [];
+  onMount(async () => {
+    presets = await Api.getAllPresets();
+
+    if (preset.length == 0) preset = presets[0].id;
+  });
 </script>
 
 <FullHeading backHref="/dialogs/cancel">
@@ -40,6 +42,7 @@
     <Preset
       src={p.icon}
       label={p.name}
+      isSelected={preset == p.id}
       on:click={() => {
         preset = p.id;
       }}
