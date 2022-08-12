@@ -7,7 +7,7 @@
 
 <H tag={3} thin className="absolute top-1/4">Cancel {SM.action.type}ing?</H>
 <div class="w-3/4 absolute top-2/3 flex flex-col gap-4">
-  <a sveltekit:prefetch href="./1">
+  <a sveltekit:prefetch href={SM.action.continueUrl}>
     <Button isFullWidth>No, continue</Button>
   </a>
   <a sveltekit:prefetch href={SM.action.backUrl}>

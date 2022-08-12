@@ -16,9 +16,9 @@
   let allowedApps: AppIconI[] = [];
 
   onMount(async () => {
-    allowedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
+    allowedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.apps));
   });
-  /** save goal to a file
+  /** save preset to a file
    * @returns {void}
    */
   function saveGoal() {
@@ -28,7 +28,7 @@
         id: SM.preset.id,
         name: SM.preset.name,
         icon: SM.preset.icon,
-        apps: SM.selectors.apps,
+        apps: SM.dialogs.apps,
       };
       Api.savePreset(data);
       goto("/focus");
@@ -39,7 +39,7 @@
 
 <FullHeading backHref="./2">Summary</FullHeading>
 
-<H tag={6} thin>Goal name</H>
+<H tag={6} thin>Preset name</H>
 <H tag={4} className="-mt-2" thin>{SM.preset.name}</H>
 
 <H tag={6} thin>Icon</H>

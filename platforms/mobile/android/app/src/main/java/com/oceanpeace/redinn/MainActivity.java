@@ -13,6 +13,7 @@ import com.oceanpeace.redinn.icons.IconWorker;
 import com.oceanpeace.redinn.icons.IconsPlugin;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
 import com.oceanpeace.redinn.presets.PresetsPlugin;
+import com.oceanpeace.redinn.schedule.SchedulePlugin;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,8 +25,6 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-
-        super.onCreate(savedInstanceState);
         checkData();
         Focus.getInstance().setContextElements(this.getApplicationContext());
 
@@ -47,6 +46,9 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(GoalsPlugin.class);
         registerPlugin(IconsPlugin.class);
         registerPlugin(PresetsPlugin.class);
+        registerPlugin(SchedulePlugin.class);
+
+        super.onCreate(savedInstanceState);
     }
 
     @Override

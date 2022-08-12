@@ -2915,9 +2915,9 @@ dependencies = [
 
 [[package]]
 name = "sysinfo"
-version = "0.24.7"
+version = "0.25.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54cb4ebf3d49308b99e6e9dc95e989e2fdbdc210e4f67c39db0bb89ba927001c"
+checksum = "1594a36887d0f70096702bffadfb67dfbfe76ad4bf84605e86157dc9fce9961a"
 dependencies = [
  "cfg-if",
  "core-foundation-sys",
@@ -3013,9 +3013,9 @@ dependencies = [
 
 [[package]]
 name = "tauri"
-version = "1.0.4"
+version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "827f61bd3dd40276694be5c7ffc40d65b94ab00d9f8c1a4a4db07f2cdc306c83"
+checksum = "e1a56a8b125069c2682bd31610109b4436c050c74447bee1078217a0325c1add"
 dependencies = [
  "anyhow",
  "attohttpc",

@@ -13,15 +13,15 @@
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    SM.selectors.backUrl = "/focus/editpreset/1";
-    selectedApps = await Api.getAppIcons(JSON.parse(SM.selectors.apps));
+    SM.dialogs.backUrl = "/focus/editpreset/1";
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.apps));
   });
 
   let name = SM.preset.name;
   $: SM.preset.name = name;
 </script>
 
-<FullHeading backHref="./0">
+<FullHeading backHref="/dialogs/cancel">
   {SM.action.type} preset
 </FullHeading>
 
@@ -34,7 +34,7 @@
 
 <SelectedApps apps={selectedApps} />
 
-<a sveltekit:prefetch href="/selectors/apps">
+<a sveltekit:prefetch href="/dialogs/apps">
   <Button secondary size="small">edit</Button>
 </a>
 
@@ -42,7 +42,7 @@
 
 <SelectedApps />
 
-<a sveltekit:prefetch href="/selectors/apps">
+<a sveltekit:prefetch href="/dialogs/apps">
   <Button secondary size="small">edit</Button>
 </a>
 
