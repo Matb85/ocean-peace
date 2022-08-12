@@ -3,8 +3,6 @@ package com.oceanpeace.redinn;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.getcapacitor.BridgeActivity;
@@ -13,7 +11,6 @@ import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.icons.IconWorker;
 import com.oceanpeace.redinn.icons.IconsPlugin;
-import com.oceanpeace.redinn.mayo.GoalMayo;
 import com.oceanpeace.redinn.mayo.MayoPlugin;
 import com.oceanpeace.redinn.presets.PresetsPlugin;
 
@@ -41,7 +38,7 @@ public class MainActivity extends BridgeActivity {
 //            e.printStackTrace();
 //        }
 
-        WorkManager.getInstance(getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE,new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+        //WorkManager.getInstance(getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE,new OneTimeWorkRequest.Builder(GoalMayo.class).build());
 
         WorkManager.getInstance(getApplicationContext()).enqueue(IconWorker.regenerateIcons);
 
