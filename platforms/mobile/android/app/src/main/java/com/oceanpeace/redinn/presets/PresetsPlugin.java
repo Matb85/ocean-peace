@@ -1,5 +1,7 @@
 package com.oceanpeace.redinn.presets;
 
+import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -18,14 +20,14 @@ import java.io.File;
 @CapacitorPlugin(name = "Presets")
 public class PresetsPlugin extends Plugin {
     private String getPresetsFolder(Context ctx) {
-        return ctx.getDataDir().getAbsolutePath() + "/presets";
+        return getFilesDir(ctx) + "/presets";
     }
 
     @Override
     public void load() {
         Context ctx = getActivity().getApplicationContext();
 
-        File iconFolderFile = new File(getPresetsFolder(ctx));
+        File iconFolderFile = new File(getFilesDir(ctx));
         if (!iconFolderFile.isDirectory()) {
             Log.d("PresetsPlugin", "creating the presets folder");
             iconFolderFile.mkdir();

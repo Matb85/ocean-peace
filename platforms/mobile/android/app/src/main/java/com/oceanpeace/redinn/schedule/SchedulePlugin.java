@@ -1,5 +1,7 @@
 package com.oceanpeace.redinn.schedule;
 
+import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -18,7 +20,7 @@ import java.io.File;
 @CapacitorPlugin(name = "Schedule")
 public class SchedulePlugin extends Plugin {
     private String getSchedulesFolder(Context ctx) {
-        return ctx.getDataDir().getAbsolutePath() + "/schedule";
+        return getFilesDir(ctx) + "/schedule";
     }
 
     @Override
