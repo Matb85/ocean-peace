@@ -1,9 +1,11 @@
 import goal from "./goal";
 import preset from "./preset";
+import schedule from "./schedule";
 
 export default {
   goal,
   preset,
+  schedule,
   dialogs: {
     set apps(value: string) {
       sessionStorage.setItem("dialogs_apps", value);
