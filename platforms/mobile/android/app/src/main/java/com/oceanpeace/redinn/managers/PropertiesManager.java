@@ -1,6 +1,4 @@
-package com.oceanpeace.redinn;
-
-import android.content.Context;
+package com.oceanpeace.redinn.managers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,13 +14,9 @@ public class PropertiesManager {
 
     private final String path;
 
-    public PropertiesManager(String fileName, Context context) {
-        path = context.getFilesDir().getPath() + "/" + fileName;
-    }
     public PropertiesManager(String differentLocalization, String fileName) {
         path = differentLocalization + "/" + fileName;
     }
-
 
 
     public void Create() throws IOException {
@@ -62,7 +56,7 @@ public class PropertiesManager {
             OutputStream output = new FileOutputStream(path);
 
             // set the properties values
-            for(int i=0; i<keys.length && i<values.length; i++) {
+            for (int i = 0; i < keys.length && i < values.length; i++) {
                 prop.setProperty(keys[i], values[i]);
             }
 
@@ -73,7 +67,6 @@ public class PropertiesManager {
             ex.printStackTrace();
         }
     }
-
 
 
     //Read config file
@@ -110,7 +103,7 @@ public class PropertiesManager {
             input.close();
 
             // set the properties values
-            for(int i=0; i<keys.length; i++) {
+            for (int i = 0; i < keys.length; i++) {
                 readings[i] += prop.getProperty(keys[i]);
             }
 

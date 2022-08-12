@@ -8,7 +8,7 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.oceanpeace.redinn.JSONManager;
+import com.oceanpeace.redinn.managers.JSONManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.oceanpeace.redinn.managers;
 
 import android.util.Log;
 

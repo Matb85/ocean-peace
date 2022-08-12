@@ -7,14 +7,13 @@ import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.oceanpeace.redinn.JSONManager;
+import com.oceanpeace.redinn.managers.JSONManager;
 import com.oceanpeace.redinn.mayo.GoalMayo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Goals {
     Context context;
