@@ -21,7 +21,7 @@
   $: SM.preset.name = name;
 </script>
 
-<FullHeading backHref="./0">
+<FullHeading backHref="/dialogs/cancel">
   {SM.action.type} preset
 </FullHeading>
 

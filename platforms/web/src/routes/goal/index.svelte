@@ -33,6 +33,7 @@
     SM.dialogs.apps = goalData.apps;
     SM.action.type = "Edit";
     SM.action.backUrl = $page.url.pathname + $page.url.search;
+    SM.action.continueUrl = "/goal/edit/1";
   });
 </script>
 
