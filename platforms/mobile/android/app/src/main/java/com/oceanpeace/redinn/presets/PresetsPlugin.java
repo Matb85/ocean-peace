@@ -27,7 +27,7 @@ public class PresetsPlugin extends Plugin {
     public void load() {
         Context ctx = getActivity().getApplicationContext();
 
-        File iconFolderFile = new File(getFilesDir(ctx));
+        File iconFolderFile = new File(getPresetsFolder(ctx));
         if (!iconFolderFile.isDirectory()) {
             Log.d("PresetsPlugin", "creating the presets folder");
             iconFolderFile.mkdir();
