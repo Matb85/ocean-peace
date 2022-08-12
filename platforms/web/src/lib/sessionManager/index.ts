@@ -4,18 +4,18 @@ import preset from "./preset";
 export default {
   goal,
   preset,
-  selectors: {
+  dialogs: {
     set apps(value: string) {
-      sessionStorage.setItem("selectors_apps", value);
+      sessionStorage.setItem("dialogs_apps", value);
     },
     get apps() {
-      return sessionStorage.getItem("selectors_apps");
+      return sessionStorage.getItem("dialogs_apps");
     },
     set backUrl(value: string) {
-      sessionStorage.setItem("selectors_backUrl", value);
+      sessionStorage.setItem("dialogs_backUrl", value);
     },
     get backUrl() {
-      return sessionStorage.getItem("selectors_backUrl");
+      return sessionStorage.getItem("dialogs_backUrl");
     },
   },
   action: {
@@ -30,6 +30,12 @@ export default {
     },
     get backUrl() {
       return sessionStorage.getItem("action_back");
+    },
+    set continueUrl(value: string) {
+      sessionStorage.setItem("dialogs_continueUrl", value);
+    },
+    get continueUrl() {
+      return sessionStorage.getItem("dialogs_continueUrl");
     },
   },
 };

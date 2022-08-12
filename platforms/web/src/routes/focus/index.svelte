@@ -26,7 +26,7 @@
       SM.action.type = "Add";
       SM.action.backUrl = "/focus";
 
-      SM.selectors.apps = "[]";
+      SM.dialogs.apps = "[]";
     }
   });
 </script>
@@ -52,7 +52,9 @@
 
 <div class="card-flex-col">
   {#each Array(3) as _}
-    <Schedule src={W} title="Event example" />
+    <a class="w-full" sveltekit:prefetch href="/focus/schedule">
+      <Schedule src={W} title="Event example" />
+    </a>
   {/each}
   <Button secondary>Add a Rule</Button>
 </div>

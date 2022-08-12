@@ -21,7 +21,7 @@
     SM.preset.name = presetData.name;
     SM.preset.icon = presetData.icon;
 
-    SM.selectors.apps = presetData.apps;
+    SM.dialogs.apps = presetData.apps;
     SM.action.type = "Edit";
     SM.action.backUrl = $page.url.pathname + $page.url.search;
   });

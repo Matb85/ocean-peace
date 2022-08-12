@@ -30,7 +30,7 @@
     SM.goal.activeDays = goalData.activeDays;
     SM.goal.limitActionType = goalData.limitActionType;
 
-    SM.selectors.apps = goalData.apps;
+    SM.dialogs.apps = goalData.apps;
     SM.action.type = "Edit";
     SM.action.backUrl = $page.url.pathname + $page.url.search;
   });

@@ -15,7 +15,7 @@
   let allowedApps: AppIconI[] = [];
 
   onMount(async () => {
-    Api.getAppIcons(JSON.parse(SM.selectors.apps)).then(data => (allowedApps = data));
+    Api.getAppIcons(JSON.parse(SM.dialogs.apps)).then(data => (allowedApps = data));
     const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
     console.log(t);
   });
