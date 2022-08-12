@@ -79,10 +79,10 @@ public class PresetsPlugin extends Plugin {
             call.resolve(res);
             return;
         }
-        Log.d("PresetsPlugin", "iterating through all files...");
+        Log.i("PresetsPlugin", "iterating through all files...");
 
         for (File file : files) {
-            Log.d("PresetsPlugin", "reading file " + file.getName());
+            Log.i("PresetsPlugin", "reading file " + file.getName());
             try {
                 arr.put(JSONManager.readFile(file));
             } catch (Exception err) {
