@@ -27,8 +27,6 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-
-        super.onCreate(savedInstanceState);
         checkData();
         Focus.getInstance().setContextElements(this.getApplicationContext());
 
@@ -50,6 +48,8 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(GoalsPlugin.class);
         registerPlugin(IconsPlugin.class);
         registerPlugin(PresetsPlugin.class);
+
+        super.onCreate(savedInstanceState);
     }
 
     @Override
