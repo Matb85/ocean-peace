@@ -12,7 +12,7 @@
     "@redinn/oceanpeace-web": "workspace:^1.0.0"
   },
   "devDependencies": {
-    "@capacitor/camera": "4.0.1",
+    "@capacitor/camera": "4.1.0",
     "@capacitor/cli": "4.1.0",
     "@capacitor/core": "4.1.0",
     "@capacitor/splash-screen": "4.0.1",
