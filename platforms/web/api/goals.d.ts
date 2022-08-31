@@ -5,6 +5,7 @@ export interface GoalI {
   limit: string;
   activeDays: string;
   limitActionType: string;
+  websites: string;
 }
 
 export interface GoalsMethods {

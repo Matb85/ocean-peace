@@ -1,6 +1,6 @@
 {
   "extends": ["config:base"],
-  "ignoreDeps": ["@redinnlabs/system"],
+  "ignoreDeps": ["@redinnlabs/system", "@sveltejs/kit"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],

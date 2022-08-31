@@ -1,5 +1,7 @@
 package com.oceanpeace.redinn.goals;
 
+import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -7,14 +9,13 @@ import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import com.oceanpeace.redinn.JSONManager;
+import com.oceanpeace.redinn.managers.JSONManager;
 import com.oceanpeace.redinn.mayo.GoalMayo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Goals {
     Context context;
@@ -23,38 +24,15 @@ public class Goals {
         this.context = context;
     }
 
-    private String getDir(Context context) {
-        return context.getFilesDir().getAbsolutePath();
-    }
 
-    /**
-     * Creates a goal file and saves all passed data
-     *
-     * @param name  name of the goal
-     * @param id    {"0": "com.example.one", "1", "com.example.two", ...}
-     * @param apps  "0100101"
-     * @param limit time limit in minutes
-     * @throws IOException throws expectation if IO fails
-     */
-    public void saveGoal(String id, String name, String apps, String limit, String activeDays, String limitActionType) throws Exception {
+    public void saveGoal(JSONObject goal) throws Exception {
+        JSONManager.writeFile(goal, getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
-        JSONObject goal = new JSONObject();
-
-        goal.put("id", id);
-        goal.put("name", name);
-        goal.put("apps", apps);
-        goal.put("limit", limit);
-        goal.put("activeDays", activeDays);
-        goal.put("limitActionType", limitActionType);
-
-        JSONManager.writeFile(goal, getDir(context.getApplicationContext()) + "/goals/" + id + ".json");
-
-        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
-
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002 + "", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
     }
 
     public JSONArray getAllGoals() {
-        File[] files = new File(getDir(context.getApplicationContext()) + "/goals").listFiles();
+        File[] files = new File(getFilesDir(context) + "/goals").listFiles();
 
         if (files == null)
             return null;
@@ -62,10 +40,10 @@ public class Goals {
         /* put data from each goal the the final array */
         JSONArray ret = new JSONArray();
 
-        Log.d("GoalsPlugin","iterating through all files...");
+        Log.d("GoalsPlugin", "iterating through all files...");
 
         for (File file : files) {
-            Log.d("GoalsPlugin","reading file "+ file.getName());
+            Log.d("GoalsPlugin", "reading file " + file.getName());
 
             try {
                 ret.put(JSONManager.readFile(file));
@@ -80,7 +58,7 @@ public class Goals {
     public JSONObject getGoal(String id) {
         JSONObject res = new JSONObject();
 
-        File file = new File(getDir(context.getApplicationContext()) + "/goals/" + id + ".json");
+        File file = new File(getFilesDir(context) + "/goals/" + id + ".json");
 
         try {
             res = JSONManager.readFile(file);
@@ -92,12 +70,10 @@ public class Goals {
 
 
     public void deleteGoal(String id) {
-
         /* delete the id from the database */
-        File file = new File(getDir(context.getApplicationContext()) + "/goals/" + id + ".json");
+        File file = new File(getFilesDir(context) + "/goals/" + id + ".json");
         file.delete();
 
-        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002+"", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
-
+        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002 + "", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
     }
 }

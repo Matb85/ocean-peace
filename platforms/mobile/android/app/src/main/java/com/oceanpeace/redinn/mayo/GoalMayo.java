@@ -19,7 +19,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.getcapacitor.JSArray;
-import com.oceanpeace.redinn.PropertiesManager;
+import com.oceanpeace.redinn.managers.PropertiesManager;
 import com.oceanpeace.redinn.R;
 import com.oceanpeace.redinn.goals.Goals;
 

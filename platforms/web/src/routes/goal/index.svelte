@@ -7,6 +7,7 @@
   import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
   import DangerZone from "$lib/DangerZone.svelte";
+  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
 
   import { page } from "$app/stores";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -31,6 +32,8 @@
     SM.goal.limitActionType = goalData.limitActionType;
 
     SM.dialogs.apps = goalData.apps;
+    SM.dialogs.websites = goalData.websites;
+
     SM.action.type = "Edit";
     SM.action.backUrl = $page.url.pathname + $page.url.search;
     SM.action.continueUrl = "/goal/edit/1";
@@ -93,7 +96,9 @@
 </section>
 
 <H thin>Selected apps</H>
-
 <SelectedApps apps={selectedApps} />
+
+<H tag={6} thin>Allowed Websites</H>
+<SelectedWebsites websites={JSON.parse(SM.dialogs.websites || "[]")} />
 
 <DangerZone deleteUrl="/goal/delete" label="Delete Goal" />

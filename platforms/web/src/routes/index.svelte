@@ -22,6 +22,7 @@
       SM.action.continueUrl = "/goal/edit/1";
 
       SM.dialogs.apps = "[]";
+      SM.dialogs.websites = "[]";
     }
   });
 

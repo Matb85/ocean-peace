@@ -30,6 +30,7 @@
       SM.action.continueUrl = "/focus/editpreset/1";
 
       SM.dialogs.apps = "[]";
+      SM.dialogs.websites = "[]";
     } else if (to.pathname == "/focus/editschedule/1") {
       SM.schedule.id = "" + Date.now();
       SM.schedule.name = "";
@@ -68,6 +69,7 @@
   {#each allSchedules as schedule}
     <a class="w-full" sveltekit:prefetch href="/focus/schedule?id={schedule.id}">
       <Schedule
+        alt=""
         src={allPresets.filter(x => (x.id = schedule.preset))[0].icon}
         title={schedule.name}
         info={JSON.parse(schedule.activeDays).join(",") +

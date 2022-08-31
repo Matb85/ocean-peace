@@ -1,5 +1,7 @@
 package com.oceanpeace.redinn.presets;
 
+import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -8,7 +10,7 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.oceanpeace.redinn.JSONManager;
+import com.oceanpeace.redinn.managers.JSONManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +20,7 @@ import java.io.File;
 @CapacitorPlugin(name = "Presets")
 public class PresetsPlugin extends Plugin {
     private String getPresetsFolder(Context ctx) {
-        return ctx.getDataDir().getAbsolutePath() + "/presets";
+        return getFilesDir(ctx) + "/presets";
     }
 
     @Override
