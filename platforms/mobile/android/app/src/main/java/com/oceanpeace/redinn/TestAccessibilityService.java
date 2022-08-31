@@ -5,9 +5,12 @@ import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import java.util.Date;
+
 public class TestAccessibilityService extends AccessibilityService {
 
-    private String lastPN = null;
+    private String lastPackageName = null;
+    private long changeTime;
 
     @Override
     public void onServiceConnected() {
@@ -20,34 +23,24 @@ public class TestAccessibilityService extends AccessibilityService {
     }
 
 
-        @Override
+    @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         AccessibilityNodeInfo nodeInfo = event.getSource();
         if (nodeInfo == null)
             return;
+
+        if (event.getPackageName() != lastPackageName) {
+            long curTime = event.getEventTime();
+
+        }
         
         Log.i("WINDOW",
                 "\nonAccessibilityEvent: "  + event.getPackageName() +
                         "\nevent: " + event.toString() +
-                        "\nnode_info: " + nodeInfo.toString()
+                        "\nnode_info: " + nodeInfo.toString() +
+                        "\nclass_name: " + event.getClassName() +
+                        "\ndate: " + new Date(event.getEventTime()).toString()
         );
-
-        if (nodeInfo.getChildCount() > 0)
-        {
-
-            for (int i=0; i<nodeInfo.getChildCount(); i++) {
-                String childs ="";
-                AccessibilityNodeInfo child = nodeInfo.getChild(i);
-                childs = childs + child.toString() + "\n" + nodeInfo.getChildCount() + "\n";
-//                if (child.getChildCount() > 0)
-//                    for (int j=0; j < child.getChildCount(); j++) {
-//                        AccessibilityNodeInfo child2 = child.getChild(i);
-//                        childs = childs + child2.toString() + "\n";
-//                    }
-                Log.i("CHILD", childs);
-            }
-
-        }
 
         
     }
