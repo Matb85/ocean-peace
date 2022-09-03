@@ -57,6 +57,24 @@ public class FunctionBase {
         }
         return false;
     }
+
+    /**
+     *
+     * Checks if the <i>array</i> contains JSONObject with a <b>String</b> in the specified <i>field</i>
+     *
+     * @param array     array which you want to be searched
+     * @param fieldName Name of the field of JSONObject that you want to search in
+     * @param element   <b>String</b> you looking for
+     * @return  <i>true</i> if @array has JSONObject containing element in specified field
+     * @throws JSONException
+     */
+    public static boolean JSONArrayHasElement(JSONArray array, String fieldName, String element) throws JSONException {
+        for (int i=0; i < array.length(); i++) {
+            if (array.getJSONObject(i).getString(fieldName).equals(element))
+                return true;
+        }
+        return false;
+    }
     //endregion
 
     //region DayOfTheWeek

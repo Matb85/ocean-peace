@@ -9,12 +9,9 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.work.BackoffPolicy;
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -24,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 // TODO: rename this class
 
 public class TestAccessibilityService extends AccessibilityService {
@@ -34,9 +31,43 @@ public class TestAccessibilityService extends AccessibilityService {
         private long previousChangeTime = SystemClock.uptimeMillis();
         private String dayOfWeek = null;
 
+        /**
+         * JSONArray of this type elements: <br/>
+         *
+         *  { <br/>
+         * 	    &emsp "packageName": "com.facebook.katana", <br/>
+         * 	    &emsp "goals": [ <br/>
+         * 		    &emsp&emsp "goal1234", <br/>
+         * 		    &emsp&emsp "goal1234", <br/>
+         *  	&emsp ], <br/>
+         *  } <br/>
+         */
         private JSONArray notify = new JSONArray();
+
+        /**
+         * JSONArray of this type elements: <br/>
+         *
+         *  { <br/>
+         * 	    &emsp "packageName": "com.facebook.katana", <br/>
+         * 	    &emsp "goals": [ <br/>
+         * 		    &emsp&emsp "goal1234", <br/>
+         * 		    &emsp&emsp "goal1234", <br/>
+         *  	&emsp ], <br/>
+         *  } <br/>
+         */
         private JSONArray close = new JSONArray();
+
+        /**
+         * JSONArray of this type elements: <br/>
+         *
+         * [<br/>
+         *  &emsp "com.facebook.katana", "com.instagram.katana:, <br/>
+         * ]<br/>
+         *
+         */
         private static JSONArray focus = new JSONArray();
+
+        public static JSONArray todayGoals = new JSONArray();
     //endregion
 
 
@@ -48,20 +79,11 @@ public class TestAccessibilityService extends AccessibilityService {
         // region creating lists of packageNames
 
             // creating arrays using worker with back off delay if the work fail
-            WorkManager.getInstance(getApplicationContext())
-                    .enqueueUniqueWork(
-                            "6000",
-                            ExistingWorkPolicy.APPEND_OR_REPLACE,
-                            new OneTimeWorkRequest.Builder(
-                                CreateGoalsArraysWorker.class
-                            )
-                                    .setBackoffCriteria(
-                                            BackoffPolicy.LINEAR,
-                                            1000,
-                                            TimeUnit.MILLISECONDS
-                                    )
-                                    .build()
-                    );
+        try {
+            updateGoalsArray();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         //endregion
 
@@ -91,6 +113,10 @@ public class TestAccessibilityService extends AccessibilityService {
         displayTime = thisChangeTime - previousChangeTime;
         previousChangeTime = thisChangeTime;
 
+
+
+
+        Toast.makeText(getApplicationContext(), "" + event.getPackageName(), Toast.LENGTH_SHORT).show();
 //        if (previousPackageName != null) {
 //
 //            WorkManager.getInstance(getApplicationContext())
@@ -117,18 +143,34 @@ public class TestAccessibilityService extends AccessibilityService {
     // region Mayo
 
         private void mayo(String packageName, long eventTime) throws JSONException {
+            // variables
+            long duration;
+
+
             //checking if window is blocked by FOCUS session
             if (JSONArrayHasElement(focus, packageName)) {
                 mayoClose();
                 return;
             }
 
+            //checking if current window is a part of the same app as previous
+            if (Objects.equals(packageName, previousPackageName))
+                return;
+
             //checking if the date changed
             //if not then update arrays
             if (!dayOfWeek.equals(getDayOfWeekStringShort())) {
                 dayOfWeek = getDayOfWeekStringShort();
                 updateGoalsArray();
+
+                previousChangeTime = SystemClock.uptimeMillis();
+                previousPackageName = null;
             }
+
+
+            duration = eventTime - previousChangeTime;
+            previousChangeTime = eventTime;
+
 
             //check if window is blocked by goals
             // TODO: make the timer that will close app when usage time meet the limit
@@ -142,6 +184,8 @@ public class TestAccessibilityService extends AccessibilityService {
                 return;
             }
         }
+
+
 
         // TODO: make closing app function
         private void mayoClose() {
@@ -176,6 +220,12 @@ public class TestAccessibilityService extends AccessibilityService {
          * @throws JSONException
          */
         public void updateGoalsArray () throws JSONException {
+            //clear arrays
+            Log.i("MAYO", "updateGoalsArray: clearing arrays!");
+            notify = new JSONArray();
+            close = new JSONArray();
+            todayGoals = new JSONArray();
+
             Log.i("MAYO", "updateGoalsArray: updating for " + dayOfWeek);
 
             JSONArray goals;
@@ -206,7 +256,8 @@ public class TestAccessibilityService extends AccessibilityService {
 
             Log.i("MAYO", "updateGoalsArray: arrays updated!" +
                     "\n\tnotify: " + notify.toString() +
-                    "\n\tclose: " + close.toString());
+                    "\n\tclose: " + close.toString() +
+                    "\n\tgoals: " + todayGoals.toString());
         }
 
         void updateNotifyArray (JSONObject goal) throws JSONException {
@@ -223,11 +274,27 @@ public class TestAccessibilityService extends AccessibilityService {
             // adding packageNames to the notify array
             for (int i = 0; i < packageNames.length(); i++) {
                 //checking if the packageName already exist in array
-                if (JSONArrayHasElement(notify, packageNames.getString(i)))
+                if (JSONArrayHasElement(notify, "packageName" ,packageNames.getString(i))) {
+                    // search for this packageName
+                    for (int j = 0; j < notify.length(); j++) {
+                        if (notify.getJSONObject(j).getString("packageName").equals(packageNames.getString(i))) {
+                            //check if the goal is not already present
+                            if (!JSONArrayHasElement(notify.getJSONObject(j).getJSONArray("goals"), goal.getString("id")))
+                                notify.getJSONObject(j).getJSONArray("goals").put(goal.getString("id"));
+                        }
+                    }
                     continue;
+                }
 
-                notify.put(packageNames.getString(i));
+
+                JSONObject element = new JSONObject()
+                                .put("packageName", packageNames.getString(i))
+                                .put("goals", new JSONArray().put(goal.getString("id")));
+
+                notify.put(element);
+
             }
+            updateLoadedGoals(goal);
         }
 
         void updateCloseArray (JSONObject goal) throws JSONException {
@@ -241,14 +308,37 @@ public class TestAccessibilityService extends AccessibilityService {
 
             packageNames = new JSONArray( goal.getString("apps") );
 
-            // adding packageNames to the close array
+            // adding packageNames to the notify array
             for (int i = 0; i < packageNames.length(); i++) {
                 //checking if the packageName already exist in array
-                if (JSONArrayHasElement(close, packageNames.getString(i)))
+                if (JSONArrayHasElement(close, "packageName" ,packageNames.getString(i))) {
+                    // search for this packageName
+                    for (int j = 0; j < close.length(); j++) {
+                        if (close.getJSONObject(j).getString("packageName").equals(packageNames.getString(i))) {
+                            //check if the goal is not already present
+                            if (!JSONArrayHasElement(close.getJSONObject(j).getJSONArray("goals"), goal.getString("id")))
+                                close.getJSONObject(j).getJSONArray("goals").put(goal.getString("id"));
+                        }
+                    }
                     continue;
+                }
 
-                close.put(packageNames.getString(i));
+
+                JSONObject element = new JSONObject()
+                        .put("packageName", packageNames.getString(i))
+                        .put("goals", new JSONArray().put(goal.getString("id")));
+
+                close.put(element);
+
             }
+            updateLoadedGoals(goal);
+        }
+
+        private void updateLoadedGoals (JSONObject goal) throws  JSONException {
+            if(JSONArrayHasElement(todayGoals, "id", goal.getString("id")))
+                return;
+
+            todayGoals.put(goal);
         }
 
     // endregion
@@ -296,5 +386,7 @@ public class TestAccessibilityService extends AccessibilityService {
     }
 
     //endregion
+
+
 }
 
