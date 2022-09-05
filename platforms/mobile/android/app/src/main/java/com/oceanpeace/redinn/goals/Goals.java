@@ -1,5 +1,6 @@
 package com.oceanpeace.redinn.goals;
 
+import static com.oceanpeace.redinn.FunctionBase.JSONArrayOptElement;
 import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
 
 import android.content.Context;
@@ -13,19 +14,47 @@ import com.oceanpeace.redinn.managers.JSONManager;
 import com.oceanpeace.redinn.mayo.GoalMayo;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 
+/**
+ * Class providing saving, loading and deleting functions for goals. <br/>
+ *  <br/>
+ * Goal basic structure:<br/>
+ *
+ * { <br/>
+ * &emsp"id": "goal1662045227355",<br/>
+ * &emsp"name": "Lol",<br/>
+ * &emsp"apps": "[\"com.Playrion.AirlinesManager2\"]",<br/>
+ * &emsp"websites": "[{\"url\":\"Delta.com\",\"label\":\"*.Delta.com\",\"favicon\":\"\/globe.png\",\"type\":1}]",<br/>
+ * &emsp"limit": "75",<br/>
+ * &emsp"activeDays": "[\"Tue\"]",<br/>
+ * &emsp"limitActionType": "Notification"<br/>
+ * }
+ */
 public class Goals {
+    // region constructor
     Context context;
 
     public Goals(Context context) {
         this.context = context;
     }
-
+    //endregion
 
     public void saveGoal(JSONObject goal) throws Exception {
+
+        if (goal.opt(SESSIONUPDATE) == null)
+            goal.put(SESSIONUPDATE, null);
+
+        if (goal.opt(SESSIONTIME) == null)
+            goal.put(SESSIONTIME, 0L);
+
+        if (goal.opt(SESSIONSHISTORY) == null)
+            goal.put(SESSIONSHISTORY, new JSONArray());
+
+
         JSONManager.writeFile(goal, getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
         WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002 + "", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
@@ -52,6 +81,8 @@ public class Goals {
             }
         }
 
+
+
         return ret;
     }
 
@@ -62,9 +93,24 @@ public class Goals {
 
         try {
             res = JSONManager.readFile(file);
+
+
+
+            // checking if the goal is in today's goals to update it's data
+            JSONObject temp = JSONArrayOptElement(todayGoals, ID, id);
+            if (temp != null) {
+                res.put(SESSIONUPDATE, temp.getString(SESSIONUPDATE));
+                res.put(SESSIONTIME, temp.getLong(SESSIONTIME));
+                res.put(SESSIONSHISTORY, temp.getJSONArray(SESSIONSHISTORY));
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
         return res;
     }
 
@@ -76,4 +122,62 @@ public class Goals {
 
         WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002 + "", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
     }
+
+
+    //region todayGoals
+    /**
+     * Array containing goals which are scheduled for today
+     */
+    public static JSONArray todayGoals = new JSONArray();
+
+    public static void updateLoadedGoals (JSONObject goal) throws JSONException {
+        if(JSONArrayOptElement(todayGoals, ID, goal.getString("id")) != null)
+            return;
+
+        todayGoals.put(goal);
+    }
+    //endregion
+
+    //region fieldsNames
+    /**
+     * String containing name of <b>id</b> field
+     */
+    public static String ID = "id";
+    /**
+     * String containing name of <b>name</b> field
+     */
+    public static String NAME = "name";
+    /**
+     * String containing name of <b>apps</b> field
+     */
+    public static String APPS = "apps";
+    /**
+     * String containing name of <b>websites</b> field
+     */
+    public static String WEBSITES = "websites";
+    /**
+     * String containing name of <b>limit</b> field
+     */
+    public static String LIMIT = "limit";
+    /**
+     * String containing name of <b>active days</b> field
+     */
+    public static String ACTIVEDAYS = "activeDays";
+    /**
+     * String containing name of <b>limit action type/b> field
+     */
+    public static String LIMITACTIONTYPE = "limitActionType";
+    /**
+     * String containing name of <b>session update date</b> field
+     */
+    public static String SESSIONUPDATE = "sessionUpdate";
+    /**
+     * String containing name of <b>session activity time</b> field
+     */
+    public static String SESSIONTIME = "sessionTime";
+    /**
+     * String containing name of <b>sessions' history</b> field
+     */
+    public static String SESSIONSHISTORY = "sessionHistory";
+    //endregion
 }
