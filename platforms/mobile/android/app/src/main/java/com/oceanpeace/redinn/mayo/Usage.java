@@ -9,9 +9,9 @@ import com.getcapacitor.JSObject;
 
 import java.util.List;
 
-public class Mayo {
+public class Usage {
     Context context;
-    public Mayo(Context context) {
+    public Usage(Context context) {
         this.context = context;
     }
 
