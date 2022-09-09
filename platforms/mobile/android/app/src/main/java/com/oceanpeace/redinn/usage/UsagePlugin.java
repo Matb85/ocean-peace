@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.mayo;
+package com.oceanpeace.redinn.usage;
 
 
 import static androidx.core.content.ContextCompat.startActivity;
@@ -55,25 +55,30 @@ public class UsagePlugin extends Plugin {
         }
     }
 
-    void runMayo(PluginCall call) {
-        Usage usage = new Usage(getActivity().getApplicationContext());
-        JSObject ret = new JSObject();
-        ret.put("stats", usage.GetUsageData());
-        call.resolve(ret);
-    }
-
     boolean hasPermission()
     {
         AppOpsManager opsManager = (AppOpsManager) getActivity().getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
         int mode = opsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(),getActivity().getApplicationContext().getPackageName());
 
         if (mode == AppOpsManager.MODE_DEFAULT) {
-             return getActivity().getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
+            return getActivity().getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
         }
         else {
             return mode == AppOpsManager.MODE_ALLOWED;
         }
     }
+
+
+
+    void runMayo(PluginCall call) {
+        Usage usage = new Usage(getActivity().getApplicationContext());
+        JSObject ret = new JSObject();
+        ret.put("stats", usage.GetUsageData());
+        ret.put("total", usage.getTotalTime());
+        call.resolve(ret);
+    }
+
+
 
 
 }

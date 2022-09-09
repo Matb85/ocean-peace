@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.mayo;
+package com.oceanpeace.redinn.usage;
 
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -15,6 +15,7 @@ public class Usage {
         this.context = context;
     }
 
+    long total = 0;
 
     public JSObject GetUsageData() {
 
@@ -24,7 +25,6 @@ public class Usage {
                                                 time - 1000 * 100, time);
         JSObject appsUsage = new JSObject();
 
-        long total=0;
         int it = 0;
         for (UsageStats stat: stats) {
             String packageName = stat.getPackageName();
@@ -50,5 +50,7 @@ public class Usage {
         return appsUsage;
     }
 
-
+    public long getTotalTime() {
+        return total;
+    }
 }
