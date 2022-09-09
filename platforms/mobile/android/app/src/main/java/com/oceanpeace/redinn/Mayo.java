@@ -32,7 +32,7 @@ public class Mayo extends AccessibilityService {
     // region variables
         private String previousPackageName = null;
         private long previousChangeTime = SystemClock.uptimeMillis();
-        private String dayOfWeek = null;
+        private static String dayOfWeek = null;
 
         /**
          * JSONArray of this type elements: <br/>
@@ -45,7 +45,7 @@ public class Mayo extends AccessibilityService {
          *  	&emsp ], <br/>
          *  } <br/>
          */
-        private JSONArray notify = new JSONArray();
+        private static JSONArray notify = new JSONArray();
 
         /**
          * JSONArray of this type elements: <br/>
@@ -58,7 +58,7 @@ public class Mayo extends AccessibilityService {
          *  	&emsp ], <br/>
          *  } <br/>
          */
-        private JSONArray close = new JSONArray();
+        private static JSONArray close = new JSONArray();
 
         /**
          * JSONArray of this type elements: <br/>
@@ -82,7 +82,8 @@ public class Mayo extends AccessibilityService {
 
         // region creating lists of packageNames
         try {
-            updateGoalsArray();
+            loadTodayGoals();
+            updatePackagesArray();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,7 +134,7 @@ public class Mayo extends AccessibilityService {
         //if not then update arrays
         if (!dayOfWeek.equals(getDayOfWeekStringShort())) {
             dayOfWeek = getDayOfWeekStringShort();
-            updateGoalsArray();
+            updatePackagesArray();
 
             previousChangeTime = SystemClock.uptimeMillis();
             previousPackageName = null;
@@ -223,6 +224,84 @@ public class Mayo extends AccessibilityService {
 
 
 
+    // region today's goals
+    /**
+     * Array containing goals which are scheduled for today
+     */
+    public static JSONArray todayGoals = new JSONArray();
+
+    private void loadTodayGoals() throws JSONException{
+        // empty the array
+        todayGoals = new JSONArray();
+        // get all goals
+        Goals goalsClass = new Goals(getApplicationContext());
+        JSONArray goals = goalsClass.getAllGoals();
+
+        //iterate through all goals
+        for (int i=0; i<goals.length(); i++) {
+            // if goal is not set for today, skip
+            if (FunctionBase.JSONArrayOptElement(
+                    new JSONArray(goals.getJSONObject(i).getString(Goals.ACTIVEDAYS)),
+                    dayOfWeek) == null)
+                continue;
+
+            //add goal to today goals
+            todayGoals.put(goals.getJSONObject(i));
+        }
+    }
+
+    private static void addTodayGoals(JSONObject goal) throws JSONException {
+        //if the goal exist already then return
+        if(JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id")) != null)
+            return;
+
+        //update array
+        todayGoals.put(goal);
+    }
+
+    public static void updateTodayGoals(JSONObject goal) throws  JSONException {
+        Log.i("MAYO", "updateTodayGoals: updating!");
+        // check if the goal with this id is in the array
+        JSONObject previous = JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id"));
+        if(previous != null) {
+            // get index of previous goal in array
+            int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, previous.getString(Goals.ID));
+
+            // date is possible to be null
+            try {
+                // parse Date from both goals
+                Date prevUpdate = Date.valueOf(previous.getString(Goals.SESSIONUPDATE));
+                Date curUpdate = Date.valueOf(goal.getString(Goals.SESSIONUPDATE));
+                // check if previous has more up-to-date data
+                if (prevUpdate.after(curUpdate)) {
+                    //update data
+                    goal.put(Goals.SESSIONUPDATE, Calendar.getInstance().getTime().toString());
+                    goal.put(Goals.SESSIONSHISTORY, previous.getString(Goals.SESSIONSHISTORY));
+                    goal.put(Goals.SESSIONTIME, previous.getString(Goals.SESSIONTIME));
+                }
+            } catch (NullPointerException e) {
+
+            } catch (IllegalArgumentException e) {
+
+            } finally {
+                // replace goal in array
+                todayGoals.put(index, goal);
+            }
+
+        }
+        else {
+            // if goal doesn't exist add it
+            todayGoals.put(goal);
+        }
+
+        updatePackagesArray();
+
+        Log.i("MAYO", "updateTodayGoals: " + todayGoals.toString());
+    }
+    //endregion
+
+
+
     // region Updating Goals' arrays functions
 
         /**
@@ -231,24 +310,20 @@ public class Mayo extends AccessibilityService {
          *
          * @throws JSONException
          */
-        public void updateGoalsArray () throws JSONException {
+        public static void updatePackagesArray() throws JSONException {
             //clear arrays
             Log.i("MAYO", "updateGoalsArray: clearing arrays!");
             notify = new JSONArray();
             close = new JSONArray();
-            todayGoals = new JSONArray();
 
             Log.i("MAYO", "updateGoalsArray: updating for " + dayOfWeek);
 
-            JSONArray goals;
             JSONObject goal;
 
-            Goals goalsClass = new Goals(getApplicationContext());
-            goals = goalsClass.getAllGoals();
 
             // iterating through the all goals
-            for (int i = 0; i < goals.length(); i++) {
-                goal = goals.getJSONObject(i);
+            for (int i = 0; i < todayGoals.length(); i++) {
+                goal = todayGoals.getJSONObject(i);
 
                 // checking the goal's limit action type (notify or close)
                 // & calling functions to put packageNames to the correct array
@@ -272,13 +347,7 @@ public class Mayo extends AccessibilityService {
                     "\n\tgoals: " + todayGoals.toString());
         }
 
-        void updateNotifyArray (JSONObject goal) throws JSONException {
-            // skip function if goal is not set for today
-            if (FunctionBase.JSONArrayOptElement(
-                    new JSONArray(goal.getString(Goals.ACTIVEDAYS)),
-                    dayOfWeek) == null)
-                return;
-
+        static void updateNotifyArray (JSONObject goal) throws JSONException {
             JSONArray packageNames;
 
             packageNames = new JSONArray( goal.getString("apps") );
@@ -303,16 +372,9 @@ public class Mayo extends AccessibilityService {
                 notify.put(element);
 
             }
-            addTodayGoals(goal);
         }
 
-        void updateCloseArray (JSONObject goal) throws JSONException {
-            // skip function if goal is not set for today
-            if (FunctionBase.JSONArrayOptElement(
-                    new JSONArray(goal.getString(Goals.ACTIVEDAYS)),
-                    dayOfWeek) == null)
-                return;
-
+        static void updateCloseArray (JSONObject goal) throws JSONException {
             JSONArray packageNames;
 
             packageNames = new JSONArray( goal.getString("apps") );
@@ -336,7 +398,6 @@ public class Mayo extends AccessibilityService {
                 close.put(element);
 
             }
-            addTodayGoals(goal);
         }
 
 
@@ -344,47 +405,5 @@ public class Mayo extends AccessibilityService {
     // endregion
 
 
-
-
-    // region today's goals
-    /**
-     * Array containing goals which are scheduled for today
-     */
-    public static JSONArray todayGoals = new JSONArray();
-
-    private static void addTodayGoals(JSONObject goal) throws JSONException {
-        //if the goal exist already then return
-        if(JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id")) != null)
-            return;
-
-        //update array
-        todayGoals.put(goal);
-    }
-
-    public static void updateTodayGoals(JSONObject goal) throws  JSONException {
-        // check if the goal with this id is in the array
-        JSONObject previous = JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id"));
-        if(previous != null) {
-            // get index of previous goal in array
-            int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, previous.getString(Goals.ID));
-            // parse Date from both goals
-            Date prevUpdate = Date.valueOf(previous.getString(Goals.SESSIONUPDATE));
-            Date curUpdate = Date.valueOf(goal.getString(Goals.SESSIONUPDATE));
-            // check if previous has more up-to-date data
-            if(prevUpdate.after(curUpdate)) {
-                //update data
-                goal.put(Goals.SESSIONUPDATE, Calendar.getInstance().getTime().toString());
-                goal.put(Goals.SESSIONSHISTORY, previous.getString(Goals.SESSIONSHISTORY));
-                goal.put(Goals.SESSIONTIME, previous.getString(Goals.SESSIONTIME));
-            }
-            // replace goal in array
-            todayGoals.put(index, goal);
-        }
-        else {
-            // if goal doesn't exist add it
-            todayGoals.put(goal);
-        }
-    }
-    //endregion
 }
 

@@ -10,6 +10,7 @@ import com.oceanpeace.redinn.Mayo;
 import com.oceanpeace.redinn.managers.JSONManager;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -52,7 +53,11 @@ public class Goals {
 
         JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
-        Mayo.updateTodayGoals(goal);
+        try {
+            Mayo.updateTodayGoals(goal);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public JSONArray getAllGoals() {
@@ -95,8 +100,8 @@ public class Goals {
             JSONObject temp = JSONArrayOptElement(Mayo.todayGoals, ID, id);
             if (temp != null) {
                 res.put(SESSIONUPDATE, temp.getString(SESSIONUPDATE));
-                res.put(SESSIONTIME, temp.getLong(SESSIONTIME));
-                res.put(SESSIONSHISTORY, temp.getJSONArray(SESSIONSHISTORY));
+                res.put(SESSIONTIME, temp.getString(SESSIONTIME));
+                res.put(SESSIONSHISTORY, temp.getString(SESSIONSHISTORY));
             }
 
 
