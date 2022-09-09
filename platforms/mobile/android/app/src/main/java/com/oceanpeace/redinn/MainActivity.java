@@ -10,9 +10,9 @@ import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.icons.IconManager;
 import com.oceanpeace.redinn.icons.IconsPlugin;
-import com.oceanpeace.redinn.mayo.UsagePlugin;
 import com.oceanpeace.redinn.presets.PresetsPlugin;
 import com.oceanpeace.redinn.schedule.SchedulePlugin;
+import com.oceanpeace.redinn.usage.UsagePlugin;
 
 public class MainActivity extends BridgeActivity {
 

@@ -1,6 +1,5 @@
 package com.oceanpeace.redinn.schedule;
 
-import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +9,7 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.oceanpeace.redinn.FunctionBase;
 import com.oceanpeace.redinn.managers.JSONManager;
 
 import org.json.JSONArray;
@@ -20,7 +20,7 @@ import java.io.File;
 @CapacitorPlugin(name = "Schedule")
 public class SchedulePlugin extends Plugin {
     private String getSchedulesFolder(Context ctx) {
-        return getFilesDir(ctx) + "/schedule";
+        return FunctionBase.getFilesDir(ctx) + "/schedule";
     }
 
     @Override
