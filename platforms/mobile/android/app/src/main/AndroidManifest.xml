@@ -12,6 +12,7 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +23,7 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".TestAccessibilityService"
+            android:name=".Mayo"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true"
             >
@@ -49,19 +50,7 @@
             android:name=".focus.Focus"
             android:enabled="true"
             android:exported="true" />
-        <service
-            android:name=".icons.IconManager"
-            android:enabled="true"
-            android:exported="true" />
 
-        <receiver
-            android:name=".Autostart"
-            android:enabled="false"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:exported="true"
