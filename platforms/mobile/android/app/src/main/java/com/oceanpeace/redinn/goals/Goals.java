@@ -1,20 +1,15 @@
 package com.oceanpeace.redinn.goals;
 
 import static com.oceanpeace.redinn.FunctionBase.JSONArrayOptElement;
-import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
 
 import android.content.Context;
 import android.util.Log;
 
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-
+import com.oceanpeace.redinn.FunctionBase;
+import com.oceanpeace.redinn.Mayo;
 import com.oceanpeace.redinn.managers.JSONManager;
-import com.oceanpeace.redinn.mayo.GoalMayo;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -46,22 +41,22 @@ public class Goals {
     public void saveGoal(JSONObject goal) throws Exception {
 
         if (goal.opt(SESSIONUPDATE) == null)
-            goal.put(SESSIONUPDATE, null);
+            goal.put(SESSIONUPDATE, "");
 
         if (goal.opt(SESSIONTIME) == null)
-            goal.put(SESSIONTIME, 0L);
+            goal.put(SESSIONTIME, "0");
 
         if (goal.opt(SESSIONSHISTORY) == null)
-            goal.put(SESSIONSHISTORY, new JSONArray());
+            goal.put(SESSIONSHISTORY, new JSONArray().toString());
 
 
-        JSONManager.writeFile(goal, getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
+        JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
-        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002 + "", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
+        Mayo.updateTodayGoals(goal);
     }
 
     public JSONArray getAllGoals() {
-        File[] files = new File(getFilesDir(context) + "/goals").listFiles();
+        File[] files = new File(FunctionBase.getFilesDir(context) + "/goals").listFiles();
 
         if (files == null)
             return null;
@@ -89,7 +84,7 @@ public class Goals {
     public JSONObject getGoal(String id) {
         JSONObject res = new JSONObject();
 
-        File file = new File(getFilesDir(context) + "/goals/" + id + ".json");
+        File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
 
         try {
             res = JSONManager.readFile(file);
@@ -97,7 +92,7 @@ public class Goals {
 
 
             // checking if the goal is in today's goals to update it's data
-            JSONObject temp = JSONArrayOptElement(todayGoals, ID, id);
+            JSONObject temp = JSONArrayOptElement(Mayo.todayGoals, ID, id);
             if (temp != null) {
                 res.put(SESSIONUPDATE, temp.getString(SESSIONUPDATE));
                 res.put(SESSIONTIME, temp.getLong(SESSIONTIME));
@@ -117,26 +112,12 @@ public class Goals {
 
     public void deleteGoal(String id) {
         /* delete the id from the database */
-        File file = new File(getFilesDir(context) + "/goals/" + id + ".json");
+        File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
         file.delete();
 
-        WorkManager.getInstance(context.getApplicationContext()).enqueueUniqueWork(6002 + "", ExistingWorkPolicy.REPLACE, new OneTimeWorkRequest.Builder(GoalMayo.class).build());
     }
 
 
-    //region todayGoals
-    /**
-     * Array containing goals which are scheduled for today
-     */
-    public static JSONArray todayGoals = new JSONArray();
-
-    public static void updateLoadedGoals (JSONObject goal) throws JSONException {
-        if(JSONArrayOptElement(todayGoals, ID, goal.getString("id")) != null)
-            return;
-
-        todayGoals.put(goal);
-    }
-    //endregion
 
     //region fieldsNames
     /**
