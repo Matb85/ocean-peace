@@ -118,8 +118,14 @@ public class Goals {
     public void deleteGoal(String id) {
         /* delete the id from the database */
         File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
-        file.delete();
 
+        try {
+            Mayo.deleteTodayGoal(new JSONObject().put(Goals.ID, id));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        file.delete();
     }
 
 

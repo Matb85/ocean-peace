@@ -24,7 +24,6 @@ import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.Objects;
 // TODO: rename this class
 
 public class Mayo extends AccessibilityService {
@@ -83,7 +82,7 @@ public class Mayo extends AccessibilityService {
         // region creating lists of packageNames
         try {
             loadTodayGoals();
-            updatePackagesArray();
+            updatePackagesArrays();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -99,7 +98,7 @@ public class Mayo extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         try {
-            mayo(event.getPackageName().toString(), event.getEventTime());
+            run(event.getPackageName().toString(), event.getEventTime());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -115,7 +114,7 @@ public class Mayo extends AccessibilityService {
 
     // region Mayo
 
-    private void mayo(String packageName, long eventTime) throws JSONException {
+    private void run(String packageName, long eventTime) throws JSONException {
         // variables
         long duration;
 
@@ -127,15 +126,19 @@ public class Mayo extends AccessibilityService {
         }
 
         //checking if current window is a part of the same app as previous
-        if (Objects.equals(packageName, previousPackageName))
+        if (packageName.equals(previousPackageName))
             return;
 
         //checking if the date changed
         //if not then update arrays
         if (!dayOfWeek.equals(getDayOfWeekStringShort())) {
+            // update dayOfWeek
             dayOfWeek = getDayOfWeekStringShort();
-            updatePackagesArray();
+            // update arrays
+            loadTodayGoals();
+            updatePackagesArrays();
 
+            // prevent calculating previous day
             previousChangeTime = SystemClock.uptimeMillis();
             previousPackageName = null;
         }
@@ -161,6 +164,7 @@ public class Mayo extends AccessibilityService {
             mayoClose(packageName);
             return;
         }
+
         previousPackageName = packageName;
     }
 
@@ -220,7 +224,6 @@ public class Mayo extends AccessibilityService {
     }
 
     //endregion
-    // endregion
 
 
 
@@ -231,7 +234,9 @@ public class Mayo extends AccessibilityService {
     public static JSONArray todayGoals = new JSONArray();
 
     private void loadTodayGoals() throws JSONException{
+        Log.i("MAYO", "loadTodayGoals: loading...");
         // empty the array
+        Log.i("MAYO", "loadTodayGoals: clearing array...");
         todayGoals = new JSONArray();
         // get all goals
         Goals goalsClass = new Goals(getApplicationContext());
@@ -248,19 +253,12 @@ public class Mayo extends AccessibilityService {
             //add goal to today goals
             todayGoals.put(goals.getJSONObject(i));
         }
-    }
-
-    private static void addTodayGoals(JSONObject goal) throws JSONException {
-        //if the goal exist already then return
-        if(JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id")) != null)
-            return;
-
-        //update array
-        todayGoals.put(goal);
+        Log.i("MAYO", "todayGoals: " + todayGoals.toString());
+        Log.i("MAYO", "loadTodayGoals: done!");
     }
 
     public static void updateTodayGoals(JSONObject goal) throws  JSONException {
-        Log.i("MAYO", "updateTodayGoals: updating!");
+        Log.i("MAYO", "updateTodayGoals: updating...");
         // check if the goal with this id is in the array
         JSONObject previous = JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id"));
         if(previous != null) {
@@ -279,9 +277,7 @@ public class Mayo extends AccessibilityService {
                     goal.put(Goals.SESSIONSHISTORY, previous.getString(Goals.SESSIONSHISTORY));
                     goal.put(Goals.SESSIONTIME, previous.getString(Goals.SESSIONTIME));
                 }
-            } catch (NullPointerException e) {
-
-            } catch (IllegalArgumentException e) {
+            } catch (NullPointerException | IllegalArgumentException e) {
 
             } finally {
                 // replace goal in array
@@ -294,9 +290,26 @@ public class Mayo extends AccessibilityService {
             todayGoals.put(goal);
         }
 
-        updatePackagesArray();
+        updatePackagesArrays();
 
         Log.i("MAYO", "updateTodayGoals: " + todayGoals.toString());
+        Log.i("MAYO", "updateTodayGoals: updated!");
+    }
+
+    public static void deleteTodayGoal(JSONObject goal) throws JSONException {
+        Log.i("MAYO", "deleteTodayGoal: removing goal...");
+        // getting goal index
+        int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, goal.getString(Goals.ID));
+        // if goal is not in the array
+        if (index < 0)
+            return;
+
+        // remove goal
+        todayGoals.remove(index);
+        // update arrays
+        updatePackagesArrays();
+
+        Log.i("MAYO", "deleteTodayGoal: goal removed from array!");
     }
     //endregion
 
@@ -310,9 +323,9 @@ public class Mayo extends AccessibilityService {
          *
          * @throws JSONException
          */
-        public static void updatePackagesArray() throws JSONException {
+        public static void updatePackagesArrays() throws JSONException {
             //clear arrays
-            Log.i("MAYO", "updateGoalsArray: clearing arrays!");
+            Log.i("MAYO", "updateGoalsArray: clearing arrays...");
             notify = new JSONArray();
             close = new JSONArray();
 
@@ -335,6 +348,7 @@ public class Mayo extends AccessibilityService {
                             updateCloseArray(goal);
                         break;
                     default:
+                        //handle error
                             Log.e("MAYO", "updateGoalsArray: Error occurred while checking goal's limit action type\n"
                                 + "\t" + goal.getString("id") + ":\"limitActionType\" filed my be empty or may contain not supported type of action");
                         break;
@@ -364,11 +378,12 @@ public class Mayo extends AccessibilityService {
                     continue;
                 }
 
-
+                // create object which will be stored
                 JSONObject element = new JSONObject()
                                 .put("packageName", packageNames.getString(i))
                                 .put("goals", new JSONArray().put(goal.getString(Goals.ID)));
 
+                // store object
                 notify.put(element);
 
             }
@@ -390,11 +405,12 @@ public class Mayo extends AccessibilityService {
                     continue;
                 }
 
-
+                // create object which will be stored
                 JSONObject element = new JSONObject()
                         .put("packageName", packageNames.getString(i))
                         .put("goals", new JSONArray().put(goal.getString(Goals.ID)));
 
+                // store object
                 close.put(element);
 
             }
