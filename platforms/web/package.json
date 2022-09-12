@@ -21,7 +21,7 @@
     ".": "./api/index.d.ts"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "1.0.0-next.39",
+    "@sveltejs/adapter-static": "1.0.0-next.43",
     "@sveltejs/kit": "1.0.0-next.405",
     "@typescript-eslint/eslint-plugin": "5.33.0",
     "@typescript-eslint/parser": "5.33.0",
