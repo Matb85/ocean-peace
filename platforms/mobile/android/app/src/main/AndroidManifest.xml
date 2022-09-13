@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".Mayo"
+            android:name=".mayo.Mayo"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true"
             >

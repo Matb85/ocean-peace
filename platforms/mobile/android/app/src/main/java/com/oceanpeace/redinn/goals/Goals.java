@@ -6,7 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceanpeace.redinn.FunctionBase;
-import com.oceanpeace.redinn.Mayo;
+import com.oceanpeace.redinn.mayo.Mayo;
 import com.oceanpeace.redinn.managers.JSONManager;
 
 import org.json.JSONArray;
@@ -54,7 +54,7 @@ public class Goals {
         JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
         try {
-            Mayo.updateTodayGoals(goal);
+            Mayo.changeTodayGoals(goal);
         } catch (JSONException e) {
             e.printStackTrace();
         }

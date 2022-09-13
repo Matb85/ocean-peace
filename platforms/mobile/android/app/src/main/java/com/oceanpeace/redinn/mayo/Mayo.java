@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.oceanpeace.redinn.mayo;
 
 import static com.oceanpeace.redinn.FunctionBase.JSONArrayGetIndexOf;
 import static com.oceanpeace.redinn.FunctionBase.JSONArrayOptElement;
@@ -16,22 +16,25 @@ import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
 
+import com.oceanpeace.redinn.FunctionBase;
+import com.oceanpeace.redinn.R;
 import com.oceanpeace.redinn.goals.Goals;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
 import java.util.Calendar;
-// TODO: rename this class
+import java.util.Date;
+
 
 public class Mayo extends AccessibilityService {
 
     // region variables
-        private String previousPackageName = null;
-        private long previousChangeTime = SystemClock.uptimeMillis();
+        private String closedPackageName = null;
+        private long closedChangeTime = SystemClock.uptimeMillis();
         private static String dayOfWeek = null;
+        private boolean closedIsInArryas = true;
 
         /**
          * JSONArray of this type elements: <br/>
@@ -98,6 +101,7 @@ public class Mayo extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         try {
+            // run function
             run(event.getPackageName().toString(), event.getEventTime());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -108,70 +112,123 @@ public class Mayo extends AccessibilityService {
     @Override
     public void onInterrupt() {
     }
+
+    @Override
+    public void onDestroy() {
+        allGoalsToFile();
+    }
     //endregion
 
 
 
     // region Mayo
 
-    private void run(String packageName, long eventTime) throws JSONException {
+    private void run(String openedPackageName, long eventTime) throws JSONException {
         // variables
-        long duration;
+        long duration = 0;
 
 
         //checking if window is blocked by FOCUS session
-        if (FunctionBase.JSONArrayOptElement(focus, packageName) != null) {
-            mayoClose(packageName);
+        if (FunctionBase.JSONArrayOptElement(focus, openedPackageName) != null) {
+            mayoClose(openedPackageName);
             return;
         }
 
         //checking if current window is a part of the same app as previous
-        if (packageName.equals(previousPackageName))
+        if (openedPackageName.equals(closedPackageName))
             return;
 
-        //checking if the date changed
-        //if not then update arrays
-        if (!dayOfWeek.equals(getDayOfWeekStringShort())) {
-            // update dayOfWeek
-            dayOfWeek = getDayOfWeekStringShort();
-            // update arrays
-            loadTodayGoals();
-            updatePackagesArrays();
+        if (closedIsInArryas) {
+            // get the session duration
+            duration = eventTime - closedChangeTime;
 
-            // prevent calculating previous day
-            previousChangeTime = SystemClock.uptimeMillis();
-            previousPackageName = null;
+
+            //checking if the date changed
+            //if not then update arrays
+            if (!dayOfWeek.equals(getDayOfWeekStringShort())) {
+                // get the time spent after midnight
+                long pastMidnightTime =
+                        Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * (60 * 60 * 1000) +
+                                Calendar.getInstance().get(Calendar.MINUTE) * (60 * 1000) +
+                                Calendar.getInstance().get(Calendar.SECOND) * (1000);
+                // update yesterday's part of session
+                updateGoals(closedPackageName, duration - pastMidnightTime);
+
+                // update dayOfWeek
+                dayOfWeek = getDayOfWeekStringShort();
+
+                // save today goals
+                allGoalsToFile();
+                // update arrays
+                loadTodayGoals();
+                updatePackagesArrays();
+
+                duration = pastMidnightTime;
+
+
+            }
+            updateGoals(closedPackageName, duration);
+
         }
-
-
-        duration = eventTime - previousChangeTime;
-        previousChangeTime = eventTime;
-
-
-
-        Log.i("MAYO", "window: " + packageName);
+        closedChangeTime = eventTime;
+        Log.i("MAYO", "duration: " + duration);
+        Log.i("MAYO", "goals update: " + todayGoals.toString());
+        Log.i("MAYO", "window: " + openedPackageName);
 
         //check if window is blocked by goals
         // TODO: make the timer that will close app when usage time meet the limit
-        if (FunctionBase.JSONArrayOptElement(close, "packageName", packageName) != null) {
-            mayoClose(packageName);
-            return;
+        if (FunctionBase.JSONArrayOptElement(close, "packageName", openedPackageName) != null) {
+            mayoClose(openedPackageName);
+            closedIsInArryas = true;
         }
 
         //check if window is set to notify by goals
         // TODO: make the timer that will send notification when usage time meet the limit
-        if (FunctionBase.JSONArrayOptElement(notify, "packageName", packageName) != null) {
-            mayoClose(packageName);
-            return;
+        else if (FunctionBase.JSONArrayOptElement(notify, "packageName", openedPackageName) != null) {
+            mayoClose(openedPackageName);
+            closedIsInArryas = true;
+        }
+        else {
+            closedIsInArryas = false;
         }
 
-        previousPackageName = packageName;
+        closedPackageName = openedPackageName;
     }
 
 
+    void updateGoals(String packageName, long sessionTime) throws JSONException {
+        JSONObject closePack = JSONArrayOptElement(close, "packageName", packageName);
+        if (closePack != null) {
+            JSONArray goalsArray = closePack.getJSONArray("goals");
+            for (int i=0; i< goalsArray.length(); i++) {
+                JSONObject goal = JSONArrayOptElement(todayGoals, Goals.ID, goalsArray.getString(i));
+                long time = goal.getLong(Goals.SESSIONTIME) + sessionTime;
+                long limit = goal.getLong(Goals.LIMIT);
+                if (time > limit) {
 
-    private void updateGoal(String packageName, long eventTime) {
+                }
+                goal.put(Goals.SESSIONTIME, time);
+                goal.put(Goals.SESSIONUPDATE, Calendar.getInstance().getTime().toString());
+                saveGoal(goal);
+            }
+        }
 
+
+        JSONObject notifyPack = JSONArrayOptElement(notify, "packageName", packageName);
+        if (notifyPack != null) {
+            JSONArray goalsArray = notifyPack.getJSONArray("goals");
+            for (int i=0; i< goalsArray.length(); i++) {
+                JSONObject goal = JSONArrayOptElement(todayGoals, Goals.ID, goalsArray.getString(i));
+                long time = goal.getLong(Goals.SESSIONTIME) + sessionTime;
+                long limit = goal.getLong(Goals.LIMIT);
+                if (time > limit) {
+
+                }
+                goal.put(Goals.SESSIONTIME, time);
+                goal.put(Goals.SESSIONUPDATE, Calendar.getInstance().getTime().toString());
+                saveGoal(goal);
+            }
+        }
     }
 
 
@@ -210,12 +267,12 @@ public class Mayo extends AccessibilityService {
     }
 
 
+    //endregion
 
 
     //region Focus
 
     // TODO: rewrite Focus, to make it works with MAYO2.0
-
     public static void startFocus(JSONArray packages) {
         focus = packages;
     }
@@ -232,6 +289,24 @@ public class Mayo extends AccessibilityService {
      * Array containing goals which are scheduled for today
      */
     public static JSONArray todayGoals = new JSONArray();
+
+    private void allGoalsToFile() {
+        Goals goalsClass = new Goals(getApplicationContext());
+        for (int i=0; i< todayGoals.length(); i++) {
+            try {
+                goalsClass.saveGoal(todayGoals.getJSONObject(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void saveGoal(JSONObject goal) throws JSONException{
+        int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, goal.getString(Goals.ID));
+        if (index >= 0) {
+            todayGoals.put(index, goal);
+        }
+    }
 
     private void loadTodayGoals() throws JSONException{
         Log.i("MAYO", "loadTodayGoals: loading...");
@@ -257,7 +332,7 @@ public class Mayo extends AccessibilityService {
         Log.i("MAYO", "loadTodayGoals: done!");
     }
 
-    public static void updateTodayGoals(JSONObject goal) throws  JSONException {
+    public static void changeTodayGoals(JSONObject goal) throws  JSONException {
         Log.i("MAYO", "updateTodayGoals: updating...");
         // check if the goal with this id is in the array
         JSONObject previous = JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id"));
@@ -268,8 +343,8 @@ public class Mayo extends AccessibilityService {
             // date is possible to be null
             try {
                 // parse Date from both goals
-                Date prevUpdate = Date.valueOf(previous.getString(Goals.SESSIONUPDATE));
-                Date curUpdate = Date.valueOf(goal.getString(Goals.SESSIONUPDATE));
+                Date prevUpdate = java.sql.Date.valueOf(previous.getString(Goals.SESSIONUPDATE));
+                Date curUpdate = java.sql.Date.valueOf(goal.getString(Goals.SESSIONUPDATE));
                 // check if previous has more up-to-date data
                 if (prevUpdate.after(curUpdate)) {
                     //update data
