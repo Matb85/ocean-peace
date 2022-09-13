@@ -34,7 +34,7 @@ public class Mayo extends AccessibilityService {
         private String closedPackageName = null;
         private long closedChangeTime = SystemClock.uptimeMillis();
         private static String dayOfWeek = null;
-        private boolean closedIsInArryas = true;
+        private boolean closedIsInArrays = true;
 
         /**
          * JSONArray of this type elements: <br/>
@@ -138,7 +138,7 @@ public class Mayo extends AccessibilityService {
         if (openedPackageName.equals(closedPackageName))
             return;
 
-        if (closedIsInArryas) {
+        if (closedIsInArrays) {
             // get the session duration
             duration = eventTime - closedChangeTime;
 
@@ -179,17 +179,17 @@ public class Mayo extends AccessibilityService {
         // TODO: make the timer that will close app when usage time meet the limit
         if (FunctionBase.JSONArrayOptElement(close, "packageName", openedPackageName) != null) {
             mayoClose(openedPackageName);
-            closedIsInArryas = true;
+            closedIsInArrays = true;
         }
 
         //check if window is set to notify by goals
         // TODO: make the timer that will send notification when usage time meet the limit
         else if (FunctionBase.JSONArrayOptElement(notify, "packageName", openedPackageName) != null) {
             mayoClose(openedPackageName);
-            closedIsInArryas = true;
+            closedIsInArrays = true;
         }
         else {
-            closedIsInArryas = false;
+            closedIsInArrays = false;
         }
 
         closedPackageName = openedPackageName;

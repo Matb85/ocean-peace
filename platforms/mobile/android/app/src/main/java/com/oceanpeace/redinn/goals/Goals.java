@@ -69,13 +69,20 @@ public class Goals {
         /* put data from each goal the the final array */
         JSONArray ret = new JSONArray();
 
-        Log.d("GoalsPlugin", "iterating through all files...");
+        Log.i("GoalsPlugin", "iterating through all files...");
 
         for (File file : files) {
-            Log.d("GoalsPlugin", "reading file " + file.getName());
 
             try {
-                ret.put(JSONManager.readFile(file));
+                JSONObject temp = JSONArrayOptElement(Mayo.todayGoals, ID, file.getName().substring(0,file.getName().length()-5));
+                if (temp != null) {
+                    Log.i("GoalsPlugin", "reading today goal " + temp.getString(ID));
+                    ret.put(temp);
+                }
+                else {
+                    Log.i("GoalsPlugin", "reading file " + file.getName());
+                    ret.put(JSONManager.readFile(file));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -92,16 +99,14 @@ public class Goals {
         File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
 
         try {
-            res = JSONManager.readFile(file);
-
-
 
             // checking if the goal is in today's goals to update it's data
             JSONObject temp = JSONArrayOptElement(Mayo.todayGoals, ID, id);
             if (temp != null) {
-                res.put(SESSIONUPDATE, temp.getString(SESSIONUPDATE));
-                res.put(SESSIONTIME, temp.getString(SESSIONTIME));
-                res.put(SESSIONSHISTORY, temp.getString(SESSIONSHISTORY));
+                res = temp;
+            }
+            else {
+                res = JSONManager.readFile(file);
             }
 
 
