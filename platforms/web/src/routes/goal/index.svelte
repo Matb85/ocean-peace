@@ -14,6 +14,8 @@
   import type { GoalI, AppIconI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
+import goal from "$lib/sessionManager/goal";
+import A1 from "../focus/editpreset/1.svelte";
   const goalId = $page.url.searchParams.get("id");
   let goalData: GoalI;
   let selectedApps: AppIconI[] = [];
@@ -30,6 +32,8 @@
     SM.goal.timeHours = Math.floor(timeInMinutes / 60) + "";
     SM.goal.activeDays = goalData.activeDays;
     SM.goal.limitActionType = goalData.limitActionType;
+    SM.goal.sessionTime = goalData.sessionTime;
+    
 
     SM.dialogs.apps = goalData.apps;
     SM.dialogs.websites = goalData.websites;
@@ -52,10 +56,9 @@
 <section class="w-11/12 grid grid-cols-6 gap-2">
   <PieChart
     className="w-full col-span-4"
-    maxValue={200}
+    maxValue={parseInt(SM.goal.timeHours) * 60 * 60 * 1000 + parseInt(SM.goal.timeMinutes) * 60 * 1000}
     data={[
-      { color: "#3772FF", value: 110 },
-      { color: "#FCBA04", value: 40 },
+      { color: "#3772FF", value: parseInt(SM.goal.sessionTime) },
     ]}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
@@ -67,9 +70,8 @@
     isVertical
     className="col-span-2 self-center flex-col flex-none"
     data={[
-      { color: "#3772FF", text: "Samsung", bold: "1h 27min" },
-      { color: "#FCBA04", text: "Macbook", bold: "0h 16min" },
-      { color: "#F8F5FA", text: "Time left", bold: "3h 37min" },
+      { color: "#3772FF", text: "Samsung", bold: "" + (Math.floor(parseInt(SM.goal.sessionTime) / (1000 * 60 * 60)) + "h ") +  (Math.floor(parseInt(SM.goal.sessionTime) / (1000 * 60)) + "min")},
+      { color: "#F8F5FA", text: "Time left", bold: "" + (parseInt(SM.goal.timeHours) - Math.floor(parseInt(SM.goal.sessionTime) / (1000 * 60 * 60)) + "h ") +  (Math.ceil(parseInt(SM.goal.timeMinutes) - parseInt(SM.goal.sessionTime) / (1000 * 60)) + "min")},
     ]}
   />
 </section>

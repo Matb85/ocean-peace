@@ -39,6 +39,7 @@ public class Goals {
     }
     //endregion
 
+    // TODO: make updating goal synchronize progress
     public void saveGoal(JSONObject goal) throws Exception {
 
         if (goal.opt(SESSIONUPDATE) == null)

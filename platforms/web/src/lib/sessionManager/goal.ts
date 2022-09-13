@@ -35,4 +35,10 @@ export default {
   get limitActionType() {
     return sessionStorage.getItem("goal_limitActionType");
   },
+  set sessionTime(value: string) {
+    sessionStorage.setItem("goal_sessionTime", value);
+  },
+  get sessionTime() {
+    return sessionStorage.getItem("goal_sessionTime");
+  }
 };

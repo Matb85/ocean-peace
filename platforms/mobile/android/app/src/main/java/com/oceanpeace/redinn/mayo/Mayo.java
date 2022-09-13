@@ -178,14 +178,14 @@ public class Mayo extends AccessibilityService {
         //check if window is blocked by goals
         // TODO: make the timer that will close app when usage time meet the limit
         if (FunctionBase.JSONArrayOptElement(close, "packageName", openedPackageName) != null) {
-            mayoClose(openedPackageName);
+            //mayoClose(openedPackageName);
             closedIsInArrays = true;
         }
 
         //check if window is set to notify by goals
         // TODO: make the timer that will send notification when usage time meet the limit
         else if (FunctionBase.JSONArrayOptElement(notify, "packageName", openedPackageName) != null) {
-            mayoClose(openedPackageName);
+            //mayoClose(openedPackageName);
             closedIsInArrays = true;
         }
         else {
