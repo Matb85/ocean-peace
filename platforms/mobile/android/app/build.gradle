@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 31
+    compileSdk 32
     defaultConfig {
         applicationId "com.oceanpeace.redinn"
         minSdkVersion rootProject.ext.minSdkVersion
