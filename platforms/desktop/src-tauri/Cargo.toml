@@ -15,7 +15,7 @@ rust-version = "1.57"
 tauri-build = { version = "1.0.4", features = [] }
 
 [dependencies]
-sysinfo = "0.25.2"
+sysinfo = "0.26.2"
 active-win-pos-rs = "0.6.0"
 timer = "0.2.0"
 chrono = "0.4.22"
