@@ -2,6 +2,11 @@ package com.oceanpeace.redinn;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.work.WorkManager;
 
@@ -47,6 +52,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(IconsPlugin.class);
         registerPlugin(PresetsPlugin.class);
         registerPlugin(SchedulePlugin.class);
+        registerPlugin(UIPlugin.class);
 
         super.onCreate(savedInstanceState);
     }

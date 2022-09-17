@@ -10,30 +10,26 @@
   import { beforeNavigate, goto } from "$app/navigation";
   import { page } from "$app/stores";
   import Navbar from "$lib/Navbar.svelte";
-  let className = "";
+  import Api from "@redinn/oceanpeace-mobile/api";
   let tempTo: string;
 
   beforeNavigate(({ from, cancel, to }) => {
     if (from && to) {
-      if (from.pathname == to.pathname) {
-        return;
-      }
-      className = "during-transition";
+      if (from.pathname == to.pathname) return;
       if (tempTo != to.pathname + to.search) {
         cancel();
-        setTimeout(() => {
-          goto(to.pathname + to.search);
-          setTimeout(() => {
-            className = "";
-          }, 200);
-        }, 200);
+        Api.fadeIn().then(() => {
+          goto(to.pathname + to.search).then(() => {
+            Api.fadeOut();
+          });
+        });
       }
       tempTo = to.pathname + to.search;
     }
   });
 </script>
 
-<main id="main" class={className}>
+<main id="main">
   <slot />
 </main>
 
@@ -43,19 +39,10 @@
 
 <GlobalGradient />
 
-<style global>
+<style global lang="postcss">
   @import "@redinnlabs/system/utils/base.css";
-
   #main {
     @apply flex flex-col items-center gap-4 pb-32;
     scrollbar-width: none;
-    transition-duration: 200ms;
-    transition-property: transform, opacity;
-    /*transform: translateY(0rem);*/
-    opacity: 1;
-  }
-  #main.during-transition {
-    /*transform: translateY(-5rem);*/
-    opacity: 0;
   }
 </style>
