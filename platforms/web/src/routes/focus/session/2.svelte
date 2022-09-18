@@ -3,7 +3,7 @@
   import { Button, Background } from "@redinnlabs/system/Elements";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import H from "$lib/H.svelte";
-
+  import Link from "$lib/Link.svelte";
   const minutes: number = 148;
 </script>
 
@@ -26,9 +26,9 @@
 
 <SelectedApps />
 
-<a sveltekit:prefetch href="/" class="fixed bottom-10">
+<Link href="/" className="fixed bottom-10">
   <Button>continue</Button>
-</a>
+</Link>
 
 <div class="background">
   <Background className="background-svg" x={50} y={100} />

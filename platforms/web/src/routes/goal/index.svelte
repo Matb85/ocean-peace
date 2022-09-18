@@ -8,13 +8,13 @@
   import H from "$lib/H.svelte";
   import DangerZone from "$lib/DangerZone.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
+  import { querystring } from "svelte-spa-router";
 
-  import { page } from "$app/stores";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI, AppIconI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-  const goalId = $page.url.searchParams.get("id");
+  const goalId = new URLSearchParams($querystring).get("id");
   let goalData: GoalI;
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
@@ -35,7 +35,7 @@
     SM.dialogs.websites = goalData.websites;
 
     SM.action.type = "Edit";
-    SM.action.backUrl = $page.url.pathname + $page.url.search;
+    SM.action.backUrl = "/goal?" + $querystring;
     SM.action.continueUrl = "/goal/edit/1";
   });
 </script>

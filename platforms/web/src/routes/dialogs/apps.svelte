@@ -6,7 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-
+  import Link from "$lib/Link.svelte";
   const goBackUrl = SM.dialogs.backUrl;
 
   import type { AppIconI } from "$schema";
@@ -66,6 +66,6 @@
   {/each}
 </section>
 
-<a href={goBackUrl} sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+<Link href={goBackUrl} className="fixed bottom-10 z-50 w-10/12">
   <Button isFullWidth>Save</Button>
-</a>
+</Link>

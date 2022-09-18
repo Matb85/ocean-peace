@@ -6,6 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SM from "$lib/sessionManager";
+  import Link from "$lib/Link.svelte";
 
   // start time
   const startHours: columnI = {
@@ -68,7 +69,7 @@
   $: SM.schedule.activeDays = JSON.stringify(days.filter(x => activeDays.includes(x)));
 </script>
 
-<FullHeading backHref="./1">
+<FullHeading backHref="/focus/editschedule/1">
   {SM.action.type} schedule
 </FullHeading>
 
@@ -91,8 +92,8 @@
   </div>
 </div>
 
-<div class="fixed-bottom-button bg-white">
-  <a sveltekit:prefetch href={activeDays.length > 0 ? "./3" : ""} style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
+<div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
+  <Link href={activeDays.length > 0 ? "/focus/editschedule/3" : ""}>
     <Button isFullWidth>next</Button>
-  </a>
+  </Link>
 </div>

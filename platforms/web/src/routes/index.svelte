@@ -4,31 +4,28 @@
   import Cutout from "$lib/Cutout.svelte";
   import H from "$lib/H.svelte";
   import SM from "$lib/sessionManager";
-
+  import Link from "$lib/Link.svelte";
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
 
-  import { beforeNavigate } from "$app/navigation";
-  beforeNavigate(({ to }) => {
-    if (to.pathname == "/goal/edit/1") {
-      SM.goal.id = "goal" + Date.now();
-      SM.goal.name = "";
-      SM.goal.timeMinutes = "15";
-      SM.goal.timeHours = "1";
-      SM.goal.activeDays = "[]";
-      SM.goal.limitActionType = "Notification";
-      SM.action.type = "Add";
-      SM.action.backUrl = "/";
-      SM.action.continueUrl = "/goal/edit/1";
+  onDestroy(() => {
+    SM.goal.id = "goal" + Date.now();
+    SM.goal.name = "";
+    SM.goal.timeMinutes = "15";
+    SM.goal.timeHours = "1";
+    SM.goal.activeDays = "[]";
+    SM.goal.limitActionType = "Notification";
+    SM.action.type = "Add";
+    SM.action.backUrl = "/";
+    SM.action.continueUrl = "/goal/edit/1";
 
-      SM.dialogs.apps = "[]";
-      SM.dialogs.websites = "[]";
-    }
+    SM.dialogs.apps = "[]";
+    SM.dialogs.websites = "[]";
   });
 
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI } from "$schema";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
@@ -36,7 +33,7 @@
 </script>
 
 <!-- aquarium background -->
-<a sveltekit:prefetch href="/insights" class="w-full h-80 block relative">
+<Link href="/insights" className="w-full h-80 block relative">
   <Aquarium
     percent={(maxScreenTime - curScreenTime) / maxScreenTime < 0
       ? 0
@@ -58,25 +55,25 @@
       left
     </H>
   </div>
-</a>
+</Link>
 
 <!-- focus button -->
-<a sveltekit:prefetch href="/focus">
+<Link href="/focus">
   <Button>Start a focus session</Button>
-</a>
+</Link>
 
 <!-- goals display -->
 <H thin>Your Goals</H>
 <div class="card-flex-col">
   {#each allGoals as goal}
-    <a sveltekit:prefetch href="/goal?id={goal.id}" class="w-full">
+    <Link href="/goal?id={goal.id}" className="w-full">
       <Goal percentage={Math.random() * 100} title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
-    </a>
+    </Link>
   {/each}
   {#if allGoals.length == 0}
     <p>No goals</p>
   {/if}
-  <a sveltekit:prefetch href="/goal/edit/1">
+  <Link href="/goal/edit/1">
     <Button>Add Goal</Button>
-  </a>
+  </Link>
 </div>

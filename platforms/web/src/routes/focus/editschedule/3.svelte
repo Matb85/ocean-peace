@@ -8,7 +8,7 @@
 
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { goto } from "$app/navigation";
+  import { goTo } from "$lib/utils";
   import type { PresetI, ScheduleI } from "$schema";
   import SM from "$lib/sessionManager";
 
@@ -32,13 +32,13 @@
         stopTime: SM.schedule.stopTime,
       };
       await Api.saveSchedule(data);
-      goto("/focus");
+      goTo("/focus");
     }, 1500);
   }
   let isComplete = false;
 </script>
 
-<FullHeading backHref="./2">Summary</FullHeading>
+<FullHeading backHref="/focus/editschedule/2">Summary</FullHeading>
 
 <H tag={6} thin>Rule name</H>
 <H tag={4} className="-mt-2" thin>{SM.schedule.name}</H>

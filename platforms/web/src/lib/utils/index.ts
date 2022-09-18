@@ -1,4 +1,17 @@
-/** return a 2-element array with hours and minutes
+import { push } from "svelte-spa-router";
+import Api from "@redinn/oceanpeace-mobile/api";
+
+/** navigates to another page
+ * @param to a string
+ * @returns void
+ */
+export async function goTo(to: string): Promise<void> {
+  await Api.fadeIn();
+  push(to);
+  setTimeout(() => Api.fadeOut(), 75);
+}
+
+/** returns a 2-element array with hours and minutes
  * @param stringTime a number
  * @returns array with the time
  */
@@ -7,7 +20,7 @@ export function timeFromNumber(stringTime: string): [number, number] {
   return [Math.floor(time / 60), Math.floor(time % 60)];
 }
 
-/** return a string with hours and minutes
+/** returns a string with hours and minutes
  * @param stringTime a number
  * @returns string with the time
  */

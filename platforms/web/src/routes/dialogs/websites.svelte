@@ -7,6 +7,7 @@
   import H from "$lib/H.svelte";
   import { mdiChevronRight } from "@mdi/js";
   import { WebsiteTypes } from "$lib/utils/index";
+  import Link from "$lib/Link.svelte";
   const goBackUrl = SM.dialogs.backUrl;
 
   interface WebsiteI {
@@ -83,6 +84,6 @@
   {/each}
 </div>
 
-<a href={goBackUrl} sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+<Link href={goBackUrl} className="fixed bottom-10 z-50 w-10/12">
   <Button isFullWidth>Save</Button>
-</a>
+</Link>

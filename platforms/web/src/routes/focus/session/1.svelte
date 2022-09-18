@@ -9,7 +9,7 @@
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
   import SM from "$lib/sessionManager";
-
+  import Link from "$lib/Link.svelte";
   export let appsCount: number = 16;
 
   let allowedApps: AppIconI[] = [];
@@ -33,9 +33,9 @@
   </H>
 </div>
 
-<a sveltekit:prefetch href="./2" class="mt-4">
+<Link href="/focus/session/2" className="mt-4">
   <Button secondary size="small" isWarning>Cancel Session</Button>
-</a>
+</Link>
 
 <H thin>Allowed apps</H>
 <SelectedApps apps={allowedApps} />

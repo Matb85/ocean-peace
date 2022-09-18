@@ -6,12 +6,14 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import DangerZone from "$lib/DangerZone.svelte";
-  import { page } from "$app/stores";
+  import { querystring } from "svelte-spa-router";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { PresetI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-  const presetId = $page.url.searchParams.get("id");
+  import Link from "$lib/Link.svelte";
+
+  const presetId = new URLSearchParams($querystring).get("id");
 
   let presetData: PresetI;
   onMount(async () => {
@@ -24,7 +26,7 @@
     SM.dialogs.apps = presetData.apps;
     SM.dialogs.websites = presetData.websites;
     SM.action.type = "Edit";
-    SM.action.backUrl = $page.url.pathname + $page.url.search;
+    SM.action.backUrl = "/goal/preset?" + $querystring;
     SM.action.continueUrl = "/focus/editpreset/1";
   });
 
@@ -70,8 +72,8 @@
   {/each}
 </div>
 
-<a sveltekit:prefetch href="/focus/session/1" class="fixed bottom-10">
+<Link href="/focus/session/1" className="fixed bottom-10">
   <Button>Start {presetData?.name || ""}</Button>
-</a>
+</Link>
 
 <DangerZone deleteUrl="/focus/editpreset/delete" label="Delete Preset" />

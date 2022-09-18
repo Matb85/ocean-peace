@@ -4,13 +4,14 @@
   import { mdiCog } from "@mdi/js";
   import { IconButton, Button } from "@redinnlabs/system/Elements";
   import { BarChart, CircleChart, FlatChart, ChartKey } from "@redinnlabs/system/Charts";
+  import Link from "$lib/Link.svelte";
 </script>
 
 <FullHeading backHref="/">Profile</FullHeading>
 
-<a href="/profile/settings" class="absolute top-5 right-3">
+<Link href="/profile/settings" className="absolute top-5 right-3">
   <IconButton secondary d={mdiCog} />
-</a>
+</Link>
 
 <img class="shadow-wrapper w-1/2 aspect-square object-cover rounded-2xl mt-8" src="/profile.jpg" alt="profile" />
 <H noMargins thin>John Doe</H>

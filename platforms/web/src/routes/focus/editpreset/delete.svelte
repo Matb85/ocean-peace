@@ -3,15 +3,15 @@
   import { Button } from "@redinnlabs/system/Elements";
 
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { goto } from "$app/navigation";
+  import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
-
+  import Link from "$lib/Link.svelte";
   /** delete a given preset
    * @returns {void}
    */
   async function deletePreset() {
     await Api.deletePreset(SM.preset.id);
-    goto("/focus");
+    goTo("/focus");
   }
 </script>
 
@@ -21,8 +21,8 @@
 </div>
 
 <div class="w-3/4 absolute top-2/3 flex flex-col gap-4">
-  <a sveltekit:prefetch href="/focus/preset?id={SM.preset.id}">
+  <Link href="/focus/preset?id={SM.preset.id}">
     <Button isFullWidth>No, don't do this</Button>
-  </a>
+  </Link>
   <Button on:click={deletePreset} isFullWidth isWarning>Yes, delete it</Button>
 </div>

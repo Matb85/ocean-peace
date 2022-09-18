@@ -3,7 +3,7 @@
   import { Button } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
   import { Preset } from "@redinnlabs/system/Units";
-
+  import Link from "$lib/Link.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
 
@@ -50,12 +50,8 @@
   {/each}
 </div>
 
-<div class="fixed-bottom-button bg-white">
-  <a
-    sveltekit:prefetch
-    href={preset.length > 0 && name.length > 0 ? "./2" : ""}
-    style:opacity={preset.length > 0 && name.length > 0 ? "1" : "0.5"}
-  >
+<div class="fixed-bottom-button bg-white" style:opacity={preset.length > 0 && name.length > 0 ? "1" : "0.5"}>
+  <Link href={preset.length > 0 && name.length > 0 ? "/focus/editschedule/2" : ""}>
     <Button isFullWidth>next</Button>
-  </a>
+  </Link>
 </div>

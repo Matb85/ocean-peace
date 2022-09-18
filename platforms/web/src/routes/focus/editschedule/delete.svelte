@@ -1,9 +1,10 @@
 <script lang="ts">
   import H from "$lib/H.svelte";
   import { Button } from "@redinnlabs/system/Elements";
+  import Link from "$lib/Link.svelte";
 
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { goto } from "$app/navigation";
+  import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
 
   /** delete a given schedule
@@ -11,7 +12,7 @@
    */
   async function deleteSchedule() {
     await Api.deleteSchedule(SM.schedule.id);
-    goto("/focus");
+    goTo("/focus");
   }
 </script>
 
@@ -21,8 +22,8 @@
 </div>
 
 <div class="w-3/4 absolute top-2/3 flex flex-col gap-4">
-  <a sveltekit:prefetch href="/focus/schedule?id={SM.schedule.id}">
+  <Link href="/focus/schedule?id={SM.schedule.id}">
     <Button isFullWidth>No, don't do this</Button>
-  </a>
+  </Link>
   <Button on:click={deleteSchedule} isFullWidth isWarning>Yes, delete it</Button>
 </div>

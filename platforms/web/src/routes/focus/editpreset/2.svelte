@@ -5,6 +5,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SM from "$lib/sessionManager";
+  import Link from "$lib/Link.svelte";
 
   const icons = [
     "/presets/icon-my-time.svg",
@@ -47,7 +48,7 @@
   $: SM.preset.icon = chosen;
 </script>
 
-<FullHeading backHref="./1">{SM.action.type} preset</FullHeading>
+<FullHeading backHref="/focus/editpreset/1">{SM.action.type} preset</FullHeading>
 
 <H thin>Choose Icon</H>
 
@@ -59,14 +60,8 @@
   {/each}
 </section>
 
-<div class="fixed-bottom-button ">
-  <a sveltekit:prefetch href="./3">
+<div class="fixed-bottom-button bg-white rounded-2xl" style:opacity={chosen.length > 0 ? "1" : "0.5"}>
+  <Link href={chosen.length > 0 ? "/focus/editpreset/3" : ""}>
     <Button isFullWidth>next</Button>
-  </a>
-</div>
-
-<div class="fixed-bottom-button bg-white rounded-2xl">
-  <a sveltekit:prefetch href={chosen.length > 0 ? "./3" : ""} style:opacity={chosen.length > 0 ? "1" : "0.5"}>
-    <Button isFullWidth>next</Button>
-  </a>
+  </Link>
 </div>

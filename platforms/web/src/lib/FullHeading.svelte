@@ -1,5 +1,6 @@
 <script lang="ts">
   import { BackButton, EditButton, Heading } from "@redinnlabs/system/Elements";
+  import Link from "./Link.svelte";
   export let backHref = null;
   export let editHref = null;
 </script>
@@ -7,13 +8,13 @@
 <Heading className="mt-5 mx-auto" tag={3}><slot /></Heading>
 
 {#if backHref}
-  <a sveltekit:prefetch href={backHref} class="fixed z-50 top-3 left-3">
+  <Link href={backHref} className="fixed z-50 top-3 left-3">
     <BackButton />
-  </a>
+  </Link>
 {/if}
 
 {#if editHref}
-  <a href={editHref} class="absolute top-3 right-3">
+  <Link href={editHref} className="absolute top-3 right-3">
     <EditButton />
-  </a>
+  </Link>
 {/if}

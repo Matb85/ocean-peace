@@ -6,7 +6,7 @@
   import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
-
+  import Link from "$lib/Link.svelte";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI } from "$schema";
@@ -35,23 +35,19 @@
 
 <SelectedApps apps={selectedApps} />
 
-<a sveltekit:prefetch href="/dialogs/apps">
+<Link href="/dialogs/apps">
   <Button secondary size="small">edit</Button>
-</a>
+</Link>
 
 <H thin>Selected Websites</H>
 <SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
 
-<a sveltekit:prefetch href="/dialogs/websites">
+<Link href="/dialogs/websites">
   <Button secondary size="small">edit</Button>
-</a>
+</Link>
 
-<div class="fixed-bottom-button bg-white">
-  <a
-    sveltekit:prefetch
-    href={selectedApps.length > 0 && name.length > 0 ? "./2" : ""}
-    style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}
-  >
+<div class="fixed-bottom-button bg-white" style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}>
+  <Link href={selectedApps.length > 0 && name.length > 0 ? "/goal/edit/2" : ""}>
     <Button isFullWidth>next</Button>
-  </a>
+  </Link>
 </div>

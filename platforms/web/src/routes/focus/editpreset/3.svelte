@@ -10,7 +10,7 @@
 
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { goto } from "$app/navigation";
+  import { goTo } from "$lib/utils";
   import type { AppIconI, PresetI } from "$schema";
   import SM from "$lib/sessionManager";
 
@@ -33,13 +33,13 @@
         websites: SM.dialogs.apps,
       };
       Api.savePreset(data);
-      goto("/focus");
+      goTo("/focus");
     }, 1500);
   }
   let isComplete = false;
 </script>
 
-<FullHeading backHref="./2">Summary</FullHeading>
+<FullHeading backHref="/focus/editpreset/2">Summary</FullHeading>
 
 <H tag={6} thin>Preset name</H>
 <H tag={4} className="-mt-2" thin>{SM.preset.name}</H>

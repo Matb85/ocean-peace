@@ -2,7 +2,7 @@
 <script lang="ts">
   import { Button } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
-
+  import Link from "$lib/Link.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
@@ -36,24 +36,20 @@
 
 <SelectedApps apps={selectedApps} />
 
-<a sveltekit:prefetch href="/dialogs/apps">
+<Link href="/dialogs/apps">
   <Button secondary size="small">edit</Button>
-</a>
+</Link>
 
 <H thin>Allowed websites</H>
 
 <SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
 
-<a sveltekit:prefetch href="/dialogs/websites">
+<Link href="/dialogs/websites">
   <Button secondary size="small">edit</Button>
-</a>
+</Link>
 
-<div class="fixed-bottom-button bg-white">
-  <a
-    sveltekit:prefetch
-    href={selectedApps.length > 0 && name.length > 0 ? "./2" : ""}
-    style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}
-  >
+<div class="fixed-bottom-button bg-white" style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}>
+  <Link href={selectedApps.length > 0 && name.length > 0 ? "/focus/editpreset/2" : ""}>
     <Button isFullWidth>next</Button>
-  </a>
+  </Link>
 </div>

@@ -21,8 +21,7 @@
     ".": "./api/index.d.ts"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "1.0.0-next.43",
-    "@sveltejs/kit": "1.0.0-next.405",
+    "@tsconfig/svelte": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "5.33.0",
     "@typescript-eslint/parser": "5.33.0",
     "autoprefixer": "10.4.11",
@@ -44,6 +43,8 @@
   "dependencies": {
     "@mdi/js": "7.0.96",
     "@redinn/oceanpeace-mobile": "workspace:^1.0.0",
-    "@redinnlabs/system": "github:Redinn-Labs/design-system#release"
+    "@redinnlabs/system": "github:Redinn-Labs/design-system#release",
+    "@sveltejs/vite-plugin-svelte": "^1.0.6",
+    "svelte-spa-router": "^3.3.0"
   }
 }

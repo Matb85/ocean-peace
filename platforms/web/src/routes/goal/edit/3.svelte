@@ -10,7 +10,7 @@
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI, GoalI } from "$schema";
-  import { goto } from "$app/navigation";
+  import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
 
   let selectedApps: AppIconI[] = [];
@@ -34,13 +34,13 @@
     };
     setTimeout(() => {
       Api.saveGoal(data);
-      goto("/");
+      goTo("/");
     }, 1500);
   }
   let isComplete = false;
 </script>
 
-<FullHeading backHref="./2">Summary</FullHeading>
+<FullHeading backHref="/goal/edit/2">Summary</FullHeading>
 
 <H tag={6} thin>Goal name</H>
 <H tag={4} className="-mt-2" thin>{SM.goal.name}</H>
@@ -71,7 +71,7 @@
 <H tag={6} thin>Allowed Websites</H>
 <SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
 
-<div on:click={saveGoal} class="fixed-bottom-button" href="/">
+<div on:click={saveGoal} class="fixed-bottom-button">
   <Button isFullWidth>save</Button>
 </div>
 

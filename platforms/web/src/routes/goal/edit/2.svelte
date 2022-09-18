@@ -6,7 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
   import SM from "$lib/sessionManager";
-
+  import Link from "$lib/Link.svelte";
   const hours: columnI = {
     units: "h",
     data: [...Array(6).keys()],
@@ -43,7 +43,7 @@
   $: SM.goal.limitActionType = type;
 </script>
 
-<FullHeading backHref="./1">{SM.action.type} goal</FullHeading>
+<FullHeading backHref="/goal/edit/1">{SM.action.type} goal</FullHeading>
 
 <H thin>Active days</H>
 
@@ -58,8 +58,8 @@
 <H thin>Limit Type</H>
 <RadioInput bind:chosen={type} options={limitTypes} />
 
-<div class="fixed-bottom-button bg-white">
-  <a sveltekit:prefetch href={activeDays.length > 0 ? "./3" : ""} style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
+<div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
+  <Link href={activeDays.length > 0 ? "/goal/edit/3" : ""}>
     <Button isFullWidth>next</Button>
-  </a>
+  </Link>
 </div>

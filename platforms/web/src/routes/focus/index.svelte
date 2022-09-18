@@ -8,6 +8,7 @@
   import { onMount } from "svelte";
   import type { PresetI, ScheduleI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
+  import Link from "$lib/Link.svelte";
 
   let allPresets: PresetI[] = [];
   let allSchedules: ScheduleI[] = [];
@@ -17,10 +18,13 @@
   });
 
   import SM from "$lib/sessionManager";
-  import { beforeNavigate } from "$app/navigation";
 
-  beforeNavigate(({ to }) => {
-    if (to.pathname == "/focus/editpreset/1") {
+  /** set proper session data before leaving the page
+   * @param to the path
+   * @returns nothing
+   */
+  function beforeNavigate(to: string) {
+    if (to == "/focus/editpreset/1") {
       SM.preset.id = "" + Date.now();
       SM.preset.name = "";
       SM.preset.icon = "";
@@ -31,7 +35,7 @@
 
       SM.dialogs.apps = "[]";
       SM.dialogs.websites = "[]";
-    } else if (to.pathname == "/focus/editschedule/1") {
+    } else if (to == "/focus/editschedule/1") {
       SM.schedule.id = "" + Date.now();
       SM.schedule.name = "";
       SM.schedule.preset = "";
@@ -43,7 +47,10 @@
       SM.action.backUrl = "/focus";
       SM.action.continueUrl = "/focus/editschedule/1";
     }
-  });
+
+    beforeNavigate("/focus/editschedule/1");
+    beforeNavigate("/focus/editpreset/1");
+  }
 </script>
 
 <FullHeading backHref="/">Focus</FullHeading>
@@ -52,14 +59,14 @@
 
 <div class="grid grid-cols-2 gap-4">
   {#each allPresets as preset}
-    <a sveltekit:prefetch href="/focus/preset?id={preset.id}">
+    <Link href="/focus/preset?id={preset.id}">
       <Preset src={preset.icon} label={preset.name} />
-    </a>
+    </Link>
   {/each}
   {#each new Array(Math.abs(4 - allPresets.length)) as _}
-    <a sveltekit:prefetch href="/focus/editpreset/1">
+    <Link href="/focus/editpreset/1" on:click={() => beforeNavigate("/focus/editpreset/1")}>
       <Preset src={A} noShadowWrapper />
-    </a>
+    </Link>
   {/each}
 </div>
 
@@ -67,7 +74,7 @@
 
 <div class="card-flex-col">
   {#each allSchedules as schedule}
-    <a class="w-full" sveltekit:prefetch href="/focus/schedule?id={schedule.id}">
+    <Link className="w-full" href="/focus/schedule?id={schedule.id}">
       <Schedule
         alt=""
         src={allPresets.filter(x => (x.id = schedule.preset))[0].icon}
@@ -78,12 +85,12 @@
           "-" +
           stringTimeFromNumber(schedule.stopTime)}
       />
-    </a>
+    </Link>
   {/each}
   {#if allSchedules.length == 0}
     <p>No schedules</p>
   {/if}
-  <a sveltekit:prefetch href="/focus/editschedule/1">
+  <Link href="/focus/editschedule/1" on:click={() => beforeNavigate("/focus/editschedule/1")}>
     <Button secondary>Add a Schedule</Button>
-  </a>
+  </Link>
 </div>
