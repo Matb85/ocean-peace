@@ -5,30 +5,22 @@
   import H from "$lib/H.svelte";
   import { Preset } from "@redinnlabs/system/Units";
   import { Button } from "@redinnlabs/system/Elements";
-  import type { ScheduleI, PresetI } from "$schema";
+  import type { PresetI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
   import { querystring } from "svelte-spa-router";
 
-  const scheduleId = new URLSearchParams($querystring).get("id");
-
-  let scheduleData: Partial<ScheduleI> = {};
+  const scheduleData = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
   let presetData: Partial<PresetI> = {};
   onMount(async () => {
-    scheduleData = await Api.getSchedule(scheduleId);
     presetData = await Api.getPreset(scheduleData.preset);
 
-    SM.schedule.id = scheduleData.id;
-    SM.schedule.name = scheduleData.name;
-    SM.schedule.preset = scheduleData.preset;
-    SM.schedule.activeDays = scheduleData.activeDays;
-    SM.schedule.startTime = scheduleData.startTime;
-    SM.schedule.stopTime = scheduleData.stopTime;
-
-    SM.action.type = "Edit";
-    SM.action.backUrl = "/focus/schedule?" + $querystring;
-    SM.action.continueUrl = "/focus/editschedule/1";
+    SM.action.setProps({
+      type: "Edit",
+      backUrl: "/focus/schedule?" + $querystring,
+      continueUrl: "/focus/editschedule/1",
+    });
   });
 </script>
 

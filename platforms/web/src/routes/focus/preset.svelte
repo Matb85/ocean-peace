@@ -7,27 +7,17 @@
   import H from "$lib/H.svelte";
   import DangerZone from "$lib/DangerZone.svelte";
   import { querystring } from "svelte-spa-router";
-  import Api from "@redinn/oceanpeace-mobile/api";
-  import type { PresetI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
 
-  const presetId = new URLSearchParams($querystring).get("id");
-
-  let presetData: PresetI;
+  const presetData = SM.preset.getProps("id", "name", "icon");
   onMount(async () => {
-    presetData = await Api.getPreset(presetId);
-
-    SM.preset.id = presetData.id;
-    SM.preset.name = presetData.name;
-    SM.preset.icon = presetData.icon;
-
-    SM.dialogs.apps = presetData.apps;
-    SM.dialogs.websites = presetData.websites;
-    SM.action.type = "Edit";
-    SM.action.backUrl = "/focus/preset?" + $querystring;
-    SM.action.continueUrl = "/focus/editpreset/1";
+    SM.action.setProps({
+      type: "Edit",
+      backUrl: "/focus/preset?" + $querystring,
+      continueUrl: "/focus/editpreset/1",
+    });
   });
 
   const hoursTime = timeInputConfig.hoursConfig(1);

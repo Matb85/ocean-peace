@@ -32,10 +32,24 @@
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
   }
   /** sets proper session data before leaving the page
+   * @param i the index of the Preset in the array of all the Preset
+   * @returns {void}
+   */
+  function beforeOpenPreset(i: number) {
+    SM.preset.setProps({
+      id: allPresets[i].id,
+      name: allPresets[i].name,
+      icon: allPresets[i].icon,
+    });
+    SM.dialogs.setProps({
+      apps: allPresets[i].apps,
+      websites: allPresets[i].websites,
+    });
+  }
+  /** sets proper session data before leaving the page
    * @returns {void}
    */
   function beforeAddSchedule() {
-    console.error("beforeAddSchedule hello");
     SM.schedule.setProps({
       id: "schedule" + Date.now(),
       name: "",
@@ -46,6 +60,20 @@
     });
     SM.action.setProps({ type: "Add", backUrl: "/focus", continueUrl: "/focus/editschedule/1" });
   }
+  /** sets proper session data before leaving the page
+   * @param i the index of the schedule in the array of all the schedules
+   * @returns {void}
+   */
+  function beforeOpenSchedule(i: number) {
+    SM.schedule.setProps({
+      id: allSchedules[i].id,
+      name: allSchedules[i].name,
+      preset: allSchedules[i].preset,
+      activeDays: allSchedules[i].activeDays,
+      startTime: allSchedules[i].startTime,
+      stopTime: allSchedules[i].stopTime,
+    });
+  }
 </script>
 
 <FullHeading backHref="/">Focus</FullHeading>
@@ -53,8 +81,8 @@
 <H thin>Presets</H>
 
 <div class="grid grid-cols-2 gap-4">
-  {#each allPresets as preset}
-    <Link href="/focus/preset?id={preset.id}">
+  {#each allPresets as preset, i}
+    <Link href="/focus/preset?id={preset.id}" on:click={() => beforeOpenPreset(i)}>
       <Preset src={preset.icon} label={preset.name} />
     </Link>
   {/each}
@@ -68,8 +96,8 @@
 <H thin>Schedule</H>
 
 <div class="card-flex-col">
-  {#each allSchedules as schedule}
-    <Link className="w-full" href="/focus/schedule?id={schedule.id}">
+  {#each allSchedules as schedule, i}
+    <Link className="w-full" href="/focus/schedule?id={schedule.id}" on:click={() => beforeOpenSchedule(i)}>
       <Schedule
         alt=""
         src={allPresets.filter(x => (x.id = schedule.preset))[0].icon}

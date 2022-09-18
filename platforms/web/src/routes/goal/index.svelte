@@ -11,28 +11,14 @@
   import { querystring } from "svelte-spa-router";
 
   import Api from "@redinn/oceanpeace-mobile/api";
-  import type { GoalI, AppIconI } from "$schema";
+  import type { AppIconI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-  const goalId = new URLSearchParams($querystring).get("id");
-  let goalData: GoalI;
+  const goalData = SM.goal.getProps("id", "name", "timeMinutes", "timeHours", "activeDays", "limitActionType");
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    goalData = await Api.getGoal(goalId);
-    selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
-
-    const timeInMinutes = parseInt(goalData.limit);
-
-    SM.goal.setProps({
-      id: goalData.id,
-      name: goalData.name,
-      timeMinutes: (timeInMinutes % 60) + "",
-      timeHours: Math.floor(timeInMinutes / 60) + "",
-      activeDays: goalData.activeDays,
-      limitActionType: goalData.limitActionType,
-    });
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
     SM.action.setProps({ type: "Edit", backUrl: "/goal?" + $querystring, continueUrl: "/goal/edit/1" });
-    SM.dialogs.setProps({ apps: goalData.apps, websites: goalData.websites });
   });
 </script>
 

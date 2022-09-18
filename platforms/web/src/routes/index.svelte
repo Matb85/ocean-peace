@@ -7,6 +7,14 @@
   import Link from "$lib/Link.svelte";
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import type { GoalI } from "$schema";
+  import { onMount } from "svelte";
+
+  let allGoals: GoalI[] = [];
+  onMount(async () => {
+    allGoals = await Api.getAllGoals();
+  });
 
   /** sets up data for a new goal
    * @returns nothing
@@ -24,17 +32,22 @@
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
   }
   /** sets up data for an existing goal
+   * @param i the index of the goal in the array of all the goals
    * @returns nothing
    */
-  function beforeOpenGoal() {}
+  function beforeOpenGoal(i: number) {
+    const timeInMinutes = parseInt(allGoals[i].limit);
 
-  import Api from "@redinn/oceanpeace-mobile/api";
-  import type { GoalI } from "$schema";
-  import { onMount } from "svelte";
-  let allGoals: GoalI[] = [];
-  onMount(async () => {
-    allGoals = await Api.getAllGoals();
-  });
+    SM.goal.setProps({
+      id: allGoals[i].id,
+      name: allGoals[i].name,
+      timeMinutes: (timeInMinutes % 60) + "",
+      timeHours: Math.floor(timeInMinutes / 60) + "",
+      activeDays: allGoals[i].activeDays,
+      limitActionType: allGoals[i].limitActionType,
+    });
+    SM.dialogs.setProps({ apps: allGoals[i].apps, websites: allGoals[i].websites });
+  }
 </script>
 
 <!-- aquarium background -->
@@ -70,8 +83,8 @@
 <!-- goals display -->
 <H thin>Your Goals</H>
 <div class="card-flex-col">
-  {#each allGoals as goal}
-    <Link href="/goal?id={goal.id}" on:click={beforeOpenGoal} className="w-full">
+  {#each allGoals as goal, i}
+    <Link href="/goal?id={goal.id}" on:click={() => beforeOpenGoal(i)} className="w-full">
       <Goal percentage={Math.random() * 100} title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
     </Link>
   {/each}
