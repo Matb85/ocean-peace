@@ -12,22 +12,22 @@
   import type { PresetI } from "$schema";
   import SM from "$lib/sessionManager";
 
-  let name = SM.schedule.name;
-  $: SM.schedule.name = name;
+  let name = SM.schedule.getProp("name");
+  $: SM.schedule.setProp("name", name);
 
-  let preset = SM.schedule.preset;
-  $: SM.schedule.preset = preset;
+  let preset = SM.schedule.getProp("preset");
+  $: SM.schedule.setProp("preset", preset);
 
   let presets: PresetI[] = [];
   onMount(async () => {
     presets = await Api.getAllPresets();
-
-    if (preset.length == 0) preset = presets[0].id;
   });
 </script>
 
+{preset}
+{name}
 <FullHeading backHref="/dialogs/cancel">
-  {SM.action.type} schedule
+  {SM.action.getProp("type")} schedule
 </FullHeading>
 
 <H thin>Name</H>
@@ -44,6 +44,7 @@
       label={p.name}
       isSelected={preset == p.id}
       on:click={() => {
+        console.error("helloclick", p.id);
         preset = p.id;
       }}
     />

@@ -11,6 +11,9 @@ const alias = {
 const config = {
   plugins: [svelte()],
   resolve: { alias },
+  build: {
+    outDir: "./build",
+  },
 };
 
 export default config;

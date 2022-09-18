@@ -15,13 +15,13 @@
   let allowedApps: AppIconI[] = [];
 
   onMount(async () => {
-    Api.getAppIcons(JSON.parse(SM.dialogs.apps)).then(data => (allowedApps = data));
+    Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps"))).then(data => (allowedApps = data));
     const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
     console.log(t);
   });
 </script>
 
-<H tag={3} className="mt-7">{SM.preset.name} Session</H>
+<H tag={3} className="mt-7">{SM.preset.getProp("name")} Session</H>
 
 <div class="w-3/4 max-w-md">
   <CircleChart className="wh-full" />

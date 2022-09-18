@@ -22,7 +22,7 @@
 <style global lang="postcss">
   @import "@redinnlabs/system/utils/base.css";
   #main {
-    @apply flex flex-col items-center gap-4 pb-32;
+    @apply flex flex-col items-center gap-4 pb-32 bg-white;
     scrollbar-width: none;
   }
 </style>

@@ -12,4 +12,4 @@
   }
 </script>
 
-<a href="#{href}" on:click={navigate} class={className}><slot /></a>
+<a href="#{href}" on:click={navigate} on:click class={className}><slot /></a>

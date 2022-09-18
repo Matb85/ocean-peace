@@ -8,24 +8,29 @@
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
 
-  onDestroy(() => {
-    SM.goal.id = "goal" + Date.now();
-    SM.goal.name = "";
-    SM.goal.timeMinutes = "15";
-    SM.goal.timeHours = "1";
-    SM.goal.activeDays = "[]";
-    SM.goal.limitActionType = "Notification";
-    SM.action.type = "Add";
-    SM.action.backUrl = "/";
-    SM.action.continueUrl = "/goal/edit/1";
-
-    SM.dialogs.apps = "[]";
-    SM.dialogs.websites = "[]";
-  });
+  /** sets up data for a new goal
+   * @returns nothing
+   */
+  function beforeAddGoal() {
+    SM.goal.setProps({
+      id: "goal" + Date.now(),
+      name: "",
+      timeMinutes: "15",
+      timeHours: "1",
+      activeDays: "[]",
+      limitActionType: "Notification",
+    });
+    SM.action.setProps({ type: "Add", backUrl: "/", continueUrl: "/goal/edit/1" });
+    SM.dialogs.setProps({ apps: "[]", websites: "[]" });
+  }
+  /** sets up data for an existing goal
+   * @returns nothing
+   */
+  function beforeOpenGoal() {}
 
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI } from "$schema";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
@@ -66,14 +71,14 @@
 <H thin>Your Goals</H>
 <div class="card-flex-col">
   {#each allGoals as goal}
-    <Link href="/goal?id={goal.id}" className="w-full">
+    <Link href="/goal?id={goal.id}" on:click={beforeOpenGoal} className="w-full">
       <Goal percentage={Math.random() * 100} title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
     </Link>
   {/each}
   {#if allGoals.length == 0}
     <p>No goals</p>
   {/if}
-  <Link href="/goal/edit/1">
+  <Link href="/goal/edit/1" on:click={beforeAddGoal}>
     <Button>Add Goal</Button>
   </Link>
 </div>

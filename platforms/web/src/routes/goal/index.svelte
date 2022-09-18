@@ -19,24 +19,20 @@
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
     goalData = await Api.getGoal(goalId);
-
     selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
 
     const timeInMinutes = parseInt(goalData.limit);
 
-    SM.goal.id = goalData.id;
-    SM.goal.name = goalData.name;
-    SM.goal.timeMinutes = (timeInMinutes % 60) + "";
-    SM.goal.timeHours = Math.floor(timeInMinutes / 60) + "";
-    SM.goal.activeDays = goalData.activeDays;
-    SM.goal.limitActionType = goalData.limitActionType;
-
-    SM.dialogs.apps = goalData.apps;
-    SM.dialogs.websites = goalData.websites;
-
-    SM.action.type = "Edit";
-    SM.action.backUrl = "/goal?" + $querystring;
-    SM.action.continueUrl = "/goal/edit/1";
+    SM.goal.setProps({
+      id: goalData.id,
+      name: goalData.name,
+      timeMinutes: (timeInMinutes % 60) + "",
+      timeHours: Math.floor(timeInMinutes / 60) + "",
+      activeDays: goalData.activeDays,
+      limitActionType: goalData.limitActionType,
+    });
+    SM.action.setProps({ type: "Edit", backUrl: "/goal?" + $querystring, continueUrl: "/goal/edit/1" });
+    SM.dialogs.setProps({ apps: goalData.apps, websites: goalData.websites });
   });
 </script>
 
@@ -99,6 +95,6 @@
 <SelectedApps apps={selectedApps} />
 
 <H tag={6} thin>Allowed Websites</H>
-<SelectedWebsites websites={JSON.parse(SM.dialogs.websites || "[]")} />
+<SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites") || "[]")} />
 
 <DangerZone deleteUrl="/goal/delete" label="Delete Goal" />

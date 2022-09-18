@@ -14,16 +14,16 @@
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    SM.dialogs.backUrl = "/goal/edit/1";
-    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.apps));
+    SM.dialogs.setProp("backUrl", "/goal/edit/1");
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
   });
 
-  let name = SM.goal.name;
-  $: SM.goal.name = name;
+  let name = SM.goal.getProp("name");
+  $: SM.goal.setProp("name", name);
 </script>
 
 <FullHeading backHref="/dialogs/cancel">
-  {SM.action.type} goal
+  {SM.action.getProp("type")} goal
 </FullHeading>
 
 <H thin>Name</H>
@@ -40,7 +40,7 @@
 </Link>
 
 <H thin>Selected Websites</H>
-<SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
+<SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites"))} />
 
 <Link href="/dialogs/websites">
   <Button secondary size="small">edit</Button>

@@ -44,11 +44,12 @@
     "/presets/icon-studying.svg",
     "/presets/icon-working.svg",
   ];
-  let chosen = SM.preset.icon;
-  $: SM.preset.icon = chosen;
+
+  let chosen = SM.preset.getProp("icon");
+  $: SM.preset.setProp("icon", chosen);
 </script>
 
-<FullHeading backHref="/focus/editpreset/1">{SM.action.type} preset</FullHeading>
+<FullHeading backHref="/focus/editpreset/1">{SM.action.getProp("type")} preset</FullHeading>
 
 <H thin>Choose Icon</H>
 

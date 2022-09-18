@@ -12,10 +12,10 @@
   const startHours: columnI = {
     units: "",
     data: [...Array(24).keys()],
-    current: Math.floor(parseInt(SM.schedule.startTime) / 60),
+    current: Math.floor(parseInt(SM.schedule.getProp("startTime")) / 60),
     multiplier: 1,
   };
-  const startMinutes = timeInputConfig.minutesConfig((parseInt(SM.schedule.startTime) % 60) / 5);
+  const startMinutes = timeInputConfig.minutesConfig((parseInt(SM.schedule.getProp("startTime")) % 60) / 5);
   startMinutes.units = "";
   let startH: number;
   let startM: number;
@@ -24,14 +24,14 @@
   Object.defineProperty(startHours, "current", {
     set: val => {
       startH = val;
-      SM.schedule.startTime = (startH * 60 + startM * startMinutes.multiplier).toString();
+      SM.schedule.setProp("startTime", startH * 60 + startM * startMinutes.multiplier);
     },
     get: () => startH,
   });
   Object.defineProperty(startMinutes, "current", {
     set: val => {
       startM = val;
-      SM.schedule.startTime = (startH * 60 + startM * startMinutes.multiplier).toString();
+      SM.schedule.setProp("startTime", startH * 60 + startM * startMinutes.multiplier);
     },
     get: () => startM,
   });
@@ -39,10 +39,10 @@
   const stopHours: columnI = {
     units: "",
     data: [...Array(24).keys()],
-    current: Math.floor(parseInt(SM.schedule.stopTime) / 60),
+    current: Math.floor(parseInt(SM.schedule.getProp("stopTime")) / 60),
     multiplier: 1,
   };
-  const stopMinutes = timeInputConfig.minutesConfig((parseInt(SM.schedule.stopTime) % 60) / 5);
+  const stopMinutes = timeInputConfig.minutesConfig((parseInt(SM.schedule.getProp("stopTime")) % 60) / 5);
   stopMinutes.units = "";
   let stopH: number;
   let stopM: number;
@@ -51,26 +51,26 @@
   Object.defineProperty(stopHours, "current", {
     set: val => {
       stopH = val;
-      SM.schedule.stopTime = (stopH * 60 + stopM * stopMinutes.multiplier).toString();
+      SM.schedule.setProp("stopTime", stopH * 60 + stopM * stopMinutes.multiplier);
     },
     get: () => stopH,
   });
   Object.defineProperty(stopMinutes, "current", {
     set: val => {
       stopM = val;
-      SM.schedule.stopTime = (stopH * 60 + stopM * stopMinutes.multiplier).toString();
+      SM.schedule.setProp("stopTime", stopH * 60 + stopM * stopMinutes.multiplier);
     },
     get: () => stopM,
   });
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  let activeDays = JSON.parse(SM.schedule.activeDays);
+  let activeDays = JSON.parse(SM.schedule.getProp("activeDays"));
   /** filter days when saving to maintain order*/
-  $: SM.schedule.activeDays = JSON.stringify(days.filter(x => activeDays.includes(x)));
+  $: SM.schedule.setProp("activeDays", JSON.stringify(days.filter(x => activeDays.includes(x))));
 </script>
 
 <FullHeading backHref="/focus/editschedule/1">
-  {SM.action.type} schedule
+  {SM.action.getProp("type")} schedule
 </FullHeading>
 
 <H thin>Active days</H>

@@ -7,13 +7,13 @@
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
-  const goBackUrl = SM.dialogs.backUrl;
+  const goBackUrl = SM.dialogs.getProp("backUrl");
 
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
 
   let allApps: AppIconI[] = [];
-  let selectedApps: string[] = JSON.parse(SM.dialogs.apps);
+  let selectedApps: string[] = JSON.parse(SM.dialogs.getProp("apps"));
 
   onMount(async () => {
     allApps = await Api.getAllAppIcons();
@@ -29,7 +29,7 @@
     } else {
       selectedApps = selectedApps.filter(x => x != app.packageName);
     }
-    SM.dialogs.apps = JSON.stringify(selectedApps);
+    SM.dialogs.setProps({ apps: JSON.stringify(selectedApps) });
   }
 </script>
 

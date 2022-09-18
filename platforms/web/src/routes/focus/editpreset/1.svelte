@@ -15,16 +15,16 @@
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    SM.dialogs.backUrl = "/focus/editpreset/1";
-    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.apps));
+    SM.dialogs.setProp("backUrl", "/focus/editpreset/1");
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
   });
 
-  let name = SM.preset.name;
-  $: SM.preset.name = name;
+  let name = SM.preset.getProp("name");
+  $: SM.preset.setProp("name", name);
 </script>
 
 <FullHeading backHref="/dialogs/cancel">
-  {SM.action.type} preset
+  {SM.action.getProp("type")} preset
 </FullHeading>
 
 <H thin>Name</H>
@@ -42,7 +42,7 @@
 
 <H thin>Allowed websites</H>
 
-<SelectedWebsites websites={JSON.parse(SM.dialogs.websites)} />
+<SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites"))} />
 
 <Link href="/dialogs/websites">
   <Button secondary size="small">edit</Button>

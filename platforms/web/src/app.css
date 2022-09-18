@@ -19,7 +19,7 @@ label {
 html,
 main,
 body {
-  @apply w-full select-none;
+  @apply w-full select-none bg-white;
 }
 
 img {

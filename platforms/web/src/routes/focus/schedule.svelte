@@ -9,9 +9,9 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-  import { page } from "$app/stores";
+  import { querystring } from "svelte-spa-router";
 
-  const scheduleId = $page.url.searchParams.get("id");
+  const scheduleId = new URLSearchParams($querystring).get("id");
 
   let scheduleData: Partial<ScheduleI> = {};
   let presetData: Partial<PresetI> = {};
@@ -27,7 +27,7 @@
     SM.schedule.stopTime = scheduleData.stopTime;
 
     SM.action.type = "Edit";
-    SM.action.backUrl = $page.url.pathname + $page.url.search;
+    SM.action.backUrl = "/focus/schedule?" + $querystring;
     SM.action.continueUrl = "/focus/editschedule/1";
   });
 </script>

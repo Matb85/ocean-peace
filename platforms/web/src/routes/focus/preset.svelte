@@ -26,7 +26,7 @@
     SM.dialogs.apps = presetData.apps;
     SM.dialogs.websites = presetData.websites;
     SM.action.type = "Edit";
-    SM.action.backUrl = "/goal/preset?" + $querystring;
+    SM.action.backUrl = "/focus/preset?" + $querystring;
     SM.action.continueUrl = "/focus/editpreset/1";
   });
 

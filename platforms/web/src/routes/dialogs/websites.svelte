@@ -8,7 +8,7 @@
   import { mdiChevronRight } from "@mdi/js";
   import { WebsiteTypes } from "$lib/utils/index";
   import Link from "$lib/Link.svelte";
-  const goBackUrl = SM.dialogs.backUrl;
+  const goBackUrl = SM.dialogs.getProp("backUrl");
 
   interface WebsiteI {
     url: string;
@@ -16,8 +16,8 @@
     favicon: string;
     type: number;
   }
-  let selectedWebsites: WebsiteI[] = JSON.parse(SM.dialogs.websites || "[]");
-  $: selectedWebsites, (SM.dialogs.websites = JSON.stringify(selectedWebsites));
+  let selectedWebsites: WebsiteI[] = JSON.parse(SM.dialogs.getProp("websites") || "[]");
+  $: selectedWebsites, SM.dialogs.setProp("websites", JSON.stringify(selectedWebsites));
 
   let favicon = "/globe.png";
   let url = "";
