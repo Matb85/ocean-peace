@@ -14,7 +14,7 @@ public class UIPlugin extends Plugin {
 
     @PluginMethod
     public void fadeIn(PluginCall call) {
-        this.getBridge().getWebView().animate().alpha(0).setDuration(200).setListener(new AnimatorListenerAdapter() {
+        this.getBridge().getWebView().animate().alpha(0f).setDuration(200).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 call.resolve();
@@ -24,7 +24,7 @@ public class UIPlugin extends Plugin {
     }
     @PluginMethod
     public void fadeOut(PluginCall call) {
-        this.getBridge().getWebView().animate().alpha(1).setDuration(200).setListener(new AnimatorListenerAdapter() {
+        this.getBridge().getWebView().animate().alpha(1f).setDuration(200).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 call.resolve();

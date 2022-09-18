@@ -1,7 +1,5 @@
 <script lang="ts">
-  import H from "$lib/H.svelte";
-  import { Button } from "@redinnlabs/system/Elements";
-  import Link from "$lib/Link.svelte";
+  import Delete from "$lib/Delete.svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
@@ -16,14 +14,4 @@
   }
 </script>
 
-<div class="absolute top-1/4 text-center px-4">
-  <H tag={3}>Are you sure?</H>
-  <H thin className="mt-4">You're about to delete schedule<br />{data.name}</H>
-</div>
-
-<div class="w-3/4 absolute top-2/3 flex flex-col gap-4">
-  <Link href="/focus/schedule?id={data.id}">
-    <Button isFullWidth>No, don't do this</Button>
-  </Link>
-  <Button on:click={deleteSchedule} isFullWidth isWarning>Yes, delete it</Button>
-</div>
+<Delete cancelHref="/focus/schedule?id={data.id}" type="schedule" name={data.name} callback={deleteSchedule} />
