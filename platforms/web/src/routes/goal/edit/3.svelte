@@ -79,4 +79,4 @@
   <Button isFullWidth>save</Button>
 </div>
 
-<Confirmation {isComplete} />
+<Confirmation {isComplete} text="Goal saved!" />

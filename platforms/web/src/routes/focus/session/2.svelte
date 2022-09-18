@@ -7,6 +7,10 @@
   const minutes: number = 148;
 </script>
 
+<div class="background">
+  <Background className="background-svg" x={50} y={100} />
+</div>
+
 <H tag={3} className="mt-5 text-white">Summary</H>
 
 <div class="w-10/12 text-center text-white mt-16">
@@ -30,13 +34,9 @@
   <Button>continue</Button>
 </Link>
 
-<div class="background">
-  <Background className="background-svg" x={50} y={100} />
-</div>
-
 <style lang="postcss">
   .background {
-    @apply w-full h-full absolute -z-10 overflow-hidden;
+    @apply w-full h-full absolute top-0 -z-10 overflow-hidden;
   }
   .background :global(.background-svg) {
     @apply absolute -top-[60%];
