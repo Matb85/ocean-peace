@@ -7,7 +7,7 @@
   import { TimeInput, timeInputConfig } from "@redinnlabs/system/Form";
   import type { columnI } from "@redinnlabs/system/Form/TimeInput/TimeInput.svelte";
   import LanguageSelector from "$lib/LanguageSelector.svelte";
-
+  import { timeFromNumber, numberFromTime } from "$lib/utils";
   const hours: columnI = {
     units: "h",
     data: [...Array(6).keys()],
@@ -32,20 +32,26 @@
     get: () => m,
   });
 
-  Api.getPreferences().then(data => {
-    name = data.name;
-    h = Math.floor(parseInt(data.screentime) / 60);
-    m = Math.floor(parseInt(data.screentime) % 60) / 5;
-  });
   let name = "";
-
+  let baseName = "";
+  let firstTime = 0;
   /** updates the preferences
    * @returns {void}
    */
   function save() {
     Api.setPreference("name", name);
-    Api.setPreference("screentime", h * 60 + m + "");
+    Api.setPreference("screentime", numberFromTime([h, m * 5]) + "");
+    baseName = name;
+    firstTime = numberFromTime([h, m * 5]);
   }
+  // !TODO fix the compliance bugs due to asynchronous data fetching!
+  Api.getPreferences().then(data => {
+    baseName = name = data.name;
+    firstTime = parseInt(data.screentime);
+    const time = timeFromNumber(data.screentime);
+    h = time[0];
+    m = time[1] / 5;
+  });
 </script>
 
 <FullHeading backHref="/profile">Settings</FullHeading>
@@ -61,7 +67,7 @@
 
   <LanguageSelector className="text-black" />
 </section>
-
-<div class="fixed-bottom-button">
+{h}{m}
+<div class="fixed-bottom-button{baseName == name && numberFromTime([h, m * 5]) == firstTime ? ' grayscale' : ''}">
   <Button isFullWidth on:click={save}>Save changes</Button>
 </div>
