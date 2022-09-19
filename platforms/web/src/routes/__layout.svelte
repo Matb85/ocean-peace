@@ -1,12 +1,21 @@
 <script lang="ts">
   import "../app.css";
   import GlobalGradient from "@redinnlabs/system/utils/GlobalGradient.svelte";
-  import Router, { location } from "svelte-spa-router";
+  import Router, { replace, location } from "svelte-spa-router";
   import routes from "./router";
   import Navbar from "$lib/Navbar.svelte";
   import { setupObserver } from "@redinnlabs/system/utils/Photo.svelte";
-
+  import Api from "@redinn/oceanpeace-mobile/api";
   setupObserver();
+
+  Api.getPreferences().then(async data => {
+    console.error(JSON.stringify(data));
+    if (data.setupComplete || $location.startsWith("/setup/")) return;
+    console.error("xd");
+    await Api.fadeIn();
+    replace("/setup/1");
+    setTimeout(() => Api.fadeOut(), 75);
+  });
 </script>
 
 <main id="main">

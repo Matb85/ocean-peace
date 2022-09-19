@@ -5,6 +5,12 @@
   import { IconButton, Button } from "@redinnlabs/system/Elements";
   import { BarChart, CircleChart, FlatChart, ChartKey } from "@redinnlabs/system/Charts";
   import Link from "$lib/Link.svelte";
+  import Api from "@redinn/oceanpeace-mobile/api";
+
+  Api.getPreferences().then(data => {
+    name = data.name;
+  });
+  let name = "";
 </script>
 
 <FullHeading backHref="/">Profile</FullHeading>
@@ -14,7 +20,7 @@
 </Link>
 
 <img class="shadow-wrapper w-1/2 aspect-square object-cover rounded-2xl mt-8" src="/profile.jpg" alt="profile" />
-<H noMargins thin>John Doe</H>
+<H noMargins thin>{name}</H>
 
 <section class="shadow-wrapper card-flex-col py-4 gap-2">
   <H noMargins thin>Your balance</H>

@@ -4,7 +4,7 @@ import goalRouter from "./goal/routes";
 import dialogRouter from "./dialogs/router";
 import profileRouter from "./profile/router";
 import focusRouter from "./focus/router";
-
+import setupRouter from "./setup/router";
 const routes = {
   // Exact path
   "/": index,
@@ -13,6 +13,7 @@ const routes = {
   ...dialogRouter,
   ...profileRouter,
   ...focusRouter,
+  ...setupRouter,
 };
 
 export default routes;
