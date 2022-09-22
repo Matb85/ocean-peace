@@ -1,0 +1,73 @@
+{
+  "screentime": {
+    "screentime": "Użycie telefonu",
+    "your": "Twoje użycie telefonu"
+  },
+  "left": "zostało",
+  "last": "ostatnie",
+  "days": "dni",
+  "l7d": "Ostatnie 7 dni",
+  "focus": {
+    "start": "Zacznij sesję skupienia"
+  },
+  "goal": {
+    "goal": "Cel",
+    "your": "Twoje cele",
+    "no": "Brak celów",
+    "add": "Dodaj cel",
+    "name": "Nazwa",
+    "name_p": "Nazwa celu",
+    "edit": "Edytuj cel",
+    "a_days": "Dni aktywne",
+    "time_limit": "Limit czasu",
+    "limit_type": "Typ limitu",
+    "Notification": "Notyfikacja",
+    "Close app": "Zamknij apkę",
+    "saved": "Cel zapisany!"
+  },
+  "profile": {
+    "profile": "Profil",
+    "balance": "Twój balans",
+    "points": "punktów",
+    "leaderboard": "Zobacz tabelę",
+    "success": "Średni sukces",
+    "performance": "Wydajność",
+    "difficult": "Najcięszy cel"
+  },
+  "settings": {
+    "settings": "Ustawienia",
+    "name": "Twoje imię",
+    "screentime": "Twój cel",
+    "lang": "Twój język"
+  },
+  "nav": {
+    "home": "Home",
+    "focus": "Focus",
+    "profile": "Profil"
+  },
+  "setup": {
+    "regain": "Odzyskaj kontrolę nad swoim czasem.",
+    "name": "Hej, jak Ci na imię",
+    "con": "Kuntynuuj",
+    "before": "Zanim zaczniemy...",
+    "screentime": "Ustaw swój docelowy czas korzystania.",
+    "begin": "Zacznijmy"
+  },
+  "dialog": {
+    "apps": "Wybrane apki",
+    "select_apps": "Wybierz apki",
+    "all_apps": "Wszystkie apki",
+    "web": "Wybrane strony",
+    "select_web": "Wybierz strony",
+    "none": "0 wybranych"
+  },
+  "cta": {
+    "save": "Zapisz zmiany",
+    "con": "Kuntynuuj",
+    "edit": "Edytuj",
+    "delete": "Usuń"
+  },
+  "danger": {
+    "zone": "Strefa grozy"
+  }
+}

@@ -7,6 +7,8 @@
   import H from "$lib/H.svelte";
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
+  import { t } from "$lib/i18n";
+
   const hours: columnI = {
     units: "h",
     data: [...Array(6).keys()],
@@ -43,23 +45,23 @@
   $: SM.goal.setProp("limitActionType", type);
 </script>
 
-<FullHeading backHref="/goal/edit/1">{SM.action.getProp("type")} goal</FullHeading>
+<FullHeading backHref="/goal/edit/1">{$t("d.goal." + SM.action.getProp("type"))}</FullHeading>
 
-<H thin>Active days</H>
+<H thin>{$t("d.goal.a_days")}</H>
 
 <CheckMultiple className="flex-wrap justify-center max-w-sm" bind:chosen={activeDays} options={days} />
 
-<H thin>Time Limit</H>
+<H thin>{$t("d.goal.time_limit")}</H>
 <!--
 <RadioInput bind:chosen={limit} options={["Time period", "Times opened"]} />
 -->
 <TimeInput columns={[hours, minutes]} />
 
-<H thin>Limit Type</H>
+<H thin>{$t("d.goal.limit_type")}</H>
 <RadioInput bind:chosen={type} options={limitTypes} />
 
 <div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
   <Link href={activeDays.length > 0 ? "/goal/edit/3" : ""}>
-    <Button isFullWidth>next</Button>
+    <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>
 </div>

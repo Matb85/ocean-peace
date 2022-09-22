@@ -6,12 +6,12 @@
   import H from "$lib/H.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
-
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI, GoalI } from "$schema";
   import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
+  import { t } from "$lib/i18n";
 
   const goalSM = SM.goal.getProps("id", "name", "timeHours", "timeMinutes", "activeDays", "limitActionType");
   const dialogsSM = SM.dialogs.getProps("apps", "websites");
@@ -46,17 +46,17 @@
 
 <FullHeading backHref="/goal/edit/2">Summary</FullHeading>
 
-<H tag={6} thin>Goal name</H>
+<H tag={6} thin>{$t("d.goal.name")}</H>
 <H tag={4} className="-mt-2" thin>{goalSM.name}</H>
 
-<H tag={6} thin>Active Days</H>
+<H tag={6} thin>{$t("d.goal.a_days")}</H>
 <div class="flex flex-wrap justify-center gap-2">
   {#each JSON.parse(goalSM.activeDays) as day}
     <Button size="small">{day}</Button>
   {/each}
 </div>
 
-<H tag={6} thin>Limit</H>
+<H tag={6} thin>{$t("d.goal.time_limit")}</H>
 <div class="flex flex-wrap justify-center gap-2 items-center">
   <H tag={4} className="mt-0 mb-0" thin>
     {goalSM.timeHours}h
@@ -66,17 +66,17 @@
   <Button size="small">Time Period</Button>
 </div>
 
-<H tag={6} thin>Limit type</H>
+<H tag={6} thin>{$t("d.goal.limit_type")}</H>
 <Button size="small">{goalSM.limitActionType}</Button>
 
-<H tag={6} thin>Selected apps</H>
+<H tag={6} thin>{$t("d.dialog.apps")}</H>
 <SelectedApps apps={selectedApps} />
 
-<H tag={6} thin>Allowed Websites</H>
+<H tag={6} thin>{$t("d.dialog.web")}</H>
 <SelectedWebsites websites={JSON.parse(dialogsSM.websites)} />
 
 <div on:click={saveGoal} class="fixed-bottom-button">
-  <Button isFullWidth>save</Button>
+  <Button isFullWidth>{$t("d.cta.save")}</Button>
 </div>
 
-<Confirmation {isComplete} text="Goal saved!" />
+<Confirmation {isComplete} text={$t("d.goal.saved")} />

@@ -7,10 +7,11 @@
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
-  const goBackUrl = SM.dialogs.getProp("backUrl");
-
+  import { t } from "$lib/i18n";
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
+
+  const goBackUrl = SM.dialogs.getProp("backUrl");
 
   let allApps: AppIconI[] = [];
   let selectedApps: string[] = JSON.parse(SM.dialogs.getProp("apps"));
@@ -33,9 +34,9 @@
   }
 </script>
 
-<FullHeading>Select apps</FullHeading>
+<FullHeading>{$t("d.dialog.select_apps")}</FullHeading>
 
-<H thin className="mt-8">Selected Apps ({selectedApps.length})</H>
+<H thin className="mt-8">{$t("d.dialog.apps")} ({selectedApps.length})</H>
 
 <section class="app-group-con">
   {#each allApps.filter(x => selectedApps.includes(x.packageName)) as app}
@@ -48,11 +49,11 @@
     />
   {/each}
   {#if selectedApps.length <= 0}
-    <p>0 selected</p>
+    <p>{$t("d.dialog.none")}</p>
   {/if}
 </section>
 
-<H thin>All Apps ({allApps.length})</H>
+<H thin>{$t("d.dialog.all_apps")} ({allApps.length})</H>
 
 <section class="app-group-con">
   {#each allApps as app}
@@ -67,5 +68,5 @@
 </section>
 
 <Link href={goBackUrl} className="fixed bottom-10 z-50 w-10/12">
-  <Button isFullWidth>Save</Button>
+  <Button isFullWidth>{$t("d.cta.save")}</Button>
 </Link>

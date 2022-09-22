@@ -7,7 +7,7 @@
   import H from "$lib/H.svelte";
   import { onMount } from "svelte";
   import type { ChartColumnI } from "@redinnlabs/system/utils";
-
+  import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
 
   let usageStats: Array<ChartColumnI> = [];
@@ -26,7 +26,7 @@
   });
 </script>
 
-<FullHeading backHref="/">Screen Time</FullHeading>
+<FullHeading backHref="/">{$t("d.screentime.screentime")}</FullHeading>
 
 <div class="w-full h-80 absolute -z-50 top-0">
   <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />
@@ -45,7 +45,7 @@
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>24 min</H>
-      <H tag={3} className="!font-normal">left</H>
+      <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
   <ChartKey

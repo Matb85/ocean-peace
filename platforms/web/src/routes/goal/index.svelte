@@ -9,7 +9,7 @@
   import DangerZone from "$lib/DangerZone.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { querystring } from "svelte-spa-router";
-
+  import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI } from "$schema";
   import { onMount } from "svelte";
@@ -22,7 +22,7 @@
   });
 </script>
 
-<FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
+<FullHeading backHref="/" editHref="/goal/edit/1">{$t("d.goal.goal")}</FullHeading>
 
 <section class="w-full h-80 absolute -z-50 top-0">
   <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />
@@ -56,7 +56,7 @@
   />
 </section>
 
-<H thin>Last 7 days</H>
+<H thin>{$t("d.l7d")}</H>
 <section class="flex flex-wrap items-center justify-center max-w-xs">
   {#each ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as day}
     <div class="text-center">
@@ -77,10 +77,10 @@
   {/each}
 </section>
 
-<H thin>Selected apps</H>
+<H thin>{$t("d.dialog.apps")}</H>
 <SelectedApps apps={selectedApps} />
 
-<H tag={6} thin>Allowed Websites</H>
+<H thin>{$t("d.dialog.web")}</H>
 <SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites") || "[]")} />
 
-<DangerZone deleteUrl="/goal/delete" label="Delete Goal" />
+<DangerZone deleteUrl="/goal/delete" label={$t("d.cta.delete") + " " + $t("d.goal.goal").toLowerCase()} />

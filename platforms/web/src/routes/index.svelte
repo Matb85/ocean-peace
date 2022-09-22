@@ -10,7 +10,7 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
-
+  import { t } from "$lib/i18n";
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
@@ -61,8 +61,8 @@
   <Cutout className="w-full bottom-0 absolute" />
 
   <!-- screen time display -->
-  <div class="text-shadow text-white absolute w-full bottom-20 grid grid-cols-1 place-items-center">
-    <H noMargins>Your Screen time</H>
+  <div class="text-shadow text-white absolute w-full bottom-24 grid grid-cols-1 place-items-center">
+    <H noMargins>{$t("d.screentime.your")}</H>
     <H tag={2} noMargins className="text-shadow-sm">
       {curScreenTime < 59 ? "" : Math.floor(curScreenTime / 60) + "h"}
       {curScreenTime % 60 == 0 ? "" : (curScreenTime % 60) + "min"}
@@ -70,18 +70,18 @@
     <H tag={4} noMargins>
       {Math.floor((maxScreenTime - curScreenTime) / 60) + "h"}
       {(maxScreenTime - curScreenTime) % 60 == 0 ? "" : ((maxScreenTime - curScreenTime) % 60) + "min"}
-      left
+      {$t("d.left")}
     </H>
   </div>
 </Link>
 
 <!-- focus button -->
 <Link href="/focus">
-  <Button>Start a focus session</Button>
+  <Button>{$t("d.focus.start")}</Button>
 </Link>
 
 <!-- goals display -->
-<H thin>Your Goals</H>
+<H thin>{$t("d.goal.your")}</H>
 <div class="card-flex-col">
   {#each allGoals as goal, i}
     <Link href="/goal?id={goal.id}" on:click={() => beforeOpenGoal(i)} className="w-full">
@@ -89,9 +89,9 @@
     </Link>
   {/each}
   {#if allGoals.length == 0}
-    <p>No goals</p>
+    <p>{$t("d.goal.no")}</p>
   {/if}
   <Link href="/goal/edit/1" on:click={beforeAddGoal}>
-    <Button>Add Goal</Button>
+    <Button>{$t("d.goal.add")}</Button>
   </Link>
 </div>

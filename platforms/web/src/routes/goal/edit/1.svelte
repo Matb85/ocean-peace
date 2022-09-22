@@ -11,6 +11,7 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI } from "$schema";
   import SM from "$lib/sessionManager";
+  import { t } from "$lib/i18n";
 
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
@@ -23,27 +24,27 @@
 </script>
 
 <FullHeading backHref="/dialogs/cancel">
-  {SM.action.getProp("type")} goal
+  {$t("d.goal." + SM.action.getProp("type"))}
 </FullHeading>
 
-<H thin>Name</H>
+<H thin>{$t("d.goal.name")}</H>
 <div class="w-11/12">
-  <TextInput placeholder="Name of your goal" bind:value={name} />
+  <TextInput placeholder={$t("d.goal.name_p")} bind:value={name} />
 </div>
 
-<H thin>Selected apps</H>
+<H thin>{$t("d.dialog.apps")}</H>
 
 <SelectedApps apps={selectedApps} />
 
 <Link href="/dialogs/apps">
-  <Button secondary size="small">edit</Button>
+  <Button secondary size="small">{$t("d.cta.edit")}</Button>
 </Link>
 
-<H thin>Selected Websites</H>
+<H thin>{$t("d.dialog.web")}</H>
 <SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites"))} />
 
 <Link href="/dialogs/websites">
-  <Button secondary size="small">edit</Button>
+  <Button secondary size="small">{$t("d.cta.edit")}</Button>
 </Link>
 
 <div class="fixed-bottom-button bg-white" style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}>

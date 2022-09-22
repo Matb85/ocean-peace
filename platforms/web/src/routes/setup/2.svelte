@@ -7,6 +7,7 @@
   import Link from "$lib/Link.svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
+  import { t } from "$lib/i18n";
   const hours: columnI = {
     units: "h",
     data: [...Array(6).keys()],
@@ -46,12 +47,12 @@
     <Link href="/setup/1">
       <BackButton />
     </Link>
-    <H tag={3}>Before we begin...</H>
+    <H tag={3}>{$t("d.setup.before")}</H>
   </div>
-  <H thin className="mb-4">Set Your goal Screentime.</H>
+  <H thin className="mb-4">{$t("d.setup.screentime")}</H>
   <TimeInput columns={[hours, minutes]} />
 
   <Link on:click={setScreentime} className="absolute bottom-5" href="/">
-    <Button>Let's begin</Button>
+    <Button>{$t("d.setup.begin")}</Button>
   </Link>
 </Wrapper>

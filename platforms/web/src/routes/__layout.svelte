@@ -8,6 +8,12 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   setupObserver();
 
+  import { locale, loadTranslations } from "$lib/i18n";
+
+  const defaultLocale = "en"; // get from cookie, user session, ...
+  const initLocale = locale.get() || localStorage.getItem("oceanpeace_lang") || defaultLocale; // set default if no locale already set
+  loadTranslations(initLocale, $location); // keep this just before the `return`
+
   Api.getPreferences().then(async data => {
     console.error(JSON.stringify(data));
     if (data.setupComplete || $location.startsWith("/setup/")) return;

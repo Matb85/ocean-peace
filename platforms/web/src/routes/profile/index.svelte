@@ -6,6 +6,7 @@
   import { BarChart, CircleChart, FlatChart, ChartKey } from "@redinnlabs/system/Charts";
   import Link from "$lib/Link.svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
+  import { t } from "$lib/i18n";
 
   Api.getPreferences().then(data => {
     name = data.name;
@@ -13,7 +14,7 @@
   let name = "";
 </script>
 
-<FullHeading backHref="/">Profile</FullHeading>
+<FullHeading backHref="/">{$t("d.profile.profile")}</FullHeading>
 
 <Link href="/profile/settings" className="absolute top-5 right-3">
   <IconButton secondary d={mdiCog} />
@@ -23,13 +24,13 @@
 <H noMargins thin>{name}</H>
 
 <section class="shadow-wrapper card-flex-col py-4 gap-2">
-  <H noMargins thin>Your balance</H>
-  <h2 class="score">425 points</h2>
-  <Button>see the leaderboard</Button>
+  <H noMargins thin>{$t("d.profile.balance")}</H>
+  <h2 class="score">425 {$t("d.profile.points")}</h2>
+  <Button>{$t("d.profile.leaderboard")}</Button>
 </section>
 
-<H thin>Performance</H>
-<p class="-mt-3">last 7 days</p>
+<H noMargins thin>{$t("d.profile.performance")}</H>
+<p class="-mt-3">{$t("d.l7d")}</p>
 
 <BarChart
   maxTime={200}
@@ -44,19 +45,19 @@
   ]}
 />
 
-<H thin>Average Success</H>
+<H thin>{$t("d.profile.success")}</H>
 <section class="w-11/12 grid grid-cols-2 gap-2">
   <CircleChart className="w-full" color="#BAEEBD">
     <H tag={3} noMargins className="wh-full flex items-center justify-center leading-none opacity-60">77%</H>
   </CircleChart>
   <div class="shadow-wrapper block w-full h-min p-4 text-center self-center">
-    <p>Most difficult Goal</p>
+    <p>{$t("d.profile.difficult")}</p>
     <b>Check the news twice a day</b>
   </div>
 </section>
 
-<H noMargins thin>Screen Time</H>
-<p class="-mt-3">last 7 days</p>
+<H noMargins thin>{$t("d.screentime.screentime")}</H>
+<p class="-mt-3">{$t("d.l7d")}</p>
 
 <BarChart
   maxTime={200}

@@ -8,6 +8,7 @@
   import type { columnI } from "@redinnlabs/system/Form/TimeInput/TimeInput.svelte";
   import LanguageSelector from "$lib/LanguageSelector.svelte";
   import { timeFromNumber, numberFromTime } from "$lib/utils";
+  import { t } from "$lib/i18n";
   const hours: columnI = {
     units: "h",
     data: [...Array(6).keys()],
@@ -54,20 +55,20 @@
   });
 </script>
 
-<FullHeading backHref="/profile">Settings</FullHeading>
+<FullHeading backHref="/profile">{$t("d.settings.settings")}</FullHeading>
 
-<H thin>Your name</H>
+<H thin>{$t("d.settings.name")}</H>
 
 <section class="card-flex-col">
-  <TextInput label="Your name" placeholder="Your name" bind:value={name} />
+  <TextInput label={$t("d.settings.name")} placeholder={$t("d.settings.name")} bind:value={name} />
 
-  <H thin>Your goal screen time</H>
+  <H thin>{$t("d.settings.screentime")}</H>
   <TimeInput columns={[hours, minutes]} />
-  <H thin>Your language</H>
+  <H thin>{$t("d.settings.lang")}</H>
 
   <LanguageSelector className="text-black" />
 </section>
 {h}{m}
 <div class="fixed-bottom-button{baseName == name && numberFromTime([h, m * 5]) == firstTime ? ' grayscale' : ''}">
-  <Button isFullWidth on:click={save}>Save changes</Button>
+  <Button isFullWidth on:click={save}>{$t("d.cta.save")}</Button>
 </div>

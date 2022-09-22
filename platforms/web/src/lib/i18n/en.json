@@ -1,0 +1,71 @@
+{
+  "screentime": {
+    "screentime": "Screen time",
+    "your": "Your screen time"
+  },
+  "left": "left",
+  "last": "last",
+  "days": "days",
+  "l7d": "Last 7 days",
+  "focus": {
+    "start": "Start a focus session"
+  },
+  "goal": {
+    "goal": "Goal",
+    "your": "Your Goals",
+    "no": "No Goals",
+    "add": "Add a goal",
+    "name": "name",
+    "name_p": "Name of the goal",
+    "edit": "edit a goal",
+    "time_limit": "Time limit",
+    "limit_type": "Limit Type",
+    "Notification": "Notification",
+    "Close app": "Close app",
+    "saved": "Goal saved!"
+  },
+  "profile": {
+    "profile": "Profile",
+    "balance": "Your balance",
+    "points": "points",
+    "leaderboard": "See the leaderboard",
+    "success": "Average success",
+    "performance": "Performance",
+    "difficult": "Most difficult goal"
+  },
+  "settings": {
+    "settings": "Settings",
+    "name": "Your name",
+    "screentime": "Your goal screentime",
+    "lang": "Your language"
+  },
+  "nav": {
+    "home": "Home",
+    "focus": "Focus",
+    "profile": "Profile"
+  },
+  "setup": {
+    "regain": "Regain the control of your time.",
+    "name": "Hi, what's your name?",
+    "before": "Before we begin...",
+    "screentime": "Set Your goal Screentime.",
+    "begin": "Let's begin"
+  },
+  "dialog": {
+    "apps": "Selected apps",
+    "select_apps": "Select apps",
+    "all_apps": "All apps",
+    "web": "Selected websites",
+    "select_web": "Select websites",
+    "none": "0 selected"
+  },
+  "cta": {
+    "save": "Save changes",
+    "con": "Continue",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "danger": {
+    "zone": "Danger zone"
+  }
+}
