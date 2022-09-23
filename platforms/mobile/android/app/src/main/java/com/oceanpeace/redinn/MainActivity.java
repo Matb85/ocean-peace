@@ -1,6 +1,10 @@
 package com.oceanpeace.redinn;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 
 import androidx.work.WorkManager;
 
@@ -10,6 +14,7 @@ import com.oceanpeace.redinn.focus.FocusPlugin;
 import com.oceanpeace.redinn.goals.GoalsPlugin;
 import com.oceanpeace.redinn.icons.IconManager;
 import com.oceanpeace.redinn.icons.IconsPlugin;
+import com.oceanpeace.redinn.mayo.MayoAPI;
 import com.oceanpeace.redinn.presets.PresetsPlugin;
 import com.oceanpeace.redinn.schedule.SchedulePlugin;
 import com.oceanpeace.redinn.usage.UsagePlugin;
@@ -19,6 +24,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+
 
         //region Plugin Registration
 
@@ -36,8 +42,9 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onStart() {
-
         //WorkManager.getInstance(getApplicationContext()).enqueue(IconWorker.regenerateIcons);
+
+        bindAPI();
 
         IconManager.regenerateIcons(getApplicationContext());
 
@@ -50,8 +57,58 @@ public class MainActivity extends BridgeActivity {
     }
 
     @Override
+    public void onStop() {
+
+
+
+        super.onStop();
+    }
+
+    @Override
     public void onDestroy() {
         WorkManager.getInstance(getApplicationContext()).cancelAllWork();
+        unbindAPI();
         super.onDestroy();
     }
+
+
+
+    // region API
+    public static MayoAPI mAPI;
+    public static boolean mBound= false;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            MayoAPI.LocalBinder binder = (MayoAPI.LocalBinder) service;
+            mAPI = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+
+    void bindAPI() {
+        if (mBound)
+            return;
+
+        Intent intent = new Intent(this, MayoAPI.class);
+        bindService(intent, mConnection, BIND_AUTO_CREATE);
+
+    }
+
+    void unbindAPI() {
+        if (!mBound)
+            return;
+
+        unbindService(mConnection);
+    }
+    // endregion
+
 }

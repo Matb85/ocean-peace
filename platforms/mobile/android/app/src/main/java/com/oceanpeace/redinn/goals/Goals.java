@@ -6,11 +6,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceanpeace.redinn.FunctionBase;
-import com.oceanpeace.redinn.mayo.Mayo;
+import com.oceanpeace.redinn.MainActivity;
 import com.oceanpeace.redinn.managers.JSONManager;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -34,6 +33,8 @@ public class Goals {
     // region constructor
     Context context;
 
+
+
     public Goals(Context context) {
         this.context = context;
     }
@@ -54,11 +55,7 @@ public class Goals {
 
         JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
-        try {
-            Mayo.changeTodayGoals(goal);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        MainActivity.mAPI.changeGoal(goal);
     }
 
     public JSONArray getAllGoals() {
@@ -75,7 +72,13 @@ public class Goals {
         for (File file : files) {
 
             try {
-                JSONObject temp = JSONArrayOptElement(Mayo.todayGoals, ID, file.getName().substring(0,file.getName().length()-5));
+                JSONObject temp = null;
+                try {
+                    if (MainActivity.mBound && !MainActivity.mAPI.todayGoalsEmpty())
+                        temp = JSONArrayOptElement(MainActivity.mAPI.getTodayGoals(), ID, file.getName().substring(0, file.getName().length() - 5));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (temp != null) {
                     Log.i("GoalsPlugin", "reading today goal " + temp.getString(ID));
                     ret.put(temp);
@@ -102,7 +105,10 @@ public class Goals {
         try {
 
             // checking if the goal is in today's goals to update it's data
-            JSONObject temp = JSONArrayOptElement(Mayo.todayGoals, ID, id);
+            JSONObject temp = null;
+            if (MainActivity.mBound && !MainActivity.mAPI.todayGoalsEmpty()) {
+                temp = JSONArrayOptElement(MainActivity.mAPI.getTodayGoals(), ID, id);
+            }
             if (temp != null) {
                 res = temp;
             }
@@ -126,8 +132,9 @@ public class Goals {
         File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
 
         try {
-            Mayo.deleteTodayGoal(new JSONObject().put(Goals.ID, id));
-        } catch (JSONException e) {
+            if (MainActivity.mBound)
+                MainActivity.mAPI.deleteGoal(new JSONObject().put(Goals.ID, id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

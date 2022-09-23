@@ -5,8 +5,12 @@ import static com.oceanpeace.redinn.FunctionBase.JSONArrayOptElement;
 import static com.oceanpeace.redinn.FunctionBase.getDayOfWeekStringShort;
 
 import android.accessibilityservice.AccessibilityService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PixelFormat;
+import android.os.Binder;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
@@ -77,9 +81,17 @@ public class Mayo extends AccessibilityService {
 
 
     //region Accessibility
+
+    MayoReceiver mReceiver = new MayoReceiver();
+
     @Override
     public void onServiceConnected() {
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("ocean.waves.mayo.force_update");
+        filter.addAction("ocean.waves.mayo.change");
+        filter.addAction("ocean.waves.mayo.delete");
+        registerReceiver(mReceiver, filter);
         dayOfWeek = getDayOfWeekStringShort();
 
         // region creating lists of packageNames
@@ -107,6 +119,13 @@ public class Mayo extends AccessibilityService {
             e.printStackTrace();
         }
 
+    }
+
+
+    public class LocalBinder extends Binder {
+        public Mayo getServerInstance() {
+            return Mayo.this;
+        }
     }
 
     @Override
@@ -168,7 +187,7 @@ public class Mayo extends AccessibilityService {
 
             }
             updateGoals(closedPackageName, duration);
-
+            updateAPI(todayGoals);
         }
         closedChangeTime = eventTime;
         Log.i("MAYO", "duration: " + duration);
@@ -193,6 +212,8 @@ public class Mayo extends AccessibilityService {
         }
 
         closedPackageName = openedPackageName;
+
+
     }
 
 
@@ -495,6 +516,41 @@ public class Mayo extends AccessibilityService {
 
     // endregion
 
+    void updateAPI(JSONArray tGoals) {
+            Intent intent = new Intent();
+            intent.setAction("ocean.waves.mapi.update");
+            intent.putExtra("todayGoals", todayGoals.toString());
+            sendBroadcast(intent);
+    }
 
+    public class MayoReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case "ocean.waves.mayo.force_update":
+                    updateAPI(todayGoals);
+                    break;
+                case "ocean.waves.mayo.delete":
+                    try {
+                        deleteTodayGoal(new JSONObject(intent.getStringExtra("goal")));
+                        updateAPI(todayGoals);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "ocean.waves.mayo.change":
+                    Log.i("MAYO", "onReceive: received change request");
+                    try {
+                        changeTodayGoals(new JSONObject(intent.getStringExtra("goal")));
+                        updateAPI(todayGoals);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    }
+
+    // endregion
 }
 

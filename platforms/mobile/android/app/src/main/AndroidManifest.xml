@@ -26,6 +26,7 @@
             android:name=".mayo.Mayo"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true"
+            android:process=":ocean.mayo"
             >
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -36,9 +37,37 @@
         </service>
 
         <receiver
+            android:name=".mayo.Mayo$MayoReceiver"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="ocean.waves.mayo.force_update" />
+                <action android:name="ocean.waves.mayo.delete" />
+                <action android:name="ocean.waves.mayo.change" />
+            </intent-filter>
+        </receiver>
+
+
+        <service
+            android:name=".mayo.MayoAPI"
+            android:exported="true"
+            >
+        </service>
+
+        <receiver
+            android:name=".mayo.MayoAPI$apiBroadcast"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="ocean.waves.mapi.update" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
             android:name=".Broadcast"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:process=":ocean.mayo">
             <intent-filter>
                 <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END" />
                 <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK" />
