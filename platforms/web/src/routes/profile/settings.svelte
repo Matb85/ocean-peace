@@ -14,7 +14,7 @@
 
 <div class="card-flex-col">
   {#each Array(2) as _}
-    <Schedule src={W} title="Event example" />
+    <Schedule src={W} alt="alt" title="Event example" />
   {/each}
 </div>
 
