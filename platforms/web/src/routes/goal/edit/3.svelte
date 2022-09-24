@@ -1,9 +1,9 @@
 <!-- displays the summary -->
 <script lang="ts">
   import Confirmation from "$lib/Confirmation.svelte";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import SelectedApps from "$lib/SelectedApps.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { onMount } from "svelte";

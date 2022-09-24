@@ -1,8 +1,8 @@
 <script lang="ts">
   export let deleteUrl = "";
   export let label = "";
-  import { Button } from "@redinnlabs/system/Elements";
-  import H from "$lib/H.svelte";
+  import { Button, H } from "@redinnlabs/system/Elements";
+
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";
 </script>

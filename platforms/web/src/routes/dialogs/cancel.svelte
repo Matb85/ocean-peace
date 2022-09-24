@@ -1,7 +1,7 @@
 <!-- allows to go back or return to editing -->
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
-  import H from "$lib/H.svelte";
+  import { Button, H } from "@redinnlabs/system/Elements";
+
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";

@@ -1,8 +1,8 @@
 <script lang="ts">
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import { mdiCog } from "@mdi/js";
-  import { IconButton, Button } from "@redinnlabs/system/Elements";
+  import { IconButton, Button, H } from "@redinnlabs/system/Elements";
   import { BarChart, CircleChart, FlatChart, ChartKey } from "@redinnlabs/system/Charts";
   import Link from "$lib/Link.svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -14,7 +14,7 @@
   let name = "";
 </script>
 
-<FullHeading backHref="/">{$t("d.profile.profile")}</FullHeading>
+<FullHeading tag={3} backHref="/">{$t("d.profile.profile")}</FullHeading>
 
 <Link href="/profile/settings" className="absolute top-5 right-3">
   <IconButton secondary d={mdiCog} />

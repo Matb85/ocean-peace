@@ -2,9 +2,9 @@
   import { stringTimeFromNumber } from "$lib/utils";
   import FullHeading from "$lib/FullHeading.svelte";
   import DangerZone from "$lib/DangerZone.svelte";
-  import H from "$lib/H.svelte";
+
   import { Preset } from "@redinnlabs/system/Units";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import type { PresetI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { onMount } from "svelte";
@@ -25,7 +25,7 @@
   });
 </script>
 
-<FullHeading backHref="/focus" editHref="/focus/editschedule/1">{$t("d.schedule.schedule")}</FullHeading>
+<FullHeading tag={3} backHref="/focus" editHref="/focus/editschedule/1">{$t("d.schedule.schedule")}</FullHeading>
 
 <H tag={6} thin>{$t("d.schedule.name")}</H>
 <H tag={4} className="-mt-2" thin>{scheduleData.name}</H>

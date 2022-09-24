@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import A from "@redinnlabs/system/assets/icon-add.svg";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import { stringTimeFromNumber } from "$lib/utils";
   import { onMount } from "svelte";
   import type { PresetI, ScheduleI } from "$schema";
@@ -78,7 +78,7 @@
   }
 </script>
 
-<FullHeading backHref="/">{$t("d.focus.focus")}</FullHeading>
+<FullHeading tag={3} backHref="/">{$t("d.focus.focus")}</FullHeading>
 
 <H thin>{$t("d.focus.presets")}</H>
 

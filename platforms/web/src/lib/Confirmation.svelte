@@ -1,8 +1,8 @@
 <!-- displays the summary -->
 <script lang="ts">
-  import { Icon } from "@redinnlabs/system/Elements";
+  import { Icon, H } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
-  import H from "$lib/H.svelte";
+
   import { fly } from "svelte/transition";
   export let text;
   export let isComplete = false;

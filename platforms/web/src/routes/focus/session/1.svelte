@@ -1,10 +1,10 @@
 <!-- displays the ongoing session -->
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import { CircleChart } from "@redinnlabs/system/Charts";
-  import H from "$lib/H.svelte";
+
   import { onMount } from "svelte";
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";

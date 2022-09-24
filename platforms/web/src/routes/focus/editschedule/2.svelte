@@ -1,10 +1,10 @@
 <!-- allows to select active days & set time limit -->
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { TimeInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
   import type { columnI } from "@redinnlabs/system/Form/TimeInput/TimeInput.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";

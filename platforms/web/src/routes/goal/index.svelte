@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Icon, Aquarium } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium, H } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
-  import H from "$lib/H.svelte";
+
   import DangerZone from "$lib/DangerZone.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { querystring } from "svelte-spa-router";
@@ -22,7 +22,7 @@
   });
 </script>
 
-<FullHeading backHref="/" editHref="/goal/edit/1">{$t("d.goal.goal")}</FullHeading>
+<FullHeading tag={3} backHref="/" editHref="/goal/edit/1">{$t("d.goal.goal")}</FullHeading>
 
 <section class="w-full h-80 absolute -z-50 top-0">
   <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />

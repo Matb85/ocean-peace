@@ -1,6 +1,5 @@
 <script lang="ts">
-  import H from "$lib/H.svelte";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import Link from "$lib/Link.svelte";
   export let callback = () => {};
   export let cancelHref: string;

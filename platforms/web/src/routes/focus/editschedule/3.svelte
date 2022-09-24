@@ -2,9 +2,9 @@
 <script lang="ts">
   import Confirmation from "$lib/Confirmation.svelte";
   import { Preset } from "@redinnlabs/system/Units";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import { t } from "$lib/i18n";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";

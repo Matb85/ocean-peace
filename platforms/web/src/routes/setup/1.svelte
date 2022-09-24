@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
   import Wrapper from "$lib/Wrapper.svelte";
-  import H from "$lib/H.svelte";
+
   import Link from "$lib/Link.svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { t } from "$lib/i18n";

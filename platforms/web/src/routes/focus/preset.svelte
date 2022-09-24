@@ -1,10 +1,10 @@
 <!-- set the timer before starting -->
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { TimeInput, RadioInput, CheckMultiple, timeInputConfig } from "@redinnlabs/system/Form";
   import { SoundTrack } from "@redinnlabs/system/Units";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import DangerZone from "$lib/DangerZone.svelte";
   import { querystring } from "svelte-spa-router";
   import { onMount } from "svelte";

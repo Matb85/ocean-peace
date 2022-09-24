@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Button, Aquarium } from "@redinnlabs/system/Elements";
+  import { Button, Aquarium, H } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
-  import H from "$lib/H.svelte";
+
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
   export let curScreenTime: number = 100;

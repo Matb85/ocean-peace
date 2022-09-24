@@ -1,8 +1,8 @@
 <!-- allows to select apps -->
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { AppStatus } from "@redinnlabs/system/Units";
-  import H from "$lib/H.svelte";
+
   import FullHeading from "$lib/FullHeading.svelte";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";

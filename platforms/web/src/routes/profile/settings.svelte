@@ -1,8 +1,8 @@
 <script lang="ts">
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import { TextInput } from "@redinnlabs/system/Form";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { TimeInput, timeInputConfig } from "@redinnlabs/system/Form";
   import type { columnI } from "@redinnlabs/system/Form/TimeInput/TimeInput.svelte";

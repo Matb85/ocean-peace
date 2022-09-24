@@ -68,7 +68,7 @@ importers:
     dependencies:
       '@mdi/js': 7.0.96
       '@redinn/oceanpeace-mobile': link:../mobile
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/f54cbb2e28fb35669c1f35d8af45b6ae13d343e2
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/75b8a292cd85b1117674634e6bce60ff709d9f4b
       '@sveltejs/vite-plugin-svelte': 1.0.6_svelte@3.50.1+vite@3.1.1
       svelte-spa-router: 3.3.0
     devDependencies:
@@ -4428,10 +4428,10 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  github.com/Redinn-Labs/design-system/f54cbb2e28fb35669c1f35d8af45b6ae13d343e2:
-    resolution: {commit: f54cbb2e28fb35669c1f35d8af45b6ae13d343e2, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/75b8a292cd85b1117674634e6bce60ff709d9f4b:
+    resolution: {commit: 75b8a292cd85b1117674634e6bce60ff709d9f4b, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
-    version: 1.18.0
+    version: 1.18.7
     dependencies:
       '@mdi/js': 7.0.96
       modular-slider: 0.11.0

@@ -1,8 +1,8 @@
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
-  import { Button, Background } from "@redinnlabs/system/Elements";
+  import { Button, Background, H } from "@redinnlabs/system/Elements";
   import SelectedApps from "$lib/SelectedApps.svelte";
-  import H from "$lib/H.svelte";
+
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";
   const minutes: number = 148;

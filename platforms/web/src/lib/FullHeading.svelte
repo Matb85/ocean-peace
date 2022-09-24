@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { BackButton, EditButton, Heading } from "@redinnlabs/system/Elements";
+  import { BackButton, EditButton, H } from "@redinnlabs/system/Elements";
   import Link from "./Link.svelte";
   export let backHref = null;
   export let editHref = null;
+  export let tag: 1 | 2 | 3 | 4 | 5 | 6 = 4;
 </script>
 
-<Heading className="mt-5 mx-auto" tag={3}><slot /></Heading>
+<H noMargins className="mt-5 mx-auto" {tag}><slot /></H>
 
 {#if backHref}
   <Link href={backHref} className="fixed z-50 top-3 left-3">

@@ -1,9 +1,9 @@
 <!-- allows to set the name and select apps & websites -->
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import SelectedApps from "$lib/SelectedApps.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import Link from "$lib/Link.svelte";

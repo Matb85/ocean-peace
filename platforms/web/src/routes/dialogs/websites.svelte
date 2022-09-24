@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
   import { SearchBar, Schedule } from "@redinnlabs/system/Units";
   import { CheckBox } from "@redinnlabs/system/Form";
   import SM from "$lib/sessionManager";
-  import H from "$lib/H.svelte";
+
   import { mdiChevronRight } from "@mdi/js";
   import { WebsiteTypes } from "$lib/utils/index";
   import Link from "$lib/Link.svelte";
