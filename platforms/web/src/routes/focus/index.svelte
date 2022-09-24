@@ -10,6 +10,7 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import Link from "$lib/Link.svelte";
   import SM from "$lib/sessionManager";
+  import { t } from "$lib/i18n";
 
   let allPresets: PresetI[] = [];
   let allSchedules: ScheduleI[] = [];
@@ -50,6 +51,7 @@
    * @returns {void}
    */
   function beforeAddSchedule() {
+    console.error("dlkfjslkfjslkfjskldjfslkj");
     SM.schedule.setProps({
       id: "schedule" + Date.now(),
       name: "",
@@ -76,9 +78,9 @@
   }
 </script>
 
-<FullHeading backHref="/">Focus</FullHeading>
+<FullHeading backHref="/">{$t("d.focus.focus")}</FullHeading>
 
-<H thin>Presets</H>
+<H thin>{$t("d.focus.presets")}</H>
 
 <div class="grid grid-cols-2 gap-4">
   {#each allPresets as preset, i}
@@ -93,7 +95,7 @@
   {/each}
 </div>
 
-<H thin>Schedule</H>
+<H thin>{$t("d.schedule.schedule")}</H>
 
 <div class="card-flex-col">
   {#each allSchedules as schedule, i}
@@ -111,9 +113,13 @@
     </Link>
   {/each}
   {#if allSchedules.length == 0}
-    <p>No schedules</p>
+    <p>{$t("d.schedule.none")}</p>
   {/if}
-  <Link href="/focus/editschedule/1" on:click={beforeAddSchedule}>
-    <Button secondary>Add a Schedule</Button>
+  <Link
+    href={allPresets.length > 0 ? "/focus/editschedule/1" : ""}
+    className={allPresets.length > 0 ? "" : "grayscale"}
+    on:click={beforeAddSchedule}
+  >
+    <Button secondary>{$t("d.schedule.add")}</Button>
   </Link>
 </div>

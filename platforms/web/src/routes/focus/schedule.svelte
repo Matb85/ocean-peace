@@ -10,6 +10,7 @@
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
   import { querystring } from "svelte-spa-router";
+  import { t } from "$lib/i18n";
 
   const scheduleData = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
   let presetData: Partial<PresetI> = {};
@@ -24,30 +25,33 @@
   });
 </script>
 
-<FullHeading backHref="/focus" editHref="/focus/editschedule/1">Schedule</FullHeading>
+<FullHeading backHref="/focus" editHref="/focus/editschedule/1">{$t("d.schedule.schedule")}</FullHeading>
 
-<H tag={6} thin>Rule name</H>
+<H tag={6} thin>{$t("d.schedule.name")}</H>
 <H tag={4} className="-mt-2" thin>{scheduleData.name}</H>
 
-<H tag={6} thin>Preset for this schedule</H>
+<H tag={6} thin>{$t("d.schedule.chosen_preset")}</H>
 
 <Preset src={presetData.icon} label={presetData.name} />
 
-<H tag={6} thin>Days active</H>
+<H tag={6} thin>{$t("d.schedule.a_days")}</H>
 <div class="flex flex-wrap justify-center gap-2">
   {#each JSON.parse(scheduleData.activeDays || "[]") as day}
     <Button size="small">{day}</Button>
   {/each}
 </div>
 
-<H tag={6} thin>Hours active</H>
+<H tag={6} thin>{$t("d.schedule.h_active")}</H>
 <H tag={4} className="-mt-2" thin
   >{stringTimeFromNumber(scheduleData.startTime)} - {stringTimeFromNumber(scheduleData.stopTime)}</H
 >
 
-<H tag={6} thin>Status</H>
+<H tag={6} thin>{$t("d.schedule.status")}</H>
 <div class="grayscale">
-  <Button isWarning>Not running</Button>
+  <Button isWarning>{$t("d.schedule.not_running")}</Button>
 </div>
 
-<DangerZone deleteUrl="/focus/editschedule/delete" label="Delete Schedule" />
+<DangerZone
+  deleteUrl="/focus/editschedule/delete"
+  label={$t("d.cta.delete") + " " + $t("d.schedule.schedule").toLowerCase()}
+/>

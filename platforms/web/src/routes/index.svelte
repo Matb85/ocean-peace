@@ -77,7 +77,7 @@
 
 <!-- focus button -->
 <Link href="/focus">
-  <Button>{$t("d.focus.start")}</Button>
+  <Button>{$t("d.focus.start_session")}</Button>
 </Link>
 
 <!-- goals display -->

@@ -7,6 +7,7 @@
   import H from "$lib/H.svelte";
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
+  import { t } from "$lib/i18n";
 
   // start time
   const startHours: columnI = {
@@ -70,23 +71,23 @@
 </script>
 
 <FullHeading backHref="/focus/editschedule/1">
-  {SM.action.getProp("type")} schedule
+  {$t("d.schedule." + SM.action.getProp("type"))}
 </FullHeading>
 
-<H thin>Active days</H>
+<H thin>{$t("d.schedule.a_days")}</H>
 
 <CheckMultiple className="flex-wrap justify-center max-w-sm" bind:chosen={activeDays} options={days} />
 
 <div class="flex justify-center gap-8">
   <div class="flex flex-col items-center gap-2 relative">
-    <H thin>Start Time</H>
+    <H thin>{$t("d.schedule.startt")}</H>
 
     <TimeInput columns={[startHours, startMinutes]} />
     <div class="w-full h-full absolute -z-10 flex items-center justify-center"><span class="mt-14">:</span></div>
   </div>
 
   <div class="flex flex-col items-center gap-2 relative">
-    <H thin>Stop Time</H>
+    <H thin>{$t("d.schedule.endt")}</H>
     <TimeInput columns={[stopHours, stopMinutes]} />
     <div class="w-full h-full absolute -z-10 flex items-center justify-center"><span class="mt-14">:</span></div>
   </div>
@@ -94,6 +95,6 @@
 
 <div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
   <Link href={activeDays.length > 0 ? "/focus/editschedule/3" : ""}>
-    <Button isFullWidth>next</Button>
+    <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>
 </div>

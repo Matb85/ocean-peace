@@ -12,6 +12,8 @@
   import { goTo } from "$lib/utils";
   import type { AppIconI, PresetI } from "$schema";
   import SM from "$lib/sessionManager";
+  import { t } from "$lib/i18n";
+
   const presetSM = SM.preset.getProps("id", "name", "icon");
   const dialogsSM = SM.dialogs.getProps("apps", "websites");
 
@@ -40,24 +42,24 @@
   let isComplete = false;
 </script>
 
-<FullHeading backHref="/focus/editpreset/2">Summary</FullHeading>
+<FullHeading backHref="/focus/editpreset/2">{$t("d.summary")}</FullHeading>
 
-<H tag={6} thin>Preset name</H>
+<H tag={6} thin>{$t("d.preset.name")}</H>
 <H tag={4} className="-mt-2" thin>{presetSM.name}</H>
 
-<H tag={6} thin>Icon</H>
+<H tag={6} thin>{$t("d.preset.icon")}</H>
 
 <div class="shadow-wrapper-sm w-20 rounded-2xl bg-white">
   <AppStatus className="scale-[0.75]" src={presetSM.icon} />
 </div>
-<H tag={6} thin>Allowed apps</H>
+<H tag={6} thin>{$t("d.dialog.apps")}</H>
 <SelectedApps apps={allowedApps} />
 
-<H tag={6} thin>Allowed Websites</H>
+<H tag={6} thin>{$t("d.dialog.web")}</H>
 <SelectedWebsites websites={JSON.parse(dialogsSM.websites)} />
 
 <div on:click={saveGoal} class="fixed-bottom-button">
-  <Button isFullWidth>save</Button>
+  <Button isFullWidth>{$t("d.cta.save")}</Button>
 </div>
 
-<Confirmation {isComplete} text="Preset saved!" />
+<Confirmation {isComplete} text={$t("d.preset.saved")} />

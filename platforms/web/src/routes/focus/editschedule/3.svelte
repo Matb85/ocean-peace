@@ -5,7 +5,7 @@
   import { Button } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
-
+  import { t } from "$lib/i18n";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
@@ -38,22 +38,22 @@
   let isComplete = false;
 </script>
 
-<FullHeading backHref="/focus/editschedule/2">Summary</FullHeading>
+<FullHeading backHref="/focus/editschedule/2">{$t("d.summary")}</FullHeading>
 
-<H tag={6} thin>Rule name</H>
+<H tag={6} thin>{$t("d.schedule.name")}</H>
 <H tag={4} className="-mt-2" thin>{sheduleSM.name}</H>
 
-<H tag={6} thin>Preset for this schedule</H>
+<H tag={6} thin>{$t("d.schedule.chosen_preset")}</H>
 <Preset src={preset.icon} label={preset.name} />
 
-<H tag={6} thin>Days active</H>
+<H tag={6} thin>{$t("d.schedule.a_days")}</H>
 <div class="flex flex-wrap justify-center gap-2">
   {#each JSON.parse(sheduleSM.activeDays) as day}
     <Button size="small">{day}</Button>
   {/each}
 </div>
 
-<H tag={6} thin>Hours active</H>
+<H tag={6} thin>{$t("d.schedule.h_active")}</H>
 <H tag={4} className="-mt-2" thin>
   {Math.floor(parseInt(sheduleSM.startTime) / 60)}:{Math.floor(parseInt(sheduleSM.startTime) % 60)}
   -
@@ -61,7 +61,7 @@
 </H>
 
 <div on:click={saveSchedule} class="fixed-bottom-button">
-  <Button isFullWidth>save</Button>
+  <Button isFullWidth>{$t("d.cta.save")}</Button>
 </div>
 
-<Confirmation {isComplete} text="Schedule saved!" />
+<Confirmation {isComplete} text={$t("d.schedule.saved")} />

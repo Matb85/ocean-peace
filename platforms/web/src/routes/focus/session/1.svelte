@@ -10,7 +10,7 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
-  export let appsCount: number = 16;
+  import { t } from "$lib/i18n";
 
   let allowedApps: AppIconI[] = [];
 
@@ -21,23 +21,20 @@
   });
 </script>
 
-<H tag={3} className="mt-7">{SM.preset.getProp("name")} Session</H>
+<H tag={3} className="mt-7">{SM.preset.getProp("name")} {$t("d.focus.session")}</H>
 
 <div class="w-3/4 max-w-md">
   <CircleChart className="wh-full" />
   <H tag={6}>
-    {appsCount}
-    {appsCount > 1 ? "apps" : "app"} available
-    <br />
-    You'll get 25 points for this session
+    {$t("d.focus.get", { default: 25 })}
   </H>
 </div>
 
 <Link href="/focus/session/2" className="mt-4">
-  <Button secondary size="small" isWarning>Cancel Session</Button>
+  <Button secondary size="small" isWarning>{$t("d.focus.cancel")}</Button>
 </Link>
 
-<H thin>Allowed apps</H>
+<H thin>{$t("d.dialog.allowed_apps")}</H>
 <SelectedApps apps={allowedApps} />
 
-<H thin>Allowed websites</H>
+<H thin>{$t("d.dialog.allowed_web")}</H>

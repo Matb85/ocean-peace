@@ -44,7 +44,7 @@
   let isComplete = false;
 </script>
 
-<FullHeading backHref="/goal/edit/2">Summary</FullHeading>
+<FullHeading backHref="/goal/edit/2">{$t("d.summary")}</FullHeading>
 
 <H tag={6} thin>{$t("d.goal.name")}</H>
 <H tag={4} className="-mt-2" thin>{goalSM.name}</H>

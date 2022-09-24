@@ -7,17 +7,61 @@
   "last": "ostatnie",
   "days": "dni",
   "l7d": "Ostatnie 7 dni",
+  "points": "punktów",
+  "summary": "Podsumowanie",
   "focus": {
-    "start": "Zacznij sesję skupienia"
+    "start_session": "Zacznij sesję skupienia",
+    "focus": "Focus",
+    "presets": "Szablony",
+    "duration": "Czas trwania",
+    "options": "Opcje",
+    "focust": "Skupienie",
+    "breakt": "Przerwa",
+    "hours": "Godziny",
+    "minutes": "Minuty",
+    "stopwatch": "Stoper",
+    "continued": "czasowy",
+    "pomodoro": "Pomodoro",
+    "session": "sesja",
+    "get": "Dostaniesz {{default}} punktów za tą sesję",
+    "cancel": "Anuluj sesję",
+    "of_focus": "skupienia",
+    "notif_received": "otrzymanych notyfikacji"
+  },
+  "schedule": {
+    "schedule": "Grafik",
+    "none": "0 grafików",
+    "add": "Dodaj grafik",
+    "edit": "Edytuj grafik",
+    "name": "Nazwa grafiku",
+    "choose_preset": "Wybierz szablon",
+    "chosen_preset": "Wybrany szablon",
+    "a_days": "Dni aktywne",
+    "h_active": "Godziny aktywne",
+    "startt": "Czas startu",
+    "endt": "Czas końca",
+    "saved": "Grafik zapisana!",
+    "status": "Status",
+    "not_running": "Obecnie wyłączony",
+    "running": "Obecnie włączony"
+  },
+  "preset": {
+    "preset": "Szablon",
+    "add": "Dodaj szablon",
+    "edit": "Edytuj szablon",
+    "name": "Nazwa szablonu",
+    "choose_icon": "Wybierz ikonę",
+    "icon": "Ikona",
+    "saved": "Szablon zapisany!"
   },
   "goal": {
     "goal": "Cel",
     "your": "Twoje cele",
     "no": "Brak celów",
     "add": "Dodaj cel",
-    "name": "Nazwa",
-    "name_p": "Nazwa celu",
     "edit": "Edytuj cel",
+    "name": "Nazwa celu",
+    "name_p": "Nazwa celu",
     "a_days": "Dni aktywne",
     "time_limit": "Limit czasu",
     "limit_type": "Typ limitu",
@@ -28,7 +72,6 @@
   "profile": {
     "profile": "Profil",
     "balance": "Twój balans",
-    "points": "punktów",
     "leaderboard": "Zobacz tabelę",
     "success": "Średni sukces",
     "performance": "Wydajność",
@@ -56,18 +99,26 @@
   "dialog": {
     "apps": "Wybrane apki",
     "select_apps": "Wybierz apki",
+    "allowed_apps": "Dozwolone apki",
     "all_apps": "Wszystkie apki",
     "web": "Wybrane strony",
     "select_web": "Wybierz strony",
+    "allowed_web": "Dozwolone strony",
     "none": "0 wybranych"
   },
   "cta": {
-    "save": "Zapisz zmiany",
+    "save": "Zapisz",
     "con": "Kuntynuuj",
     "edit": "Edytuj",
-    "delete": "Usuń"
+    "delete": "Usuń",
+    "start": "Zacznij"
   },
   "danger": {
-    "zone": "Strefa grozy"
+    "zone": "Strefa grozy",
+    "cancel": "Unuluj",
+    "editing": "edytowanie",
+    "adding": "dodawanie",
+    "no_con": "Nie, kontunuuj",
+    "yes_cancel": "Tak, anuluj"
   }
 }

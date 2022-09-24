@@ -25,7 +25,7 @@
 
 <section class="shadow-wrapper card-flex-col py-4 gap-2">
   <H noMargins thin>{$t("d.profile.balance")}</H>
-  <h2 class="score">425 {$t("d.profile.points")}</h2>
+  <h2 class="score">425 {$t("d.points")}</h2>
   <Button>{$t("d.profile.leaderboard")}</Button>
 </section>
 

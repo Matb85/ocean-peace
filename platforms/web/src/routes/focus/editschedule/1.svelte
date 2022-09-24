@@ -6,7 +6,7 @@
   import Link from "$lib/Link.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import H from "$lib/H.svelte";
-
+  import { t } from "$lib/i18n";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { PresetI } from "$schema";
@@ -24,18 +24,16 @@
   });
 </script>
 
-{preset}
-{name}
 <FullHeading backHref="/dialogs/cancel">
-  {SM.action.getProp("type")} schedule
+  {$t("d.schedule." + SM.action.getProp("type"))}
 </FullHeading>
 
-<H thin>Name</H>
+<H thin>{$t("d.schedule.name")}</H>
 <div class="w-11/12">
-  <TextInput placeholder="Name of your goal" bind:value={name} />
+  <TextInput placeholder={$t("d.schedule.name")} bind:value={name} />
 </div>
 
-<H thin>Choose preset</H>
+<H thin>{$t("d.schedule.choose_preset")}</H>
 
 <div class="flex flex-wrap gap-4 justify-center">
   {#each presets as p}
@@ -44,7 +42,6 @@
       label={p.name}
       isSelected={preset == p.id}
       on:click={() => {
-        console.error("helloclick", p.id);
         preset = p.id;
       }}
     />
@@ -53,6 +50,6 @@
 
 <div class="fixed-bottom-button bg-white" style:opacity={preset.length > 0 && name.length > 0 ? "1" : "0.5"}>
   <Link href={preset.length > 0 && name.length > 0 ? "/focus/editschedule/2" : ""}>
-    <Button isFullWidth>next</Button>
+    <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>
 </div>
