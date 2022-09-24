@@ -18,7 +18,7 @@
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
     selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
-    SM.action.setProps({ type: "Edit", backUrl: "/goal?" + $querystring, continueUrl: "/goal/edit/1" });
+    SM.action.setProps({ type: "edit", backUrl: "/goal?" + $querystring, continueUrl: "/goal/edit/1" });
   });
 </script>
 

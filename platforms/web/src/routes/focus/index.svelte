@@ -28,7 +28,7 @@
       icon: "",
     });
 
-    SM.action.setProps({ type: "Add", backUrl: "/focus", continueUrl: "/focus/editpreset/1" });
+    SM.action.setProps({ type: "add", backUrl: "/focus", continueUrl: "/focus/editpreset/1" });
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
   }
   /** sets proper session data before leaving the page
@@ -58,7 +58,7 @@
       startTime: 60 * 16.5 + "",
       stopTime: 60 * 18.5 + "",
     });
-    SM.action.setProps({ type: "Add", backUrl: "/focus", continueUrl: "/focus/editschedule/1" });
+    SM.action.setProps({ type: "add", backUrl: "/focus", continueUrl: "/focus/editschedule/1" });
   }
   /** sets proper session data before leaving the page
    * @param i the index of the schedule in the array of all the schedules

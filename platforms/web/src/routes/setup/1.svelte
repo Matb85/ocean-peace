@@ -32,6 +32,6 @@
     className="absolute bottom-5{value.length > 0 ? '' : ' opacity-50'}"
     href={value.length > 0 ? "/setup/2" : ""}
   >
-    <Button>{$t("d.setup.con")}</Button>
+    <Button>{$t("d.cta.con")}</Button>
   </Link>
 </Wrapper>

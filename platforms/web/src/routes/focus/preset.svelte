@@ -14,7 +14,7 @@
   const presetData = SM.preset.getProps("id", "name", "icon");
   onMount(async () => {
     SM.action.setProps({
-      type: "Edit",
+      type: "edit",
       backUrl: "/focus/preset?" + $querystring,
       continueUrl: "/focus/editpreset/1",
     });

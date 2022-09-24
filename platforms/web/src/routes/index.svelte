@@ -28,7 +28,7 @@
       activeDays: "[]",
       limitActionType: "Notification",
     });
-    SM.action.setProps({ type: "Add", backUrl: "/", continueUrl: "/goal/edit/1" });
+    SM.action.setProps({ type: "add", backUrl: "/", continueUrl: "/goal/edit/1" });
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
   }
   /** sets up data for an existing goal

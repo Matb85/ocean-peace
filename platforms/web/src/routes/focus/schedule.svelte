@@ -17,7 +17,7 @@
     presetData = await Api.getPreset(scheduleData.preset);
 
     SM.action.setProps({
-      type: "Edit",
+      type: "edit",
       backUrl: "/focus/schedule?" + $querystring,
       continueUrl: "/focus/editschedule/1",
     });
