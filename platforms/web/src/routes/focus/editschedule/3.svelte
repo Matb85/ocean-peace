@@ -13,9 +13,9 @@
   import SM from "$lib/sessionManager";
 
   let preset: Partial<PresetI> = {};
-  const sheduleSM = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
+  const scheduleSM = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
   onMount(async () => {
-    preset = await Api.getPreset(sheduleSM.preset);
+    preset = await Api.getPreset(scheduleSM.preset);
   });
   /** save schedule to a file
    * @returns {void}
@@ -24,12 +24,12 @@
     isComplete = true;
     setTimeout(async () => {
       const data: ScheduleI = {
-        id: sheduleSM.id,
-        name: sheduleSM.name,
-        preset: sheduleSM.preset,
-        activeDays: sheduleSM.activeDays,
-        startTime: sheduleSM.startTime,
-        stopTime: sheduleSM.stopTime,
+        id: scheduleSM.id,
+        name: scheduleSM.name,
+        preset: scheduleSM.preset,
+        activeDays: scheduleSM.activeDays,
+        startTime: scheduleSM.startTime,
+        stopTime: scheduleSM.stopTime,
       };
       await Api.saveSchedule(data);
       goTo("/focus");
@@ -41,23 +41,23 @@
 <FullHeading backHref="/focus/editschedule/2">{$t("d.summary")}</FullHeading>
 
 <H tag={6} thin>{$t("d.schedule.name")}</H>
-<H tag={4} className="-mt-2" thin>{sheduleSM.name}</H>
+<H tag={4} className="-mt-2" thin>{scheduleSM.name}</H>
 
 <H tag={6} thin>{$t("d.schedule.chosen_preset")}</H>
 <Preset src={preset.icon} label={preset.name} />
 
 <H tag={6} thin>{$t("d.schedule.a_days")}</H>
 <div class="flex flex-wrap justify-center gap-2">
-  {#each JSON.parse(sheduleSM.activeDays) as day}
+  {#each JSON.parse(scheduleSM.activeDays) as day}
     <Button size="small">{day}</Button>
   {/each}
 </div>
 
-<H tag={6} thin>{$t("d.schedule.h_active")}</H>
+<H tag={6} thin>{$t("d.schedule.a_hours")}</H>
 <H tag={4} className="-mt-2" thin>
-  {Math.floor(parseInt(sheduleSM.startTime) / 60)}:{Math.floor(parseInt(sheduleSM.startTime) % 60)}
+  {Math.floor(parseInt(scheduleSM.startTime) / 60)}:{Math.floor(parseInt(scheduleSM.startTime) % 60)}
   -
-  {Math.floor(parseInt(sheduleSM.stopTime) / 60)}:{Math.floor(parseInt(sheduleSM.stopTime) % 60)}
+  {Math.floor(parseInt(scheduleSM.stopTime) / 60)}:{Math.floor(parseInt(scheduleSM.stopTime) % 60)}
 </H>
 
 <div on:click={saveSchedule} class="fixed-bottom-button">

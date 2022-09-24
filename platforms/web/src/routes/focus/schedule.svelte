@@ -41,7 +41,7 @@
   {/each}
 </div>
 
-<H tag={6} thin>{$t("d.schedule.h_active")}</H>
+<H tag={6} thin>{$t("d.schedule.a_hours")}</H>
 <H tag={4} className="-mt-2" thin
   >{stringTimeFromNumber(scheduleData.startTime)} - {stringTimeFromNumber(scheduleData.stopTime)}</H
 >

@@ -37,7 +37,7 @@
     "choose_preset": "Choose preset",
     "chosen_preset": "Chosen preset",
     "a_days": "Active days",
-    "h_active": "Active hours",
+    "a_hours": "Active hours",
     "startt": "Start time",
     "endt": "End time",
     "saved": "Schedule saved!",
