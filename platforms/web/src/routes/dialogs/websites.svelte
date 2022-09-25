@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
   import { SearchBar, Schedule } from "@redinnlabs/system/Units";
   import { CheckBox } from "@redinnlabs/system/Form";
   import SM from "$lib/sessionManager";
-  import H from "$lib/H.svelte";
+
   import { mdiChevronRight } from "@mdi/js";
   import { WebsiteTypes } from "$lib/utils/index";
-  const goBackUrl = SM.dialogs.backUrl;
+  import Link from "$lib/Link.svelte";
+  const goBackUrl = SM.dialogs.getProp("backUrl");
 
   interface WebsiteI {
     url: string;
@@ -15,8 +16,8 @@
     favicon: string;
     type: number;
   }
-  let selectedWebsites: WebsiteI[] = JSON.parse(SM.dialogs.websites || "[]");
-  $: selectedWebsites, (SM.dialogs.websites = JSON.stringify(selectedWebsites));
+  let selectedWebsites: WebsiteI[] = JSON.parse(SM.dialogs.getProp("websites") || "[]");
+  $: selectedWebsites, SM.dialogs.setProp("websites", JSON.stringify(selectedWebsites));
 
   let favicon = "/globe.png";
   let url = "";
@@ -83,6 +84,6 @@
   {/each}
 </div>
 
-<a href={goBackUrl} sveltekit:prefetch class="fixed bottom-10 z-50 w-10/12">
+<Link href={goBackUrl} className="fixed bottom-10 z-50 w-10/12">
   <Button isFullWidth>Save</Button>
-</a>
+</Link>

@@ -1,13 +1,35 @@
-/** return a 2-element array with hours and minutes
- * @param stringTime a number
- * @returns array with the time
+import { push } from "svelte-spa-router";
+import Api from "@redinn/oceanpeace-mobile/api";
+
+/** navigates to another page
+ * @param to a string
+ * @returns void
  */
-export function timeFromNumber(stringTime: string): [number, number] {
+export async function goTo(to: string): Promise<void> {
+  await Api.fadeIn();
+  push(to);
+  setTimeout(() => Api.fadeOut(), 75);
+}
+/** [hours, minutes] */
+type TimeType = [number, number];
+
+/** returns a 2-element array with hours and minutes
+ * @param stringTime a number
+ * @returns [hours, minutes]
+ */
+export function timeFromNumber(stringTime: string): TimeType {
   const time = parseInt(stringTime);
   return [Math.floor(time / 60), Math.floor(time % 60)];
 }
+/** returns a 2-element array with hours and minutes
+ * @param time a number
+ * @returns [hours, minutes]
+ */
+export function numberFromTime(time: TimeType): number {
+  return time[0] * 60 + time[1];
+}
 
-/** return a string with hours and minutes
+/** returns a string with hours and minutes
  * @param stringTime a number
  * @returns string with the time
  */

@@ -5,6 +5,7 @@ import focusPlugin from "./focus";
 import mayoPlugin from "./usage";
 import presetsPlugin from "./presets";
 import schedulePlugin from "./schedule";
+import uiPlugin from "./ui";
 
 const AndroidApi: Schema = {
   ...goalsPlugin,
@@ -13,6 +14,7 @@ const AndroidApi: Schema = {
   ...mayoPlugin,
   ...presetsPlugin,
   ...schedulePlugin,
+  ...uiPlugin,
 };
 
 export default AndroidApi;

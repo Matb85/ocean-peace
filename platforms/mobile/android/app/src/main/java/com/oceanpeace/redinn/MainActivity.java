@@ -4,6 +4,13 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+
 import android.os.IBinder;
 
 import androidx.work.WorkManager;
@@ -34,6 +41,9 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(IconsPlugin.class);
         registerPlugin(PresetsPlugin.class);
         registerPlugin(SchedulePlugin.class);
+        registerPlugin(UIPlugin.class);
+
+        //endregion
 
         //endregion
 

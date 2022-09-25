@@ -2,20 +2,20 @@
 <script lang="ts">
   import Confirmation from "$lib/Confirmation.svelte";
   import { Preset } from "@redinnlabs/system/Units";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
 
+  import { t } from "$lib/i18n";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { goto } from "$app/navigation";
+  import { goTo } from "$lib/utils";
   import type { PresetI, ScheduleI } from "$schema";
   import SM from "$lib/sessionManager";
 
   let preset: Partial<PresetI> = {};
-
+  const scheduleSM = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
   onMount(async () => {
-    preset = await Api.getPreset(SM.schedule.preset);
+    preset = await Api.getPreset(scheduleSM.preset);
   });
   /** save schedule to a file
    * @returns {void}
@@ -24,44 +24,44 @@
     isComplete = true;
     setTimeout(async () => {
       const data: ScheduleI = {
-        id: SM.schedule.id,
-        name: SM.schedule.name,
-        preset: SM.schedule.preset,
-        activeDays: SM.schedule.activeDays,
-        startTime: SM.schedule.startTime,
-        stopTime: SM.schedule.stopTime,
+        id: scheduleSM.id,
+        name: scheduleSM.name,
+        preset: scheduleSM.preset,
+        activeDays: scheduleSM.activeDays,
+        startTime: scheduleSM.startTime,
+        stopTime: scheduleSM.stopTime,
       };
       await Api.saveSchedule(data);
-      goto("/focus");
+      goTo("/focus");
     }, 1500);
   }
   let isComplete = false;
 </script>
 
-<FullHeading backHref="./2">Summary</FullHeading>
+<FullHeading backHref="/focus/editschedule/2">{$t("d.summary")}</FullHeading>
 
-<H tag={6} thin>Rule name</H>
-<H tag={4} className="-mt-2" thin>{SM.schedule.name}</H>
+<H tag={6} thin>{$t("d.schedule.name")}</H>
+<H tag={4} className="-mt-2" thin>{scheduleSM.name}</H>
 
-<H tag={6} thin>Preset for this schedule</H>
+<H tag={6} thin>{$t("d.schedule.chosen_preset")}</H>
 <Preset src={preset.icon} label={preset.name} />
 
-<H tag={6} thin>Days active</H>
+<H tag={6} thin>{$t("d.schedule.a_days")}</H>
 <div class="flex flex-wrap justify-center gap-2">
-  {#each JSON.parse(SM.schedule.activeDays) as day}
+  {#each JSON.parse(scheduleSM.activeDays) as day}
     <Button size="small">{day}</Button>
   {/each}
 </div>
 
-<H tag={6} thin>Hours active</H>
+<H tag={6} thin>{$t("d.schedule.a_hours")}</H>
 <H tag={4} className="-mt-2" thin>
-  {Math.floor(parseInt(SM.schedule.startTime) / 60)}:{Math.floor(parseInt(SM.schedule.startTime) % 60)}
+  {Math.floor(parseInt(scheduleSM.startTime) / 60)}:{Math.floor(parseInt(scheduleSM.startTime) % 60)}
   -
-  {Math.floor(parseInt(SM.schedule.stopTime) / 60)}:{Math.floor(parseInt(SM.schedule.stopTime) % 60)}
+  {Math.floor(parseInt(scheduleSM.stopTime) / 60)}:{Math.floor(parseInt(scheduleSM.stopTime) % 60)}
 </H>
 
 <div on:click={saveSchedule} class="fixed-bottom-button">
-  <Button isFullWidth>save</Button>
+  <Button isFullWidth>{$t("d.cta.save")}</Button>
 </div>
 
-<Confirmation {isComplete} />
+<Confirmation {isComplete} text={$t("d.schedule.saved")} />

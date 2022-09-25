@@ -1,43 +1,40 @@
 <!-- displays the ongoing session -->
 <script lang="ts">
   import "@redinnlabs/system/utils/base.css";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import { CircleChart } from "@redinnlabs/system/Charts";
-  import H from "$lib/H.svelte";
+
   import { onMount } from "svelte";
   import type { AppIconI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
   import SM from "$lib/sessionManager";
-
-  export let appsCount: number = 16;
+  import Link from "$lib/Link.svelte";
+  import { t } from "$lib/i18n";
 
   let allowedApps: AppIconI[] = [];
 
   onMount(async () => {
-    Api.getAppIcons(JSON.parse(SM.dialogs.apps)).then(data => (allowedApps = data));
+    Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps"))).then(data => (allowedApps = data));
     const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
     console.log(t);
   });
 </script>
 
-<H tag={3} className="mt-7">{SM.preset.name} Session</H>
+<H tag={3} className="mt-7">{SM.preset.getProp("name")} {$t("d.focus.session")}</H>
 
 <div class="w-3/4 max-w-md">
   <CircleChart className="wh-full" />
   <H tag={6}>
-    {appsCount}
-    {appsCount > 1 ? "apps" : "app"} available
-    <br />
-    You'll get 25 points for this session
+    {$t("d.focus.get", { default: 25 })}
   </H>
 </div>
 
-<a sveltekit:prefetch href="./2" class="mt-4">
-  <Button secondary size="small" isWarning>Cancel Session</Button>
-</a>
+<Link href="/focus/session/2" className="mt-4">
+  <Button secondary size="small" isWarning>{$t("d.focus.cancel")}</Button>
+</Link>
 
-<H thin>Allowed apps</H>
+<H thin>{$t("d.dialog.allowed_apps")}</H>
 <SelectedApps apps={allowedApps} />
 
-<H thin>Allowed websites</H>
+<H thin>{$t("d.dialog.allowed_web")}</H>

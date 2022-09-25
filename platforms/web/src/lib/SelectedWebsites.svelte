@@ -2,6 +2,7 @@
   import { CheckBoxStatic } from "@redinnlabs/system/Elements";
   import { WebsiteTypes } from "$lib/utils/index";
   import { Schedule } from "@redinnlabs/system/Units";
+  import { t } from "./i18n";
 
   export let websites = [];
 </script>
@@ -13,6 +14,6 @@
     </Schedule>
   {/each}
   {#if websites.length <= 0}
-    <p>0 selected</p>
+    <p>{$t("d.dialog.none")}</p>
   {/if}
 </div>

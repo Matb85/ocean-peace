@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import { Schedule, Preset } from "@redinnlabs/system/Units";
   import A from "@redinnlabs/system/assets/icon-add.svg";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import { stringTimeFromNumber } from "$lib/utils";
   import { onMount } from "svelte";
   import type { PresetI, ScheduleI } from "$schema";
   import Api from "@redinn/oceanpeace-mobile/api";
+  import Link from "$lib/Link.svelte";
+  import SM from "$lib/sessionManager";
+  import { t } from "$lib/i18n";
 
   let allPresets: PresetI[] = [];
   let allSchedules: ScheduleI[] = [];
@@ -16,58 +19,87 @@
     allSchedules = await Api.getAllSchedules();
   });
 
-  import SM from "$lib/sessionManager";
-  import { beforeNavigate } from "$app/navigation";
+  /** sets proper session data before leaving the page
+   * @returns {void}
+   */
+  function beforeAddPreset() {
+    SM.preset.setProps({
+      id: "preset" + Date.now(),
+      name: "",
+      icon: "",
+    });
 
-  beforeNavigate(({ to }) => {
-    if (to.pathname == "/focus/editpreset/1") {
-      SM.preset.id = "" + Date.now();
-      SM.preset.name = "";
-      SM.preset.icon = "";
-
-      SM.action.type = "Add";
-      SM.action.backUrl = "/focus";
-      SM.action.continueUrl = "/focus/editpreset/1";
-
-      SM.dialogs.apps = "[]";
-      SM.dialogs.websites = "[]";
-    } else if (to.pathname == "/focus/editschedule/1") {
-      SM.schedule.id = "" + Date.now();
-      SM.schedule.name = "";
-      SM.schedule.preset = "";
-      SM.schedule.activeDays = "[]";
-      SM.schedule.startTime = 60 * 16.5 + "";
-      SM.schedule.stopTime = 60 * 18.5 + "";
-
-      SM.action.type = "Add";
-      SM.action.backUrl = "/focus";
-      SM.action.continueUrl = "/focus/editschedule/1";
-    }
-  });
+    SM.action.setProps({ type: "add", backUrl: "/focus", continueUrl: "/focus/editpreset/1" });
+    SM.dialogs.setProps({ apps: "[]", websites: "[]" });
+  }
+  /** sets proper session data before leaving the page
+   * @param i the index of the Preset in the array of all the Preset
+   * @returns {void}
+   */
+  function beforeOpenPreset(i: number) {
+    SM.preset.setProps({
+      id: allPresets[i].id,
+      name: allPresets[i].name,
+      icon: allPresets[i].icon,
+    });
+    SM.dialogs.setProps({
+      apps: allPresets[i].apps,
+      websites: allPresets[i].websites,
+    });
+  }
+  /** sets proper session data before leaving the page
+   * @returns {void}
+   */
+  function beforeAddSchedule() {
+    console.error("dlkfjslkfjslkfjskldjfslkj");
+    SM.schedule.setProps({
+      id: "schedule" + Date.now(),
+      name: "",
+      preset: allPresets[0].id,
+      activeDays: "[]",
+      startTime: 60 * 16.5 + "",
+      stopTime: 60 * 18.5 + "",
+    });
+    SM.action.setProps({ type: "add", backUrl: "/focus", continueUrl: "/focus/editschedule/1" });
+  }
+  /** sets proper session data before leaving the page
+   * @param i the index of the schedule in the array of all the schedules
+   * @returns {void}
+   */
+  function beforeOpenSchedule(i: number) {
+    SM.schedule.setProps({
+      id: allSchedules[i].id,
+      name: allSchedules[i].name,
+      preset: allSchedules[i].preset,
+      activeDays: allSchedules[i].activeDays,
+      startTime: allSchedules[i].startTime,
+      stopTime: allSchedules[i].stopTime,
+    });
+  }
 </script>
 
-<FullHeading backHref="/">Focus</FullHeading>
+<FullHeading tag={3} backHref="/">{$t("d.focus.focus")}</FullHeading>
 
-<H thin>Presets</H>
+<H thin>{$t("d.focus.presets")}</H>
 
 <div class="grid grid-cols-2 gap-4">
-  {#each allPresets as preset}
-    <a sveltekit:prefetch href="/focus/preset?id={preset.id}">
+  {#each allPresets as preset, i}
+    <Link href="/focus/preset?id={preset.id}" on:click={() => beforeOpenPreset(i)}>
       <Preset src={preset.icon} label={preset.name} />
-    </a>
+    </Link>
   {/each}
   {#each new Array(Math.abs(4 - allPresets.length)) as _}
-    <a sveltekit:prefetch href="/focus/editpreset/1">
+    <Link href="/focus/editpreset/1" on:click={beforeAddPreset}>
       <Preset src={A} noShadowWrapper />
-    </a>
+    </Link>
   {/each}
 </div>
 
-<H thin>Schedule</H>
+<H thin>{$t("d.schedule.schedule")}</H>
 
 <div class="card-flex-col">
-  {#each allSchedules as schedule}
-    <a class="w-full" sveltekit:prefetch href="/focus/schedule?id={schedule.id}">
+  {#each allSchedules as schedule, i}
+    <Link className="w-full" href="/focus/schedule?id={schedule.id}" on:click={() => beforeOpenSchedule(i)}>
       <Schedule
         alt=""
         src={allPresets.filter(x => (x.id = schedule.preset))[0].icon}
@@ -78,12 +110,16 @@
           "-" +
           stringTimeFromNumber(schedule.stopTime)}
       />
-    </a>
+    </Link>
   {/each}
   {#if allSchedules.length == 0}
-    <p>No schedules</p>
+    <p>{$t("d.schedule.none")}</p>
   {/if}
-  <a sveltekit:prefetch href="/focus/editschedule/1">
-    <Button secondary>Add a Schedule</Button>
-  </a>
+  <Link
+    href={allPresets.length > 0 ? "/focus/editschedule/1" : ""}
+    className={allPresets.length > 0 ? "" : "grayscale"}
+    on:click={beforeAddSchedule}
+  >
+    <Button secondary>{$t("d.schedule.add")}</Button>
+  </Link>
 </div>

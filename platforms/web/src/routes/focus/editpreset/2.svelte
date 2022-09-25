@@ -1,10 +1,12 @@
 <!-- allows to select the icon -->
 <script lang="ts">
   import { AppStatus } from "@redinnlabs/system/Units";
-  import { Button } from "@redinnlabs/system/Elements";
+  import { Button, H } from "@redinnlabs/system/Elements";
   import FullHeading from "$lib/FullHeading.svelte";
-  import H from "$lib/H.svelte";
+
   import SM from "$lib/sessionManager";
+  import Link from "$lib/Link.svelte";
+  import { t } from "$lib/i18n";
 
   const icons = [
     "/presets/icon-my-time.svg",
@@ -43,13 +45,14 @@
     "/presets/icon-studying.svg",
     "/presets/icon-working.svg",
   ];
-  let chosen = SM.preset.icon;
-  $: SM.preset.icon = chosen;
+
+  let chosen = SM.preset.getProp("icon");
+  $: SM.preset.setProp("icon", chosen);
 </script>
 
-<FullHeading backHref="./1">{SM.action.type} preset</FullHeading>
+<FullHeading backHref="/focus/editpreset/1">{$t("d.preset." + SM.action.getProp("type"))}</FullHeading>
 
-<H thin>Choose Icon</H>
+<H thin>{$t("d.preset.choose_icon")}</H>
 
 <section class="app-group-con">
   {#each icons as icon}
@@ -59,14 +62,8 @@
   {/each}
 </section>
 
-<div class="fixed-bottom-button ">
-  <a sveltekit:prefetch href="./3">
-    <Button isFullWidth>next</Button>
-  </a>
-</div>
-
-<div class="fixed-bottom-button bg-white rounded-2xl">
-  <a sveltekit:prefetch href={chosen.length > 0 ? "./3" : ""} style:opacity={chosen.length > 0 ? "1" : "0.5"}>
-    <Button isFullWidth>next</Button>
-  </a>
+<div class="fixed-bottom-button bg-white rounded-2xl" style:opacity={chosen.length > 0 ? "1" : "0.5"}>
+  <Link href={chosen.length > 0 ? "/focus/editpreset/3" : ""}>
+    <Button isFullWidth>{$t("d.cta.con")}</Button>
+  </Link>
 </div>

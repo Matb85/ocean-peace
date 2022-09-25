@@ -1,61 +1,43 @@
-<script context="module" lang="ts">
-  import { setupObserver } from "@redinnlabs/system/utils/Photo.svelte";
-
-  setupObserver();
-</script>
-
 <script lang="ts">
   import "../app.css";
   import GlobalGradient from "@redinnlabs/system/utils/GlobalGradient.svelte";
-  import { beforeNavigate, goto } from "$app/navigation";
-  import { page } from "$app/stores";
+  import Router, { replace, location } from "svelte-spa-router";
+  import routes from "./router";
   import Navbar from "$lib/Navbar.svelte";
-  let className = "";
-  let tempTo: string;
+  import { setupObserver } from "@redinnlabs/system/utils/Photo.svelte";
+  import Api from "@redinn/oceanpeace-mobile/api";
+  setupObserver();
 
-  beforeNavigate(({ from, cancel, to }) => {
-    if (from && to) {
-      if (from.pathname == to.pathname) {
-        return;
-      }
-      className = "during-transition";
-      if (tempTo != to.pathname + to.search) {
-        cancel();
-        setTimeout(() => {
-          goto(to.pathname + to.search);
-          setTimeout(() => {
-            className = "";
-          }, 200);
-        }, 200);
-      }
-      tempTo = to.pathname + to.search;
-    }
+  import { locale, loadTranslations } from "$lib/i18n";
+
+  const defaultLocale = "en"; // get from cookie, user session, ...
+  const initLocale = locale.get() || localStorage.getItem("oceanpeace_lang") || defaultLocale; // set default if no locale already set
+  loadTranslations(initLocale, $location); // keep this just before the `return`
+
+  Api.getPreferences().then(async data => {
+    console.error(JSON.stringify(data));
+    if (data.setupComplete || $location.startsWith("/setup/")) return;
+    console.error("xd");
+    await Api.fadeIn();
+    replace("/setup/1");
+    setTimeout(() => Api.fadeOut(), 75);
   });
 </script>
 
-<main id="main" class={className}>
-  <slot />
+<main id="main">
+  <Router {routes} />
 </main>
 
-{#if ["/", "/focus", "/profile"].includes($page.url.pathname)}
+{#if ["/", "/focus", "/profile"].includes($location)}
   <Navbar />
 {/if}
 
 <GlobalGradient />
 
-<style global>
+<style global lang="postcss">
   @import "@redinnlabs/system/utils/base.css";
-
   #main {
     @apply flex flex-col items-center gap-4 pb-32;
     scrollbar-width: none;
-    transition-duration: 200ms;
-    transition-property: transform, opacity;
-    /*transform: translateY(0rem);*/
-    opacity: 1;
-  }
-  #main.during-transition {
-    /*transform: translateY(-5rem);*/
-    opacity: 0;
   }
 </style>

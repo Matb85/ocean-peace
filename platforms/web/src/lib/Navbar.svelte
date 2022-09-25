@@ -1,20 +1,16 @@
 <script>
-  import { Heading as H, Icon } from "@redinnlabs/system/Elements";
+  import { H, Icon } from "@redinnlabs/system/Elements";
   import { mdiSlack, mdiHomeVariantOutline, mdiAccountOutline } from "@mdi/js";
   import { svgGradients } from "@redinnlabs/system/utils";
-
-  const links = [
-    { name: "Profile", icon: mdiAccountOutline, href: "/profile" },
-    { name: "Home", icon: mdiHomeVariantOutline, href: "/" },
-    { name: "Focus", icon: mdiSlack, href: "/focus" },
-  ];
+  import { t } from "./i18n";
+  import Link from "./Link.svelte";
 </script>
 
 <nav class="fixed bottom-0 w-full bg-white h-12 shadow-md border-t-2 flex justify-around items-center">
-  {#each links as link}
-    <a sveltekit:prefetch href={link.href} class="flex items-center gap-1">
+  {#each [{ name: $t("d.nav.profile"), icon: mdiAccountOutline, href: "/profile" }, { name: $t("d.nav.home"), icon: mdiHomeVariantOutline, href: "/" }, { name: $t("d.nav.focus"), icon: mdiSlack, href: "/focus" }] as link}
+    <Link href={link.href} className="flex items-center gap-1">
       <Icon className="w-6" d={link.icon} fill={svgGradients.primary} />
-      <H tag={6}>{link.name}</H>
-    </a>
+      <H noMargins tag={6}>{link.name}</H>
+    </Link>
   {/each}
 </nav>

@@ -1,50 +1,32 @@
 <script lang="ts">
-  import { Icon, Aquarium } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium, H } from "@redinnlabs/system/Elements";
   import { mdiCheck } from "@mdi/js";
   import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
-  import H from "$lib/H.svelte";
+
   import DangerZone from "$lib/DangerZone.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
-
-  import { page } from "$app/stores";
+  import { querystring } from "svelte-spa-router";
+  import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import type { GoalI, AppIconI } from "$schema";
+  import type { AppIconI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-import goal from "$lib/sessionManager/goal";
-import A1 from "../focus/editpreset/1.svelte";
-  const goalId = $page.url.searchParams.get("id");
-  let goalData: GoalI;
+  import { timeFromNumber } from "$lib/utils";
+
+  const goalData = SM.goal.getProps("id", "name", "limit", "activeDays", "limitActionType", "sessionTime");
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
-    goalData = await Api.getGoal(goalId);
-
-    selectedApps = await Api.getAppIcons(JSON.parse(goalData.apps));
-
-    const timeInMinutes = parseInt(goalData.limit);
-
-    SM.goal.id = goalData.id;
-    SM.goal.name = goalData.name;
-    SM.goal.timeMinutes = (timeInMinutes % 60) + "";
-    SM.goal.timeHours = Math.floor(timeInMinutes / 60) + "";
-    SM.goal.activeDays = goalData.activeDays;
-    SM.goal.limitActionType = goalData.limitActionType;
-    SM.goal.sessionTime = goalData.sessionTime;
-    
-
-    SM.dialogs.apps = goalData.apps;
-    SM.dialogs.websites = goalData.websites;
-
-    SM.action.type = "Edit";
-    SM.action.backUrl = $page.url.pathname + $page.url.search;
-    SM.action.continueUrl = "/goal/edit/1";
+    selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
+    SM.action.setProps({ type: "edit", backUrl: "/goal?" + $querystring, continueUrl: "/goal/edit/1" });
   });
+
+  const limit = timeFromNumber(goalData.limit);
 </script>
 
-<FullHeading backHref="/" editHref="/goal/edit/1">Goal</FullHeading>
+<FullHeading tag={3} backHref="/" editHref="/goal/edit/1">{$t("d.goal.goal")}</FullHeading>
 
 <section class="w-full h-80 absolute -z-50 top-0">
   <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />
@@ -52,14 +34,12 @@ import A1 from "../focus/editpreset/1.svelte";
   <Cutout className="w-full bottom-0 absolute" />
 </section>
 
-<H tag={5} thin className="w-9/12">{goalData?.name || ""}</H>
+<H tag={5} thin className="w-9/12 text-center">{goalData?.name || ""}</H>
 <section class="w-11/12 grid grid-cols-6 gap-2">
   <PieChart
     className="w-full col-span-4"
-    maxValue={parseInt(SM.goal.timeHours) * 60 * 60 * 1000 + parseInt(SM.goal.timeMinutes) * 60 * 1000}
-    data={[
-      { color: "#3772FF", value: parseInt(SM.goal.sessionTime) },
-    ]}
+    maxValue={parseInt(goalData.limit) * 60 * 1000}
+    data={[{ color: "#3772FF", value: parseInt(goalData.sessionTime) }]}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>24 min</H>
@@ -70,13 +50,27 @@ import A1 from "../focus/editpreset/1.svelte";
     isVertical
     className="col-span-2 self-center flex-col flex-none"
     data={[
-      { color: "#3772FF", text: "Samsung", bold: "" + (Math.floor(parseInt(SM.goal.sessionTime) / (1000 * 60 * 60)) + "h ") +  (Math.floor(parseInt(SM.goal.sessionTime) / (1000 * 60)) + "min")},
-      { color: "#F8F5FA", text: "Time left", bold: "" + (parseInt(SM.goal.timeHours) - Math.floor(parseInt(SM.goal.sessionTime) / (1000 * 60 * 60)) + "h ") +  (Math.ceil(parseInt(SM.goal.timeMinutes) - parseInt(SM.goal.sessionTime) / (1000 * 60)) + "min")},
+      {
+        color: "#3772FF",
+        text: "Samsung",
+        bold:
+          "" +
+          (Math.floor(parseInt(goalData.sessionTime) / (1000 * 60 * 60)) + "h ") +
+          (Math.floor(parseInt(goalData.sessionTime) / (1000 * 60)) + "min"),
+      },
+      {
+        color: "#F8F5FA",
+        text: "Time left",
+        bold:
+          "" +
+          (limit[0] - Math.floor(parseInt(goalData.sessionTime) / (1000 * 60 * 60)) + "h ") +
+          (Math.ceil(limit[1] - parseInt(goalData.sessionTime) / (1000 * 60)) + "min"),
+      },
     ]}
   />
 </section>
 
-<H thin>Last 7 days</H>
+<H thin>{$t("d.l7d")}</H>
 <section class="flex flex-wrap items-center justify-center max-w-xs">
   {#each ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as day}
     <div class="text-center">
@@ -97,10 +91,10 @@ import A1 from "../focus/editpreset/1.svelte";
   {/each}
 </section>
 
-<H thin>Selected apps</H>
+<H thin>{$t("d.dialog.apps")}</H>
 <SelectedApps apps={selectedApps} />
 
-<H tag={6} thin>Allowed Websites</H>
-<SelectedWebsites websites={JSON.parse(SM.dialogs.websites || "[]")} />
+<H thin>{$t("d.dialog.web")}</H>
+<SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites") || "[]")} />
 
-<DangerZone deleteUrl="/goal/delete" label="Delete Goal" />
+<DangerZone deleteUrl="/goal/delete" label={$t("d.cta.delete") + " " + $t("d.goal.goal").toLowerCase()} />

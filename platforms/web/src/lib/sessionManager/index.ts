@@ -1,49 +1,24 @@
-import goal from "./goal";
-import preset from "./preset";
-import schedule from "./schedule";
+import factory from "./factory";
+
+export type GoalKeys = "id" | "name" | "limit" | "activeDays" | "limitActionType" | "sessionTime";
+export type GoalType = Record<GoalKeys, string>;
+
+export type PresetKeys = "id" | "name" | "icon";
+export type PresetType = Record<PresetKeys, string>;
+
+export type ScheduleKeys = "id" | "name" | "preset" | "activeDays" | "startTime" | "stopTime";
+export type ScheduleType = Record<ScheduleKeys, string>;
+
+export type DialogKeys = "apps" | "websites" | "backUrl";
+export type DialogType = Record<DialogKeys, string>;
+
+export type ActionKeys = "type" | "backUrl" | "continueUrl";
+export type ActionType = Record<ActionKeys, string>;
 
 export default {
-  goal,
-  preset,
-  schedule,
-  dialogs: {
-    set apps(value: string) {
-      sessionStorage.setItem("dialogs_apps", value);
-    },
-    get apps() {
-      return sessionStorage.getItem("dialogs_apps");
-    },
-    set websites(value: string) {
-      sessionStorage.setItem("dialogs_websites", value);
-    },
-    get websites() {
-      return sessionStorage.getItem("dialogs_websites");
-    },
-    set backUrl(value: string) {
-      sessionStorage.setItem("dialogs_backUrl", value);
-    },
-    get backUrl() {
-      return sessionStorage.getItem("dialogs_backUrl");
-    },
-  },
-  action: {
-    set type(value: string) {
-      sessionStorage.setItem("action_type", value);
-    },
-    get type() {
-      return sessionStorage.getItem("action_type");
-    },
-    set backUrl(value: string) {
-      sessionStorage.setItem("action_back", value);
-    },
-    get backUrl() {
-      return sessionStorage.getItem("action_back");
-    },
-    set continueUrl(value: string) {
-      sessionStorage.setItem("dialogs_continueUrl", value);
-    },
-    get continueUrl() {
-      return sessionStorage.getItem("dialogs_continueUrl");
-    },
-  },
+  goal: factory<GoalKeys>("goal_"),
+  preset: factory<PresetKeys>("preset_"),
+  schedule: factory<ScheduleKeys>("schedule_"),
+  dialogs: factory<DialogKeys>("dialog_"),
+  action: factory<ActionKeys>("action_"),
 };

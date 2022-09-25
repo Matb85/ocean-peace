@@ -1,43 +1,53 @@
 <script lang="ts">
-  import { Button, Aquarium } from "@redinnlabs/system/Elements";
+  import { Button, Aquarium, H } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
-  import H from "$lib/H.svelte";
-  import SM from "$lib/sessionManager";
 
+  import SM from "$lib/sessionManager";
+  import Link from "$lib/Link.svelte";
   export let curScreenTime: number = 100;
   export let maxScreenTime: number = 270;
-
-  import { beforeNavigate } from "$app/navigation";
-  beforeNavigate(({ to }) => {
-    if (to.pathname == "/goal/edit/1") {
-      SM.goal.id = "goal" + Date.now();
-      SM.goal.name = "";
-      SM.goal.timeMinutes = "15";
-      SM.goal.timeHours = "1";
-      SM.goal.activeDays = "[]";
-      SM.goal.limitActionType = "Notification";
-      SM.action.type = "Add";
-      SM.action.backUrl = "/";
-      SM.action.continueUrl = "/goal/edit/1";
-
-      SM.dialogs.apps = "[]";
-      SM.dialogs.websites = "[]";
-    }
-  });
-
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
-import goal from "$lib/sessionManager/goal";
+  import { t } from "$lib/i18n";
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
   });
+
+  /** sets up data for a new goal
+   * @returns nothing
+   */
+  function beforeAddGoal() {
+    SM.goal.setProps({
+      id: "goal" + Date.now(),
+      name: "",
+      limit: 1 * 60 + 15 + "",
+      activeDays: "[]",
+      limitActionType: "Notification",
+    });
+    SM.action.setProps({ type: "add", backUrl: "/", continueUrl: "/goal/edit/1" });
+    SM.dialogs.setProps({ apps: "[]", websites: "[]" });
+  }
+  /** sets up data for an existing goal
+   * @param i the index of the goal in the array of all the goals
+   * @returns nothing
+   */
+  function beforeOpenGoal(i: number) {
+    SM.goal.setProps({
+      id: allGoals[i].id,
+      name: allGoals[i].name,
+      limit: allGoals[i].limit,
+      activeDays: allGoals[i].activeDays,
+      limitActionType: allGoals[i].limitActionType,
+    });
+    SM.dialogs.setProps({ apps: allGoals[i].apps, websites: allGoals[i].websites });
+  }
 </script>
 
 <!-- aquarium background -->
-<a sveltekit:prefetch href="/insights" class="w-full h-80 block relative">
+<Link href="/insights" className="w-full h-80 block relative">
   <Aquarium
     percent={(maxScreenTime - curScreenTime) / maxScreenTime < 0
       ? 0
@@ -47,8 +57,8 @@ import goal from "$lib/sessionManager/goal";
   <Cutout className="w-full bottom-0 absolute" />
 
   <!-- screen time display -->
-  <div class="text-shadow text-white absolute w-full bottom-20 grid grid-cols-1 place-items-center">
-    <H noMargins>Your Screen time</H>
+  <div class="text-shadow text-white absolute w-full bottom-24 grid grid-cols-1 place-items-center">
+    <H noMargins>{$t("d.screentime.your")}</H>
     <H tag={2} noMargins className="text-shadow-sm">
       {curScreenTime < 59 ? "" : Math.floor(curScreenTime / 60) + "h"}
       {curScreenTime % 60 == 0 ? "" : (curScreenTime % 60) + "min"}
@@ -56,32 +66,34 @@ import goal from "$lib/sessionManager/goal";
     <H tag={4} noMargins>
       {Math.floor((maxScreenTime - curScreenTime) / 60) + "h"}
       {(maxScreenTime - curScreenTime) % 60 == 0 ? "" : ((maxScreenTime - curScreenTime) % 60) + "min"}
-      left
+      {$t("d.left")}
     </H>
   </div>
-</a>
+</Link>
 
 <!-- focus button -->
-<a sveltekit:prefetch href="/focus">
-  <Button>Start a focus session</Button>
-</a>
+<Link href="/focus">
+  <Button>{$t("d.focus.start_session")}</Button>
+</Link>
 
 <!-- goals display -->
-<H thin>Your Goals</H>
+<H thin>{$t("d.goal.your")}</H>
 <div class="card-flex-col">
-  {#each allGoals as goal}
-    <a sveltekit:prefetch href="/goal?id={goal.id}" class="w-full">
-      <Goal 
-        percentage={(parseInt(goal.limit) - (parseInt(goal.sessionTime, 0)/(1000 * 60))) / parseInt(goal.limit) < 0 
-          ? 0 
-          : (parseInt(goal.limit) - parseInt(goal.sessionTime, 0)/(1000 * 60)) / parseInt(goal.limit) * 100} 
-        title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
-    </a>
+  {#each allGoals as goal, i}
+    <Link href="/goal?id={goal.id}" on:click={() => beforeOpenGoal(i)} className="w-full">
+      <Goal
+        percentage={(parseInt(goal.limit) - parseInt(goal.sessionTime, 0) / (1000 * 60)) / parseInt(goal.limit) < 0
+          ? 0
+          : ((parseInt(goal.limit) - parseInt(goal.sessionTime, 0) / (1000 * 60)) / parseInt(goal.limit)) * 100}
+        title={goal.name}
+        info={JSON.parse(goal.activeDays).join(", ")}
+      />
+    </Link>
   {/each}
   {#if allGoals.length == 0}
-    <p>No goals</p>
+    <p>{$t("d.goal.no")}</p>
   {/if}
-  <a sveltekit:prefetch href="/goal/edit/1">
-    <Button>Add Goal</Button>
-  </a>
+  <Link href="/goal/edit/1" on:click={beforeAddGoal}>
+    <Button>{$t("d.goal.add")}</Button>
+  </Link>
 </div>

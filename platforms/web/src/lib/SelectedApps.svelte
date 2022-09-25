@@ -1,7 +1,7 @@
 <script lang="ts">
   import { AppStatus } from "@redinnlabs/system/Units";
   import type { AppIconI } from "$schema";
-
+  import { t } from "./i18n";
   export let apps: AppIconI[] = [];
 </script>
 
@@ -10,6 +10,6 @@
     <AppStatus src={app.iconPath} label={app.label} alt={app.label} />
   {/each}
   {#if apps.length <= 0}
-    <p>0 selected</p>
+    <p>{$t("d.dialog.none")}</p>
   {/if}
 </section>
