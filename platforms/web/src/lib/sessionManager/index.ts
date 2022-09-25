@@ -1,6 +1,6 @@
 import factory from "./factory";
 
-export type GoalKeys = "id" | "name" | "limit" | "activeDays" | "limitActionType";
+export type GoalKeys = "id" | "name" | "limit" | "activeDays" | "limitActionType" | "sessionTime";
 export type GoalType = Record<GoalKeys, string>;
 
 export type PresetKeys = "id" | "name" | "icon";

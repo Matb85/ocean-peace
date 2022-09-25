@@ -11,6 +11,7 @@
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
   import { t } from "$lib/i18n";
+
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
@@ -81,7 +82,13 @@
 <div class="card-flex-col">
   {#each allGoals as goal, i}
     <Link href="/goal?id={goal.id}" on:click={() => beforeOpenGoal(i)} className="w-full">
-      <Goal percentage={Math.random() * 100} title={goal.name} info={JSON.parse(goal.activeDays).join(", ")} />
+      <Goal
+        percentage={(parseInt(goal.limit) - parseInt(goal.sessionTime, 0) / (1000 * 60)) / parseInt(goal.limit) < 0
+          ? 0
+          : ((parseInt(goal.limit) - parseInt(goal.sessionTime, 0) / (1000 * 60)) / parseInt(goal.limit)) * 100}
+        title={goal.name}
+        info={JSON.parse(goal.activeDays).join(", ")}
+      />
     </Link>
   {/each}
   {#if allGoals.length == 0}

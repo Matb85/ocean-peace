@@ -1,6 +1,5 @@
 package com.oceanpeace.redinn.icons;
 
-import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -8,6 +7,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.util.Log;
+
+import com.oceanpeace.redinn.FunctionBase;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +37,7 @@ public class IconManager {
         Log.i("IconManager", "regenerating icons...");
         /* initial setup */
         PackageManager pm = ctx.getPackageManager();
-        String ICONS_FOLDER = getFilesDir(ctx) + "/app_icons";
+        String ICONS_FOLDER = FunctionBase.getFilesDir(ctx) + "/app_icons";
         // https://github.com/zhanghai/AppIconLoader
         final AppIconLoader loader= new AppIconLoader(128, false, ctx);
 

@@ -14,5 +14,7 @@
     "markdown",
     "svelte"
   ],
-  "eslint.workingDirectories": ["platforms/web"]
+  "eslint.workingDirectories": [
+    "platforms/web"
+  ]
 }

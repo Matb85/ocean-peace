@@ -2,7 +2,7 @@ import type Schema from "@redinn/oceanpeace-web/api";
 import goalsPlugin from "./goals";
 import iconsPlugin from "./icons";
 import focusPlugin from "./focus";
-import mayoPlugin from "./mayo";
+import mayoPlugin from "./usage";
 import presetsPlugin from "./presets";
 import schedulePlugin from "./schedule";
 import uiPlugin from "./ui";
