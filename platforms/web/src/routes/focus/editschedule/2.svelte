@@ -10,60 +10,51 @@
   import { t } from "$lib/i18n";
 
   // start time
-  const startHours: columnI = {
+  const startH: columnI = {
+    id: "startH",
     units: "",
     data: [...Array(24).keys()],
     current: Math.floor(parseInt(SM.schedule.getProp("startTime")) / 60),
     multiplier: 1,
   };
-  const startMinutes = timeInputConfig.minutesConfig((parseInt(SM.schedule.getProp("startTime")) % 60) / 5);
-  startMinutes.units = "";
-  let startH: number;
-  let startM: number;
-  startH = startHours.current;
-  startM = startMinutes.current;
-  Object.defineProperty(startHours, "current", {
-    set: val => {
-      startH = val;
-      SM.schedule.setProp("startTime", startH * 60 + startM * startMinutes.multiplier);
-    },
-    get: () => startH,
-  });
-  Object.defineProperty(startMinutes, "current", {
-    set: val => {
-      startM = val;
-      SM.schedule.setProp("startTime", startH * 60 + startM * startMinutes.multiplier);
-    },
-    get: () => startM,
-  });
+  const startM = timeInputConfig.minutesConfig("startM", (parseInt(SM.schedule.getProp("startTime")) % 60) / 5);
+  startM.units = "";
+
   // stop time
-  const stopHours: columnI = {
+  const stopH: columnI = {
+    id: "stopH",
     units: "",
     data: [...Array(24).keys()],
     current: Math.floor(parseInt(SM.schedule.getProp("stopTime")) / 60),
     multiplier: 1,
   };
-  const stopMinutes = timeInputConfig.minutesConfig((parseInt(SM.schedule.getProp("stopTime")) % 60) / 5);
-  stopMinutes.units = "";
-  let stopH: number;
-  let stopM: number;
-  stopH = stopHours.current;
-  stopM = stopMinutes.current;
-  Object.defineProperty(stopHours, "current", {
-    set: val => {
-      stopH = val;
-      SM.schedule.setProp("stopTime", stopH * 60 + stopM * stopMinutes.multiplier);
-    },
-    get: () => stopH,
-  });
-  Object.defineProperty(stopMinutes, "current", {
-    set: val => {
-      stopM = val;
-      SM.schedule.setProp("stopTime", stopH * 60 + stopM * stopMinutes.multiplier);
-    },
-    get: () => stopM,
-  });
-
+  const stopM = timeInputConfig.minutesConfig("stopM", (parseInt(SM.schedule.getProp("stopTime")) % 60) / 5);
+  stopM.units = "";
+  /** updates the time
+   * @param e event
+   * @returns {void}
+   */
+  function onUpdate(e: CustomEvent<{ id: string; current: number }>) {
+    const { id, current } = e.detail;
+    if (id == "startH") SM.schedule.setProp("startTime", current * 60 + startM.current * startM.multiplier);
+    if (id == "startM") SM.schedule.setProp("startTime", startH.current * 60 + current * startM.multiplier);
+    if (id == "stopH") SM.schedule.setProp("stopTime", current * 60 + stopM.current * startM.multiplier);
+    if (id == "stopM") SM.schedule.setProp("stopTime", stopH.current * 60 + current * startM.multiplier);
+    validateTime();
+  }
+  let isTimeCorrect = false;
+  /** checks if the time is set correctly
+   * @returns {void}
+   */
+  function validateTime() {
+    if (
+      startH.current * 60 + startM.current * startM.multiplier <
+      stopH.current * 60 + stopM.current * stopM.multiplier
+    )
+      isTimeCorrect = true;
+    else isTimeCorrect = false;
+  }
+  validateTime();
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   let activeDays = JSON.parse(SM.schedule.getProp("activeDays"));
   /** filter days when saving to maintain order*/
@@ -82,19 +73,19 @@
   <div class="flex flex-col items-center gap-2 relative">
     <H thin>{$t("d.schedule.startt")}</H>
 
-    <TimeInput columns={[startHours, startMinutes]} />
+    <TimeInput columns={[startH, startM]} on:update={onUpdate} />
     <div class="w-full h-full absolute -z-10 flex items-center justify-center"><span class="mt-14">:</span></div>
   </div>
 
   <div class="flex flex-col items-center gap-2 relative">
     <H thin>{$t("d.schedule.endt")}</H>
-    <TimeInput columns={[stopHours, stopMinutes]} />
+    <TimeInput columns={[stopH, stopM]} on:update={onUpdate} />
     <div class="w-full h-full absolute -z-10 flex items-center justify-center"><span class="mt-14">:</span></div>
   </div>
 </div>
 
-<div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
-  <Link href={activeDays.length > 0 ? "/focus/editschedule/3" : ""}>
+<div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 && isTimeCorrect ? "1" : "0.5"}>
+  <Link href={activeDays.length > 0 && isTimeCorrect ? "/focus/editschedule/3" : ""}>
     <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>
 </div>

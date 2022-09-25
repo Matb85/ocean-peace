@@ -10,6 +10,7 @@
 
   Api.getPreferences().then(data => {
     name = data.name;
+    sessionStorage.setItem("preferences_temp", JSON.stringify(data));
   });
   let name = "";
 </script>

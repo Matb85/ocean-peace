@@ -20,16 +20,10 @@
     });
   });
 
-  const hoursTime = timeInputConfig.hoursConfig(1);
-  const minutesTime = timeInputConfig.minutesConfig(3);
-  const focusTime = timeInputConfig.minutesConfig(5);
-  const breakTime = timeInputConfig.minutesConfig(1);
-  let h: number;
-  let m: number;
-  h = hoursTime.current;
-  m = minutesTime.current;
-  Object.defineProperty(hoursTime, "current", { set: val => (h = val), get: () => h });
-  Object.defineProperty(minutesTime, "current", { set: val => (m = val), get: () => m });
+  const hoursTime = timeInputConfig.hoursConfig("hoursTime", 1);
+  const minutesTime = timeInputConfig.minutesConfig("minutesTime", 3);
+  const focusTime = timeInputConfig.minutesConfig("focusTime", 5);
+  const breakTime = timeInputConfig.minutesConfig("breakTime", 1);
 
   let limit = "Pomodoro";
 </script>

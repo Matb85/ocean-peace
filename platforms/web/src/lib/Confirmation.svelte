@@ -10,7 +10,7 @@
 
 {#if isComplete}
   <section in:fly={{ y: 200, duration: 300 }} class="fixed top-0 left-0 z-50 bg-white w-full h-screen">
-    <H tag={3} thin className="mt-32">{text}</H>
+    <H tag={3} thin className="mt-32 text-center">{text}</H>
     <section
       in:fly={{ x: -400, duration: 1200 }}
       class="mt-16 mx-auto bg-green-light w-1/2 aspect-square rounded-3xl flex justify-center items-center"
