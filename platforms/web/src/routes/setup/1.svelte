@@ -17,14 +17,14 @@
 </script>
 
 <Wrapper>
-  <div slot="header">
+  <div slot="header" class="text-center">
     <H tag={3}>
       <img src="/logo.svg" alt="logo" class="inline-block h-14" />Ocean Peace
     </H>
     <H thin tag={6} className="mt-0">By RedinnLabs</H>
     <H thin tag={5} className="mt-4 w-3/4 mx-auto">{$t("d.setup.regain")}</H>
   </div>
-  <H thin className="mb-4">{$t("d.setup.name")}</H>
+  <H thin className="mb-4 text-center">{$t("d.setup.name")}</H>
   <TextInput placeholder={$t("d.settings.name")} bind:value />
 
   <Link

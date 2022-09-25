@@ -28,13 +28,13 @@
 </script>
 
 <Wrapper>
-  <div slot="header" class="card-flex-col w-full">
+  <div slot="header" class="card-flex-col w-full text-center">
     <Link href="/setup/1">
       <BackButton />
     </Link>
     <H tag={3}>{$t("d.setup.before")}</H>
   </div>
-  <H thin className="mb-4">{$t("d.setup.screentime")}</H>
+  <H thin className="mb-4 text-center">{$t("d.setup.screentime")}</H>
   <TimeInput columns={[hours, minutes]} />
 
   <Link on:click={setScreentime} className="absolute bottom-5" href="/">
