@@ -1,8 +1,5 @@
 package com.oceanpeace.redinn;
 
-
-import static com.oceanpeace.redinn.config.ConfigPlugin.getFilesDir;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.util.Log;
@@ -44,7 +41,7 @@ public class UIPlugin extends Plugin {
     @PluginMethod
     public void setPreferences(PluginCall call) {
         try {
-            JSONManager.writeFile(call.getObject("data"), getFilesDir(getActivity().getApplicationContext()) + "/settings.json");
+            JSONManager.writeFile(call.getObject("data"), FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json");
             call.resolve();
         } catch (Exception e) {
             Log.e("UIPlugin", e.toString());
@@ -57,12 +54,12 @@ public class UIPlugin extends Plugin {
         try {
             JSONObject data = new JSONObject();
             try {
-                data = JSONManager.readFile(new File(getFilesDir(getActivity().getApplicationContext()) + "/settings.json"));
+                data = JSONManager.readFile(new File(FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json"));
             } catch (Exception e) {
                 Log.e("UIPlugin", "settings.json does not exist " + e.toString());
             }
             data.put(call.getString("key"), call.getString("value"));
-            JSONManager.writeFile(data, getFilesDir(getActivity().getApplicationContext()) + "/settings.json");
+            JSONManager.writeFile(data, FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json");
             call.resolve();
         } catch (Exception e) {
             Log.e("UIPlugin", e.toString());
@@ -75,7 +72,7 @@ public class UIPlugin extends Plugin {
         try {
             JSONObject data = new JSONObject();
             try {
-                data = JSONManager.readFile(new File(getFilesDir(getActivity().getApplicationContext()) + "/settings.json"));
+                data = JSONManager.readFile(new File(FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json"));
             } catch (Exception e) {
                 Log.e("UIPlugin", "settings.json does not exist " + e.toString());
             }            JSObject res = new JSObject();

@@ -5,7 +5,6 @@
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
-
   import DangerZone from "$lib/DangerZone.svelte";
   import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { querystring } from "svelte-spa-router";

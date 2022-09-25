@@ -26,6 +26,7 @@
       limit: 1 * 60 + 15 + "",
       activeDays: "[]",
       limitActionType: "Notification",
+      sessionTime: "0",
     });
     SM.action.setProps({ type: "add", backUrl: "/", continueUrl: "/goal/edit/1" });
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
@@ -41,6 +42,7 @@
       limit: allGoals[i].limit,
       activeDays: allGoals[i].activeDays,
       limitActionType: allGoals[i].limitActionType,
+      sessionTime: allGoals[i].sessionTime,
     });
     SM.dialogs.setProps({ apps: allGoals[i].apps, websites: allGoals[i].websites });
   }
