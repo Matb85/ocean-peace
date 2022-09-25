@@ -6,6 +6,9 @@ export interface GoalI {
   activeDays: string;
   limitActionType: string;
   websites: string;
+  sessionUpdate: string;
+  sessionTime: string;
+  sessionHistory: string;
 }
 
 export interface GoalsMethods {

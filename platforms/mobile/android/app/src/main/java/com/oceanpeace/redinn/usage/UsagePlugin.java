@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.mayo;
+package com.oceanpeace.redinn.usage;
 
 
 import static androidx.core.content.ContextCompat.startActivity;
@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
 
-import androidx.work.WorkManager;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
@@ -24,7 +22,7 @@ import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 
 @CapacitorPlugin(
-        name="Mayo",
+        name="Usage",
         permissions = {
                 @Permission(
                        alias = "usage",
@@ -34,7 +32,7 @@ import com.getcapacitor.annotation.PermissionCallback;
                 )
         }
 )
-public class MayoPlugin extends Plugin {
+public class UsagePlugin extends Plugin {
 
     @PluginMethod()
     public void callMayo(PluginCall call) {
@@ -57,20 +55,13 @@ public class MayoPlugin extends Plugin {
         }
     }
 
-    void runMayo(PluginCall call) {
-        Mayo mayo = new Mayo(getActivity().getApplicationContext());
-        JSObject ret = new JSObject();
-        ret.put("stats", mayo.GetUsageData());
-        call.resolve(ret);
-    }
-
     boolean hasPermission()
     {
         AppOpsManager opsManager = (AppOpsManager) getActivity().getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
         int mode = opsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(),getActivity().getApplicationContext().getPackageName());
 
         if (mode == AppOpsManager.MODE_DEFAULT) {
-             return getActivity().getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
+            return getActivity().getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
         }
         else {
             return mode == AppOpsManager.MODE_ALLOWED;
@@ -78,8 +69,16 @@ public class MayoPlugin extends Plugin {
     }
 
 
-    @PluginMethod
-    public void stopBackgroundMayo() {
-        WorkManager.getInstance(getActivity().getApplicationContext()).cancelUniqueWork(6002+"");
+
+    void runMayo(PluginCall call) {
+        Usage usage = new Usage(getActivity().getApplicationContext());
+        JSObject ret = new JSObject();
+        ret.put("stats", usage.GetUsageData());
+        ret.put("total", usage.getTotalTime());
+        call.resolve(ret);
     }
+
+
+
+
 }
