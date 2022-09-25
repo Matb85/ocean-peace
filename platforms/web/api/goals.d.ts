@@ -9,8 +9,6 @@ export interface GoalI {
 }
 
 export interface GoalsMethods {
-  // G O A L S   A P I
-
   /** Returns JSON with each goal JSON as described below
    * @returns all goals
    */

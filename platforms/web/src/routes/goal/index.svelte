@@ -14,7 +14,7 @@
   import type { AppIconI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-  const goalData = SM.goal.getProps("id", "name", "timeMinutes", "timeHours", "activeDays", "limitActionType");
+  const goalData = SM.goal.getProps("id", "name", "limit", "activeDays", "limitActionType");
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
     selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
@@ -30,7 +30,7 @@
   <Cutout className="w-full bottom-0 absolute" />
 </section>
 
-<H tag={5} thin className="w-9/12">{goalData?.name || ""}</H>
+<H tag={5} thin className="w-9/12 text-center">{goalData?.name || ""}</H>
 <section class="w-11/12 grid grid-cols-6 gap-2">
   <PieChart
     className="w-full col-span-4"

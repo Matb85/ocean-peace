@@ -9,11 +9,12 @@
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI, GoalI } from "$schema";
-  import { goTo } from "$lib/utils";
+  import { goTo, timeFromNumber } from "$lib/utils";
   import SM from "$lib/sessionManager";
   import { t } from "$lib/i18n";
 
-  const goalSM = SM.goal.getProps("id", "name", "timeHours", "timeMinutes", "activeDays", "limitActionType");
+  const goalSM = SM.goal.getProps("id", "name", "limit", "activeDays", "limitActionType");
+  const time = timeFromNumber(goalSM.limit);
   const dialogsSM = SM.dialogs.getProps("apps", "websites");
 
   let selectedApps: AppIconI[] = [];
@@ -32,7 +33,7 @@
       name: goalSM.name,
       apps: dialogsSM.apps,
       websites: dialogsSM.websites,
-      limit: parseInt(goalSM.timeHours) * 60 + parseInt(goalSM.timeMinutes) + "",
+      limit: goalSM.limit,
       activeDays: goalSM.activeDays,
       limitActionType: goalSM.limitActionType,
     };
@@ -59,8 +60,8 @@
 <H tag={6} thin>{$t("d.goal.time_limit")}</H>
 <div class="flex flex-wrap justify-center gap-2 items-center">
   <H tag={4} className="mt-0 mb-0" thin>
-    {goalSM.timeHours}h
-    {parseInt(goalSM.timeMinutes)}min
+    {time[0]}h
+    {time[1] * 5}min
   </H>
   <!---->
   <Button size="small">Time Period</Button>

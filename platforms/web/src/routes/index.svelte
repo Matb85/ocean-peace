@@ -23,8 +23,7 @@
     SM.goal.setProps({
       id: "goal" + Date.now(),
       name: "",
-      timeMinutes: "15",
-      timeHours: "1",
+      limit: 1 * 60 + 15 + "",
       activeDays: "[]",
       limitActionType: "Notification",
     });
@@ -36,13 +35,10 @@
    * @returns nothing
    */
   function beforeOpenGoal(i: number) {
-    const timeInMinutes = parseInt(allGoals[i].limit);
-
     SM.goal.setProps({
       id: allGoals[i].id,
       name: allGoals[i].name,
-      timeMinutes: (timeInMinutes % 60) + "",
-      timeHours: Math.floor(timeInMinutes / 60) + "",
+      limit: allGoals[i].limit,
       activeDays: allGoals[i].activeDays,
       limitActionType: allGoals[i].limitActionType,
     });

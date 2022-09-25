@@ -8,23 +8,26 @@
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";
+  import { timeFromNumber } from "$lib/utils";
+
+  const time = timeFromNumber(SM.goal.getProp("limit"));
 
   const hours: columnI = {
     id: "hours",
     units: "h",
     data: [...Array(6).keys()],
-    current: parseInt(SM.goal.getProp("timeHours")),
+    current: time[0],
     multiplier: 1,
   };
-  const minutes = timeInputConfig.minutesConfig("minutes", parseInt(SM.goal.getProp("timeMinutes")) / 5);
+  const minutes = timeInputConfig.minutesConfig("minutes", time[1] / 5);
   /** updates the time
    * @param e event
    * @returns {void}
    */
   function onUpdate(e: CustomEvent<{ id: string; current: number }>) {
     const { id, current } = e.detail;
-    if (id == "hours") SM.goal.setProp("timeHours", current);
-    if (id == "minutes") SM.goal.setProp("timeMinutes", current * minutes.multiplier);
+    if (id == "hours") SM.goal.setProp("limit", current * 60 + minutes.current * minutes.multiplier);
+    if (id == "minutes") SM.goal.setProp("limit", hours.current * 60 + current * minutes.multiplier);
   }
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
