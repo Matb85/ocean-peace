@@ -11,7 +11,6 @@
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
   import { t } from "$lib/i18n";
-
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
