@@ -2,9 +2,9 @@
  * @param prefix the prefix for the SM
  * @returns the controller
  */
-export default function <K extends string, L extends Record<string, string>>(prefix: string) {
+export default function <K extends string>(prefix: string) {
   return {
-    setProps(data: Partial<L>) {
+    setProps(data: Partial<Record<K, string>>) {
       for (const prop in data) {
         if (Object.prototype.hasOwnProperty.call(data, prop)) sessionStorage.setItem(prefix + prop, data[prop]);
       }

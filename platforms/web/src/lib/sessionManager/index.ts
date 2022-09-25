@@ -16,9 +16,9 @@ export type ActionKeys = "type" | "backUrl" | "continueUrl";
 export type ActionType = Record<ActionKeys, string>;
 
 export default {
-  goal: factory<GoalKeys, GoalType>("goal_"),
-  preset: factory<PresetKeys, PresetType>("preset_"),
-  schedule: factory<ScheduleKeys, ScheduleType>("schedule_"),
-  dialogs: factory<DialogKeys, DialogType>("dialog_"),
-  action: factory<ActionKeys, ActionType>("action_"),
+  goal: factory<GoalKeys>("goal_"),
+  preset: factory<PresetKeys>("preset_"),
+  schedule: factory<ScheduleKeys>("schedule_"),
+  dialogs: factory<DialogKeys>("dialog_"),
+  action: factory<ActionKeys>("action_"),
 };

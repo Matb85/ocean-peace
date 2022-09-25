@@ -1,10 +1,10 @@
 export interface GoalI {
   id: string;
   name: string;
-  apps: string;
   limit: string;
   activeDays: string;
   limitActionType: string;
+  apps: string;
   websites: string;
 }
 
