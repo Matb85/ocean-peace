@@ -1,6 +1,7 @@
 {
   "extends": ["config:base"],
-  "ignoreDeps": ["@redinnlabs/system", "@sveltejs/kit"],
+  "schedule": ["before 3am on the first day of the month"],
+  "ignoreDeps": ["@redinnlabs/system"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
