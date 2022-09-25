@@ -14,7 +14,6 @@
   "devDependencies": {
     "@capacitor/cli": "4.1.0",
     "@capacitor/core": "4.1.0",
-    "@capacitor/preferences": "^4.0.1",
     "@capacitor/splash-screen": "4.0.1",
     "cordova-res": "0.15.4"
   }

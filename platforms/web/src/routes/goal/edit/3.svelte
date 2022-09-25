@@ -36,6 +36,9 @@
       limit: goalSM.limit,
       activeDays: goalSM.activeDays,
       limitActionType: goalSM.limitActionType,
+      sessionUpdate: "",
+      sessionTime: "0",
+      sessionHistory: "[]",
     };
     setTimeout(() => {
       Api.saveGoal(data);
@@ -61,7 +64,7 @@
 <div class="flex flex-wrap justify-center gap-2 items-center">
   <H tag={4} className="mt-0 mb-0" thin>
     {time[0]}h
-    {time[1] * 5}min
+    {time[1]}min
   </H>
   <!---->
   <Button size="small">Time Period</Button>

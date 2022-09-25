@@ -24,7 +24,6 @@ importers:
       '@capacitor/app': 4.0.1
       '@capacitor/cli': 4.1.0
       '@capacitor/core': 4.1.0
-      '@capacitor/preferences': ^4.0.1
       '@capacitor/splash-screen': 4.0.1
       '@redinn/oceanpeace-web': workspace:^1.0.0
       cordova-res: 0.15.4
@@ -35,7 +34,6 @@ importers:
     devDependencies:
       '@capacitor/cli': 4.1.0
       '@capacitor/core': 4.1.0
-      '@capacitor/preferences': 4.0.1_@capacitor+core@4.1.0
       '@capacitor/splash-screen': 4.0.1_@capacitor+core@4.1.0
       cordova-res: 0.15.4
 
@@ -164,14 +162,6 @@ packages:
     resolution: {integrity: sha512-bMYFnC5l5n11D/kLTz9TOOJfUH+nQqYRwzG7h5h4AXIm8aFxH5ZY3iFlDZd7R4xcyrlnfxzfoooSH9trPjRBLA==}
     dependencies:
       tslib: 2.4.0
-
-  /@capacitor/preferences/4.0.1_@capacitor+core@4.1.0:
-    resolution: {integrity: sha512-FffJjKS4XcodUj/rtFtWizQ9q/oYDSn5opZ+JYwj/EkjiMWMhY/Pk9lN3vwQfp+VJrTt3hjr+bwKXjhTbYBqKw==}
-    peerDependencies:
-      '@capacitor/core': ^4.0.0
-    dependencies:
-      '@capacitor/core': 4.1.0
-    dev: true
 
   /@capacitor/splash-screen/4.0.1_@capacitor+core@4.1.0:
     resolution: {integrity: sha512-7hklUx69aZDonuLP1R5X4ZTGgZLwX8RTj9/3U1905Kz/XflcT7Rhighbad+uZBaOU+L/8Vm6Y3RlR3rFj4ELVA==}

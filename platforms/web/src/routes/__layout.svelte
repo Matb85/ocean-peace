@@ -15,9 +15,7 @@
   loadTranslations(initLocale, $location); // keep this just before the `return`
 
   Api.getPreferences().then(async data => {
-    console.error(JSON.stringify(data));
     if (data.setupComplete || $location.startsWith("/setup/")) return;
-    console.error("xd");
     await Api.fadeIn();
     replace("/setup/1");
     setTimeout(() => Api.fadeOut(), 75);

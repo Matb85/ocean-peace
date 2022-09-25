@@ -42,16 +42,13 @@ public class Goals {
 
     // TODO: make updating goal synchronize progress
     public void saveGoal(JSONObject goal) throws Exception {
-
-        if (goal.opt(SESSIONUPDATE) == null)
-            goal.put(SESSIONUPDATE, "");
-
-        if (goal.opt(SESSIONTIME) == null)
-            goal.put(SESSIONTIME, "0");
-
-        if (goal.opt(SESSIONSHISTORY) == null)
-            goal.put(SESSIONSHISTORY, new JSONArray().toString());
-
+        // prevent creating goals in an nonexistent folder
+        String GOALS_FOLDER = FunctionBase.getFilesDir(context) + "/goals";
+        File goalsFolderFile = new File(GOALS_FOLDER);
+        if (!goalsFolderFile.isDirectory()) {
+            Log.i("GoalsPlugin", "creating the goals folder");
+            goalsFolderFile.mkdir();
+        }
 
         JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
@@ -62,7 +59,7 @@ public class Goals {
         File[] files = new File(FunctionBase.getFilesDir(context) + "/goals").listFiles();
 
         if (files == null)
-            return null;
+            return new JSONArray();
 
         /* put data from each goal the the final array */
         JSONArray ret = new JSONArray();
