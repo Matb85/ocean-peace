@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.redinn.oceanpeace;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -16,15 +16,15 @@ import android.os.IBinder;
 import androidx.work.WorkManager;
 
 import com.getcapacitor.BridgeActivity;
-import com.oceanpeace.redinn.focus.Focus;
-import com.oceanpeace.redinn.focus.FocusPlugin;
-import com.oceanpeace.redinn.goals.GoalsPlugin;
-import com.oceanpeace.redinn.icons.IconManager;
-import com.oceanpeace.redinn.icons.IconsPlugin;
-import com.oceanpeace.redinn.mayo.MayoAPI;
-import com.oceanpeace.redinn.presets.PresetsPlugin;
-import com.oceanpeace.redinn.schedule.SchedulePlugin;
-import com.oceanpeace.redinn.usage.UsagePlugin;
+import com.redinn.oceanpeace.focus.Focus;
+import com.redinn.oceanpeace.focus.FocusPlugin;
+import com.redinn.oceanpeace.goals.GoalsPlugin;
+import com.redinn.oceanpeace.icons.IconManager;
+import com.redinn.oceanpeace.icons.IconsPlugin;
+import com.redinn.oceanpeace.mayo.MayoAPI;
+import com.redinn.oceanpeace.presets.PresetsPlugin;
+import com.redinn.oceanpeace.schedule.SchedulePlugin;
+import com.redinn.oceanpeace.usage.UsagePlugin;
 
 public class MainActivity extends BridgeActivity {
 

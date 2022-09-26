@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.usage;
+package com.redinn.oceanpeace.usage;
 
 
 import static androidx.core.content.ContextCompat.startActivity;

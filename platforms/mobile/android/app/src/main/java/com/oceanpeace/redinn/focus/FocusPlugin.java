@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.focus;
+package com.redinn.oceanpeace.focus;
 
 import android.os.Build;
 

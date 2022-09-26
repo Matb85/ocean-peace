@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.redinn.oceanpeace;
 
 import android.content.Context;
 

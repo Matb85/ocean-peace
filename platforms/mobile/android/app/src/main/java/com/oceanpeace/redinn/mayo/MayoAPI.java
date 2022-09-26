@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.mayo;
+package com.redinn.oceanpeace.mayo;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;

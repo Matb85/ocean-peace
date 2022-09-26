@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Ocean Peace</string>
     <string name="title_activity_main">Ocean Peace</string>
-    <string name="package_name">com.oceanpeace.redinn</string>
-    <string name="custom_url_scheme">com.oceanpeace.redinn</string>
+    <string name="package_name">com.redinn.oceanpeace</string>
+    <string name="custom_url_scheme">com.redinn.oceanpeace</string>
     <string name="accessibility_service_label" />
 </resources>

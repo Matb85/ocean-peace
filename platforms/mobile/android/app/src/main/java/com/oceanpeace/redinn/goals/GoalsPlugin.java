@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.goals;
+package com.redinn.oceanpeace.goals;
 
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;

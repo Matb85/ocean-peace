@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.presets;
+package com.redinn.oceanpeace.presets;
 
 
 import android.content.Context;
@@ -9,8 +9,8 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.oceanpeace.redinn.FunctionBase;
-import com.oceanpeace.redinn.managers.JSONManager;
+import com.redinn.oceanpeace.FunctionBase;
+import com.redinn.oceanpeace.managers.JSONManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,8 +1,8 @@
-package com.oceanpeace.redinn.mayo;
+package com.redinn.oceanpeace.mayo;
 
-import static com.oceanpeace.redinn.FunctionBase.JSONArrayGetIndexOf;
-import static com.oceanpeace.redinn.FunctionBase.JSONArrayOptElement;
-import static com.oceanpeace.redinn.FunctionBase.getDayOfWeekStringShort;
+import static com.redinn.oceanpeace.FunctionBase.JSONArrayGetIndexOf;
+import static com.redinn.oceanpeace.FunctionBase.JSONArrayOptElement;
+import static com.redinn.oceanpeace.FunctionBase.getDayOfWeekStringShort;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.BroadcastReceiver;
@@ -20,9 +20,9 @@ import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
 
-import com.oceanpeace.redinn.FunctionBase;
-import com.oceanpeace.redinn.R;
-import com.oceanpeace.redinn.goals.Goals;
+import com.redinn.oceanpeace.FunctionBase;
+import com.redinn.oceanpeace.R;
+import com.redinn.oceanpeace.goals.Goals;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.icons;
+package com.redinn.oceanpeace.icons;
 
 
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.oceanpeace.redinn.FunctionBase;
+import com.redinn.oceanpeace.FunctionBase;
 
 import java.io.File;
 import java.io.FileInputStream;

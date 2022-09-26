@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.icons;
+package com.redinn.oceanpeace.icons;
 
 import android.util.Log;
 

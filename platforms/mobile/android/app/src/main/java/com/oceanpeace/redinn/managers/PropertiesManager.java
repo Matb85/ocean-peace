@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.managers;
+package com.redinn.oceanpeace.managers;
 
 import java.io.File;
 import java.io.FileInputStream;

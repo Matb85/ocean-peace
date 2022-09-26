@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.focus;
+package com.redinn.oceanpeace.focus;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.oceanpeace.redinn.Broadcast;
+import com.redinn.oceanpeace.Broadcast;
 
 import java.util.Calendar;
 

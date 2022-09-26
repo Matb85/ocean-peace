@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn;
+package com.redinn.oceanpeace;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -9,7 +9,7 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.oceanpeace.redinn.managers.JSONManager;
+import com.redinn.oceanpeace.managers.JSONManager;
 
 import org.json.JSONObject;
 

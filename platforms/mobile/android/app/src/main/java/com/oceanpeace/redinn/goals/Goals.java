@@ -1,13 +1,13 @@
-package com.oceanpeace.redinn.goals;
+package com.redinn.oceanpeace.goals;
 
-import static com.oceanpeace.redinn.FunctionBase.JSONArrayOptElement;
+import static com.redinn.oceanpeace.FunctionBase.JSONArrayOptElement;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.oceanpeace.redinn.FunctionBase;
-import com.oceanpeace.redinn.MainActivity;
-import com.oceanpeace.redinn.managers.JSONManager;
+import com.redinn.oceanpeace.FunctionBase;
+import com.redinn.oceanpeace.MainActivity;
+import com.redinn.oceanpeace.managers.JSONManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

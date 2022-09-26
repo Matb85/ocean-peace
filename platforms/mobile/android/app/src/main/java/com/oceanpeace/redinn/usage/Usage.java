@@ -1,4 +1,4 @@
-package com.oceanpeace.redinn.usage;
+package com.redinn.oceanpeace.usage;
 
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
