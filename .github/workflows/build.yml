@@ -59,19 +59,9 @@ jobs:
       - name: Sign AAP
         run: cd platforms/mobile/ && jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/bundle/release/app-release-signed.aab ./android/app/build/outputs/bundle/release/app-release.aab release
 
-      - name: Sign debug APK
-        run: cd platforms/mobile/ && ls ./android/app/build/outputs && ./android/app/build/outputs/apk && ls && jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/apk/debug/app-debug-signed.apk ./android/app/build/outputs/apk/debug/app-debug.apk release
-
       - name: Upload Android App Bundle
         uses: actions/upload-artifact@v3
         with:
           name: Android App Bundle
           path: platforms/mobile/android/app/build/outputs/bundle/release/app-release-signed.aab
-          retention-days: 60
-
-      - name: Upload debug APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: Debug APK
-          path: platforms/mobile/android/app/build/outputs/apk/debug/app-debug-signed.apk
           retention-days: 60
