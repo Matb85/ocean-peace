@@ -11,7 +11,8 @@
     "lint:svelte": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "pnpm lint:eslint && pnpm lint:svelte",
     "tauri": "tauri",
-    "redinn": "pnpm install Redinn-Labs/design-system#release"
+    "redinn": "pnpm install Redinn-Labs/design-system#release",
+    "test": "pnpm lint"
   },
   "main": "dist/index.d.ts",
   "files": [

@@ -1,0 +1,14 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+protected_branch='master'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+if  [ "$protected_branch" = "$current_branch" ]; then
+    if  [ -z "$CI" ]; then
+        echo "You can't commit directly to master branch"
+        exit 1
+    fi
+fi
+
+pnpm test

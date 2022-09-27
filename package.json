@@ -1,6 +1,10 @@
 {
   "name": "ocean-peace",
   "version": "0.0.1",
+  "scripts": {
+    "prepare": "husky install",
+    "test": "pnpm run -r test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Redinn-Labs/ocean-peace.git"
@@ -8,5 +12,8 @@
   "bugs": {
     "url": "https://github.com/Redinn-Labs/ocean-peace/issues"
   },
-  "homepage": "https://github.com/Redinn-Labs/ocean-peace#readme"
+  "homepage": "https://github.com/Redinn-Labs/ocean-peace#readme",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
 }
