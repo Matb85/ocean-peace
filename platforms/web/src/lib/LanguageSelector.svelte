@@ -4,7 +4,7 @@
 
   /** changes the locale
    * @param e the input event
-   * @returns {void}
+   * @returns void
    */
   function onChange(e: Event) {
     $locale = (e.target as HTMLInputElement).value;
@@ -21,7 +21,7 @@
   <option value="pl"> 🇵🇱 Polski</option>
 </select>
 
-<style>
+<style lang="postcss">
   .lang-selector {
     appearance: none;
     @apply bg-transparent px-4 py-1 border-none outline-primary1 rounded-xl;

@@ -4,8 +4,8 @@ import type { PresetI, PresetsMethods } from "@redinn/oceanpeace-web/api/presets
 interface PresetsPlugin {
   getAllPresets(): Promise<{ presets: PresetI[] }>;
   getPreset(data: { id: string }): Promise<{ preset: PresetI }>;
-  savePreset(data: { data: PresetI }): void;
-  deletePreset(data: { id: string }): void;
+  savePreset(data: { data: PresetI }): Promise<void>;
+  deletePreset(data: { id: string }): Promise<void>;
 }
 
 const Presets = registerPlugin<PresetsPlugin>("Presets");
@@ -19,11 +19,11 @@ const plugin: PresetsMethods = {
     const { preset } = await Presets.getPreset({ id });
     return preset;
   },
-  async savePreset(data: PresetI): Promise<void> {
-    await Presets.savePreset({ data });
+  savePreset(data: PresetI): Promise<void> {
+    return Presets.savePreset({ data });
   },
-  async deletePreset(id: string): Promise<void> {
-    await Presets.deletePreset({ id });
+  deletePreset(id: string): Promise<void> {
+    return Presets.deletePreset({ id });
   },
 };
 

@@ -6,7 +6,7 @@
   const data = SM.preset.getProps("id", "name");
 
   /** delete a given preset
-   * @returns {void}
+   * @returns void
    */
   async function deletePreset() {
     await Api.deletePreset(data.id);

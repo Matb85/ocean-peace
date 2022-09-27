@@ -9,7 +9,7 @@
 
   let value = "";
   /** sets the username
-   * @returns {void}
+   * @returns void
    */
   function setUsername() {
     Api.setPreference("name", value);

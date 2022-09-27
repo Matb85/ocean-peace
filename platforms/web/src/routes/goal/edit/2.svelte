@@ -22,7 +22,7 @@
   const minutes = timeInputConfig.minutesConfig("minutes", time[1] / 5);
   /** updates the time
    * @param e event
-   * @returns {void}
+   * @returns void
    */
   function onUpdate(e: CustomEvent<{ id: string; current: number }>) {
     const { id, current } = e.detail;

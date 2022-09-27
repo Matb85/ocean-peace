@@ -25,7 +25,7 @@
 
   let urls = [];
   /** fetches the favicon
-   * @returns {void}
+   * @returns void
    */
   async function search() {
     url = url.trim();
@@ -38,7 +38,7 @@
     }
   }
   /** resets the favicon
-   * @returns {void}
+   * @returns void
    */
   function resetFavicon() {
     favicon = "/globe.png";

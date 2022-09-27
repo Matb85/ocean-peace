@@ -21,8 +21,9 @@ const plugin: UIMethods = {
   setPreferences(data: PreferencesI) {
     return UI.setPreferences({ data });
   },
-  getPreferences() {
-    return UI.getPreferences().then(data => data.data);
+  async getPreferences() {
+    const data = await UI.getPreferences();
+    return data.data;
   },
   setPreference(key: keyof PreferencesI, value: string) {
     return UI.setPreference({ key, value });

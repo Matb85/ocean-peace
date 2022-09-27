@@ -4,8 +4,8 @@ import type { ScheduleI, ScheduleMethods } from "@redinn/oceanpeace-web/api/sche
 interface SchedulesPlugin {
   getAllSchedules(): Promise<{ schedules: ScheduleI[] }>;
   getSchedule(data: { id: string }): Promise<{ schedule: ScheduleI }>;
-  saveSchedule(data: { data: ScheduleI }): void;
-  deleteSchedule(data: { id: string }): void;
+  saveSchedule(data: { data: ScheduleI }): Promise<void>;
+  deleteSchedule(data: { id: string }): Promise<void>;
 }
 
 const Schedule = registerPlugin<SchedulesPlugin>("Schedule");
@@ -19,11 +19,11 @@ const plugin: ScheduleMethods = {
     const { schedule } = await Schedule.getSchedule({ id });
     return schedule;
   },
-  async saveSchedule(data: ScheduleI): Promise<void> {
-    await Schedule.saveSchedule({ data });
+  saveSchedule(data: ScheduleI): Promise<void> {
+    return Schedule.saveSchedule({ data });
   },
-  async deleteSchedule(id: string): Promise<void> {
-    await Schedule.deleteSchedule({ id });
+  deleteSchedule(id: string): Promise<void> {
+    return Schedule.deleteSchedule({ id });
   },
 };
 

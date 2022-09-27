@@ -32,7 +32,7 @@
   stopM.units = "";
   /** updates the time
    * @param e event
-   * @returns {void}
+   * @returns void
    */
   function onUpdate(e: CustomEvent<{ id: string; current: number }>) {
     const { id, current } = e.detail;
@@ -44,7 +44,7 @@
   }
   let isTimeCorrect = false;
   /** checks if the time is set correctly
-   * @returns {void}
+   * @returns void
    */
   function validateTime() {
     if (

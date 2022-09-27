@@ -7,7 +7,7 @@
   const data = SM.goal.getProps("id", "name");
 
   /** delete a given goal
-   * @returns {void}
+   * @returns void
    */
   async function deleteGoal() {
     await Api.deleteGoal(data.id);
