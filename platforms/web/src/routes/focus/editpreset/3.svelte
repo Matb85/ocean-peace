@@ -23,7 +23,7 @@
     allowedApps = await Api.getAppIcons(JSON.parse(dialogsSM.apps));
   });
   /** save preset to a file
-   * @returns {void}
+   * @returns void
    */
   function saveGoal() {
     isComplete = true;

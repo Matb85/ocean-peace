@@ -1,0 +1,55 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  android:
+    name: Build APK for Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "11"
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.x.x
+
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: pnpm
+
+      - name: Install app dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm --filter @redinn/oceanpeace-mobile sync
+
+      - name: Build app bundle
+        run: cd platforms/mobile/android/ && gradle bundle
+
+      - name: Extract Android signing key from env
+        run: |
+          echo "${{ secrets.RELEASE_KEYSTORE }}" > android/release.jks.base64
+          base64 -d android/release.jks.base64 > android/release.decrypted.jks
+
+      - name: Sign dev build
+        run: jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/bundle/release/app-release-signed.aab ./android/app/build/outputs/bundle/release/app-release.aab release
+
+      - name: Upload release bundle
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: platforms/mobile/android/app/build/outputs/bundle/release/app-release-signed.aab
+          retention-days: 60

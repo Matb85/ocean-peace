@@ -4,7 +4,7 @@
   import { mdiCheck } from "@mdi/js";
 
   import { fly } from "svelte/transition";
-  export let text;
+  export let text: string;
   export let isComplete = false;
 </script>
 

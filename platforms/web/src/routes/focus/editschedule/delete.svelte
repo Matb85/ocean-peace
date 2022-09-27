@@ -6,7 +6,7 @@
 
   const data = SM.schedule.getProps("id", "name");
   /** delete a given schedule
-   * @returns {void}
+   * @returns void
    */
   async function deleteSchedule() {
     await Api.deleteSchedule(data.id);

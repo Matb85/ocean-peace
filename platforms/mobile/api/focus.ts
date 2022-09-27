@@ -13,7 +13,7 @@ interface FocusPlugin {
     wakeDevice: boolean;
   }): Promise<{ started: boolean }>;
   startStopwatch(options: { twentyRule: boolean }): Promise<{ started: boolean }>;
-  stopFocus();
+  stopFocus(): Promise<void>;
 }
 
 const Focus = registerPlugin<FocusPlugin>("Focus");

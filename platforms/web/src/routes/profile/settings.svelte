@@ -33,7 +33,7 @@
   let m: number = minutes.current;
   /** updates the time
    * @param e event
-   * @returns {void}
+   * @returns void
    */
   function onUpdate(e: CustomEvent<{ id: string; current: number }>) {
     const { id, current } = e.detail;
@@ -41,7 +41,7 @@
     if (id == "minutes") m = current;
   }
   /** updates the preferences
-   * @returns {void}
+   * @returns void
    */
   function save() {
     Api.setPreference("name", name);

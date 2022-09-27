@@ -23,7 +23,7 @@
     selectedApps = await Api.getAppIcons(JSON.parse(dialogsSM.apps));
   });
   /** save goal to a file
-   * @returns {void}
+   * @returns void
    */
   function saveGoal() {
     isComplete = true;

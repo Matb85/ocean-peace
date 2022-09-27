@@ -18,7 +18,7 @@
     preset = await Api.getPreset(scheduleSM.preset);
   });
   /** save schedule to a file
-   * @returns {void}
+   * @returns void
    */
   function saveSchedule() {
     isComplete = true;

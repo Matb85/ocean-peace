@@ -22,7 +22,7 @@
 
   /** removes or add an app to the selectedApps array
    * @param app the app to toggle
-   * @returns {void}
+   * @returns void
    */
   function toggleApp(app: AppIconI) {
     if (!selectedApps.includes(app.packageName)) {

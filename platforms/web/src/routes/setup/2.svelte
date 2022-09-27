@@ -18,7 +18,7 @@
   const minutes = timeInputConfig.minutesConfig("minutes", 15 / 5);
 
   /** sets the username
-   * @returns {void}
+   * @returns void
    */
   function setScreentime() {
     Api.setPreference("screentime", (hours.current * 60 + minutes.current * 5).toString());

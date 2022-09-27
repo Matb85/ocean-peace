@@ -20,7 +20,7 @@
   });
 
   /** sets proper session data before leaving the page
-   * @returns {void}
+   * @returns void
    */
   function beforeAddPreset() {
     SM.preset.setProps({
@@ -34,7 +34,7 @@
   }
   /** sets proper session data before leaving the page
    * @param i the index of the Preset in the array of all the Preset
-   * @returns {void}
+   * @returns void
    */
   function beforeOpenPreset(i: number) {
     SM.preset.setProps({
@@ -48,7 +48,7 @@
     });
   }
   /** sets proper session data before leaving the page
-   * @returns {void}
+   * @returns void
    */
   function beforeAddSchedule() {
     console.error("dlkfjslkfjslkfjskldjfslkj");
@@ -64,7 +64,7 @@
   }
   /** sets proper session data before leaving the page
    * @param i the index of the schedule in the array of all the schedules
-   * @returns {void}
+   * @returns void
    */
   function beforeOpenSchedule(i: number) {
     SM.schedule.setProps({
