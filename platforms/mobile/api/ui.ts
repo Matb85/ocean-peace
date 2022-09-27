@@ -1,6 +1,6 @@
 import { registerPlugin } from "@capacitor/core";
 import type { UIMethods, PreferencesI } from "@redinn/oceanpeace-web/api/ui";
-
+import { SplashScreen } from "@capacitor/splash-screen";
 interface UIPlugin {
   fadeIn(): Promise<void>;
   fadeOut(): Promise<void>;
@@ -26,6 +26,9 @@ const plugin: UIMethods = {
   },
   setPreference(key: keyof PreferencesI, value: string) {
     return UI.setPreference({ key, value });
+  },
+  hideSplash() {
+    return SplashScreen.hide();
   },
 };
 

@@ -1,109 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.redinn.oceanpeace">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.redinn.oceanpeace">
 
     <!-- Permissions -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-    <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme">
 
-        <service
-            android:name=".mayo.Mayo"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:exported="true"
-            android:process=":ocean.mayo"
-            >
+        <service android:name=".mayo.Mayo" android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" android:exported="true" android:process=":ocean.mayo">
             <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
             </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibility_service_config"/>
         </service>
 
-        <receiver
-            android:name=".mayo.Mayo$MayoReceiver"
-            android:exported="true"
-            tools:ignore="Instantiatable">
+        <receiver android:name=".mayo.Mayo$MayoReceiver" android:exported="true" tools:ignore="Instantiatable">
             <intent-filter>
-                <action android:name="ocean.waves.mayo.force_update" />
-                <action android:name="ocean.waves.mayo.delete" />
-                <action android:name="ocean.waves.mayo.change" />
+                <action android:name="ocean.waves.mayo.force_update"/>
+                <action android:name="ocean.waves.mayo.delete"/>
+                <action android:name="ocean.waves.mayo.change"/>
             </intent-filter>
         </receiver>
 
 
-        <service
-            android:name=".mayo.MayoAPI"
-            android:exported="true"
-            >
+        <service android:name=".mayo.MayoAPI" android:exported="true">
         </service>
 
-        <receiver
-            android:name=".mayo.MayoAPI$apiBroadcast"
-            android:exported="true"
-            tools:ignore="Instantiatable">
+        <receiver android:name=".mayo.MayoAPI$apiBroadcast" android:exported="true" tools:ignore="Instantiatable">
             <intent-filter>
-                <action android:name="ocean.waves.mapi.update" />
+                <action android:name="ocean.waves.mapi.update"/>
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".Broadcast"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":ocean.mayo">
+        <receiver android:name=".Broadcast" android:enabled="true" android:exported="true" android:process=":ocean.mayo">
             <intent-filter>
-                <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END" />
-                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK" />
-                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_BREAK" />
+                <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END"/>
+                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK"/>
+                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_BREAK"/>
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".focus.Focus"
-            android:enabled="true"
-            android:exported="true" />
+        <service android:name=".focus.Focus" android:enabled="true" android:exported="true"/>
 
 
-        <activity
-            android:exported="true"
-            android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-            android:label="@string/title_activity_main"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBarLaunch"
-            android:windowSoftInputMode="adjustPan">
+        <activity android:exported="true" android:name=".MainActivity" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode" android:label="@string/title_activity_main" android:launchMode="singleTask" android:theme="@style/AppTheme.NoActionBarLaunch" android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+        <provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
         </provider>
     </application>
 

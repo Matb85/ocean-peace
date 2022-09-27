@@ -1,3 +1,4 @@
+/// <reference types="@capacitor/splash-screen" />
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
@@ -5,17 +6,13 @@ const config: CapacitorConfig = {
   appName: "Ocean Peace",
   bundledWebRuntime: false,
   webDir: "../web/build",
-  // plugins: {
-  //   SplashScreen: {
-  //     launchShowDuration: 10000,
-  //     launchAutoHide: true,
-  //     backgroundColor: "ffffffff",
-  //     androidScaleType: "CENTER_CROP",
-  //     showSpinner: false,
-  //     splashFullScreen: true,
-  //     splashImmersive: true,
-  //   },
-  // },
+  plugins: {
+    SplashScreen: {
+      launchAutoHide: false,
+      backgroundColor: "ffffffff",
+      androidScaleType: "CENTER_CROP",
+    },
+  },
   // comment out this line for production
   // adjust for development whenever necessary
   // server: { url: "http://10.0.2.2:3000", cleartext: true }, // for the emulator

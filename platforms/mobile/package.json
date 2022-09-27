@@ -4,7 +4,7 @@
   "scripts": {
     "sync": "pnpm --filter @redinn/oceanpeace-web build && cap sync",
     "open:android": "cap open android",
-    "icons": "cordova-res android --skip-config --copy"
+    "icons": "capacitor-assets generate --android"
   },
   "dependencies": {
     "@capacitor/android": "4.3.0",
@@ -12,9 +12,9 @@
     "@redinn/oceanpeace-web": "workspace:^1.0.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "1.0.0-next.5",
     "@capacitor/cli": "4.3.0",
     "@capacitor/core": "4.3.0",
-    "@capacitor/splash-screen": "4.0.1",
-    "cordova-res": "0.15.4"
+    "@capacitor/splash-screen": "4.0.1"
   }
 }

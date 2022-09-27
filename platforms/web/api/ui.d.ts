@@ -17,4 +17,5 @@ export interface UIMethods {
   setPreferences(data: PreferencesI): Promise<void>;
   getPreferences(): Promise<PreferencesI>;
   setPreference(key: string, value: string): Promise<void>;
+  hideSplash(): Promise<void>;
 }

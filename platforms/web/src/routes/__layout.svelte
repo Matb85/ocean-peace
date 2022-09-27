@@ -16,9 +16,8 @@
 
   Api.getPreferences().then(async data => {
     if (data.setupComplete || $location.startsWith("/setup/")) return;
-    await Api.fadeIn();
     replace("/setup/1");
-    setTimeout(() => Api.fadeOut(), 75);
+    setTimeout(() => Api.hideSplash(), 100);
   });
 </script>
 

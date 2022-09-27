@@ -2,5 +2,12 @@
 	"appId": "ocean.peace.mobile",
 	"appName": "Ocean Peace",
 	"bundledWebRuntime": false,
-	"webDir": "../web/build"
+	"webDir": "../web/build",
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"backgroundColor": "ffffffff",
+			"androidScaleType": "CENTER_CROP"
+		}
+	}
 }
