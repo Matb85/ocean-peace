@@ -23,7 +23,7 @@ jobs:
           config: |
             HostName github.com
             User git
-            IdentityFile ~/.ssh/id_ed25519_design_system-bastion
+            IdentityFile ~/.ssh/id_ed25519_design_system
 
       - name: Setup java
         uses: actions/setup-java@v3
