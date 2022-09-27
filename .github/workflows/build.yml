@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   android:
@@ -13,6 +13,17 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
+
+      - name: Install SSH key for Design System
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          name: id_ed25519_design_system # optional
+          known_hosts: "|1|r2GtBiIWDfKxTeQNSzBCec0o7aY=|JucDoGUfPPyGD2WdSLxbN5EmiLE= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg="
+          config: |
+            HostName github.com
+            User git
+            IdentityFile ~/.ssh/id_ed25519_design_system-bastion
 
       - name: Setup java
         uses: actions/setup-java@v3
