@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Mayo extends AccessibilityService {
@@ -76,7 +78,7 @@ public class Mayo extends AccessibilityService {
          */
         private static JSONArray focus = new JSONArray();
 
-
+        private Timer timer = new Timer("mayo.Timer", false);
     //endregion
 
 
@@ -143,9 +145,9 @@ public class Mayo extends AccessibilityService {
     // region Mayo
 
     private void run(String openedPackageName, long eventTime) throws JSONException {
-        // variables
-        long duration = 0;
-
+        //checking if current window is a part of the same app as previous
+        if (openedPackageName.equals(closedPackageName))
+            return;
 
         //checking if window is blocked by FOCUS session
         if (FunctionBase.JSONArrayOptElement(focus, openedPackageName) != null) {
@@ -153,9 +155,8 @@ public class Mayo extends AccessibilityService {
             return;
         }
 
-        //checking if current window is a part of the same app as previous
-        if (openedPackageName.equals(closedPackageName))
-            return;
+        // variables
+        long duration = 0;
 
         if (closedIsInArrays) {
             // get the session duration
@@ -197,6 +198,11 @@ public class Mayo extends AccessibilityService {
         //check if window is blocked by goals
         // TODO: make the timer that will close app when usage time meet the limit
         if (FunctionBase.JSONArrayOptElement(close, "packageName", openedPackageName) != null) {
+
+            Date closeTime = new Date();
+            //TODO: Plan how limits will work & putt them in Arrrays & implement timer or AlarmManager
+            timer.schedule(new Mclose(), closeTime);
+
             //mayoClose(openedPackageName);
             closedIsInArrays = true;
         }
@@ -252,6 +258,36 @@ public class Mayo extends AccessibilityService {
         }
     }
 
+
+    class Mclose extends TimerTask {
+        @Override
+        public void run() {
+            View testView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.popup, null);
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                    PixelFormat.TRANSLUCENT);
+            params.gravity = Gravity.RIGHT | Gravity.TOP;
+            params.setTitle("Load Average");
+            WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+            wm.addView(testView, params);
+
+            TextView text = (TextView) testView.findViewById(R.id.closeText);
+            text.setText(closedPackageName); // OPTION: packageName
+            testView.findViewById(R.id.closePopupBtn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // close app function
+                    Intent startMain = new Intent(Intent.ACTION_MAIN);
+                    startMain.addCategory(Intent.CATEGORY_HOME);
+                    startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(startMain);
+
+                    wm.removeView(testView);
+                }
+            });
+        }
+    }
 
     // TODO: make closing app function
     private void mayoClose(String packageName) {
