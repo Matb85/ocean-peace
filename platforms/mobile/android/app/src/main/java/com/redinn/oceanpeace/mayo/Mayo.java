@@ -54,6 +54,7 @@ public class Mayo extends AccessibilityService {
          * 		    &emsp&emsp "goal1234", <br/>
          *  	&emsp ], <br/>
          *      &emsp "limit": 120 <br/>
+         *      &emsp "limitGoal": "goal1234" <br/>
          *  } <br/>
          */
         private static JSONArray notify = new JSONArray();
@@ -68,6 +69,7 @@ public class Mayo extends AccessibilityService {
          * 		    &emsp&emsp "goal1234", <br/>
          *  	&emsp ], <br/>
          *      &emsp "limit": 120 <br/>
+         *      &emsp "limitGoal": "goal1234" <br/>
          *  } <br/>
          */
         private static JSONArray close = new JSONArray();
