@@ -27,6 +27,7 @@
       activeDays: "[]",
       limitActionType: "Notification",
       sessionTime: "0",
+      sessionHistory: "[]"
     });
     SM.action.setProps({ type: "add", backUrl: "/", continueUrl: "/goal/edit/1" });
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
@@ -43,6 +44,7 @@
       activeDays: allGoals[i].activeDays,
       limitActionType: allGoals[i].limitActionType,
       sessionTime: allGoals[i].sessionTime,
+      sessionHistory: allGoals[i].sessionHistory,
     });
     SM.dialogs.setProps({ apps: allGoals[i].apps, websites: allGoals[i].websites });
   }

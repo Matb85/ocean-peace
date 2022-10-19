@@ -39,10 +39,10 @@ import java.util.TimerTask;
 public class Mayo extends AccessibilityService {
 
     // region variables
-        private String closedPackageName = null;
-        private long closedChangeTime = SystemClock.uptimeMillis();
-        private static String dayOfWeek = null;
-        private boolean closedIsInArrays = true;
+        String closedPackageName = null;
+        long closedChangeTime = SystemClock.uptimeMillis();
+        String dayOfWeek = null;
+        boolean closedIsInArrays = true;
 
         /**
          * JSONArray of this type elements: <br/>
@@ -166,7 +166,7 @@ public class Mayo extends AccessibilityService {
         // variables
         long duration = 0;
 
-        if (closedIsInArrays) {
+
             // get the session duration
             duration = eventTime - closedChangeTime;
 
@@ -180,8 +180,12 @@ public class Mayo extends AccessibilityService {
                                 Calendar.getInstance().get(Calendar.MINUTE) * (60 * 1000) +
                                 Calendar.getInstance().get(Calendar.SECOND) * (1000);
                 // update yesterday's part of session
-                updateGoals(closedPackageName, duration - pastMidnightTime);
+                if (duration - pastMidnightTime >0)
+                    updateGoals(closedPackageName, duration - pastMidnightTime);
 
+
+                //update history
+                endDay(dayOfWeek);
                 // update dayOfWeek
                 dayOfWeek = getDayOfWeekStringShort();
 
@@ -195,6 +199,7 @@ public class Mayo extends AccessibilityService {
 
 
             }
+        if (closedIsInArrays) {
             updateGoals(closedPackageName, duration);
             updateAPI(todayGoals);
         }
@@ -239,6 +244,33 @@ public class Mayo extends AccessibilityService {
         }
 
         closedPackageName = openedPackageName;
+
+
+    }
+    void endDay(String dayOfWeek) {
+        for (int i=0; i< todayGoals.length(); i++) {
+            try {
+                JSONObject goal = todayGoals.getJSONObject(i);
+                JSONArray array = new JSONArray(goal.getString(Goals.SESSIONSHISTORY));
+                // update history
+                if (goal.getLong(Goals.SESSIONTIME) > Long.parseLong(goal.getString(Goals.LIMIT)))
+                    array.put(new JSONObject().put("status", false).put("time", goal.getLong(Goals.SESSIONTIME)).put("day", dayOfWeek));
+                else
+                    array.put(new JSONObject().put("status", true).put("time", goal.getLong(Goals.SESSIONTIME)).put("day", dayOfWeek));
+                // remove too old records
+                if (array.length()>7)
+                    array.remove(0);
+                goal.put(Goals.SESSIONSHISTORY, array.toString());
+
+                //zero the sessionTime
+                goal.put(Goals.SESSIONTIME, 0L);
+
+                changeTodayGoals(goal);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 
     }
@@ -377,7 +409,7 @@ public class Mayo extends AccessibilityService {
     /**
      * Array containing goals which are scheduled for today
      */
-    public static JSONArray todayGoals = new JSONArray();
+    public JSONArray todayGoals = new JSONArray();
 
     private void allGoalsToFile() {
         Goals goalsClass = new Goals(getApplicationContext());
@@ -421,7 +453,7 @@ public class Mayo extends AccessibilityService {
         Log.i("MAYO", "loadTodayGoals: done!");
     }
 
-    public static void changeTodayGoals(JSONObject goal) throws  JSONException {
+    public void changeTodayGoals(JSONObject goal) throws  JSONException {
         Log.i("MAYO", "updateTodayGoals: updating...");
         // check if the goal with this id is in the array
         JSONObject previous = JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id"));
@@ -464,7 +496,7 @@ public class Mayo extends AccessibilityService {
         Log.i("MAYO", "updateTodayGoals: updated!");
     }
 
-    public static void deleteTodayGoal(JSONObject goal) throws JSONException {
+    public void deleteTodayGoal(JSONObject goal) throws JSONException {
         Log.i("MAYO", "deleteTodayGoal: removing goal...");
         // getting goal index
         int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, goal.getString(Goals.ID));
@@ -491,7 +523,7 @@ public class Mayo extends AccessibilityService {
          *
          * @throws JSONException
          */
-        public static void updatePackagesArrays() throws JSONException {
+        public void updatePackagesArrays() throws JSONException {
             //clear arrays
             Log.i("MAYO", "updateGoalsArray: clearing arrays...");
             notify = new JSONArray();
