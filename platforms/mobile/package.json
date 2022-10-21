@@ -7,14 +7,14 @@
     "icons": "capacitor-assets generate --android"
   },
   "dependencies": {
-    "@capacitor/android": "4.3.0",
-    "@capacitor/app": "4.0.1",
+    "@capacitor/android": "4.4.0",
+    "@capacitor/app": "4.1.0",
     "@redinn/oceanpeace-web": "workspace:^1.0.0"
   },
   "devDependencies": {
-    "@capacitor/assets": "1.0.0-next.5",
-    "@capacitor/cli": "4.3.0",
-    "@capacitor/core": "4.3.0",
-    "@capacitor/splash-screen": "4.0.1"
+    "@capacitor/assets": "1.0.14",
+    "@capacitor/cli": "4.4.0",
+    "@capacitor/core": "4.4.0",
+    "@capacitor/splash-screen": "4.1.1"
   }
 }
