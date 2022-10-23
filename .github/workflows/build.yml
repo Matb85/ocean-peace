@@ -13,6 +13,7 @@ jobs:
   android:
     name: Build Android
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -45,7 +46,7 @@ jobs:
           cache: pnpm
 
       - name: Install app dependencies
-        run: pnpm install
+        run: pnpm i --no-frozen-lockfile
 
       - name: Build
         run: pnpm --filter @redinn/oceanpeace-mobile sync
