@@ -6,6 +6,9 @@ on:
     branches:
       - master
 
+env:
+  ANDROID_CWD: platforms/mobile/android/
+
 jobs:
   android:
     name: Build Android
@@ -48,27 +51,27 @@ jobs:
         run: pnpm --filter @redinn/oceanpeace-mobile sync
 
       - name: Build AAP
-        run: cd platforms/mobile/android/ && gradle bundle
+        working-directory: ${{ env.ANDROID_CWD }}
+        run: gradle bundle
 
       - name: Build APK
-        run: cd platforms/mobile/android/ && gradle assembleRelease
+        working-directory: ${{ env.ANDROID_CWD }}
+        run: gradle assembleRelease
 
-      - name: Extract Android signing key from env
-        run: |
-          cd platforms/mobile/
-          echo "${{ secrets.RELEASE_KEYSTORE }}" > android/release.jks.base64
-          base64 -d android/release.jks.base64 > android/release.decrypted.jks
-
-      - name: Sign AAP
-        run: cd platforms/mobile/ && jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/bundle/release/app-release-signed.aab ./android/app/build/outputs/bundle/release/app-release.aab release
-
-      - name: Sign APK
-        run: cd platforms/mobile/ && jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/apk/release/app-release-unsigned.apk  ./android/app/build/outputs/apk/release/app-release-unsigned.apk release
+      - uses: Tlaster/android-sign@v1
+        name: Sign app APK
+        with:
+          releaseDirectory: |
+            ${{ env.ANDROID_CWD }}app/build/outputs/apk/release
+            ${{ env.ANDROID_CWD }}app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.RELEASE_KEYSTORE }}
+          output: ${{ env.ANDROID_CWD }}build/release/signed
+          alias: release
+          keyStorePassword: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Artifacts
-          path: platforms/mobile/android/app/build/outputs/
+          name: AAP & APK
+          path: ${{ env.ANDROID_CWD }}build/release/signed
           retention-days: 60
-
