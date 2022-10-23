@@ -1,6 +1,6 @@
 {
-  "platforms/desktop": "0.0.0",
-  "platforms/mobile": "0.0.0",
-  "platforms/web": "0.0.0",
+  "platforms/desktop": "1.0.0",
+  "platforms/mobile": "1.0.0",
+  "platforms/web": "1.0.0",
   ".": "1.0.0"
 }
