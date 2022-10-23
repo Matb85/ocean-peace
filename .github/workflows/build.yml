@@ -58,18 +58,34 @@ jobs:
         working-directory: ${{ env.ANDROID_CWD }}
         run: gradle assembleRelease
 
-      - name: Android Sign
+      - name: Android Sign APK
         uses: ilharp/sign-android-release@v1 # Or use @nightly
-        id: sign_app
+        id: sign_apk
         with:
           releaseDir: ${{ env.ANDROID_CWD }}app/build/outputs/apk/release
           signingKey: ${{ secrets.RELEASE_KEYSTORE }}
           keyAlias: release
           keyStorePassword: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
 
-      - name: Upload Artifacts
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: AAP & APK
-          path: ${{steps.sign_app.outputs.signedFile}}
+          name: APK
+          path: ${{steps.sign_apk.outputs.signedFile}}
+          retention-days: 60
+
+      - name: Android Sign AAP
+        uses: ilharp/sign-android-release@v1 # Or use @nightly
+        id: sign_aap
+        with:
+          releaseDir: ${{ env.ANDROID_CWD }}app/build/outputs/bundle/release
+          signingKey: ${{ secrets.RELEASE_KEYSTORE }}
+          keyAlias: release
+          keyStorePassword: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+
+      - name: Upload AAP Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: AAP
+          path: ${{steps.sign_aap.outputs.signedFile}}
           retention-days: 60
