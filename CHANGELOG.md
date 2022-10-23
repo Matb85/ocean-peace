@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Redinn-Labs/ocean-peace/compare/ocean-peace-v1.0.0...ocean-peace-v1.0.1) (2022-10-23)
+
+
+### Bug Fixes
+
+* :bookmark: versioning ([55d8766](https://github.com/Redinn-Labs/ocean-peace/commit/55d8766fde64a38631a2206cb9f0f7435281f7e1))
+
 ## 1.0.0 (2022-10-23)
 
 
