@@ -1,5 +1,7 @@
 name: Release
 
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 on:
   push:
     branches:

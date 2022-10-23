@@ -2,8 +2,9 @@ name: Build
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
 
 env:
   ANDROID_CWD: platforms/mobile/android/
