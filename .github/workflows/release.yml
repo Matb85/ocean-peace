@@ -36,7 +36,7 @@ jobs:
         run: npm i pnpm -g
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm i --no-frozen-lockfile
 
       - name: Version and publish
         env:
