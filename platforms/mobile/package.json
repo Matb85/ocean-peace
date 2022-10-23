@@ -1,6 +1,7 @@
 {
   "name": "@redinn/oceanpeace-mobile",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "sync": "pnpm --filter @redinn/oceanpeace-web build && cap sync",
     "open:android": "cap open android",
