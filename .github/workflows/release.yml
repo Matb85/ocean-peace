@@ -44,7 +44,7 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
 
           if [ ${{ github.base_ref }} = next ]; then
-            pnpm lerna version --conventional-commits --conventional-prerelease --preid beta --yes
+            pnpm lerna version --conventional-commits --conventional-prerelease --preid beta --yes --create-release github
           else
-            pnpm lerna version --conventional-commits --conventional-graduate --yes
+            pnpm lerna version --conventional-commits --conventional-graduate --yes --create-release github
           fi
