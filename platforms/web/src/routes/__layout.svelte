@@ -15,9 +15,9 @@
   loadTranslations(initLocale, $location); // keep this just before the `return`
 
   Api.getPreferences().then(async data => {
+    setTimeout(() => Api.hideSplash(), 100);
     if (data.setupComplete || $location.startsWith("/setup/")) return;
     replace("/setup/1");
-    setTimeout(() => Api.hideSplash(), 100);
   });
 </script>
 
