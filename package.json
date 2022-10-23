@@ -5,6 +5,9 @@
     "prepare": "husky install",
     "test": "pnpm run -r test"
   },
+  "workspaces": [
+    "platforms/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Redinn-Labs/ocean-peace.git"
