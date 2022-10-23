@@ -2,9 +2,8 @@ name: Build
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "*"
+  release:
+    types: [published]
 
 env:
   ANDROID_CWD: platforms/mobile/android/
