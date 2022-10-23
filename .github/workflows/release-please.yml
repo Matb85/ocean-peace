@@ -11,4 +11,5 @@ jobs:
         with:
           command: manifest
           release-type: node
+          token: ${{secrets.GITHUB_TOKEN}}
           monorepo-tags: true
