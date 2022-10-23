@@ -59,19 +59,17 @@ jobs:
         run: gradle assembleRelease
 
       - name: Android Sign
-        uses: Tlaster/android-sign@v1.2.2
+        uses: ilharp/sign-android-release@v1 # Or use @nightly
+        id: sign_app
         with:
-          releaseDirectory: |
-            ${{ env.ANDROID_CWD }}app/build/outputs/apk/release
-            ${{ env.ANDROID_CWD }}app/build/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.RELEASE_KEYSTORE }}
-          output: ${{ env.ANDROID_CWD }}build/release/signed
-          alias: release
+          releaseDir: ${{ env.ANDROID_CWD }}app/build/outputs/apk/release
+          signingKey: ${{ secrets.RELEASE_KEYSTORE }}
+          keyAlias: release
           keyStorePassword: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: AAP & APK
-          path: ${{ env.ANDROID_CWD }}build/release/signed
+          path: ${{steps.sign_app.outputs.signedFile}}
           retention-days: 60
