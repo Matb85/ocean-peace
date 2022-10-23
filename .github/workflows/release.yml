@@ -46,5 +46,5 @@ jobs:
           if [ ${{ github.base_ref }} = next ]; then
             pnpm lerna version --conventional-commits --conventional-prerelease --preid beta --yes --create-release github
           else
-            pnpm lerna version --conventional-commits --conventional-graduate --yes --create-release github
+            pnpm lerna version --conventional-commits --yes --create-release github
           fi
