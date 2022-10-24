@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Icon, Aquarium, H } from "@redinnlabs/system/Elements";
-  import { mdiCheck } from "@mdi/js";
+  import { mdiCheck, mdiClose } from "@mdi/js";
   import { PieChart, ChartKey } from "@redinnlabs/system/Charts";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
@@ -15,7 +15,7 @@
   import SM from "$lib/sessionManager";
   import { timeFromNumber } from "$lib/utils";
 
-  const goalData = SM.goal.getProps("id", "name", "limit", "activeDays", "limitActionType", "sessionTime");
+  const goalData = SM.goal.getProps("id", "name", "limit", "activeDays", "limitActionType", "sessionTime", "sessionHistory");
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
     selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
@@ -71,21 +71,20 @@
 
 <H thin>{$t("d.l7d")}</H>
 <section class="flex flex-wrap items-center justify-center max-w-xs">
-  {#each ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as day}
+  {#each JSON.parse(goalData.sessionHistory) as session}
     <div class="text-center">
       <PieChart
         className="w-20 h-20"
-        maxValue={200}
+        maxValue={parseInt(goalData.limit) * 60 * 1000}
         data={[
-          { color: "#3772FF", value: 100 },
-          { color: "#FCBA04", value: 30 },
+          { color: "#3772FF", value: parseInt(session.time) },
         ]}
       >
         <div class="wh-full bg-green-light text-green-dark flex items-center justify-center">
-          <Icon d={mdiCheck} className="fill-current w-32" />
+          <Icon d={session.status ? mdiCheck : mdiClose} className="fill-current w-32" />
         </div>
       </PieChart>
-      <p>{day}</p>
+      <p>{session.day}</p>
     </div>
   {/each}
 </section>

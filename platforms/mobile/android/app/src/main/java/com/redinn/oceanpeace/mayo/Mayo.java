@@ -9,8 +9,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.graphics.PixelFormat;
-import android.os.Binder;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,15 +32,17 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Mayo extends AccessibilityService {
 
     // region variables
-        private String closedPackageName = null;
-        private long closedChangeTime = SystemClock.uptimeMillis();
-        private static String dayOfWeek = null;
-        private boolean closedIsInArrays = true;
+        String closedPackageName = null;
+        long closedChangeTime = SystemClock.uptimeMillis();
+        String dayOfWeek = null;
+        boolean closedIsInArrays = true;
 
         /**
          * JSONArray of this type elements: <br/>
@@ -49,6 +53,8 @@ public class Mayo extends AccessibilityService {
          * 		    &emsp&emsp "goal1234", <br/>
          * 		    &emsp&emsp "goal1234", <br/>
          *  	&emsp ], <br/>
+         *      &emsp "limit": 120 <br/>
+         *      &emsp "limitGoal": "goal1234" <br/>
          *  } <br/>
          */
         private static JSONArray notify = new JSONArray();
@@ -62,6 +68,8 @@ public class Mayo extends AccessibilityService {
          * 		    &emsp&emsp "goal1234", <br/>
          * 		    &emsp&emsp "goal1234", <br/>
          *  	&emsp ], <br/>
+         *      &emsp "limit": 120 <br/>
+         *      &emsp "limitGoal": "goal1234" <br/>
          *  } <br/>
          */
         private static JSONArray close = new JSONArray();
@@ -76,7 +84,7 @@ public class Mayo extends AccessibilityService {
          */
         private static JSONArray focus = new JSONArray();
 
-
+        private Timer timer = new Timer("mayo.Timer", false);
     //endregion
 
 
@@ -107,10 +115,13 @@ public class Mayo extends AccessibilityService {
     }
 
 
-    // TODO: refactor code by using functions and workers
+
+    // TODO: refactor code by using functions and workers or threads
     // TODO: make clear documentation & comments
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+
+        ApplicationInfo info =getApplicationInfo();
 
         try {
             // run function
@@ -122,12 +133,6 @@ public class Mayo extends AccessibilityService {
     }
 
 
-    public class LocalBinder extends Binder {
-        public Mayo getServerInstance() {
-            return Mayo.this;
-        }
-    }
-
     @Override
     public void onInterrupt() {
     }
@@ -135,6 +140,7 @@ public class Mayo extends AccessibilityService {
     @Override
     public void onDestroy() {
         allGoalsToFile();
+        unregisterReceiver(mReceiver);
     }
     //endregion
 
@@ -143,9 +149,11 @@ public class Mayo extends AccessibilityService {
     // region Mayo
 
     private void run(String openedPackageName, long eventTime) throws JSONException {
-        // variables
-        long duration = 0;
+        //checking if current window is a part of the same app as previous
+        if (openedPackageName.equals(closedPackageName))
+            return;
 
+        timer.cancel();
 
         //checking if window is blocked by FOCUS session
         if (FunctionBase.JSONArrayOptElement(focus, openedPackageName) != null) {
@@ -153,11 +161,10 @@ public class Mayo extends AccessibilityService {
             return;
         }
 
-        //checking if current window is a part of the same app as previous
-        if (openedPackageName.equals(closedPackageName))
-            return;
+        // variables
+        long duration = 0;
 
-        if (closedIsInArrays) {
+
             // get the session duration
             duration = eventTime - closedChangeTime;
 
@@ -171,8 +178,12 @@ public class Mayo extends AccessibilityService {
                                 Calendar.getInstance().get(Calendar.MINUTE) * (60 * 1000) +
                                 Calendar.getInstance().get(Calendar.SECOND) * (1000);
                 // update yesterday's part of session
-                updateGoals(closedPackageName, duration - pastMidnightTime);
+                if (duration - pastMidnightTime >0)
+                    updateGoals(closedPackageName, duration - pastMidnightTime);
 
+
+                //update history
+                endDay(dayOfWeek);
                 // update dayOfWeek
                 dayOfWeek = getDayOfWeekStringShort();
 
@@ -186,6 +197,7 @@ public class Mayo extends AccessibilityService {
 
 
             }
+        if (closedIsInArrays) {
             updateGoals(closedPackageName, duration);
             updateAPI(todayGoals);
         }
@@ -195,16 +207,34 @@ public class Mayo extends AccessibilityService {
         Log.i("MAYO", "window: " + openedPackageName);
 
         //check if window is blocked by goals
-        // TODO: make the timer that will close app when usage time meet the limit
-        if (FunctionBase.JSONArrayOptElement(close, "packageName", openedPackageName) != null) {
-            //mayoClose(openedPackageName);
+        JSONObject closeElement = FunctionBase.JSONArrayOptElement(close, "packageName", openedPackageName);
+        JSONObject notifyElement = FunctionBase.JSONArrayOptElement(notify, "packageName", openedPackageName);
+        if ( closeElement != null) {
+
+            timer = new Timer("mayo.Timer");
+            Date closeTime = new Date();
+            closeTime.setTime(
+                    Calendar.getInstance().getTimeInMillis()
+                    + closeElement.getLong("limit")
+                    - FunctionBase.JSONArrayOptElement(todayGoals, Goals.NAME, closeElement.getString("limitGoal")).getLong(Goals.SESSIONTIME)
+            );
+            timer.schedule(new MClose(), closeTime);
+
             closedIsInArrays = true;
         }
 
         //check if window is set to notify by goals
-        // TODO: make the timer that will send notification when usage time meet the limit
-        else if (FunctionBase.JSONArrayOptElement(notify, "packageName", openedPackageName) != null) {
-            //mayoClose(openedPackageName);
+        else if (notifyElement != null) {
+
+            timer = new Timer("mayo.Timer");
+            Date closeTime = new Date();
+            closeTime.setTime(
+                    Calendar.getInstance().getTimeInMillis()
+                            + closeElement.getLong("limit")
+                            - FunctionBase.JSONArrayOptElement(todayGoals, Goals.NAME, closeElement.getString("limitGoal")).getLong(Goals.SESSIONTIME)
+            );
+            //TODO: Make notification window appear
+            timer.schedule(new MClose(), closeTime);
             closedIsInArrays = true;
         }
         else {
@@ -212,6 +242,33 @@ public class Mayo extends AccessibilityService {
         }
 
         closedPackageName = openedPackageName;
+
+
+    }
+    void endDay(String dayOfWeek) {
+        for (int i=0; i< todayGoals.length(); i++) {
+            try {
+                JSONObject goal = todayGoals.getJSONObject(i);
+                JSONArray array = new JSONArray(goal.getString(Goals.SESSIONSHISTORY));
+                // update history
+                if (goal.getLong(Goals.SESSIONTIME) > (Long.parseLong(goal.getString(Goals.LIMIT)) * 1000 * 60))
+                    array.put(new JSONObject().put("status", false).put("time", goal.getLong(Goals.SESSIONTIME)).put("day", dayOfWeek));
+                else
+                    array.put(new JSONObject().put("status", true).put("time", goal.getLong(Goals.SESSIONTIME)).put("day", dayOfWeek));
+                // remove too old records
+                if (array.length()>7)
+                    array.remove(0);
+                goal.put(Goals.SESSIONSHISTORY, array.toString());
+
+                //zero the sessionTime
+                goal.put(Goals.SESSIONTIME, 0L);
+
+                changeTodayGoals(goal);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 
     }
@@ -252,6 +309,47 @@ public class Mayo extends AccessibilityService {
         }
     }
 
+
+    class MClose extends TimerTask {
+        @Override
+        public void run() {
+            Looper.prepare();
+
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+
+                    View testView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.popup, null);
+                    WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                            WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
+                            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                            PixelFormat.TRANSLUCENT);
+                    params.gravity = Gravity.RIGHT | Gravity.TOP;
+                    params.setTitle("Load Average");
+                    WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+                    wm.addView(testView, params);
+
+                    TextView text = (TextView) testView.findViewById(R.id.closeText);
+                    text.setText(closedPackageName); // OPTION: packageName
+                    testView.findViewById(R.id.closePopupBtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // close app function
+                            Intent startMain = new Intent(Intent.ACTION_MAIN);
+                            startMain.addCategory(Intent.CATEGORY_HOME);
+                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(startMain);
+
+                            wm.removeView(testView);
+                        }
+                    });
+
+                }
+            });
+
+            Looper.loop();
+        }
+    }
 
     // TODO: make closing app function
     private void mayoClose(String packageName) {
@@ -309,7 +407,7 @@ public class Mayo extends AccessibilityService {
     /**
      * Array containing goals which are scheduled for today
      */
-    public static JSONArray todayGoals = new JSONArray();
+    public JSONArray todayGoals = new JSONArray();
 
     private void allGoalsToFile() {
         Goals goalsClass = new Goals(getApplicationContext());
@@ -353,13 +451,17 @@ public class Mayo extends AccessibilityService {
         Log.i("MAYO", "loadTodayGoals: done!");
     }
 
-    public static void changeTodayGoals(JSONObject goal) throws  JSONException {
+    public void changeTodayGoals(JSONObject goal) throws  JSONException {
         Log.i("MAYO", "updateTodayGoals: updating...");
         // check if the goal with this id is in the array
         JSONObject previous = JSONArrayOptElement(todayGoals, Goals.ID, goal.getString("id"));
         if(previous != null) {
             // get index of previous goal in array
             int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, previous.getString(Goals.ID));
+
+            //BUG: Progress do not synchronize
+
+            // TODO: Fix progress synchronization while updating goal
 
             // date is possible to be null
             try {
@@ -374,7 +476,7 @@ public class Mayo extends AccessibilityService {
                     goal.put(Goals.SESSIONTIME, previous.getString(Goals.SESSIONTIME));
                 }
             } catch (NullPointerException | IllegalArgumentException e) {
-
+                e.printStackTrace();
             } finally {
                 // replace goal in array
                 todayGoals.put(index, goal);
@@ -392,7 +494,7 @@ public class Mayo extends AccessibilityService {
         Log.i("MAYO", "updateTodayGoals: updated!");
     }
 
-    public static void deleteTodayGoal(JSONObject goal) throws JSONException {
+    public void deleteTodayGoal(JSONObject goal) throws JSONException {
         Log.i("MAYO", "deleteTodayGoal: removing goal...");
         // getting goal index
         int index = JSONArrayGetIndexOf(todayGoals, Goals.ID, goal.getString(Goals.ID));
@@ -419,7 +521,7 @@ public class Mayo extends AccessibilityService {
          *
          * @throws JSONException
          */
-        public static void updatePackagesArrays() throws JSONException {
+        public void updatePackagesArrays() throws JSONException {
             //clear arrays
             Log.i("MAYO", "updateGoalsArray: clearing arrays...");
             notify = new JSONArray();
@@ -462,8 +564,15 @@ public class Mayo extends AccessibilityService {
 
             packageNames = new JSONArray( goal.getString("apps") );
 
+            long goalLimit = Long.parseLong(goal.getString(Goals.LIMIT)) * 60 * 1000;
+
+
             // adding packageNames to the notify array
             for (int i = 0; i < packageNames.length(); i++) {
+
+                String limitName = goal.getString(Goals.NAME);
+
+                long limit = -1;
                 //checking if the packageName already exist in array
                 JSONObject temp = JSONArrayOptElement(notify, "packageName" ,packageNames.getString(i));
                 if (temp != null) {
@@ -471,13 +580,22 @@ public class Mayo extends AccessibilityService {
                     if (FunctionBase.JSONArrayOptElement(temp.getJSONArray("goals"), goal.getString(Goals.ID)) == null)
                         temp.getJSONArray("goals").put(goal.getString(Goals.ID));
 
+                    if (goalLimit < temp.getLong("limit")) {
+                        limit = goalLimit;
+                    } else {
+                        limit = temp.getLong("limit");
+                        limitName = temp.getString("limitGoal");
+                    }
+
                     continue;
                 }
 
                 // create object which will be stored
                 JSONObject element = new JSONObject()
                                 .put("packageName", packageNames.getString(i))
-                                .put("goals", new JSONArray().put(goal.getString(Goals.ID)));
+                                .put("goals", new JSONArray().put(goal.getString(Goals.ID)))
+                                .put("limit", limit == -1 ? goalLimit : limit)
+                                .put("limitGoal", limitName);
 
                 // store object
                 notify.put(element);
@@ -490,21 +608,37 @@ public class Mayo extends AccessibilityService {
 
             packageNames = new JSONArray( goal.getString("apps") );
 
+            long goalLimit = Long.parseLong(goal.getString(Goals.LIMIT)) * 60 * 1000;
+
             // adding packageNames to the notify array
             for (int i = 0; i < packageNames.length(); i++) {
+
+                String limitName = goal.getString(Goals.NAME);
+
+                long limit = -1;
                 //checking if the packageName already exist in array
                 JSONObject temp = JSONArrayOptElement(close, "packageName" ,packageNames.getString(i));
                 if (temp != null) {
                     //check if the goal is not already present
                     if (FunctionBase.JSONArrayOptElement(temp.getJSONArray("goals"), goal.getString(Goals.ID)) == null)
                         temp.getJSONArray("goals").put(goal.getString(Goals.ID));
+
+                    if (goalLimit < temp.getLong("limit"))
+                        limit = goalLimit;
+                    else {
+                        limit = temp.getLong("limit");
+                        limitName = temp.getString("limitGoal");
+                    }
+
                     continue;
                 }
 
                 // create object which will be stored
                 JSONObject element = new JSONObject()
                         .put("packageName", packageNames.getString(i))
-                        .put("goals", new JSONArray().put(goal.getString(Goals.ID)));
+                        .put("goals", new JSONArray().put(goal.getString(Goals.ID)))
+                        .put("limit", limit == -1 ? goalLimit : limit)
+                        .put("limitGoal", limitName);
 
                 // store object
                 close.put(element);
