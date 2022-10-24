@@ -9,8 +9,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.graphics.PixelFormat;
-import android.os.Binder;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -115,10 +115,13 @@ public class Mayo extends AccessibilityService {
     }
 
 
+
     // TODO: refactor code by using functions and workers or threads
     // TODO: make clear documentation & comments
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+
+        ApplicationInfo info =getApplicationInfo();
 
         try {
             // run function
@@ -130,12 +133,6 @@ public class Mayo extends AccessibilityService {
     }
 
 
-    public class LocalBinder extends Binder {
-        public Mayo getServerInstance() {
-            return Mayo.this;
-        }
-    }
-
     @Override
     public void onInterrupt() {
     }
@@ -143,6 +140,7 @@ public class Mayo extends AccessibilityService {
     @Override
     public void onDestroy() {
         allGoalsToFile();
+        unregisterReceiver(mReceiver);
     }
     //endregion
 
@@ -253,7 +251,7 @@ public class Mayo extends AccessibilityService {
                 JSONObject goal = todayGoals.getJSONObject(i);
                 JSONArray array = new JSONArray(goal.getString(Goals.SESSIONSHISTORY));
                 // update history
-                if (goal.getLong(Goals.SESSIONTIME) > Long.parseLong(goal.getString(Goals.LIMIT)))
+                if (goal.getLong(Goals.SESSIONTIME) > (Long.parseLong(goal.getString(Goals.LIMIT)) * 1000 * 60))
                     array.put(new JSONObject().put("status", false).put("time", goal.getLong(Goals.SESSIONTIME)).put("day", dayOfWeek));
                 else
                     array.put(new JSONObject().put("status", true).put("time", goal.getLong(Goals.SESSIONTIME)).put("day", dayOfWeek));
