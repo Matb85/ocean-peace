@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.redinn.oceanpeace.focus.Focus;
-
 import java.util.Calendar;
 
 public class Broadcast extends BroadcastReceiver {
