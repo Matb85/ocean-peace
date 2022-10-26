@@ -30,6 +30,8 @@
                 <action android:name="ocean.waves.mayo.force_update"/>
                 <action android:name="ocean.waves.mayo.delete"/>
                 <action android:name="ocean.waves.mayo.change"/>
+                <action android:name="ocean.waves.mayo.focus.start"/>
+                <action android:name="ocean.waves.mayo.focus.stop"/>
             </intent-filter>
         </receiver>
 
@@ -40,14 +42,6 @@
         <receiver android:name=".mayo.MayoAPI$apiBroadcast" android:exported="true" tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="ocean.waves.mapi.update"/>
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name=".Broadcast" android:enabled="true" android:exported="true" android:process=":ocean.mayo">
-            <intent-filter>
-                <action android:name="com.oceanpeace.broadcasts.CONTINUOUS_END"/>
-                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_WORK"/>
-                <action android:name="com.oceanpeace.broadcasts.POMODORO_START_BREAK"/>
             </intent-filter>
         </receiver>
 

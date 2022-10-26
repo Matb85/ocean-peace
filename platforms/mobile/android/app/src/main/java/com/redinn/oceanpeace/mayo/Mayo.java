@@ -78,7 +78,7 @@ public class Mayo extends AccessibilityService {
          * JSONArray of this type elements: <br/>
          *
          * [<br/>
-         *  &emsp "com.facebook.katana", "com.instagram.katana:, <br/>
+         *  &emsp "com.facebook.katana", "com.instagram.katana", <br/>
          * ]<br/>
          *
          */
@@ -680,6 +680,16 @@ public class Mayo extends AccessibilityService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case "ocean.waves.mayo.focus.start":
+                    try {
+                        startFocus(new JSONArray(intent.getStringExtra("packages")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "ocean.waves.mayo.focus.stop":
+                    stopFocus();
                     break;
             }
         }
