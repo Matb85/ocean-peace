@@ -51,8 +51,6 @@ public class MainActivity extends BridgeActivity {
 
         IconManager.regenerateIcons(getApplicationContext());
 
-        Focus.getInstance().setContextElements(this.getApplicationContext());
-
         super.onStart();
 
         // TODO: make checking for usageStats permissions & accessibility
