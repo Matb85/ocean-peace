@@ -15,18 +15,18 @@ import org.json.JSONObject;
 import java.io.File;
 
 /**
- * Class providing saving, loading and deleting functions for goals. <br/>
- *  <br/>
- * Goal basic structure:<br/>
+ * Class providing saving, loading and deleting functions for goals. <br>
+ *  <br>
+ * Goal basic structure:<br>
  *
- * { <br/>
- * &emsp"id": "goal1662045227355",<br/>
- * &emsp"name": "Lol",<br/>
- * &emsp"apps": "[\"com.Playrion.AirlinesManager2\"]",<br/>
- * &emsp"websites": "[{\"url\":\"Delta.com\",\"label\":\"*.Delta.com\",\"favicon\":\"\/globe.png\",\"type\":1}]",<br/>
- * &emsp"limit": "75",<br/>
- * &emsp"activeDays": "[\"Tue\"]",<br/>
- * &emsp"limitActionType": "Notification"<br/>
+ * { <br>
+ * &emsp;"id": "goal1662045227355",<br>
+ * &emsp;"name": "Lol",<br>
+ * &emsp;"apps": "[\"com.Playrion.AirlinesManager2\"]",<br>
+ * &emsp;"websites": "[{\"url\":\"Delta.com\",\"label\":\"*.Delta.com\",\"favicon\":\"\/globe.png\",\"type\":1}]",<br>
+ * &emsp;"limit": "75",<br>
+ * &emsp;"activeDays": "[\"Tue\"]",<br>
+ * &emsp;"limitActionType": "Notification"<br>
  * }
  */
 public class Goals {
@@ -166,7 +166,7 @@ public class Goals {
      */
     public static String ACTIVEDAYS = "activeDays";
     /**
-     * String containing name of <b>limit action type/b> field
+     * String containing name of <b>limit action type</b> field
      */
     public static String LIMITACTIONTYPE = "limitActionType";
     /**

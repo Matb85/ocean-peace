@@ -111,8 +111,8 @@ public class FunctionBase {
      * @param element   wanted {@link String#String() String}
      * @return <i>int</i> with index of the element
      *
-     * <br/>
-     * <b>NOTE: &emsp</b> if the function returned <b>-1</b>, it means that the array doesn't contain specified element
+     * <br>
+     * <b>NOTE: </b> &emsp; if the function returned <b>-1</b>, it means that the array doesn't contain specified element
      *
      * @author Raccon
      * @since 09.09.2022
@@ -136,8 +136,8 @@ public class FunctionBase {
      * @param element   wanted <i>int</i>
      * @return <i>int</i> with index of the element
      *
-     * <br/>
-     * <b>NOTE: &emsp</b> if the function returned <b>-1</b>, it means that the array doesn't contain specified element
+     * <br>
+     * <b>NOTE: </b> &emsp; if the function returned <b>-1</b>, it means that the array doesn't contain specified element
      *
      * @author Raccon
      * @since 09.09.2022
@@ -161,8 +161,8 @@ public class FunctionBase {
      * @param element   wanted <i>long</i>
      * @return <i>int</i> with index of the element
      *
-     * <br/>
-     * <b>NOTE: &emsp</b> if the function returned <b>-1</b>, it means that the array doesn't contain specified element
+     * <br>
+     * <b>NOTE: </b> &emsp; if the function returned <b>-1</b>, it means that the array doesn't contain specified element
      *
      * @author Raccon
      * @since 09.09.2022
@@ -187,8 +187,8 @@ public class FunctionBase {
      * @param element   wanted {@link String#String() String}
      * @return  <i>int</i> with index of the element
      *
-     * <br/>
-     * <b>NOTE: &emsp</b> if the function returned <b>-1</b>, it means that the array doesn't contain specified element
+     * <br>
+     * <b>NOTE: </b> &emsp; if the function returned <b>-1</b>, it means that the array doesn't contain specified element
      *
      * @author Raccon
      * @since 09.09.2022

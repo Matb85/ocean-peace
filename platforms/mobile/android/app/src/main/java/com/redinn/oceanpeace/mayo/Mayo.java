@@ -45,41 +45,41 @@ public class Mayo extends AccessibilityService {
         boolean closedIsInArrays = true;
 
         /**
-         * JSONArray of this type elements: <br/>
+         * JSONArray of this type elements: <br>
          *
-         *  { <br/>
-         * 	    &emsp "packageName": "com.facebook.katana", <br/>
-         * 	    &emsp "goals": [ <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         *  	&emsp ], <br/>
-         *      &emsp "limit": 120 <br/>
-         *      &emsp "limitGoal": "goal1234" <br/>
-         *  } <br/>
+         *  { <br>
+         * 	    &emsp; "packageName": "com.facebook.katana", <br>
+         * 	    &emsp; "goals": [ <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         *  	&emsp; ], <br>
+         *      &emsp; "limit": 120 <br>
+         *      &emsp; "limitGoal": "goal1234" <br>
+         *  } <br>
          */
         private static JSONArray notify = new JSONArray();
 
         /**
-         * JSONArray of this type elements: <br/>
+         * JSONArray of this type elements: <br>
          *
-         *  { <br/>
-         * 	    &emsp "packageName": "com.facebook.katana", <br/>
-         * 	    &emsp "goals": [ <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         *  	&emsp ], <br/>
-         *      &emsp "limit": 120 <br/>
-         *      &emsp "limitGoal": "goal1234" <br/>
-         *  } <br/>
+         *  { <br>
+         * 	    &emsp; "packageName": "com.facebook.katana", <br>
+         * 	    &emsp; "goals": [ <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         *  	&emsp; ], <br>
+         *      &emsp; "limit": 120 <br>
+         *      &emsp; "limitGoal": "goal1234" <br>
+         *  } <br>
          */
         private static JSONArray close = new JSONArray();
 
         /**
-         * JSONArray of this type elements: <br/>
+         * JSONArray of this type elements: <br>
          *
-         * [<br/>
-         *  &emsp "com.facebook.katana", "com.instagram.katana", <br/>
-         * ]<br/>
+         * [<br>
+         *  &emsp; "com.facebook.katana", "com.instagram.katana", <br>
+         * ]<br>
          *
          */
         private static JSONArray focus = new JSONArray();
