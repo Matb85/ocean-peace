@@ -1,5 +1,6 @@
 package com.redinn.oceanpeace.focus;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -38,6 +39,13 @@ public class FocusService extends Service {
         mHandler = new Handler(looper);
 
         super.onCreate();
+    }
+
+    @Override
+    public void onDestroy() {
+        handlerThread.quitSafely();
+
+        super.onDestroy();
     }
 
     /**
@@ -90,19 +98,20 @@ public class FocusService extends Service {
      *
      * Stopwatch is a focus session type that runs endless until user stop it or process will be killed.
      * It blocks all preselected applications. Responsive for blocking is {@link com.redinn.oceanpeace.mayo.Mayo Mayo}.
-     * Function first check if other focus session isn't running, then overrides <i>apps</i> array and send broadcast to Mayo to start blocking selected apps.
+     * Function first check if other focus session isn't running, then overrides {@link #appsPackageNames} array and send broadcast to Mayo to start blocking selected apps.
      *
-     * @param apps {@link java.lang.reflect.Array array} of {@link String String} , String} containing PackageNames of apps selected for blocking in focus session
+     * @param apps {@link java.lang.reflect.Array array} of {@link String String} containing PackageNames of apps selected for blocking in focus session
      * @return {@link androidx.work.ListenableWorker.Result Result}. If <i>failure</i>, a error message is provided. If <i>true</i> focus session started correctly
      *
      * @since 5.11.2022, {@link FocusService FocusService} ver 2.0
      *
      * @see #appsPackageNames
      * @see #startContinuous(String[], long)
-     * @see #startPomodoro()
+     * @see #startPomodoro(String[], long, long, int)
      * @see #stop()
      */
     ListenableWorker.Result startStopwatch(String[] apps) {
+        // Check if the other session isn't running
         if (isRunning) {
             Data returnData = new Data.Builder().putString(FIELD_RESULT, ERROR_RUNNING).build();
 
@@ -110,13 +119,20 @@ public class FocusService extends Service {
         }
 
         try {
+            // override the array
             appsPackageNames = apps;
 
+            //blocking notifications
+            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
+
+            // send broadcast to Mayo
             broadcastStart();
         }
         catch (Exception e) {
             e.printStackTrace();
-            return ListenableWorker.Result.failure();
+            Data returnData = new Data.Builder().putString(FIELD_RESULT, ERROR_DATA).build();
+            return ListenableWorker.Result.failure(returnData);
         }
 
         isRunning = true;
@@ -128,11 +144,11 @@ public class FocusService extends Service {
      *
      * Continuous is a focus session that runs for chosen by user duration.
      * It blocks all preselected applications. Responsive for blocking is {@link com.redinn.oceanpeace.mayo.Mayo Mayo}.
-     * Function first checks if other focus session isn't running, then overrides <i>apps</i> array and setups a handler's {@link Runnable Runnable} to run after timeout.
+     * Function first checks if other focus session isn't running, then overrides {@link #appsPackageNames} array and setups a handler's {@link Runnable Runnable} to run after timeout.
      * {@link Runnable Runable} runs {@link FocusService#stop() stop} function.
      * At the end function sends broadcast to Mayo to start blocking selected apps.
      *
-     * @param apps {@link java.lang.reflect.Array array} of {@link String String} , String} containing PackageNames of apps selected for blocking in focus session
+     * @param apps {@link java.lang.reflect.Array array} of {@link String String} containing PackageNames of apps selected for blocking in focus session
      * @param durationMillis duration of focus session provided in milliseconds
      * @return returns {@link androidx.work.ListenableWorker.Result Result}. If <i>failure</i>, a error message is provided. If <i>true</i> focus session started correctly
      *
@@ -140,10 +156,11 @@ public class FocusService extends Service {
      *
      * @see #appsPackageNames
      * @see #startContinuous(String[], long)
-     * @see #startPomodoro()
+     * @see #startPomodoro(String[], long, long, int)
      * @see #stop()
      */
     ListenableWorker.Result startContinuous(String[] apps, long durationMillis) {
+        // Check if the other focus session isn't running
         if (isRunning) {
             Data returnData = new Data.Builder().putString(FIELD_RESULT, ERROR_RUNNING).build();
 
@@ -151,8 +168,14 @@ public class FocusService extends Service {
         }
 
         try {
+            // override the array
             appsPackageNames = apps;
 
+            //blocking notifications
+            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
+
+            // post a handler Runnable to stop the session after timeout
             mHandler.postAtTime(
                     new Runnable() {
                         @Override
@@ -163,6 +186,7 @@ public class FocusService extends Service {
                     SystemClock.uptimeMillis() + durationMillis
             );
 
+            // send broadcast to Mayo
             broadcastStart();
         }
         catch (Exception e) {
@@ -175,21 +199,117 @@ public class FocusService extends Service {
         return ListenableWorker.Result.failure();
     }
 
-    void startPomodoro() {
+    private int cyclesCount =1;
+
+    /**
+     * Pomodoro is a type of Focus session containing two phases running alternately: work and break. One full cycle consist of one work phase and one break phase,
+     * except last work phase which after which there is no break phase and the session ends.
+     * Function at the beginning checks if there is no other focus sessions running, then updates {@link #appsPackageNames} array,
+     * blocks notifications and starts work phase {@link Runnable} which will handle the lifecycle of session.
+     * After the specified number of cycles will end the function will call {@link #stop()} function.
+     * @param apps {@link java.lang.reflect.Array array} of {@link String String} containing PackageNames of apps selected for blocking in focus session
+     * @param workDurationInMills duration of work phases, provided in milliseconds
+     * @param breakDurationInMills duration of break phases, provided in milliseconds
+     * @param numberOfCycle number of cycles
+     * @return {@link androidx.work.ListenableWorker.Result Result}. If <i>failure</i>, a error message is provided. If <i>true</i> focus session started correctly
+     *
+     * @since 9.11.2022, {@link FocusService FocusService} ver 2.0
+     *
+     * @see #appsPackageNames
+     * @see #startContinuous(String[], long)
+     * @see #startStopwatch(String[])
+     * @see #stop()
+     */
+    ListenableWorker.Result startPomodoro(String[] apps, long workDurationInMills, long breakDurationInMills, int numberOfCycle) {
+
+        // Check if the other session isn't running
+        if (isRunning) {
+            Data returnData = new Data.Builder().putString(FIELD_RESULT, ERROR_RUNNING).build();
+
+            return ListenableWorker.Result.failure(returnData);
+        }
+
+        try {
+            // override the array
+            appsPackageNames = apps;
+
+
+            setupWorkingPhase(workDurationInMills, breakDurationInMills, numberOfCycle);
+
+            //blocking notifications
+            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
+
+            // send broadcast to Mayo
+            broadcastStart();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Data returnData = new Data.Builder().putString(FIELD_RESULT, ERROR_DATA).build();
+            return ListenableWorker.Result.failure(returnData);
+        }
+
+        isRunning = true;
+        return ListenableWorker.Result.success();
 
     }
+
+    private void setupWorkingPhase(long workDuration, long breakDuration, long numberOfCycles) {
+        // check if the index of cycle reached the limit
+        if (cyclesCount >= numberOfCycles) {
+            stop();
+            return;
+        }
+
+        mHandler.postAtTime(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        // start break phase
+                        setupBreakPhase(breakDuration, workDuration, numberOfCycles);
+                    }
+                },
+                SystemClock.uptimeMillis() + workDuration
+        );
+
+    }
+
+    private void setupBreakPhase(long breakDuration, long workDuration, long numberOfSessions) {
+        mHandler.postAtTime(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        // index of incoming cycle
+                        cyclesCount++;
+                        //start work phase
+                        setupWorkingPhase(workDuration, breakDuration, numberOfSessions);
+                    }
+                },
+                SystemClock.uptimeMillis() + breakDuration
+        );
+    }
+
 
 
     public void stop() {
+        // make array empty
         appsPackageNames = new String[]{};
 
+        //blocking notifications
+        NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+        notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
+
+        // remove all queued handler Runnables
         mHandler.removeCallbacksAndMessages(null);
 
         isRunning = false;
+        cyclesCount = 1;
     }
 
 
-
+    /**
+     * Function sending broadcast for Mayo to bind this service
+     */
     private void broadcastStart() {
         Intent runFocus = new Intent();
         runFocus.setAction("ocean.waves.mayo.focus.start");
