@@ -27,19 +27,22 @@ jobs:
             User git
             IdentityFile ~/.ssh/id_ed25519_design_system
 
-      - name: Set up Git
-        run: git config --global user.email "bot@redinnlabs.com" && git config --global user.name "Redinn Bot"
-
       - name: Setup Node.js 16.x
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
 
       - name: install pnpm
-        run: npm i pnpm -g
+        run: npm i pnpm lerna -g && pnpm --no-frozen-lockfile --filter "@redinn/*" install
 
-      - name: Install Dependencies
-        run: "pnpm install --no-frozen-lockfile && git add pnpm-lock.yaml && git commit -m 'chore: :pushpin: update pnpm-lock.yaml'"
+      - name: Commit changes
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: "pnpm-lock.yaml"
+          author_name: Redinn Bot
+          author_email: bot@redinnlabs.com
+          message: "chore: :pushpin: update pnpm-lock.yaml"
+          pathspec_error_handling: ignore
 
       - name: Version and publish
         env:
