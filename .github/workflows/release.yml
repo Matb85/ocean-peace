@@ -36,7 +36,7 @@ jobs:
         run: npm i pnpm -g
 
       - name: Install Dependencies
-        run: pnpm i
+        run: "pnpm install --no-frozen-lockfile && git add pnpm-lock.yaml && git commit -m 'chore: :pushpin: update pnpm-lock.yaml'"
 
       - name: Version and publish
         env:
