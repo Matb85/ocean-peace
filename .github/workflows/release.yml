@@ -27,6 +27,9 @@ jobs:
             User git
             IdentityFile ~/.ssh/id_ed25519_design_system
 
+      - name: Set up Git
+        run: git config --global user.email "bot@redinnlabs.com" && git config --global user.name "Redinn Bot"
+
       - name: Setup Node.js 16.x
         uses: actions/setup-node@v3
         with:
