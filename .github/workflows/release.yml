@@ -36,7 +36,7 @@ jobs:
         run: npm i pnpm lerna -g && pnpm --no-frozen-lockfile --filter "@redinn/*" install
 
       - name: Commit changes
-      - uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v9
         with:
           add: "pnpm-lock.yaml"
           author_name: Redinn Bot
