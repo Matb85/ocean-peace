@@ -1,6 +1,6 @@
 {
   "name": "@redinn/oceanpeace-web",
-  "version": "0.1.4",
+  "version": "0.1.8",
   "private": true,
   "type": "module",
   "scripts": {
@@ -25,7 +25,7 @@
     "@tsconfig/svelte": "3.0.0",
     "@typescript-eslint/eslint-plugin": "5.38.0",
     "@typescript-eslint/parser": "5.38.0",
-    "autoprefixer": "10.4.12",
+    "autoprefixer": "10.4.13",
     "eslint": "8.22.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-prettier": "8.5.0",
@@ -33,7 +33,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.0.1",
     "eslint-plugin-svelte3": "4.0.0",
-    "postcss": "8.4.16",
+    "postcss": "8.4.20",
     "svelte": "3.50.1",
     "svelte-check": "2.8.1",
     "svelte-preprocess": "4.10.7",
@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@mdi/js": "7.0.96",
-    "@redinn/oceanpeace-mobile": "workspace:^0.1.4",
+    "@redinn/oceanpeace-mobile": "workspace:^0.1.8",
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release",
     "@sveltejs/vite-plugin-svelte": "1.0.8",
     "svelte-spa-router": "3.3.0"

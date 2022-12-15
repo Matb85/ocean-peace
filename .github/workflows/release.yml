@@ -33,10 +33,16 @@ jobs:
           node-version: 16.x
 
       - name: install pnpm
-        run: npm i pnpm -g
+        run: npm i pnpm lerna -g && pnpm --no-frozen-lockfile --filter "@redinn/*" install
 
-      - name: Install Dependencies
-        run: pnpm i
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "pnpm-lock.yaml"
+          author_name: Redinn Bot
+          author_email: bot@redinnlabs.com
+          message: "chore: :pushpin: update pnpm-lock.yaml"
+          pathspec_error_handling: ignore
 
       - name: Version and publish
         env:
