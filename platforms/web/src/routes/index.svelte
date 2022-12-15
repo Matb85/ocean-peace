@@ -14,7 +14,10 @@
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
+    Api.getAllPermissions();
   });
+
+  
 
   /** sets up data for a new goal
    * @returns nothing
