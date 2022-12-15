@@ -1,6 +1,9 @@
 package com.redinn.oceanpeace.focus;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -12,6 +15,8 @@ import android.os.SystemClock;
 
 import androidx.work.Data;
 import androidx.work.ListenableWorker;
+
+import com.redinn.oceanpeace.R;
 
 /**
  * Finish focus:
@@ -35,8 +40,10 @@ public class FocusService extends Service {
 
     @Override
     public void onCreate() {
+        handlerThread = new HandlerThread("ocean.focus.handler.thread");
+        looper = handlerThread.getLooper();
         handlerThread.start();
-        mHandler = new Handler(looper);
+        mHandler = new Handler();
 
         super.onCreate();
     }
@@ -44,6 +51,8 @@ public class FocusService extends Service {
     @Override
     public void onDestroy() {
         handlerThread.quitSafely();
+
+        notificationManager.deleteNotificationChannel("911");
 
         super.onDestroy();
     }
@@ -123,7 +132,7 @@ public class FocusService extends Service {
             appsPackageNames = apps;
 
             //blocking notifications
-            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
             notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
 
             // send broadcast to Mayo
@@ -172,7 +181,7 @@ public class FocusService extends Service {
             appsPackageNames = apps;
 
             //blocking notifications
-            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
             notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
 
             // post a handler Runnable to stop the session after timeout
@@ -196,7 +205,7 @@ public class FocusService extends Service {
         }
 
         isRunning = true;
-        return ListenableWorker.Result.failure();
+        return ListenableWorker.Result.success();
     }
 
     private int cyclesCount =1;
@@ -237,7 +246,7 @@ public class FocusService extends Service {
             setupWorkingPhase(workDurationInMills, breakDurationInMills, numberOfCycle);
 
             //blocking notifications
-            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+            notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
             notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY);
 
             // send broadcast to Mayo
@@ -290,20 +299,27 @@ public class FocusService extends Service {
     }
 
 
-
     public void stop() {
         // make array empty
         appsPackageNames = new String[]{};
 
         //blocking notifications
-        NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+        notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
         notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL);
+        notificationManager.cancelAll();
 
         // remove all queued handler Runnables
         mHandler.removeCallbacksAndMessages(null);
 
         isRunning = false;
         cyclesCount = 1;
+
+        Intent stopFocus = new Intent();
+        stopFocus.setAction("ocean.waves.mayo.focus.stop");
+        getApplicationContext().sendBroadcast(stopFocus);
+
+        stopForeground(true);
+        stopSelf();
     }
 
 
@@ -313,6 +329,7 @@ public class FocusService extends Service {
     private void broadcastStart() {
         Intent runFocus = new Intent();
         runFocus.setAction("ocean.waves.mayo.focus.start");
+        runFocus.putExtra("packages", appsPackageNames);
         getApplicationContext().sendBroadcast(runFocus);
     }
 
@@ -321,7 +338,7 @@ public class FocusService extends Service {
     private final IBinder binder = new LocalBinder();
 
     public class LocalBinder extends Binder implements IBinder {
-        FocusService getService() {
+        public FocusService getService() {
             // Return this instance of LocalService so clients can call public methods
             return FocusService.this;
         }
@@ -330,5 +347,28 @@ public class FocusService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
+    }
+
+    private NotificationManager notificationManager;
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(new NotificationChannel("911", "oceanpeace.focus", NotificationManager.IMPORTANCE_HIGH));
+
+        Intent notificationIntent = new Intent(this, FocusService.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent,
+                        PendingIntent.FLAG_IMMUTABLE);
+
+        Notification notification =
+                new Notification.Builder(this, "911")
+                        .setContentTitle("Focus session is running")
+                        .setSmallIcon(R.drawable.splash)
+                        //.setContentIntent(pendingIntent)
+                        .build();
+
+        startForeground(912, notification);
+
+        return super.onStartCommand(intent, flags, startId);
     }
 }
