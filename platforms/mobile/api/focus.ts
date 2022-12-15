@@ -1,52 +1,27 @@
 import { registerPlugin } from "@capacitor/core";
 import type { FocusMethods } from "@redinn/oceanpeace-web/api/focus";
 interface FocusPlugin {
-  startContinuous(options: {
-    continuousDuration: number;
-    twentyRule: boolean;
-    wakeDevice: boolean;
-  }): Promise<{ started: boolean }>;
-  startPomodoro(options: {
-    workDuration: number;
-    breakDuration: number;
-    twentyRule: boolean;
-    wakeDevice: boolean;
-  }): Promise<{ started: boolean }>;
-  startStopwatch(options: { twentyRule: boolean }): Promise<{ started: boolean }>;
-  stopFocus(): Promise<void>;
+  startStopwatch(data: { packages: string}): Promise<void>;
+  startContinuous(data: { duration: number, packages: string, }): Promise<void>;
+  startPomodoro(data: {packages: string, workDuration: number, breakDuration: number, cyclesNumber: number}): Promise <void>;
+  stop(): Promise<void>;
 }
 
 const Focus = registerPlugin<FocusPlugin>("Focus");
 
 const plugin: FocusMethods = {
-  async startContinuous(continuousDuration: number, twentyRule: boolean, wakeDevice: boolean) {
-    const { started } = await Focus.startContinuous({
-      continuousDuration: continuousDuration,
-      twentyRule: twentyRule,
-      wakeDevice: wakeDevice,
-    });
-
-    return { started };
+  async startStopwatch(packages: string): Promise<void> {
+    return Focus.startStopwatch({packages});
   },
-  async startPomodoro(workDuration: number, breakDuration: number, twentyRule: boolean, wakeDevice: boolean) {
-    const { started } = await Focus.startPomodoro({
-      workDuration: workDuration,
-      breakDuration: breakDuration,
-      twentyRule: twentyRule,
-      wakeDevice: wakeDevice,
-    });
-
-    return { started };
+  async startContinuous(packages: string, duration: number): Promise<void> {
+    return Focus.startContinuous( {packages, duration});
   },
-  async startStopwatch(twentyRule: boolean) {
-    const { started } = await Focus.startStopwatch({ twentyRule: twentyRule });
-
-    return { started };
+  startPomodoro(packages: string, workDuration: number, breakDuration: number, cyclesNumber: number): Promise <void> {
+    return Focus.startPomodoro({packages, workDuration, breakDuration, cyclesNumber});
   },
-  async stopFocus() {
-    await Focus.stopFocus();
-    return;
-  },
+  stop(): Promise<void> {
+    return Focus.stop();
+  }
 };
 
 export default plugin;

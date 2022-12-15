@@ -1,30 +1,28 @@
 package com.redinn.oceanpeace;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.work.WorkManager;
 
 import com.getcapacitor.BridgeActivity;
-import com.redinn.oceanpeace.focus.Focus;
 import com.redinn.oceanpeace.focus.FocusPlugin;
+import com.redinn.oceanpeace.focus.FocusService;
 import com.redinn.oceanpeace.goals.GoalsPlugin;
 import com.redinn.oceanpeace.icons.IconManager;
 import com.redinn.oceanpeace.icons.IconsPlugin;
+import com.redinn.oceanpeace.managers.PermissionManager;
 import com.redinn.oceanpeace.mayo.MayoAPI;
 import com.redinn.oceanpeace.presets.PresetsPlugin;
 import com.redinn.oceanpeace.schedule.SchedulePlugin;
 import com.redinn.oceanpeace.usage.UsagePlugin;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends BridgeActivity {
 
@@ -42,23 +40,20 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(PresetsPlugin.class);
         registerPlugin(SchedulePlugin.class);
         registerPlugin(UIPlugin.class);
+        registerPlugin(PermissionManager.class);
 
         //endregion
 
-        //endregion
 
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onStart() {
-        //WorkManager.getInstance(getApplicationContext()).enqueue(IconWorker.regenerateIcons);
 
         bindAPI();
 
         IconManager.regenerateIcons(getApplicationContext());
-
-        Focus.getInstance().setContextElements(this.getApplicationContext());
 
         super.onStart();
 
@@ -83,11 +78,11 @@ public class MainActivity extends BridgeActivity {
 
 
 
-    // region API
+    // region Mayo API
     public static MayoAPI mAPI;
     public static boolean mBound= false;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
@@ -119,6 +114,52 @@ public class MainActivity extends BridgeActivity {
 
         unbindService(mConnection);
     }
-    // endregion
+    // endregion Mayo API
 
+    //region focus
+
+    public static void connectFocus(Context context) {
+        Intent create = new Intent().setClass(context, FocusService.class);
+
+        context.startService(create);
+
+
+        Intent bind = new Intent(context, FocusService.class);
+
+        context.startService(bind);
+        context.bindService(bind, focusConnection, Context.BIND_AUTO_CREATE);
+
+
+        //poor await
+        while(focusService == null) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.i("T", "connectFocus: " + focusService.toString());
+    }
+
+    public static FocusService focusService;
+    public static boolean focusBound = false;
+
+    private static final ServiceConnection focusConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            FocusService.LocalBinder binder = (FocusService.LocalBinder) service;
+            focusService = binder.getService();
+            focusBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
+    //endregion Focus
 }

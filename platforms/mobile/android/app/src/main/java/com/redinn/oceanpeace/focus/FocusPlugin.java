@@ -1,84 +1,210 @@
 package com.redinn.oceanpeace.focus;
 
-import android.os.Build;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.util.Log;
 
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.redinn.oceanpeace.MainActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @CapacitorPlugin(
         name="Focus"
 )
+
+/**
+ *  TODO: function checking if focus is already running
+ *  TODO: finish api for FocusService
+ */
 public class FocusPlugin extends Plugin {
 
-
-
-    @PluginMethod
-    public void startContinuous(PluginCall call) {
-        JSObject ret = new JSObject();
-        boolean wake = Boolean.FALSE.equals(call.getBoolean("wakeDevice"));
-        long duration = 0;
-        if (call.getLong("continuousDuration") != null)
-            duration = call.getLong("continuousDuration");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if(!Focus.getInstance().alarmManager.canScheduleExactAlarms()) {
-
-            }
-        }
-        else
-        {
-            boolean started = Focus.getInstance().startContinuous(duration, wake, getActivity().getApplicationContext());
-            ret.put("started", started);
-        }
-        call.resolve(ret);
-    }
+    FocusService mService;
+    boolean mBound = false;
 
     @PluginMethod
-    public void startPomodoro(PluginCall call) {
-        JSObject ret = new JSObject();
-        boolean wake = Boolean.FALSE.equals(call.getBoolean("wakeDevice"));
-        long workDuration = 0;
-        if (call.getLong("continuousDuration") != null)
-            workDuration = call.getLong("continuousDuration");
-        long breakDuration = 0;
-        if (call.getLong("continuousDuration") != null)
-            breakDuration = call.getLong("continuousDuration");
+    public void startStopwatch(PluginCall call) throws JSONException {
+        JSObject c = call.getData();
+        Log.i("T", "startStopwatch: " + c.toString());
+        JSONArray packages = new JSONArray();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if(!Focus.getInstance().alarmManager.canScheduleExactAlarms()) {
-
-            }
+        try {
+            packages = new JSONArray(c.getString("packages"));
+        } catch (NullPointerException e) {
+            call.reject("Data provided is empty", e);
         }
-        else
-        {
-            boolean started = Focus.getInstance().startPomodoro(workDuration, breakDuration, wake, getActivity().getApplicationContext());
-            ret.put("started", started);
-        }
-        call.resolve(ret);
-    }
 
-    @PluginMethod
-    public void startStopwatch(PluginCall call) {
-        JSObject ret = new JSObject();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if(!Focus.getInstance().alarmManager.canScheduleExactAlarms()) {
-
-            }
+        if (packages == null || packages.length() == 0) {
+            call.reject("Data provided is empty");
         }
-        else
-        {
-            boolean started = Focus.getInstance().startStopwatch();
-            ret.put("started", started);
-        }
-        call.resolve(ret);
-    }
 
-    @PluginMethod
-    public void stopFocus(PluginCall call) {
-        Focus.getInstance().stopFocus();
+        try {
+            MainActivity.connectFocus(getActivity().getApplicationContext());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        List<String> names = new ArrayList<>();
+        for (int i=0; i< packages.length(); i++)
+            // TODO: exception log
+            names.add(packages.getString(i));
+
+        try {
+            MainActivity.focusService.startStopwatch(names.toArray(new String[0]));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         call.resolve();
     }
+
+    @PluginMethod
+    public void startContinuous(PluginCall call) throws JSONException {
+        JSONArray packages = new JSONArray();
+        long _duration = 0L;
+
+        try {
+            packages = new JSONArray(call.getString("packages"));
+            Log.i("T", "startContinuous: " + packages.toString());
+            _duration = call.getInt("duration").longValue();
+        } catch (NullPointerException e) {
+            call.reject("Data provided is empty", e);
+            return;
+        }
+
+        if (packages == null || packages.length() == 0) {
+            call.reject("Data provided is empty");
+            return;
+        }
+
+        if (_duration <= 0) {
+            call.reject("Duration cannot be <0");
+            return;
+        }
+
+        try {
+            MainActivity.connectFocus(getActivity().getApplicationContext());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        List<String> names = new ArrayList<>();
+
+        for (int i=0; i<packages.length(); i++) {
+            // TODO: exception log
+            names.add(packages.getString(i));
+        }
+
+        try {
+            MainActivity.focusService.startContinuous(names.toArray(new String[0]), _duration);
+        }
+        catch (Exception e) {
+            call.reject("Error", e);
+        }
+
+    }
+
+    @PluginMethod
+    public void startPomodoro(PluginCall call) throws JSONException {
+        JSONArray packages = new JSONArray();
+        long _work = 0;
+        long _break = 0;
+        int _cyclesNumber = 0;
+
+        try {
+            packages = call.getArray("packages", new JSArray());
+            _work = call.getLong("workDuration");
+            _break = call.getLong("breakDuration");
+            _cyclesNumber = call.getInt("cyclesNumber");
+        } catch (NullPointerException e) {
+            call.reject("Data provided is empty", e);
+        }
+
+        if (packages == null || packages.length() == 0) {
+            call.reject("Data provided is empty");
+        }
+
+        if (_work <= 0 || _break <= 0) {
+            call.reject("Duration cannot be <0");
+        }
+        if (_cyclesNumber < 1) {
+            call.reject("Cycles number cannot be <1");
+        }
+
+
+        MainActivity.connectFocus(getActivity().getApplicationContext());
+
+
+
+        List<String> names = new ArrayList<>();
+
+        for (int i=0; i<packages.length(); i++) {
+            // TODO: exception log
+            names.add(packages.getString(i));
+        }
+
+        mService.startPomodoro( names.toArray(new String[0]), _work, _break, _cyclesNumber);
+
+        call.resolve();
+    }
+
+    @PluginMethod
+    public void stop(PluginCall call) {
+        try {
+            MainActivity.focusService.stop();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        call.resolve();
+    }
+
+
+    private void connect() {
+        Intent create = new Intent().setClass(getActivity().getApplicationContext(), FocusService.class);
+
+        getActivity().getApplicationContext().startForegroundService(create);
+
+
+        Intent bind = new Intent(getContext().getApplicationContext(), FocusService.class);
+
+        getContext().getApplicationContext().bindService(bind, connection, Context.BIND_AUTO_CREATE);
+    }
+
+
+
+
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            FocusService.LocalBinder binder = (FocusService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
 }

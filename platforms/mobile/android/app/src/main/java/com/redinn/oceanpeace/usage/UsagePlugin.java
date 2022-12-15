@@ -69,7 +69,7 @@ public class UsagePlugin extends Plugin {
     }
 
 
-
+    //TODO: rename function
     void runMayo(PluginCall call) {
         Usage usage = new Usage(getActivity().getApplicationContext());
         JSObject ret = new JSObject();
