@@ -97,7 +97,7 @@ public class PermissionManager extends Plugin {
     boolean hasNotificationPolicyPermission() {
         boolean temp;
         temp = getActivity().getApplicationContext().getSystemService(NotificationManager.class).isNotificationPolicyAccessGranted();
-        Log.e("EEEEEEE", "hasNotificationPolicyPermission: " + temp);
+        Log.i("PermissionManager", "hasNotificationPolicyPermission: " + temp);
         return temp;
     }
 }
