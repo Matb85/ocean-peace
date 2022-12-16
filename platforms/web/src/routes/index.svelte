@@ -11,6 +11,7 @@
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
   import { t } from "$lib/i18n";
+  import Navbar from "$lib/Navbar.svelte";
   let allGoals: GoalI[] = [];
   onMount(async () => {
     allGoals = await Api.getAllGoals();
@@ -30,7 +31,7 @@
       activeDays: "[]",
       limitActionType: "Notification",
       sessionTime: "0",
-      sessionHistory: "[]"
+      sessionHistory: "[]",
     });
     SM.action.setProps({ type: "add", backUrl: "/", continueUrl: "/goal/edit/1" });
     SM.dialogs.setProps({ apps: "[]", websites: "[]" });
@@ -78,11 +79,6 @@
   </div>
 </Link>
 
-<!-- focus button -->
-<Link href="/focus">
-  <Button>{$t("d.focus.start_session")}</Button>
-</Link>
-
 <!-- goals display -->
 <H thin>{$t("d.goal.your")}</H>
 <div class="card-flex-col">
@@ -104,3 +100,5 @@
     <Button>{$t("d.goal.add")}</Button>
   </Link>
 </div>
+
+<Navbar />
