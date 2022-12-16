@@ -2,7 +2,7 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "ocean.peace.mobile",
+  appId: "com.redinn.oceanpeace",
   appName: "Ocean Peace",
   bundledWebRuntime: false,
   webDir: "../web/build",

@@ -49,22 +49,13 @@ dependencies {
 
     // for creating documentation TODO: documentation
     //implementation fileTree(dir: '/home/raccoon/Android/Sdk/platforms/android-32', include: ['*.aar', '*.jar'], exclude: [])
-    
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    //testImplementation "junit:junit:$junitVersion"
-
 
     def work_version = "2.7.1"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation project(':capacitor-android')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     //testImplementation "junit:junit:5.9.1"
     testImplementation(platform('org.junit:junit-bom:5.9.1'))
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
