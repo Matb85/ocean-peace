@@ -4,5 +4,5 @@ export interface AppsUsage {
 }
 
 export interface UsageMethods {
-  getAppsUsage(): Promise<AppsUsage>;
+  getAllUsage(): Promise<AppsUsage>;
 }

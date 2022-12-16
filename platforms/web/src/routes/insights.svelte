@@ -12,7 +12,7 @@
   let usageStats: Array<ChartColumnI> = [];
 
   onMount(async () => {
-    const t = (await Api.getAppsUsage()).stats;
+    const t = (await Api.getAllUsage()).stats;
     let counter: number = 0;
     for (const app in t) {
       if (Object.prototype.hasOwnProperty.call(t, app)) {

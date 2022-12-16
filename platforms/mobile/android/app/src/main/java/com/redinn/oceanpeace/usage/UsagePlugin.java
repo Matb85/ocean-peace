@@ -35,23 +35,27 @@ import com.getcapacitor.annotation.PermissionCallback;
 public class UsagePlugin extends Plugin {
 
     @PluginMethod()
-    public void callMayo(PluginCall call) {
+    public void getAllUsage(PluginCall call) {
         if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
 
             requestPermissionForAlias("usage", call, "usagePermsCallback");
-            startActivity(getActivity().getApplicationContext(), new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), Bundle.EMPTY);
+            startActivity(
+                    getActivity().getApplicationContext(),
+                    new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    Bundle.EMPTY
+            );
 
         } else {
-            runMayo(call);
+            run(call);
         }
     }
 
     @PermissionCallback
     private void usagePermsCallback(PluginCall call) {
         if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
-            runMayo(call);
+            run(call);
         } else {
-            call.reject("Permission is required to run Mayo algorithm");
+            call.reject("Permission not granted");
         }
     }
 
@@ -70,7 +74,7 @@ public class UsagePlugin extends Plugin {
 
 
     //TODO: rename function
-    void runMayo(PluginCall call) {
+    void run(PluginCall call) {
         Usage usage = new Usage(getActivity().getApplicationContext());
         JSObject ret = new JSObject();
         ret.put("stats", usage.GetUsageData());

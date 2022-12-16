@@ -8,7 +8,7 @@ interface UsagePlugin {
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
-  async getAppsUsage(): Promise<AppsUsage> {
+  async getAllUsage(): Promise<AppsUsage> {
     const { stats, total } = await Usage.callMayo();
 
     return { stats, total };
