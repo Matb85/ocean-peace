@@ -45,44 +45,44 @@ public class Mayo extends AccessibilityService {
         boolean closedIsInArrays = true;
 
         /**
-         * JSONArray of this type elements: <br/>
+         * JSONArray of this type elements: <br>
          *
-         *  { <br/>
-         * 	    &emsp "packageName": "com.facebook.katana", <br/>
-         * 	    &emsp "goals": [ <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         *  	&emsp ], <br/>
-         *      &emsp "limit": 120 <br/>
-         *      &emsp "limitGoal": "goal1234" <br/>
-         *  } <br/>
+         *  { <br>
+         * 	    &emsp; "packageName": "com.facebook.katana", <br>
+         * 	    &emsp; "goals": [ <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         *  	&emsp; ], <br>
+         *      &emsp; "limit": 120 <br>
+         *      &emsp; "limitGoal": "goal1234" <br>
+         *  } <br>
          */
         private static JSONArray notify = new JSONArray();
 
         /**
-         * JSONArray of this type elements: <br/>
+         * JSONArray of this type elements: <br>
          *
-         *  { <br/>
-         * 	    &emsp "packageName": "com.facebook.katana", <br/>
-         * 	    &emsp "goals": [ <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         * 		    &emsp&emsp "goal1234", <br/>
-         *  	&emsp ], <br/>
-         *      &emsp "limit": 120 <br/>
-         *      &emsp "limitGoal": "goal1234" <br/>
-         *  } <br/>
+         *  { <br>
+         * 	    &emsp; "packageName": "com.facebook.katana", <br>
+         * 	    &emsp; "goals": [ <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         * 		    &emsp;&emsp; "goal1234", <br>
+         *  	&emsp; ], <br>
+         *      &emsp; "limit": 120 <br>
+         *      &emsp; "limitGoal": "goal1234" <br>
+         *  } <br>
          */
         private static JSONArray close = new JSONArray();
 
         /**
-         * JSONArray of this type elements: <br/>
+         * JSONArray of this type elements: <br>
          *
-         * [<br/>
-         *  &emsp "com.facebook.katana", "com.instagram.katana:, <br/>
-         * ]<br/>
+         * [<br>
+         *  &emsp; "com.facebook.katana", "com.instagram.katana", <br>
+         * ]<br>
          *
          */
-        private static JSONArray focus = new JSONArray();
+        private static String[] focus = new String[]{};
 
         private Timer timer = new Timer("mayo.Timer", false);
     //endregion
@@ -99,6 +99,8 @@ public class Mayo extends AccessibilityService {
         filter.addAction("ocean.waves.mayo.force_update");
         filter.addAction("ocean.waves.mayo.change");
         filter.addAction("ocean.waves.mayo.delete");
+        filter.addAction("ocean.waves.mayo.focus.start");
+        filter.addAction("ocean.waves.mayo.focus.stop");
         registerReceiver(mReceiver, filter);
         dayOfWeek = getDayOfWeekStringShort();
 
@@ -156,9 +158,11 @@ public class Mayo extends AccessibilityService {
         timer.cancel();
 
         //checking if window is blocked by FOCUS session
-        if (FunctionBase.JSONArrayOptElement(focus, openedPackageName) != null) {
-            mayoClose(openedPackageName);
-            return;
+        for (int i=0; i< focus.length; i++) {
+            if (focus[i] == openedPackageName) {
+                mayoClose(openedPackageName);
+                return;
+            }
         }
 
         // variables
@@ -392,11 +396,11 @@ public class Mayo extends AccessibilityService {
     //region Focus
 
     // TODO: rewrite Focus, to make it works with MAYO2.0
-    public static void startFocus(JSONArray packages) {
+    public static void startFocus(String[] packages) {
         focus = packages;
     }
     public static void stopFocus() {
-        focus = new JSONArray();
+        focus = new String[]{};
     }
 
     //endregion
@@ -681,9 +685,19 @@ public class Mayo extends AccessibilityService {
                         e.printStackTrace();
                     }
                     break;
+                case "ocean.waves.mayo.focus.start":
+                    startFocus(intent.getStringArrayExtra("packages"));
+                    //TODO: Mayo refactor improvement
+                    //AccessibilityServiceInfo info = getServiceInfo();
+                    //List<String> p = new ArrayList<>();
+                    break;
+                case "ocean.waves.mayo.focus.stop":
+                    stopFocus();
+                    break;
             }
         }
     }
+
 
     // endregion
 }

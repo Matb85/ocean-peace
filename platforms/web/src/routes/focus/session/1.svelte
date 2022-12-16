@@ -16,8 +16,8 @@
 
   onMount(async () => {
     Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps"))).then(data => (allowedApps = data));
-    const t: boolean = (await Api.startPomodoro(1000 * 10, 1000 * 1, false, true)).started;
-    console.log(t);
+    await Api.startContinuous(SM.dialogs.getProp("apps"), 10_000);
+    //console.log(t);
   });
 </script>
 
@@ -31,7 +31,7 @@
 </div>
 
 <Link href="/focus/session/2" className="mt-4">
-  <Button secondary size="small" isWarning>{$t("d.focus.cancel")}</Button>
+  <Button secondary size="small" isWarning on:click={()=>Api.stop()}>{$t("d.focus.cancel")}</Button>
 </Link>
 
 <H thin>{$t("d.dialog.allowed_apps")}</H>

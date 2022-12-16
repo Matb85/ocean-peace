@@ -109,5 +109,22 @@ public class MayoAPI extends Service {
         intent.putExtra("goal", goal.toString());
         this.sendBroadcast(intent);
     }
+
+
+    public void startFocus(JSONArray packages) {
+        Log.i("MayoAPI", "startFocus: sending start focus request");
+
+        Intent intent = new Intent();
+        intent.setAction("ocean.waves.mayo.focus.start");
+        intent.putExtra("packages", packages.toString());
+        this.sendBroadcast(intent);
+    }
+
+    public void stopFocus() {
+        Intent intent = new Intent();
+        intent.setAction("ocean.waves.mayo.focus.stop");
+        this.sendBroadcast(intent);
+    }
+
     // endregion
 }
