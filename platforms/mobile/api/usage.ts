@@ -2,14 +2,14 @@ import { registerPlugin } from "@capacitor/core";
 import type { AppsUsage, UsageMethods as UsageMethods } from "@redinn/oceanpeace-web/api/usage";
 
 interface UsagePlugin {
-  callMayo(): Promise<{ stats: JSON, total: number }>;
+  getAllUsage(): Promise<{ stats: JSON, total: number }>;
 }
 
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
   async getAllUsage(): Promise<AppsUsage> {
-    const { stats, total } = await Usage.callMayo();
+    const { stats, total } = await Usage.getAllUsage();
 
     return { stats, total };
   },
