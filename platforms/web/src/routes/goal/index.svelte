@@ -40,24 +40,23 @@
 </section>
 
 <H tag={5} thin className="w-9/12 text-center">{goalData?.name || ""}</H>
-<section class="w-11/12 grid grid-cols-6 gap-2">
+<section class="w-11/12">
   <PieChart
-    className="w-full col-span-4"
+    className="w-3/4 mx-auto"
     maxValue={parseInt(goalData.limit) * 60 * 1000}
     data={[{ color: "#3772FF", value: parseInt(goalData.sessionTime) }]}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>24 min</H>
-      <H tag={2} thin>left</H>
+      <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
   <ChartKey
-    isVertical
-    className="col-span-2 self-center flex-col flex-none"
+    className="w-full mt-2 items-center flex-col flex-wrap flex-none"
     data={[
       {
         color: "#3772FF",
-        text: "Samsung",
+        text: "Various",
         bold: formatMinutes(parseInt(goalData.sessionTime) / (1000 * 60)),
       },
       {

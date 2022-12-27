@@ -15,10 +15,10 @@
   let screenTimeHistory: GoalHistoryI[] = [];
   let hourlyUsageToday: HourlyUsageI[] = [];
 
-  onMount(async () => {
-    appsused = await Api.getAppsUsedToday();
-    screenTimeHistory = await Api.getScreenTimeHistory();
-    hourlyUsageToday = await Api.getHourlyUsageToday();
+  onMount(() => {
+    Api.getAppsUsedToday().then(d => (appsused = d));
+    Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
+    Api.getHourlyUsageToday().then(d => (hourlyUsageToday = d));
   });
 </script>
 
