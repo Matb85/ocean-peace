@@ -14,11 +14,10 @@
   import Navbar from "$lib/Navbar.svelte";
   let allGoals: GoalI[] = [];
   onMount(async () => {
+    SM.action.setProp("nativeBackUrl", "/");
     allGoals = await Api.getAllGoals();
     Api.getAllPermissions();
   });
-
-  
 
   /** sets up data for a new goal
    * @returns nothing

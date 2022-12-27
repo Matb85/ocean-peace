@@ -12,7 +12,7 @@ export type ScheduleType = Record<ScheduleKeys, string>;
 export type DialogKeys = "apps" | "websites" | "backUrl";
 export type DialogType = Record<DialogKeys, string>;
 
-export type ActionKeys = "type" | "backUrl" | "continueUrl";
+export type ActionKeys = "type" | "backUrl" | "continueUrl" | "nativeBackUrl";
 export type ActionType = Record<ActionKeys, string>;
 
 export type PreferenceKeys = "name" | "screenTime";
