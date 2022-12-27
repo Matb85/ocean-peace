@@ -1,8 +1,9 @@
 <script lang="ts">
   import Delete from "$lib/Delete.svelte";
-  import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
+  import Api from "@redinn/oceanpeace-mobile/api";
   import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/goal/delete");
 
   const data = SM.goal.getProps("id", "name");
 

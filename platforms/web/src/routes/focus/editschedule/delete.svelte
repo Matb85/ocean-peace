@@ -3,6 +3,7 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/focus/editschedule/delete");
 
   const data = SM.schedule.getProps("id", "name");
   /** delete a given schedule

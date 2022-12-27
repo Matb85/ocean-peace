@@ -13,16 +13,22 @@
   import type { AppIconI } from "$schema";
   import { onMount } from "svelte";
   import SM from "$lib/sessionManager";
-  import { timeFromNumber } from "$lib/utils";
+  import { formatMinutes } from "$lib/utils";
 
-  const goalData = SM.goal.getProps("id", "name", "limit", "activeDays", "limitActionType", "sessionTime", "sessionHistory");
+  const goalData = SM.goal.getProps(
+    "id",
+    "name",
+    "limit",
+    "activeDays",
+    "limitActionType",
+    "sessionTime",
+    "sessionHistory"
+  );
   let selectedApps: AppIconI[] = [];
   onMount(async () => {
     selectedApps = await Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps")));
     SM.action.setProps({ type: "edit", backUrl: "/goal?" + $querystring, continueUrl: "/goal/edit/1" });
   });
-
-  const limit = timeFromNumber(goalData.limit);
 </script>
 
 <FullHeading tag={3} backHref="/" editHref="/goal/edit/1">{$t("d.goal.goal")}</FullHeading>
@@ -34,36 +40,29 @@
 </section>
 
 <H tag={5} thin className="w-9/12 text-center">{goalData?.name || ""}</H>
-<section class="w-11/12 grid grid-cols-6 gap-2">
+<section class="w-11/12">
   <PieChart
-    className="w-full col-span-4"
+    className="w-3/4 mx-auto"
     maxValue={parseInt(goalData.limit) * 60 * 1000}
     data={[{ color: "#3772FF", value: parseInt(goalData.sessionTime) }]}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>24 min</H>
-      <H tag={2} thin>left</H>
+      <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
   <ChartKey
-    isVertical
-    className="col-span-2 self-center flex-col flex-none"
+    className="w-full mt-2 items-center flex-col flex-wrap flex-none"
     data={[
       {
         color: "#3772FF",
-        text: "Samsung",
-        bold:
-          "" +
-          (Math.floor(parseInt(goalData.sessionTime) / (1000 * 60 * 60)) + "h ") +
-          (Math.floor(parseInt(goalData.sessionTime) / (1000 * 60)) + "min"),
+        text: "Various",
+        bold: formatMinutes(parseInt(goalData.sessionTime) / (1000 * 60)),
       },
       {
         color: "#F8F5FA",
         text: "Time left",
-        bold:
-          "" +
-          (limit[0] - Math.floor(parseInt(goalData.sessionTime) / (1000 * 60 * 60)) + "h ") +
-          (Math.ceil(limit[1] - parseInt(goalData.sessionTime) / (1000 * 60)) + "min"),
+        bold: formatMinutes((parseInt(goalData.limit) - parseInt(goalData.sessionTime)) / (1000 * 60)),
       },
     ]}
   />
@@ -76,9 +75,7 @@
       <PieChart
         className="w-20 h-20"
         maxValue={parseInt(goalData.limit) * 60 * 1000}
-        data={[
-          { color: "#3772FF", value: parseInt(session.time) },
-        ]}
+        data={[{ color: "#3772FF", value: parseInt(session.time) }]}
       >
         <div class="wh-full bg-green-light text-green-dark flex items-center justify-center">
           <Icon d={session.status ? mdiCheck : mdiClose} className="fill-current w-32" />

@@ -5,6 +5,9 @@
 
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";
+  import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/");
+
   const minutes: number = 148;
 </script>
 

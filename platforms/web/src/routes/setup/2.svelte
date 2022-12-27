@@ -8,6 +8,10 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
   import { t } from "$lib/i18n";
+
+  import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/setup/1");
+
   const hours: columnI = {
     id: "hours",
     units: "h",

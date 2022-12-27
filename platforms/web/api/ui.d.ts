@@ -5,6 +5,7 @@ export interface PreferencesI {
 }
 
 export interface UIMethods {
+  setUpNativeBackButton(callback: () => void): void;
   /** fades in the screen
    * @returns nothing
    */
