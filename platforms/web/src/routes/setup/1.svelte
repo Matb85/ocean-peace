@@ -2,10 +2,13 @@
   import { Button, H } from "@redinnlabs/system/Elements";
   import { TextInput } from "@redinnlabs/system/Form";
   import Wrapper from "$lib/Wrapper.svelte";
-
   import Link from "$lib/Link.svelte";
-  import Api from "@redinn/oceanpeace-mobile/api";
+
   import { t } from "$lib/i18n";
+
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/setup/1");
 
   let value = "";
   /** sets the username

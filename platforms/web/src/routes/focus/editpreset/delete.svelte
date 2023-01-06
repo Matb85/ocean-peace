@@ -3,6 +3,8 @@
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
   import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/focus/editpreset/delete");
+
   const data = SM.preset.getProps("id", "name");
 
   /** delete a given preset

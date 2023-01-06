@@ -7,17 +7,17 @@
 
   import { onMount } from "svelte";
   import type { AppIconI } from "$schema";
-  import Api from "@redinn/oceanpeace-mobile/api";
-  import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
   import { t } from "$lib/i18n";
+  import Api from "@redinn/oceanpeace-mobile/api";
+  import SM from "$lib/sessionManager";
+  SM.action.setProp("nativeBackUrl", "/focus/session/1");
 
   let allowedApps: AppIconI[] = [];
 
   onMount(async () => {
     Api.getAppIcons(JSON.parse(SM.dialogs.getProp("apps"))).then(data => (allowedApps = data));
     await Api.startContinuous(SM.dialogs.getProp("apps"), 10_000);
-    //console.log(t);
   });
 </script>
 
@@ -31,7 +31,7 @@
 </div>
 
 <Link href="/focus/session/2" className="mt-4">
-  <Button secondary size="small" isWarning on:click={()=>Api.stop()}>{$t("d.focus.cancel")}</Button>
+  <Button secondary size="small" isWarning on:click={() => Api.stop()}>{$t("d.focus.cancel")}</Button>
 </Link>
 
 <H thin>{$t("d.dialog.allowed_apps")}</H>
