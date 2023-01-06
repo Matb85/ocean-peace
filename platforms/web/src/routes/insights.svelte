@@ -15,6 +15,7 @@
   let screenTimeHistory: GoalHistoryI[] = [];
   let hourlyUsageToday: HourlyUsageI[] = [];
 
+
   onMount(() => {
     Api.getAppsUsedToday().then(d => (appsused = d));
     Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
