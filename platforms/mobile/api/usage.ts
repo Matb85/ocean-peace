@@ -8,13 +8,13 @@ import type {
 } from "@redinn/oceanpeace-web/api/usage";
 
 interface UsagePlugin {
-  getAllUsage(): Promise<{ stats: JSON, total: number }>;
+  getAllUsage(): Promise<{ stats: JSON; total: number }>;
 }
 
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
-  async getAllUsage(): Promise<AppsUsage> {
+  async getAppsUsage(): Promise<AppsUsage> {
     const { stats, total } = await Usage.getAllUsage();
 
     return { stats, total };
@@ -26,7 +26,7 @@ const plugin: UsageMethods = {
       { minutes: 100, color: "#F8F5FA", icon: { packageName: "", label: "Rest", iconPath: "", version: "" } },
     ];
   },
-  async getHourlyUsageToday(): Promise<HourlyUsageI[]> {
+  async getUsageIntensityToday(): Promise<HourlyUsageI[]> {
     return [
       { hour: "8am", key: 0, value: 0 },
       { hour: "9am", key: 10, value: 30 },
