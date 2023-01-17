@@ -8,17 +8,13 @@ import type {
 } from "@redinn/oceanpeace-web/api/usage";
 
 interface UsagePlugin {
-  getAllUsage(): Promise<{ stats: JSON; total: number }>;
+  getAppsUsageToday(): Promise<{ stats: JSON}>;
+  getUnlocks(): Promise<{ unlocks: JSON }>;
 }
 
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
-  async getAppsUsage(): Promise<AppsUsage> {
-    const { stats, total } = await Usage.getAllUsage();
-
-    return { stats, total };
-  },
   async getAppsUsedToday(): Promise<SingleAppUsageI[]> {
     return [
       { minutes: 70, color: "#3772FF", icon: { packageName: "", label: "Instagram", iconPath: "", version: "" } },
@@ -27,7 +23,22 @@ const plugin: UsageMethods = {
     ];
   },
   async getUsageIntensityToday(): Promise<HourlyUsageI[]> {
-    return [
+    const { unlocks } = await Usage.getUnlocks();
+
+    let ret: HourlyUsageI[];
+    for ( let i=0; i<10; i++) {
+      let temp: HourlyUsageI;
+      temp.hour = unlocks[i].hour;
+      temp.key = unlocks[i].key;
+      temp.value = unlocks[i].value;
+      ret.push(temp)
+    }
+
+    console.log(ret.toString())
+
+    return ret;
+    /*
+    [
       { hour: "8am", key: 0, value: 0 },
       { hour: "9am", key: 10, value: 30 },
       { hour: "10am", key: 20, value: 45 },
@@ -39,7 +50,8 @@ const plugin: UsageMethods = {
       { hour: "4pm", key: 80, value: 60 },
       { hour: "5pm", key: 90, value: 80 },
       { hour: "6pm", key: 100, value: 100 },
-    ];
+    ]; 
+    */
   },
 
   async getScreenTimeHistory(): Promise<GoalHistoryI[]> {

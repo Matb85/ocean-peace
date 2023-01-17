@@ -2,7 +2,7 @@ import { AppIconI } from "./icons";
 
 export interface AppsUsage {
   stats: JSON;
-  total: number;
+  totalTime: number;
 }
 export interface SingleAppUsageI {
   color: string;
@@ -21,7 +21,6 @@ export interface HourlyUsageI {
 }
 
 export interface UsageMethods {
-  getAppsUsage(): Promise<AppsUsage>;
   /** used in insights.svelte in the chart where apps used today are displayed
    * @returns an array with 3 most used a a 4th element that represents the rest
    */
