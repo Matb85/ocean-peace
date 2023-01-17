@@ -39,10 +39,10 @@ import java.util.Calendar;
 public class UsagePlugin extends Plugin {
 
     @PluginMethod()
-    public void getAppsUsage(PluginCall call) {
+    public void getAppsUsageToday(PluginCall call) {
         if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
 
-            requestPermissionForAlias("usage", call, "usagePermsCallback");
+            requestPermissionForAlias("usage", call, "usagePermsCallback_AppsUsed");
             startActivity(
                     getActivity().getApplicationContext(),
                     new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -50,14 +50,20 @@ public class UsagePlugin extends Plugin {
             );
 
         } else {
-            run(call);
+            Usage usage = new Usage();
+            JSObject ret = new JSObject();
+            ret.put("stats", reduceStats(usage.GetUsageData(getActivity().getApplicationContext())));
+            call.resolve(ret);
         }
     }
 
     @PermissionCallback
-    private void usagePermsCallback(PluginCall call) {
+    private void usagePermsCallback_AppsUsed(PluginCall call) {
         if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
-            run(call);
+            Usage usage = new Usage();
+            JSObject ret = new JSObject();
+            ret.put("stats", reduceStats(usage.GetUsageData(getActivity().getApplicationContext())));
+            call.resolve(ret);
         } else {
             call.reject("Permission not granted");
         }
@@ -88,7 +94,7 @@ public class UsagePlugin extends Plugin {
                 int idx = 0;
                 // searching for max time spent
                 for (int i = 0; i < stats.length(); i++) {
-                    long a = stats.getJSONObject(i).getLong("timeSpent");
+                    long a = stats.getJSONObject(i).getLong("minutes");
                     if (a > max) {
                         max = a;
                         idx = i;
@@ -99,30 +105,58 @@ public class UsagePlugin extends Plugin {
             }
             long othersTime = 0;
             for (int i = 0; i < stats.length(); i++)
-                othersTime += stats.getJSONObject(i).getLong("timeSpent");
+                othersTime += stats.getJSONObject(i).getLong("minutes");
 
-            temp.put("timeSpent", othersTime);
-            temp.put("packageName", "Other Apps");
+            temp.put("minutes", othersTime);
+            JSObject icon = new JSObject();
+            icon.put("packageName", "");
+            icon.put("label", "Other Apps");
+            icon.put("iconPath", "");
+            icon.put("version", "");
+            temp.put("icon", icon);
             ret.put(temp);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
+        Log.i("USAGE", "reduceStats: " + ret.toString());
         return  ret;
     }
 
-    //TODO: rename function
-    void run(PluginCall call) {
-        Usage usage = new Usage();
-        JSObject ret = new JSObject();
-        JSArray stats = reduceStats(usage.GetUsageData(getActivity().getApplicationContext()));
 
-        ret.put("stats", stats);
-        ret.put("totalTime", usage.getTotalTime());
-        call.resolve(ret);
+    @PluginMethod()
+    public void getTotalTime(PluginCall call) {
+        if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
+
+            requestPermissionForAlias("usage", call, "usagePermsCallback_Time");
+            startActivity(
+                    getActivity().getApplicationContext(),
+                    new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    Bundle.EMPTY
+            );
+
+        } else {
+            Usage usage = new Usage();
+            JSObject ret = new JSObject();
+            ret.put("time", usage.getTotalTime(getActivity().getApplicationContext()));
+            call.resolve(ret);
+        }
     }
+
+    @PermissionCallback
+    private void usagePermsCallback_Time(PluginCall call) {
+        if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
+            Usage usage = new Usage();
+            JSObject ret = new JSObject();
+            ret.put("time", usage.getTotalTime(getActivity().getApplicationContext()));
+            call.resolve(ret);
+        } else {
+            call.reject("Permission not granted");
+        }
+    }
+
+
 
     @PluginMethod()
     public void getUnlocks(PluginCall call) {
