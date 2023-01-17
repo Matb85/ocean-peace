@@ -9,8 +9,11 @@ import android.util.Log;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.redinn.oceanpeace.FunctionBase;
+import com.redinn.oceanpeace.icons.IconManager;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
@@ -31,32 +34,56 @@ public class Usage {
     }
 
 
-    long totalTime = -1;
-
-
     public JSArray GetUsageData(Context context) {
 
         long time = System.currentTimeMillis();
         UsageStatsManager manager = getManager(context);
         List<UsageStats> stats = getStats(manager);
 
-        totalTime = 0;
-
         JSArray appsUsage = new JSArray();
 
-        int it = 0;
+        check_stats:
         for (UsageStats stat: stats) {
+
             String packageName = stat.getPackageName();
 
             int appTime = (int)(stat.getTotalTimeInForeground()/1000 /60);
 
-            totalTime += appTime;
+            if (appTime < 1)
+                continue check_stats;
+
+            for (int i=0; i<appsUsage.length(); i++) {
+                try {
+                    if (appsUsage.getJSONObject(i).getJSONObject("icon").getString("packageName").equals(packageName)) {
+                        int minutes = appsUsage.getJSONObject(i).getInt("minutes");
+                        appsUsage.put(i, appsUsage.getJSONObject(i).put("minutes", minutes + appTime));
+                        continue check_stats;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSObject icon = new JSObject();
+            try {
+                icon = JSObject.fromJSONObject(
+                        IconManager.getIcon(
+                                packageName,
+                                context.getApplicationContext()).toJSON()
+                );
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                icon.put("packageName", "");
+                icon.put("label", "unknown");
+                icon.put("path", "");
+                icon.put("version", "");
+            }
 
             JSObject app = new JSObject();
-            app.put("timeSpent", appTime);
-            app.put("packageName", packageName);
+            app.put("minutes", appTime);
+            app.put("icon", icon);
             appsUsage.put(app);
-            it++;
         }
 
         Log.d("Mayo", "GetUsageData: " + appsUsage.toString());
@@ -65,8 +92,16 @@ public class Usage {
         return appsUsage;
     }
 
-    public long getTotalTime() {
-        return totalTime;
+    public long getTotalTime(Context context) {
+        long time=0;
+
+        List<UsageStats> statsList = getStats(getManager(context));
+
+        for (UsageStats stats : statsList) {
+            time += stats.getTotalTimeInForeground()/1000/60;
+        }
+
+        return time;
     }
     
     public JSONArray getUnlockStats(Context context) {
