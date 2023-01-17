@@ -7,88 +7,95 @@ import android.content.Context;
 import android.icu.util.Calendar;
 import android.util.Log;
 
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class Usage {
-    Context context;
-    public Usage(Context context) {
-        this.context = context;
+
+    private UsageStatsManager getManager(Context context) {
+        return (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+    }
+    private List<UsageStats> getStats(UsageStatsManager manager) {
+        return manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+                System.currentTimeMillis()
+                        - Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60L * 60L * 1000L
+                        - Calendar.getInstance().get(Calendar.MINUTE) * 60L * 1000L
+                        - Calendar.getInstance().get(Calendar.SECOND) * 1000L,
+                System.currentTimeMillis());
     }
 
-    long total = 0;
 
-    public JSObject GetUsageData() {
+    long totalTime = -1;
+
+
+    public JSArray GetUsageData(Context context) {
 
         long time = System.currentTimeMillis();
-        UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-        List<UsageStats> stats = manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
-                                                time - 1000 * 100, time);
+        UsageStatsManager manager = getManager(context);
+        List<UsageStats> stats = getStats(manager);
 
+        totalTime = 0;
 
-
-        JSObject appsUsage = new JSObject();
+        JSArray appsUsage = new JSArray();
 
         int it = 0;
         for (UsageStats stat: stats) {
             String packageName = stat.getPackageName();
-            // Blocks OceanPeace from appearing in stats
 
             int appTime = (int)(stat.getTotalTimeInForeground()/1000 /60);
 
-            if (manager.isAppInactive(packageName) || appTime<1)
-                continue;
-
-            total += appTime;
+            totalTime += appTime;
 
             JSObject app = new JSObject();
             app.put("timeSpent", appTime);
             app.put("packageName", packageName);
-            appsUsage.put("" + it, app);
+            appsUsage.put(app);
             it++;
         }
 
-        Log.d("Mayo", "GetUsageData: " + appsUsage.toString() + "}," + total);
+        Log.d("Mayo", "GetUsageData: " + appsUsage.toString());
 
 
         return appsUsage;
     }
 
     public long getTotalTime() {
-        return total;
+        return totalTime;
     }
-
     
-    public JSONArray getUnlockStats() {
+    public JSONArray getUnlockStats(Context context) {
 
         long startingTime = System.currentTimeMillis()
-                - Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60L * 60L * 1000L
+                - 10 * 60L * 60L * 1000L
                 - Calendar.getInstance().get(Calendar.MINUTE) * 60L * 1000L
                 - Calendar.getInstance().get(Calendar.SECOND) * 1000L
                 - Calendar.getInstance().get(Calendar.MILLISECOND);
 
-        UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
 
 
         JSONArray Stats = new JSONArray();
 
         long iteration_time = startingTime;
-        byte hour=0;
-        while( iteration_time + 60L * 60L * 1000L < System.currentTimeMillis() ) {
+        byte hour= (byte) ( Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY) - 10 );
+        short key = 0;
+        while( iteration_time < Calendar.getInstance().getTimeInMillis() ) {
 
             int count = countUnlocks(
                     iteration_time,
-                    iteration_time + 60L * 60L * 1000L,
+                    iteration_time + 60L * 60 * 1000,
                     context);
 
             JSONObject record = new JSONObject();
 
             try {
-                record.put("hour", hour);
+                record.put("hour", hour > 12 ? hour-12 + "pm" : hour + "am");
+                record.put("key", key);
                 record.put("value", count);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -96,12 +103,15 @@ public class Usage {
 
             Stats.put(record);
             hour++;
+            key += 10;
+            iteration_time += 60L * 60L * 1000L;
         }
 
+        Log.i("TEST", "getUnlockStats: " + Stats.toString());
         return Stats;
     }
 
-    int countUnlocks(long start_time, long end_time, Context context) {
+     int countUnlocks(long start_time, long end_time, Context context) {
         UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
 
         int count = 0;
