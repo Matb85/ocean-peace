@@ -11,7 +11,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Process;
 import android.provider.Settings;
+import android.util.Log;
 
+import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
@@ -20,6 +22,8 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
+
+import java.util.Calendar;
 
 @CapacitorPlugin(
         name="Usage",
@@ -35,7 +39,7 @@ import com.getcapacitor.annotation.PermissionCallback;
 public class UsagePlugin extends Plugin {
 
     @PluginMethod()
-    public void getAllUsage(PluginCall call) {
+    public void getAppsUsage(PluginCall call) {
         if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
 
             requestPermissionForAlias("usage", call, "usagePermsCallback");
@@ -73,16 +77,87 @@ public class UsagePlugin extends Plugin {
     }
 
 
+    JSArray reduceStats(JSArray stats) {
+        JSArray ret = new JSArray();
+        JSObject temp = new JSObject();
+
+        try {
+
+            for (int k = 0; k < 3; k++) {
+                long max = 0;
+                int idx = 0;
+                // searching for max time spent
+                for (int i = 0; i < stats.length(); i++) {
+                    long a = stats.getJSONObject(i).getLong("timeSpent");
+                    if (a > max) {
+                        max = a;
+                        idx = i;
+                    }
+                }
+                ret.put(stats.getJSONObject(idx));
+                stats.remove(idx);
+            }
+            long othersTime = 0;
+            for (int i = 0; i < stats.length(); i++)
+                othersTime += stats.getJSONObject(i).getLong("timeSpent");
+
+            temp.put("timeSpent", othersTime);
+            temp.put("packageName", "Other Apps");
+            ret.put(temp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return  ret;
+    }
+
     //TODO: rename function
     void run(PluginCall call) {
-        Usage usage = new Usage(getActivity().getApplicationContext());
+        Usage usage = new Usage();
         JSObject ret = new JSObject();
-        ret.put("stats", usage.GetUsageData());
-        ret.put("total", usage.getTotalTime());
+        JSArray stats = reduceStats(usage.GetUsageData(getActivity().getApplicationContext()));
+
+        ret.put("stats", stats);
+        ret.put("totalTime", usage.getTotalTime());
         call.resolve(ret);
     }
 
+    @PluginMethod()
+    public void getUnlocks(PluginCall call) {
+        if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
 
+            requestPermissionForAlias("usage", call, "usagePermsCallback_unlocks");
+            startActivity(
+                    getActivity().getApplicationContext(),
+                    new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    Bundle.EMPTY
+            );
 
+        } else {
+            Log.i("TEST", "getUnlocks: starting!");
+            Usage usage = new Usage();
+            JSObject ret = new JSObject();
+            ret.put("unlocks", usage.getUnlockStats(getActivity().getApplicationContext()));
+            Log.i("TEST", "usagePermissionCallback_unlocks: " + ret.toString());
+            call.resolve(ret);
+        }
+    }
+
+    @PermissionCallback
+    void usagePermissionCallback_unlocks(PluginCall call) {
+        if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
+
+            Usage usage = new Usage();
+            JSObject ret = new JSObject();
+            ret.put("unlocks", usage.countUnlocks(Calendar.getInstance().getTimeInMillis()-10000,
+                    Calendar.getInstance().getTimeInMillis(), getActivity().getApplicationContext()));
+            Log.i("TEST", "usagePermissionCallback_unlocks: " + ret.toString());
+            call.resolve(ret);
+        } else {
+            call.reject("Permission not granted");
+        }
+    }
 
 }
