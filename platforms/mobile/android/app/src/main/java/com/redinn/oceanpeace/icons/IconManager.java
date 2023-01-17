@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.redinn.oceanpeace.FunctionBase;
 
 import java.io.File;
@@ -113,4 +115,18 @@ public class IconManager {
             Log.e("IconPlugin", "failed to close FileOutputStream " + e);
         }
     }
+
+    public static AppIconData getIcon(String packageName, Context context) throws Exception {
+        if (packageName == null)
+            throw new Exception("getIcon: packageName is null");
+
+        Properties iconDB = IconManager.getIconsData(context);
+        String data = iconDB.getProperty(packageName);
+        if (data == null) {
+            throw new Exception("getIcon: No data for package: " + packageName);
+        }
+
+        return new AppIconData(packageName, data);
+    }
+
 }
