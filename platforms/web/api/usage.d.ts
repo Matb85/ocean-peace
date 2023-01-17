@@ -21,6 +21,7 @@ export interface HourlyUsageI {
 }
 
 export interface UsageMethods {
+  getUsageTime(): Promise<number>;
   /** used in insights.svelte in the chart where apps used today are displayed
    * @returns an array with 3 most used a a 4th element that represents the rest
    */
