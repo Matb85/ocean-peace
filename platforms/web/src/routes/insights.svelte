@@ -15,11 +15,10 @@
   let screenTimeHistory: GoalHistoryI[] = [];
   let hourlyUsageToday: HourlyUsageI[] = [];
 
-
   onMount(() => {
     Api.getAppsUsedToday().then(d => (appsused = d));
     Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
-    Api.getHourlyUsageToday().then(d => (hourlyUsageToday = d));
+    Api.getUsageIntensityToday().then(d => (hourlyUsageToday = d));
   });
 </script>
 
@@ -43,7 +42,7 @@
     data={appsused.map(a => ({ color: a.color, value: a.minutes }))}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
-      <H tag={2}>24 min</H>
+      <H tag={2}>{formatMinutes(appsused[appsused.length - 1]?.minutes || 0)}</H>
       <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
@@ -54,7 +53,6 @@
 </section>
 
 <H thin>Hourly Usage Today</H>
-
 <LineChart
   axisX={hourlyUsageToday.filter((x, i) => i % 2 == 0).map(h => h.hour)}
   data={hourlyUsageToday.map(h => ({ key: h.key, value: h.value }))}
@@ -73,14 +71,3 @@
     </div>
   {/each}
 </section>
-
-<style lang="postcss" global>
-  .lines_con {
-    aspect-ratio: 16/9;
-    position: absolute;
-    z-index: 0;
-  }
-  .chart_con {
-    position: relative;
-  }
-</style>

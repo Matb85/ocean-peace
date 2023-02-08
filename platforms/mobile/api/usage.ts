@@ -1,4 +1,5 @@
-import { registerPlugin } from "@capacitor/core";
+import type { AppIconI } from "$schema";
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import type {
   AppsUsage,
   GoalHistoryI,
@@ -8,26 +9,52 @@ import type {
 } from "@redinn/oceanpeace-web/api/usage";
 
 interface UsagePlugin {
-  getAllUsage(): Promise<{ stats: JSON, total: number }>;
+  getAppsUsageToday(): Promise<{ stats: SingleAppUsageI[] }>;
+  getTotalTime(): Promise<{ time: number }>;
+  getUnlocks(): Promise<{ unlocks: HourlyUsageI[] }>;
 }
 
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
-  async getAllUsage(): Promise<AppsUsage> {
-    const { stats, total } = await Usage.getAllUsage();
+  async getUsageTime(): Promise<number> {
+      const { time } = await Usage.getTotalTime();
 
-    return { stats, total };
+      return time;
   },
   async getAppsUsedToday(): Promise<SingleAppUsageI[]> {
-    return [
+    const { stats } = await Usage.getAppsUsageToday();
+    let colors : string[] = ["#B5179E", "#3772FF", "#FCBA04", "#F8F5FA"];
+    for (let i=0; i<4; i++) {
+      stats[i].icon.iconPath = Capacitor.convertFileSrc(stats[i].icon.iconPath);
+      stats[i].color = colors[i];
+    }
+
+    return stats;
+    /* [
       { minutes: 70, color: "#3772FF", icon: { packageName: "", label: "Instagram", iconPath: "", version: "" } },
       { minutes: 100, color: "#FCBA04", icon: { packageName: "", label: "Facebook", iconPath: "", version: "" } },
       { minutes: 100, color: "#F8F5FA", icon: { packageName: "", label: "Rest", iconPath: "", version: "" } },
     ];
+    */
   },
-  async getHourlyUsageToday(): Promise<HourlyUsageI[]> {
-    return [
+  async getUsageIntensityToday(): Promise<HourlyUsageI[]> {
+    const { unlocks } = await Usage.getUnlocks();
+
+    // let ret: HourlyUsageI[];
+    // for ( let i=0; i<10; i++) {
+    //   let temp: HourlyUsageI;
+    //   temp.hour = unlocks[i].hour;
+    //   temp.key = unlocks[i].key;
+    //   temp.value = unlocks[i].value;
+    //   ret.push(temp)
+    // }
+
+    console.log(unlocks.toString())
+
+    return unlocks;
+    /*
+    [
       { hour: "8am", key: 0, value: 0 },
       { hour: "9am", key: 10, value: 30 },
       { hour: "10am", key: 20, value: 45 },
@@ -39,7 +66,8 @@ const plugin: UsageMethods = {
       { hour: "4pm", key: 80, value: 60 },
       { hour: "5pm", key: 90, value: 80 },
       { hour: "6pm", key: 100, value: 100 },
-    ];
+    ]; 
+    */
   },
 
   async getScreenTimeHistory(): Promise<GoalHistoryI[]> {
