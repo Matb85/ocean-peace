@@ -1,69 +1,151 @@
 package com.redinn.oceanpeace.usage;
 
 import android.app.usage.UsageEvents;
-import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.icu.util.Calendar;
 import android.util.Log;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.redinn.oceanpeace.FunctionBase;
 import com.redinn.oceanpeace.icons.IconManager;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Usage {
 
+    // region GET functions
     private UsageStatsManager getManager(Context context) {
         return (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
     }
-    private List<UsageStats> getStats(UsageStatsManager manager) {
-        return manager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+    private List<UsageEvents.Event> getEvents(Context context) {
+        List<UsageEvents.Event> list = new ArrayList<UsageEvents.Event>();
+
+        UsageEvents events = getManager(context).queryEvents(
                 System.currentTimeMillis()
                         - Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60L * 60L * 1000L
-                        - Calendar.getInstance().get(Calendar.MINUTE) * 60L * 1000L
-                        - Calendar.getInstance().get(Calendar.SECOND) * 1000L,
-                System.currentTimeMillis());
+                        - Calendar.getInstance().get(Calendar.MINUTE) * 60L *  1000L
+                        - Calendar.getInstance().get(Calendar.SECOND) * 1000L
+                        - Calendar.getInstance().get(Calendar.MILLISECOND),
+                System.currentTimeMillis()
+        );
+
+        while (events.hasNextEvent()) {
+            UsageEvents.Event temp = new UsageEvents.Event();
+            events.getNextEvent(temp);
+            list.add(temp);
+        }
+
+        return list;
     }
 
+    // endregion
 
-    public JSArray GetUsageData(Context context) {
+    // region API
 
-        long time = System.currentTimeMillis();
-        UsageStatsManager manager = getManager(context);
-        List<UsageStats> stats = getStats(manager);
+    // region USAGE DATA functions
 
-        JSArray appsUsage = new JSArray();
+    private class Stat {
+        long totalTime = 0;
+        long startTime;
+        boolean resumed=false;
+    }
+    private boolean isApp(String packageName, Context context) {
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName, 0);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+    private HashMap<String, Stat> _applicationsUsageData(Context context) {
 
-        check_stats:
-        for (UsageStats stat: stats) {
+        List<UsageEvents.Event> events = getEvents(context);
 
-            String packageName = stat.getPackageName();
+        HashMap<String, Stat> activityTime = new HashMap<String, Stat>();
+        long dayStart= (
+                System.currentTimeMillis()
+                - Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 60L * 60L * 1000L
+                - Calendar.getInstance().get(Calendar.MINUTE) * 60L *  1000L
+                - Calendar.getInstance().get(Calendar.SECOND) * 1000L
+                - Calendar.getInstance().get(Calendar.MILLISECOND)
+        );
 
-            int appTime = (int)(stat.getTotalTimeInForeground()/1000 /60);
 
-            if (appTime < 1)
-                continue check_stats;
+        // Activity started previous day
+        for (UsageEvents.Event event : events) {
+            if (event.getEventType() != UsageEvents.Event.ACTIVITY_PAUSED)
+                continue;
 
-            for (int i=0; i<appsUsage.length(); i++) {
-                try {
-                    if (appsUsage.getJSONObject(i).getJSONObject("icon").getString("packageName").equals(packageName)) {
-                        int minutes = appsUsage.getJSONObject(i).getInt("minutes");
-                        appsUsage.put(i, appsUsage.getJSONObject(i).put("minutes", minutes + appTime));
-                        continue check_stats;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            Stat s = new Stat();
+            s.totalTime += (event.getTimeStamp() - dayStart);
+            activityTime.put(event.getPackageName(), s);
+
+            break;
+        }
+
+        // Applications usage through the day
+        for(UsageEvents.Event event : events) {
+
+            // RESUME event
+            if (event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED) {
+                Stat temp = activityTime.get(event.getPackageName());
+                if (temp == null) {
+                    temp = new Stat();
                 }
-            }
 
+                temp.startTime = event.getTimeStamp();
+                temp.resumed = true;
+            }
+            // PAUSED event
+            else if (event.getEventType() == UsageEvents.Event.ACTIVITY_PAUSED) {
+                Stat temp = activityTime.get(event.getPackageName());
+                if (temp == null) {
+                    temp = new Stat();
+                }
+
+                // If app was opened sum it's working time
+                if (temp.resumed) {
+                    temp.totalTime += (event.getTimeStamp() - temp.startTime);
+                    temp.resumed = false;
+                }
+
+                activityTime.put(event.getPackageName(), temp);
+            }
+            // CLOSE ENOUGH DAMN
+        }
+
+        // Activity is currently running in foreground [edge case]
+        for (String name : activityTime.keySet()) {
+            Stat stat = activityTime.get(name);
+            if (!stat.resumed)
+                continue;
+
+            stat.totalTime += (System.currentTimeMillis() - stat.startTime);
+            activityTime.put(name, stat);
+        }
+
+        return activityTime;
+    }
+
+    // endregion
+
+    public JSArray getUsageData(Context context) {
+        JSArray ret = new JSArray();
+
+
+        HashMap<String, Stat> dataSet = _applicationsUsageData(context);
+
+        for (String packageName : dataSet.keySet()) {
+
+            // receive ICON data
             JSObject icon = new JSObject();
             try {
                 icon = JSObject.fromJSONObject(
@@ -81,24 +163,21 @@ public class Usage {
             }
 
             JSObject app = new JSObject();
-            app.put("minutes", appTime);
+            app.put("minutes", dataSet.get(packageName).totalTime /60000);
             app.put("icon", icon);
-            appsUsage.put(app);
+            ret.put(app);
         }
 
-        Log.d("Mayo", "GetUsageData: " + appsUsage.toString());
-
-
-        return appsUsage;
+        return ret;
     }
 
     public long getTotalTime(Context context) {
         long time=0;
 
-        List<UsageStats> statsList = getStats(getManager(context));
+        HashMap<String, Stat> data = _applicationsUsageData(context);
 
-        for (UsageStats stats : statsList) {
-            time += stats.getTotalTimeInForeground()/1000/60;
+        for (Stat s : data.values()) {
+            time += s.totalTime/1000/60;
         }
 
         return time;
@@ -111,7 +190,6 @@ public class Usage {
                 - Calendar.getInstance().get(Calendar.MINUTE) * 60L * 1000L
                 - Calendar.getInstance().get(Calendar.SECOND) * 1000L
                 - Calendar.getInstance().get(Calendar.MILLISECOND);
-
 
 
         JSONArray Stats = new JSONArray();
@@ -146,15 +224,15 @@ public class Usage {
         return Stats;
     }
 
-     int countUnlocks(long start_time, long end_time, Context context) {
+    // region UNLOCKS functions
+
+    int countUnlocks(long start_time, long end_time, Context context) {
         UsageStatsManager manager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
 
         int count = 0;
 
         UsageEvents events = manager.queryEvents(
-                // begin time
                 start_time,
-                // end time
                 end_time
         );
 
@@ -169,5 +247,7 @@ public class Usage {
 
         return count;
     }
+    // endregion
 
+    // endregion
 }

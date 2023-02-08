@@ -52,7 +52,8 @@ public class UsagePlugin extends Plugin {
         } else {
             Usage usage = new Usage();
             JSObject ret = new JSObject();
-            ret.put("stats", reduceStats(usage.GetUsageData(getActivity().getApplicationContext())));
+            ret.put("stats", reduceStats(usage.getUsageData(getActivity().getApplicationContext())));
+
             call.resolve(ret);
         }
     }
@@ -62,7 +63,7 @@ public class UsagePlugin extends Plugin {
         if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
             Usage usage = new Usage();
             JSObject ret = new JSObject();
-            ret.put("stats", reduceStats(usage.GetUsageData(getActivity().getApplicationContext())));
+            ret.put("stats", reduceStats(usage.getUsageData(getActivity().getApplicationContext())));
             call.resolve(ret);
         } else {
             call.reject("Permission not granted");
