@@ -3,16 +3,15 @@ package com.redinn.oceanpeace.goals;
 import static com.redinn.oceanpeace.FunctionBase.JSONArrayOptElement;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.redinn.oceanpeace.FunctionBase;
 import com.redinn.oceanpeace.MainActivity;
-import com.redinn.oceanpeace.managers.JSONManager;
+import com.redinn.oceanpeace.database.OceanDatabase;
+import com.redinn.oceanpeace.database.goals.Goal;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
+import java.util.List;
 
 /**
  * Class providing saving, loading and deleting functions for goals. <br>
@@ -42,54 +41,76 @@ public class Goals {
 
     // TODO: make updating goal synchronize progress
     public void saveGoal(JSONObject goal) throws Exception {
-        // prevent creating goals in an nonexistent folder
-        String GOALS_FOLDER = FunctionBase.getFilesDir(context) + "/goals";
-        File goalsFolderFile = new File(GOALS_FOLDER);
-        if (!goalsFolderFile.isDirectory()) {
-            Log.i("GoalsPlugin", "creating the goals folder");
-            goalsFolderFile.mkdir();
-        }
+//        // prevent creating goals in an nonexistent folder
+//        String GOALS_FOLDER = FunctionBase.getFilesDir(context) + "/goals";
+//        File goalsFolderFile = new File(GOALS_FOLDER);
+//        if (!goalsFolderFile.isDirectory()) {
+//            Log.i("GoalsPlugin", "creating the goals folder");
+//            goalsFolderFile.mkdir();
+//        }
+//
+//        JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
 
-        JSONManager.writeFile(goal, FunctionBase.getFilesDir(context) + "/goals/" + goal.getString("id") + ".json");
+        Goal temp = new Goal();
+        temp.id = goal.getString(Goals.ID);
+        temp.name = goal.getString(Goals.NAME);
+        temp.apps = goal.getString(Goals.APPS);
+        temp.websites = goal.getString(Goals.WEBSITES);
+        temp.limit = goal.getString(Goals.LIMIT);
+        temp.activeDays = goal.getString(Goals.ACTIVEDAYS);
+        temp.type = goal.getString(Goals.LIMITACTIONTYPE);
+        temp.sessionUpdate = goal.getString(Goals.SESSIONUPDATE);
+        temp.sessionTime = goal.getString(Goals.SESSIONTIME);
+        temp.sessionHistory = goal.getString(Goals.SESSIONSHISTORY);
+
+        OceanDatabase.getInstance(context).goalDAO().insert(temp);
 
         MainActivity.mAPI.changeGoal(goal);
     }
 
     public JSONArray getAllGoals() {
-        File[] files = new File(FunctionBase.getFilesDir(context) + "/goals").listFiles();
-
-        if (files == null)
-            return new JSONArray();
+//        File[] files = new File(FunctionBase.getFilesDir(context) + "/goals").listFiles();
+//
+//        if (files == null)
+//            return new JSONArray();
 
         /* put data from each goal the the final array */
         JSONArray ret = new JSONArray();
 
-        Log.i("GoalsPlugin", "iterating through all files...");
+//        Log.i("GoalsPlugin", "iterating through all files...");
+//
+//        for (File file : files) {
+//
+//            try {
+//                JSONObject temp = null;
+//                try {
+//                    if (MainActivity.mBound && !MainActivity.mAPI.todayGoalsEmpty())
+//                        temp = JSONArrayOptElement(MainActivity.mAPI.getTodayGoals(), ID, file.getName().substring(0, file.getName().length() - 5));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                if (temp != null) {
+//                    Log.i("GoalsPlugin", "reading today goal " + temp.getString(ID));
+//                    ret.put(temp);
+//                }
+//                else {
+//                    Log.i("GoalsPlugin", "reading file " + file.getName());
+//                    ret.put(JSONManager.readFile(file));
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        for (File file : files) {
+        List<Goal> goals = OceanDatabase.getInstance(context).goalDAO().getAllGoals();
 
-            try {
-                JSONObject temp = null;
-                try {
-                    if (MainActivity.mBound && !MainActivity.mAPI.todayGoalsEmpty())
-                        temp = JSONArrayOptElement(MainActivity.mAPI.getTodayGoals(), ID, file.getName().substring(0, file.getName().length() - 5));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if (temp != null) {
-                    Log.i("GoalsPlugin", "reading today goal " + temp.getString(ID));
-                    ret.put(temp);
-                }
-                else {
-                    Log.i("GoalsPlugin", "reading file " + file.getName());
-                    ret.put(JSONManager.readFile(file));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            for (Goal goal : goals)
+                ret.put(goal.toJSON());
         }
-
-
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return ret;
     }
@@ -97,7 +118,7 @@ public class Goals {
     public JSONObject getGoal(String id) {
         JSONObject res = new JSONObject();
 
-        File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
+        //File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
 
         try {
 
@@ -110,7 +131,11 @@ public class Goals {
                 res = temp;
             }
             else {
-                res = JSONManager.readFile(file);
+
+                List<Goal> goals = OceanDatabase.getInstance(context).goalDAO().getGoalByName(id);
+                res = goals.get(0).toJSON();
+
+                //res = JSONManager.readFile(file);
             }
 
 
@@ -126,7 +151,7 @@ public class Goals {
 
     public void deleteGoal(String id) {
         /* delete the id from the database */
-        File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
+       // File file = new File(FunctionBase.getFilesDir(context) + "/goals/" + id + ".json");
 
         try {
             if (MainActivity.mBound)
@@ -135,7 +160,12 @@ public class Goals {
             e.printStackTrace();
         }
 
-        file.delete();
+        Goal temp = new Goal();
+        temp.id = id;
+
+        OceanDatabase.getInstance(context).goalDAO().delete(temp);
+
+       // file.delete();
     }
 
 
