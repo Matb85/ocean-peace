@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.1.13 (2023-02-11)
+
+### Bug Fixes
+
+- :label: fix versions ([2cf80c7](https://github.com/Redinn-Labs/ocean-peace/commit/2cf80c7117d7da6dbe59e0f5d021dd4a87ad4f31))
+
 ## 0.1.12 (2023-01-09)
 
 **Note:** Version bump only for package @redinn/oceanpeace-desktop
