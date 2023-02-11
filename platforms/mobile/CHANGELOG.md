@@ -3,45 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 0.1.10 (2022-12-16)
+## 0.1.13 (2023-02-11)
+
+### Bug Fixes
+
+- :label: fix versions ([2cf80c7](https://github.com/Redinn-Labs/ocean-peace/commit/2cf80c7117d7da6dbe59e0f5d021dd4a87ad4f31))
+
+## 0.1.12 (2023-01-09)
 
 **Note:** Version bump only for package @redinn/oceanpeace-mobile
 
+## 0.1.11 (2022-12-16)
 
+**Note:** Version bump only for package @redinn/oceanpeace-mobile
 
+## 0.1.10 (2022-12-16)
 
+**Note:** Version bump only for package @redinn/oceanpeace-mobile
 
 ## 0.1.9 (2022-12-16)
 
 **Note:** Version bump only for package @redinn/oceanpeace-mobile
 
-
-
-
-
 ## 0.1.8 (2022-12-15)
 
 **Note:** Version bump only for package @redinn/oceanpeace-mobile
-
-
-
-
 
 ## 0.1.7 (2022-12-11)
 
 **Note:** Version bump only for package @redinn/oceanpeace-mobile
 
-
-
-
-
 ## 0.1.6 (2022-11-18)
 
 **Note:** Version bump only for package @redinn/oceanpeace-mobile
-
-
-
-
 
 ## 0.1.5 (2022-10-31)
 
