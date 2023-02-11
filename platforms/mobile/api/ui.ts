@@ -1,6 +1,8 @@
 import { registerPlugin } from "@capacitor/core";
-import type { UIMethods, PreferencesI } from "@redinn/oceanpeace-web/api/ui";
 import { SplashScreen } from "@capacitor/splash-screen";
+import { App } from "@capacitor/app";
+
+import type { UIMethods, PreferencesI } from "@redinn/oceanpeace-web/api/ui";
 interface UIPlugin {
   fadeIn(): Promise<void>;
   fadeOut(): Promise<void>;
@@ -12,6 +14,9 @@ interface UIPlugin {
 const UI = registerPlugin<UIPlugin>("UI");
 
 const plugin: UIMethods = {
+  setUpNativeBackButton(callback: () => void) {
+    App.addListener("backButton", callback);
+  },
   fadeIn() {
     return UI.fadeIn();
   },

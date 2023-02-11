@@ -1,27 +1,24 @@
 <script lang="ts">
-  import { Aquarium, H } from "@redinnlabs/system/Elements";
+  import { Icon, Aquarium, H } from "@redinnlabs/system/Elements";
+  import { mdiCheck, mdiClose } from "@mdi/js";
   import { PieChart, LineChart, ChartKey } from "@redinnlabs/system/Charts";
-  import { SoundTrack } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
   import FullHeading from "$lib/FullHeading.svelte";
-  import { onMount } from "svelte";
-  import type { ChartColumnI } from "@redinnlabs/system/utils";
   import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
+  import { formatMinutes } from "$lib/utils";
+  import type { GoalHistoryI, HourlyUsageI, SingleAppUsageI } from "$schema/usage";
+  import { onMount } from "svelte";
+  const maxScreenTime: number = 270;
 
-  let usageStats: Array<ChartColumnI> = [];
+  let appsused: SingleAppUsageI[] = [];
+  let screenTimeHistory: GoalHistoryI[] = [];
+  let hourlyUsageToday: HourlyUsageI[] = [];
 
-  onMount(async () => {
-    const t = (await Api.getAppsUsage()).stats;
-    let counter: number = 0;
-    for (const app in t) {
-      if (Object.prototype.hasOwnProperty.call(t, app)) {
-        const a: ChartColumnI = { value: 0, color: "#3772FF" };
-        a.value = t[app].timeSpent as number;
-        usageStats = [...usageStats, a];
-        counter = counter + 1;
-      }
-    }
+  onMount(() => {
+    Api.getAppsUsedToday().then(d => (appsused = d));
+    Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
+    Api.getUsageIntensityToday().then(d => (hourlyUsageToday = d));
   });
 </script>
 
@@ -33,61 +30,44 @@
   <Cutout className="w-full bottom-0 absolute" />
 </div>
 
-<section class="w-11/12 grid grid-cols-6 gap-2 mt-12">
+<H tag={5} thin className="w-9/12 text-center"
+  >{$t("d.settings.screentime") + ": "}<br />
+  {formatMinutes(maxScreenTime)}
+</H>
+
+<section class="w-11/12">
   <PieChart
-    className="w-full col-span-4"
-    maxValue={200}
-    data={[
-      { color: "#3772FF", value: 110 },
-      { color: "#FCBA04", value: 40 },
-    ]}
+    className="w-3/4 mx-auto"
+    maxValue={maxScreenTime}
+    data={appsused.map(a => ({ color: a.color, value: a.minutes }))}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
-      <H tag={2}>24 min</H>
+      <H tag={2}>{formatMinutes(appsused[appsused.length - 1]?.minutes || 0)}</H>
       <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
   <ChartKey
-    isVertical
-    className="col-span-2 self-center flex-col flex-none"
-    data={[
-      { color: "#3772FF", text: "Samsung", bold: "1h 27min" },
-      { color: "#FCBA04", text: "Macbook", bold: "0h 16min" },
-      { color: "#F8F5FA", text: "Time left", bold: "3h 37min" },
-    ]}
+    className="w-full mt-2 items-center flex-col flex-wrap flex-none"
+    data={appsused.map(a => ({ color: a.color, text: a.icon.label, bold: formatMinutes(a.minutes) }))}
   />
 </section>
 
-<H thin>Usage Intensity</H>
-
+<H thin>Hourly Usage Today</H>
 <LineChart
-  axisX={["8am", "10am", "12am", "2pm", "4pm", "6pm"]}
-  data={[
-    { key: 0, value: 0 },
-    { key: 10, value: 30 },
-    { key: 20, value: 45 },
-    { key: 30, value: 40 },
-    { key: 40, value: 80 },
-    { key: 50, value: 50 },
-    { key: 60, value: 40 },
-    { key: 70, value: 90 },
-    { key: 80, value: 60 },
-    { key: 90, value: 80 },
-    { key: 100, value: 100 },
-  ]}
+  axisX={hourlyUsageToday.filter((x, i) => i % 2 == 0).map(h => h.hour)}
+  data={hourlyUsageToday.map(h => ({ key: h.key, value: h.value }))}
 />
 
-<H thin>Apps used today</H>
-
-<PieChart className="w-64 h-64" maxValue={600} data={usageStats}>
-  <div class="wh-full flex flex-col items-center justify-center gap-2">
-    <H tag={2}>17 apps</H>
-    <H tag={3} thin>opened</H>
-  </div>
-</PieChart>
-
-<section class="w-11/12 flex flex-col gap-4">
-  {#each Array(4) as _}
-    <SoundTrack src="/instagram.svg" alt="app icon" title="Instagram" info="38min today" />
+<H thin>{$t("d.l7d")}</H>
+<section class="flex flex-wrap items-center justify-center max-w-xs">
+  {#each screenTimeHistory as session}
+    <div class="text-center">
+      <PieChart className="w-20 h-20" maxValue={maxScreenTime} data={[{ color: "#3772FF", value: session.minutes }]}>
+        <div class="wh-full bg-green-light text-green-dark flex items-center justify-center">
+          <Icon d={session.status ? mdiCheck : mdiClose} className="fill-current w-32" />
+        </div>
+      </PieChart>
+      <p>{session.day}</p>
+    </div>
   {/each}
 </section>
