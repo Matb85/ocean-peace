@@ -20,14 +20,14 @@ public interface GoalDAO {
     @Delete
     void delete(Goal goal);
 
-    @Query("SELECT * FROM goal")
+    @Query("SELECT * FROM goal ORDER BY name ASC")
     List<Goal> getAllGoals();
 
     @Query("SELECT name FROM goal")
     List<String> getAllGoalsName();
 
     @Query("SELECT * FROM goal WHERE id = :id")
-    List<Goal> getGoalByName(String id);
+    Goal getGoalByName(String id);
 
 
 }
