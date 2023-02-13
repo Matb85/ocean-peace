@@ -132,8 +132,8 @@ public class Goals {
             }
             else {
 
-                List<Goal> goals = OceanDatabase.getInstance(context).goalDAO().getGoalByName(id);
-                res = goals.get(0).toJSON();
+                Goal goals = OceanDatabase.getInstance(context).goalDAO().getGoalByName(id);
+                res = goals.toJSON();
 
                 //res = JSONManager.readFile(file);
             }
