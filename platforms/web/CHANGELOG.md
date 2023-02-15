@@ -8,6 +8,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - :bug: update version in lerna ([77f6145](https://github.com/Redinn-Labs/ocean-peace/commit/77f6145d9f575577eb45ae5c862344c86dc4f0eb))
+## 0.1.16 (2023-02-11)
+
+**Note:** Version bump only for package @redinn/oceanpeace-web
 
 ## 0.1.15 (2023-02-11)
 
