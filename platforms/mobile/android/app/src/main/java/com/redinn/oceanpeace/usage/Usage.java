@@ -9,7 +9,8 @@ import android.util.Log;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.redinn.oceanpeace.icons.IconManager;
+import com.redinn.oceanpeace.database.OceanDatabase;
+import com.redinn.oceanpeace.database.icons.Icon;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +18,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Usage {
 
@@ -140,26 +143,28 @@ public class Usage {
     public JSArray getUsageData(Context context) {
         JSArray ret = new JSArray();
 
+        Map<String, Icon> icons = OceanDatabase.getInstance(context).iconDAO().getAllIcons();
 
         HashMap<String, Stat> dataSet = _applicationsUsageData(context);
 
         for (String packageName : dataSet.keySet()) {
 
-            // receive ICON data
             JSObject icon = new JSObject();
-            try {
-                icon = JSObject.fromJSONObject(
-                        IconManager.getIcon(
-                                packageName,
-                                context.getApplicationContext()).toJSON()
-                );
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                icon.put("packageName", "");
-                icon.put("label", "unknown");
-                icon.put("path", "");
-                icon.put("version", "");
+            // receive ICON data
+            Icon data = icons.get(packageName);
+
+            if (data == null) {
+//                icon.put("packageName", "");
+//                icon.put("label", "unknown");
+//                icon.put("iconPath", "");
+//                icon.put("version", "");
+                continue;
+            }
+            else {
+                icon = data.toJSON();
+                if (Objects.equals(data.label, ""))
+                    icon.put("label", "unknown");
             }
 
             JSObject app = new JSObject();
