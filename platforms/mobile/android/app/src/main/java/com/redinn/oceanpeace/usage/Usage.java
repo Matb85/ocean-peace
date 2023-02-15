@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.redinn.oceanpeace.icons.IconManager;
+import com.redinn.oceanpeace.database.OceanDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Usage {
 
@@ -146,21 +147,11 @@ public class Usage {
         for (String packageName : dataSet.keySet()) {
 
             // receive ICON data
-            JSObject icon = new JSObject();
-            try {
-                icon = JSObject.fromJSONObject(
-                        IconManager.getIcon(
-                                packageName,
-                                context.getApplicationContext()).toJSON()
-                );
+            JSObject icon = OceanDatabase.getInstance(context).iconDAO().getIcon(packageName).toJSON();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                icon.put("packageName", "");
+            if (Objects.equals(icon.getString("label"), ""))
                 icon.put("label", "unknown");
-                icon.put("path", "");
-                icon.put("version", "");
-            }
+
 
             JSObject app = new JSObject();
             app.put("minutes", dataSet.get(packageName).totalTime /60000);

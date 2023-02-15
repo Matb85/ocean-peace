@@ -53,7 +53,13 @@ public class MainActivity extends BridgeActivity {
 
         bindAPI();
 
-        IconManager.regenerateIcons(getApplicationContext());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                IconManager.regenerateIcons(getApplicationContext());
+            }
+        }).start();
+
 
         super.onStart();
 
