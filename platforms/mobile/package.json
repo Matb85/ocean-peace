@@ -1,6 +1,6 @@
 {
   "name": "@redinn/oceanpeace-mobile",
-  "version": "0.1.15",
+  "version": "0.1.17",
   "private": true,
   "scripts": {
     "sync": "pnpm --filter @redinn/oceanpeace-web build && cap sync",
@@ -10,7 +10,7 @@
   "dependencies": {
     "@capacitor/android": "4.6.1",
     "@capacitor/app": "4.1.1",
-    "@redinn/oceanpeace-web": "workspace:^0.1.15"
+    "@redinn/oceanpeace-web": "workspace:^0.1.17"
   },
   "devDependencies": {
     "@capacitor/assets": "2.0.4",
