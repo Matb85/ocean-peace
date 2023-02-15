@@ -7,8 +7,20 @@ import androidx.room.RoomDatabase;
 
 import com.redinn.oceanpeace.database.goals.Goal;
 import com.redinn.oceanpeace.database.goals.GoalDAO;
+import com.redinn.oceanpeace.database.icons.Icon;
+import com.redinn.oceanpeace.database.icons.IconDAO;
 
-@androidx.room.Database(entities = {Goal.class}, version = 0_1)
+@androidx.room.Database(
+        entities = {Goal.class, Icon.class},
+        version = 1,
+        exportSchema = true,
+        autoMigrations = {
+//                @AutoMigration(
+//                        from = 2,
+//                        to = 2
+//                )
+        }
+)
 public abstract class OceanDatabase extends RoomDatabase {
     private static OceanDatabase instance;
 
@@ -19,7 +31,10 @@ public abstract class OceanDatabase extends RoomDatabase {
         return instance;
     }
 
+    // MIGRATION
 
-    //DAOs
+
+    // DAOs
     public abstract GoalDAO goalDAO();
+    public abstract IconDAO iconDAO();
 }
