@@ -31,7 +31,7 @@ importers:
       '@capacitor/cli': 4.6.1
       '@capacitor/core': 4.6.1
       '@capacitor/splash-screen': 4.1.2
-      '@redinn/oceanpeace-web': workspace:^0.1.15
+      '@redinn/oceanpeace-web': workspace:^0.1.17
     dependencies:
       '@capacitor/android': 4.6.1_@capacitor+core@4.6.1
       '@capacitor/app': 4.1.1_@capacitor+core@4.6.1
@@ -45,7 +45,7 @@ importers:
   platforms/web:
     specifiers:
       '@mdi/js': 7.0.96
-      '@redinn/oceanpeace-mobile': workspace:^0.1.15
+      '@redinn/oceanpeace-mobile': workspace:^0.1.17
       '@redinnlabs/system': github:Redinn-Labs/design-system#release
       '@sveltejs/vite-plugin-svelte': 1.0.8
       '@tsconfig/svelte': 3.0.0
@@ -71,7 +71,7 @@ importers:
     dependencies:
       '@mdi/js': 7.0.96
       '@redinn/oceanpeace-mobile': link:../mobile
-      '@redinnlabs/system': github.com/Redinn-Labs/design-system/b8e1cf9f753c90f62e53c78ee3b7154a99deed0a
+      '@redinnlabs/system': github.com/Redinn-Labs/design-system/5bac50370227921bf0d3c9a2602d4a56788b81cd
       '@sveltejs/vite-plugin-svelte': 1.0.8_svelte@3.50.1+vite@3.1.3
       svelte-spa-router: 3.3.0
     devDependencies:
@@ -7541,8 +7541,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  github.com/Redinn-Labs/design-system/b8e1cf9f753c90f62e53c78ee3b7154a99deed0a:
-    resolution: {commit: b8e1cf9f753c90f62e53c78ee3b7154a99deed0a, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
+  github.com/Redinn-Labs/design-system/5bac50370227921bf0d3c9a2602d4a56788b81cd:
+    resolution: {commit: 5bac50370227921bf0d3c9a2602d4a56788b81cd, repo: git+ssh://git@github.com/Redinn-Labs/design-system.git, type: git}
     name: '@redinnlabs/system'
     version: 1.18.12
     dependencies:
