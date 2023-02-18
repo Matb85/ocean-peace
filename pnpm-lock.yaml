@@ -45,7 +45,7 @@ importers:
   platforms/web:
     specifiers:
       '@mdi/js': 7.0.96
-      '@redinn/oceanpeace-mobile': workspace:^0.1.20
+      '@redinn/oceanpeace-mobile': workspace:^0.1.18
       '@redinnlabs/system': github:Redinn-Labs/design-system#release
       '@sveltejs/vite-plugin-svelte': 1.0.8
       '@tsconfig/svelte': 3.0.0
