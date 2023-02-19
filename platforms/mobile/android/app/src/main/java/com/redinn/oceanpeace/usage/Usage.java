@@ -143,7 +143,7 @@ public class Usage {
     public JSArray getUsageData(Context context) {
         JSArray ret = new JSArray();
 
-        Map<String, Icon> icons = OceanDatabase.getInstance(context).iconDAO().getAllIcons();
+        Map<String, Icon> icons = OceanDatabase.getDatabase(context).iconDAO().getAllIcons();
 
         HashMap<String, Stat> dataSet = _applicationsUsageData(context);
 

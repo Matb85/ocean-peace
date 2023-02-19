@@ -22,7 +22,7 @@ public class IconsPlugin extends Plugin {
     public void getAllIcons(PluginCall call) {
         JSObject res = new JSObject();
 
-        JSArray icons = OceanDatabase.getInstance(getContext()).iconDAO().getAllIcons_JSON();
+        JSArray icons = OceanDatabase.getDatabase(getContext()).iconDAO().getAllIcons_JSON();
 
         res.put("apps", icons);
 
@@ -39,7 +39,7 @@ public class IconsPlugin extends Plugin {
         JSObject res = new JSObject();
 
         /* retrieve data */
-        JSObject icon = OceanDatabase.getInstance(getContext()).iconDAO().getIcon(packageName).toJSON();
+        JSObject icon = OceanDatabase.getDatabase(getContext()).iconDAO().getIcon(packageName).toJSON();
 
         res.put("app", icon);
 
