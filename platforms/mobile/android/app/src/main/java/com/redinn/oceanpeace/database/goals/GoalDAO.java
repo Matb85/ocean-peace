@@ -9,6 +9,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface GoalDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,5 +32,9 @@ public interface GoalDAO {
     @Query("SELECT * FROM goal WHERE id = :id")
     Goal getGoalByName(String id);
 
+    @Query("UPDATE goal SET session_time = session_time + :time WHERE apps LIKE '%'||:appName||'%' ")
+    Completable updateGoalSessionTime(String appName, long time);
 
+    @Query("SELECT (`limit`*60*1000 - (session_time)) AS time_left FROM goal WHERE apps LIKE '%'||:appName||'%' ORDER BY time_left ASC LIMIT 1")
+    Single<Long> getTimeLeftForApp(String appName);
 }

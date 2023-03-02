@@ -28,11 +28,11 @@ public class GoalsPlugin extends Plugin {
         temp.limit = retrieved.getString(Goal.LIMIT);
         temp.activeDays = retrieved.getString(Goal.ACTIVE_DAYS);
         temp.type = retrieved.getString(Goal.LIMIT_ACTION_TYPE);
-        temp.sessionUpdate = retrieved.getString(Goal.SESSION_UPDATE);
-        temp.sessionTime = retrieved.getString(Goal.SESSION_TIME);
+        temp.sessionUpdate = "";
+        temp.sessionTime = 0;
         temp.sessionHistory = retrieved.getString(Goal.SESSION_HISTORY);
 
-        OceanDatabase.getInstance(getContext().getApplicationContext()).goalDAO().insert(temp);
+        OceanDatabase.getDatabase(getContext().getApplicationContext()).goalDAO().insert(temp);
 
         call.resolve();
     }
@@ -46,7 +46,7 @@ public class GoalsPlugin extends Plugin {
         Goal temp = new Goal();
         temp.id = id;
 
-        OceanDatabase.getInstance(getContext().getApplicationContext()).goalDAO().delete(temp);
+        OceanDatabase.getDatabase(getContext().getApplicationContext()).goalDAO().delete(temp);
 
         call.resolve();
     }
@@ -57,20 +57,20 @@ public class GoalsPlugin extends Plugin {
         if (id == null)
             call.reject("id cannot be null");
 
-        JSObject res = OceanDatabase.getInstance(getContext()).goalDAO().getGoalByName(id).toJSON();
+        JSObject res = OceanDatabase.getDatabase(getContext()).goalDAO().getGoalByName(id).toJSON_forFE();
 
         call.resolve(res);
     }
 
     @PluginMethod
     public void getAllGoals(PluginCall call) {
-        List<Goal> allGoals = OceanDatabase.getInstance(getContext()).goalDAO().getAllGoals();
+        List<Goal> allGoals = OceanDatabase.getDatabase(getContext()).goalDAO().getAllGoals();
         JSObject res = new JSObject();
 
         JSArray array = new JSArray();
 
         for (Goal temp : allGoals)
-            array.put(temp.toJSON());
+            array.put(temp.toJSON_forFE());
 
         res.put("goals", array);
         call.resolve(res);

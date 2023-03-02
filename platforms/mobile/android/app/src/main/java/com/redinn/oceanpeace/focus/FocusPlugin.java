@@ -13,7 +13,6 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
-import com.redinn.oceanpeace.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +50,7 @@ public class FocusPlugin extends Plugin {
         }
 
         try {
-            MainActivity.connectFocus(getActivity().getApplicationContext());
+            //MainActivity.connectFocus(getActivity().getApplicationContext());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +63,7 @@ public class FocusPlugin extends Plugin {
             names.add(packages.getString(i));
 
         try {
-            MainActivity.focusService.startStopwatch(names.toArray(new String[0]));
+            //MainActivity.focusService.startStopwatch(names.toArray(new String[0]));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -97,7 +96,7 @@ public class FocusPlugin extends Plugin {
         }
 
         try {
-            MainActivity.connectFocus(getActivity().getApplicationContext());
+            //MainActivity.connectFocus(getActivity().getApplicationContext());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +111,7 @@ public class FocusPlugin extends Plugin {
         }
 
         try {
-            MainActivity.focusService.startContinuous(names.toArray(new String[0]), _duration);
+            //MainActivity.focusService.startContinuous(names.toArray(new String[0]), _duration);
         }
         catch (Exception e) {
             call.reject("Error", e);
@@ -148,7 +147,7 @@ public class FocusPlugin extends Plugin {
         }
 
 
-        MainActivity.connectFocus(getActivity().getApplicationContext());
+        //MainActivity.connectFocus(getActivity().getApplicationContext());
 
 
 
@@ -167,7 +166,7 @@ public class FocusPlugin extends Plugin {
     @PluginMethod
     public void stop(PluginCall call) {
         try {
-            MainActivity.focusService.stop();
+            //MainActivity.focusService.stop();
         }
         catch (Exception e) {
             e.printStackTrace();
