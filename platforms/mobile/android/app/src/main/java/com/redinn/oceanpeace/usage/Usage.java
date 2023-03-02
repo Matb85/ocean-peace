@@ -84,6 +84,9 @@ public class Usage {
 
         // Activity started previous day
         for (UsageEvents.Event event : events) {
+            if (event.getEventType() == UsageEvents.Event.SCREEN_INTERACTIVE)
+                break;
+
             if (event.getEventType() != UsageEvents.Event.ACTIVITY_PAUSED)
                 continue;
 
