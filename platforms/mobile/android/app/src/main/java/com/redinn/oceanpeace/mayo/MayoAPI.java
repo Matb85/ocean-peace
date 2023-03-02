@@ -1,130 +1,170 @@
 package com.redinn.oceanpeace.mayo;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
+import com.redinn.oceanpeace.MainActivity;
+import com.redinn.oceanpeace.R;
+import com.redinn.oceanpeace.mayo.keepalive.KeepAliveReceiver;
 
 public class MayoAPI extends Service {
+    private static final String CHANNEL_ID = "ocean.mayo.channel.id";
+    private static final String TAG = "MAYO.API";
 
-    // region communication
-    private final IBinder mBinder = new LocalBinder();
-    apiBroadcast mBroadcast = new apiBroadcast();
+    public static boolean isServiceRunning = false;
 
-    static boolean isResponsive = false;
+    public Context getMayoContext() {
+        return this;
+    }
+
 
     public class LocalBinder extends Binder {
-        public MayoAPI getService() {
+        MayoAPI getService() {
             return MayoAPI.this;
         }
+    }
+    private final IBinder APIBinder = new LocalBinder();
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return APIBinder;
+    }
+
+
+    public static final String BROADCAST_REQUEST_BINDING = "mayo.req.bind";
+    void requestBinding() {
+        sendBroadcast(new Intent().setAction(BROADCAST_REQUEST_BINDING));
     }
 
     @Override
     public void onCreate() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("ocean.waves.mapi.update");
-        registerReceiver(mBroadcast, filter);
-
-        sendBroadcast(new Intent().setAction("ocean.waves.mayo.force_update"));
-        isResponsive = false;
-
         super.onCreate();
+        Log.d(TAG, "onCreate called");
+        createNotificationChanel();
+        isServiceRunning = true;
+
+        requestBinding();
     }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "onStartCommand called");
+
+        startForeground(1, foregroundNotification());
+
+        return START_STICKY;
+    }
+
+    private Notification foregroundNotification() {
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+
+        return new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Mayo is Running")
+                .setContentText("We will keep u productive!")
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentIntent(pendingIntent)
+                .build();
+    }
+
+    private void createNotificationChanel() {
+        NotificationChannel mayoChannel = new NotificationChannel(
+                CHANNEL_ID,
+                "Mayo",
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(mayoChannel);
+    }
+
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(mBroadcast);
+        Log.d(TAG, "onDestroy called");
+        isServiceRunning = false;
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(KeepAliveReceiver.RESTART_API_SERVICE);
+        sendBroadcast(broadcastIntent);
+
         super.onDestroy();
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
 
 
 
-    public class apiBroadcast extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
-                case "ocean.waves.mapi.update":
-                    try {
-                        todayGoals = new JSONArray(intent.getStringExtra("todayGoals"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    isResponsive = true;
-                    break;
-                default:
-                    break;
+    void display() {
+
+        View testView = LayoutInflater.from(this).inflate(R.layout.popup, null);
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH +
+                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE +
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.RIGHT | Gravity.TOP;
+        params.setTitle("Load Average");
+
+
+        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        wm.addView(testView, params);
+
+
+        testView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
             }
-        }
+        });
+
+        testView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                return true;
+            }
+        });
+
+
+
+        TextView text = (TextView) testView.findViewById(R.id.closeText);
+        text.setText("Wypierdalaj nierobie");// OPTION: packageNames
+        testView.findViewById(R.id.closePopupBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // close app function
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startMain);
+
+                wm.removeView(testView);
+            }
+        });
+
+
     }
-
-    // endregion
-
-
-
-
-
-    // region API
-
-    private JSONArray todayGoals = new JSONArray();
-
-    public boolean todayGoalsEmpty() {
-        return todayGoals == null;
-    }
-
-    public JSONArray getTodayGoals() {
-        Log.i("MayoAPI", "getTodayGoals");
-        return todayGoals;
-    }
-
-    public void changeGoal(JSONObject goal) {
-
-        Log.i("MayoAPI", "changeGoal: sending change request");
-
-        Intent intent = new Intent();
-        intent.setAction("ocean.waves.mayo.change");
-        intent.putExtra("goal", goal.toString());
-        this.sendBroadcast(intent);
-    }
-
-    public void deleteGoal(JSONObject goal) {
-
-        Log.i("MayoAPI", "deleteGoal: sending delete request");
-
-        Intent intent = new Intent();
-        intent.setAction("ocean.waves.mayo.delete");
-        intent.putExtra("goal", goal.toString());
-        this.sendBroadcast(intent);
-    }
-
-
-    public void startFocus(JSONArray packages) {
-        Log.i("MayoAPI", "startFocus: sending start focus request");
-
-        Intent intent = new Intent();
-        intent.setAction("ocean.waves.mayo.focus.start");
-        intent.putExtra("packages", packages.toString());
-        this.sendBroadcast(intent);
-    }
-
-    public void stopFocus() {
-        Intent intent = new Intent();
-        intent.setAction("ocean.waves.mayo.focus.stop");
-        this.sendBroadcast(intent);
-    }
-
-    // endregion
 }

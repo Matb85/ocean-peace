@@ -48,7 +48,7 @@ public class IconManager {
         }
 
         /* RETRIEVE ICONS FROM LOCAL DATABASE */
-        Map<String, Icon> iconDB = OceanDatabase.getInstance(context).iconDAO().getAllIcons();
+        Map<String, Icon> iconDB = OceanDatabase.getDatabase(context).iconDAO().getAllIcons();
 
         /* GET LIST OF INSTALLED APPS
          * including system utilities */
@@ -94,7 +94,7 @@ public class IconManager {
 
             /* SAVE ICON TO DATABASE */
             Icon newIconRecord = new Icon(appInfo.packageName, LABEL, ICON_PATH, VERSION);
-            OceanDatabase.getInstance(context).iconDAO().insert(newIconRecord);
+            OceanDatabase.getDatabase(context).iconDAO().insert(newIconRecord);
 
             REGENERATED_ICONS_COUNTER ++;
             Log.i("IconManager", "["+appInfo.packageName+"]: "+"generation successful");

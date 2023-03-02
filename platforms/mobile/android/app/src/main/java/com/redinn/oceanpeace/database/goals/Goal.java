@@ -1,5 +1,7 @@
 package com.redinn.oceanpeace.database.goals;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -7,10 +9,9 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.getcapacitor.JSObject;
-import com.redinn.oceanpeace.goals.Goals;
 
 /**
- * Class providing saving, loading and deleting functions for goals. <br>
+ * Class providing saving, loading and deleting functions for  <br>
  *  <br>
  * Goal basic structure:<br>
  *
@@ -49,26 +50,31 @@ public class Goal {
     @ColumnInfo(name = "session_update")
     public String sessionUpdate;
     @ColumnInfo(name = "session_time")
-    public String sessionTime;
+    public long sessionTime;
     @ColumnInfo(name = "session_history")
     public String sessionHistory;
 
 
-
+    /**
+     * Returns JSON of goal, without <i>sessionTime</i> and <i>sessionUpdate</i>
+     *
+     * @return JSObject with goal
+     */
     @Ignore
-    public JSObject toJSON() {
+    public JSObject toJSON_forFE() {
         JSObject ret = new JSObject();
 
-        ret.put(Goals.ID, id);
-        ret.put(Goals.NAME, name);
-        ret.put(Goals.APPS, apps);
-        ret.put(Goals.WEBSITES, websites);
-        ret.put(Goals.LIMIT, limit);
-        ret.put(Goals.LIMITACTIONTYPE, type);
-        ret.put(Goals.ACTIVEDAYS, activeDays);
-        ret.put(Goals.SESSIONUPDATE, sessionUpdate);
-        ret.put(Goals.SESSIONTIME, sessionTime);
-        ret.put(Goals.SESSIONSHISTORY, sessionHistory);
+        ret.put(ID, id);
+        ret.put(NAME, name);
+        ret.put(APPS, apps);
+        ret.put(WEBSITES, websites);
+        ret.put(LIMIT, limit);
+        ret.put(LIMIT_ACTION_TYPE, type);
+        ret.put(ACTIVE_DAYS, activeDays);
+        ret.put(SESSION_TIME, sessionTime);
+        ret.put(SESSION_HISTORY, sessionHistory);
+
+        Log.i("GOAL", ret.toString());
 
         return ret;
     }

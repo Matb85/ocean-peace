@@ -35,45 +35,6 @@
 
         </service>
 
-        <service
-            android:name=".mayo.Mayo"
-            android:exported="true"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:process=":ocean.mayo">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
-
-        <receiver
-            android:name=".mayo.Mayo$MayoReceiver"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-            <intent-filter>
-                <action android:name="ocean.waves.mayo.force_update" />
-                <action android:name="ocean.waves.mayo.delete" />
-                <action android:name="ocean.waves.mayo.change" />
-                <action android:name="ocean.waves.mayo.focus.start" />
-                <action android:name="ocean.waves.mayo.focus.stop" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".mayo.MayoAPI"
-            android:exported="true"></service>
-
-        <receiver
-            android:name=".mayo.MayoAPI$apiBroadcast"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-            <intent-filter>
-                <action android:name="ocean.waves.mapi.update" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".MainActivity"
@@ -99,6 +60,43 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
+        <!-- MAYO -->
+        <receiver
+            android:name=".mayo.keepalive.KeepAliveReceiver"
+            android:enabled = "true"
+            android:exported = "false" >
+            <intent-filter>
+                <action android:name="mayo.restart.api" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".mayo.MayoAPI"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".mayo.Mayo"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+        <receiver android:name=".mayo.Mayo.APICommunicationReceiver"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="mayo.req.bind"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
