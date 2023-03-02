@@ -1,23 +1,22 @@
 package com.redinn.oceanpeace;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import com.getcapacitor.BridgeActivity;
 import com.redinn.oceanpeace.focus.FocusPlugin;
-import com.redinn.oceanpeace.focus.FocusService;
 import com.redinn.oceanpeace.goals.GoalsPlugin;
 import com.redinn.oceanpeace.icons.IconManager;
 import com.redinn.oceanpeace.icons.IconsPlugin;
 import com.redinn.oceanpeace.managers.PermissionManager;
 import com.redinn.oceanpeace.mayo.MayoAPI;
+import com.redinn.oceanpeace.mayo.keepalive.KeepAliveWorker;
 import com.redinn.oceanpeace.presets.PresetsPlugin;
 import com.redinn.oceanpeace.schedule.SchedulePlugin;
 import com.redinn.oceanpeace.usage.UsagePlugin;
@@ -51,8 +50,6 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onStart() {
 
-        bindAPI();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -60,6 +57,8 @@ public class MainActivity extends BridgeActivity {
             }
         }).start();
 
+        startServiceViaWorker();
+        startService();
 
         super.onStart();
 
@@ -77,95 +76,36 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onDestroy() {
-        WorkManager.getInstance(getApplicationContext()).cancelAllWork();
-        unbindAPI();
+        stopService(new Intent(this, MayoAPI.class));
         super.onDestroy();
     }
 
 
-
-    // region Mayo API
-    public static MayoAPI mAPI;
-    public static boolean mBound= false;
-
-    private final ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            MayoAPI.LocalBinder binder = (MayoAPI.LocalBinder) service;
-            mAPI = binder.getService();
-            mBound = true;
+    public void startService() {
+        Log.d("Main", "startService called");
+        if (!MayoAPI.isServiceRunning) {
+            Intent serviceIntent = new Intent(this, MayoAPI.class);
+            ContextCompat.startForegroundService(this, serviceIntent);
         }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-
-
-    void bindAPI() {
-        if (mBound)
-            return;
-
-        Intent intent = new Intent(this, MayoAPI.class);
-        bindService(intent, mConnection, BIND_AUTO_CREATE);
-
     }
 
-    void unbindAPI() {
-        if (!mBound)
-            return;
+    public void startServiceViaWorker() {
+        Log.d("Main", "startServiceViaWorker called");
+        String UNIQUE_WORK_NAME = "StartMyServiceViaWorker";
+        WorkManager workManager = WorkManager.getInstance(this);
 
-        unbindService(mConnection);
+        // As per Documentation: The minimum repeat interval that can be defined is 15 minutes
+        // (same as the JobScheduler API), but in practice 15 doesn't work. Using 16 here
+        PeriodicWorkRequest request =
+                new PeriodicWorkRequest.Builder(
+                        KeepAliveWorker.class,
+                        16,
+                        TimeUnit.MINUTES)
+                        .build();
+
+        // to schedule a unique work, no matter how many times app is opened i.e. startServiceViaWorker gets called
+        // do check for AutoStart permission
+        workManager.enqueueUniquePeriodicWork(UNIQUE_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, request);
+
     }
-    // endregion Mayo API
-
-    //region focus
-
-    public static void connectFocus(Context context) {
-        Intent create = new Intent().setClass(context, FocusService.class);
-
-        context.startService(create);
-
-
-        Intent bind = new Intent(context, FocusService.class);
-
-        context.startService(bind);
-        context.bindService(bind, focusConnection, Context.BIND_AUTO_CREATE);
-
-
-        //poor await
-        while(focusService == null) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        Log.i("T", "connectFocus: " + focusService.toString());
-    }
-
-    public static FocusService focusService;
-    public static boolean focusBound = false;
-
-    private static final ServiceConnection focusConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            FocusService.LocalBinder binder = (FocusService.LocalBinder) service;
-            focusService = binder.getService();
-            focusBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-
-    //endregion Focus
 }
