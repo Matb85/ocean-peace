@@ -24,9 +24,9 @@ import com.redinn.oceanpeace.database.icons.IconDAO;
 public abstract class OceanDatabase extends RoomDatabase {
     private static OceanDatabase instance;
 
-    public static synchronized OceanDatabase getInstance(Context context) {
+    public static synchronized OceanDatabase getDatabase(final Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), OceanDatabase.class, "ocean-database").build();
+            instance = Room.databaseBuilder(context.getApplicationContext(), OceanDatabase.class, "ocean-database").allowMainThreadQueries().build();
         }
         return instance;
     }
