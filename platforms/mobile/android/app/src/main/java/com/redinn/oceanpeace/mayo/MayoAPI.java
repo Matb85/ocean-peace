@@ -7,28 +7,21 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.redinn.oceanpeace.MainActivity;
 import com.redinn.oceanpeace.R;
+import com.redinn.oceanpeace.mayo.keepalive.KeepAlivePinger;
 import com.redinn.oceanpeace.mayo.keepalive.KeepAliveReceiver;
 
 public class MayoAPI extends Service {
     private static final String CHANNEL_ID = "ocean.mayo.channel.id";
-    private static final String TAG = "MAYO.API";
+    private static final String TAG = "MAPI";
 
     public static boolean isServiceRunning = false;
 
@@ -47,6 +40,7 @@ public class MayoAPI extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d(TAG, "Binding...");
         return APIBinder;
     }
 
@@ -56,12 +50,33 @@ public class MayoAPI extends Service {
         sendBroadcast(new Intent().setAction(BROADCAST_REQUEST_BINDING));
     }
 
+
+
+    MayoDisplay Display = new MayoDisplay() {
+        @Override
+        public Runnable closeAppDisplay(Context context) {
+            return super.closeAppDisplay(context);
+        }
+    };
+
+    Runnable closeApp() {
+        return Display.closeAppDisplay(this);
+    }
+
+
+    KeepAlivePinger Ping = new KeepAlivePinger();
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate called");
         createNotificationChanel();
         isServiceRunning = true;
+
+        if (!Ping.isRunning())
+            Ping.preparePing();
 
         requestBinding();
     }
@@ -71,8 +86,9 @@ public class MayoAPI extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand called");
 
-        startForeground(1, foregroundNotification());
 
+
+        startForeground(1, foregroundNotification());
         return START_STICKY;
     }
 
@@ -109,62 +125,9 @@ public class MayoAPI extends Service {
         broadcastIntent.setAction(KeepAliveReceiver.RESTART_API_SERVICE);
         sendBroadcast(broadcastIntent);
 
+        Ping.stop();
+
         super.onDestroy();
     }
 
-
-
-
-
-    void display() {
-
-        View testView = LayoutInflater.from(this).inflate(R.layout.popup, null);
-
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH +
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE +
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                PixelFormat.TRANSLUCENT);
-        params.gravity = Gravity.RIGHT | Gravity.TOP;
-        params.setTitle("Load Average");
-
-
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        wm.addView(testView, params);
-
-
-        testView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                return true;
-            }
-        });
-
-        testView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                return true;
-            }
-        });
-
-
-
-        TextView text = (TextView) testView.findViewById(R.id.closeText);
-        text.setText("Wypierdalaj nierobie");// OPTION: packageNames
-        testView.findViewById(R.id.closePopupBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // close app function
-                Intent startMain = new Intent(Intent.ACTION_MAIN);
-                startMain.addCategory(Intent.CATEGORY_HOME);
-                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(startMain);
-
-                wm.removeView(testView);
-            }
-        });
-
-
-    }
 }

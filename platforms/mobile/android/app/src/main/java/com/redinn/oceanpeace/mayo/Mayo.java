@@ -43,8 +43,10 @@ public class Mayo extends AccessibilityService {
         }
     };
 
-    private static final String HANDLER_TOKEN = "MAYO.TOKEN";
+    private static final String DISPLAY_HANDLER_TOKEN = "MAYO.TOKEN";
     Handler localHandler = new Handler();
+    
+
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
@@ -85,15 +87,12 @@ public class Mayo extends AccessibilityService {
 
 
                 Log.i("BRUH", "onSuccess: " + aLong + " " + IS_API_BOUNDED);
-                localHandler.postAtTime(new Runnable() {
-                                       @Override
-                                       public void run() {
-                                           API.display();
-                                       }
-                                   }, HANDLER_TOKEN, SystemClock.uptimeMillis() + aLong);
-                //Looper.loop();
+                localHandler.postAtTime(
+                        API.closeApp(),
+                        DISPLAY_HANDLER_TOKEN,
+                        SystemClock.uptimeMillis() + aLong);
 
-                //MayoDisplay.close(getApplicationContext(), TIME_REMAINING);
+
                 Log.i("Mayo -> [" + CURRENT_PACKAGE_NAME + "]", "display set up for " + TIME_REMAINING);
             }
 
@@ -117,9 +116,8 @@ public class Mayo extends AccessibilityService {
 
         // CHECK IF EVENT IS PART OF SAME APP
         if (!CURRENT_PACKAGE_NAME.equals(PREVIOUSLY_OPENED_PACKAGE_NAME)) {
-            MayoDisplay.cancel();
 
-            localHandler.removeCallbacksAndMessages(HANDLER_TOKEN);
+            localHandler.removeCallbacksAndMessages(DISPLAY_HANDLER_TOKEN);
 
             handleDisplayPopUp();
         }
