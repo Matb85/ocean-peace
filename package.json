@@ -1,5 +1,6 @@
 {
   "name": "ocean-peace",
+  "description": "Ocean Peace - a digital wellbeing app for mobile & desktop",
   "private": true,
   "scripts": {
     "prepare": "husky install",

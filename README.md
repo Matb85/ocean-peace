@@ -1,1 +1,1 @@
-# Redinn Wellbeing - a digital wellbeing app
+# Ocean Peace - a digital wellbeing app for mobile & desktop
