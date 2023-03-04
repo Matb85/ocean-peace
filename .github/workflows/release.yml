@@ -52,7 +52,7 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
 
           if [ ${{ github.base_ref }} = next ]; then
-            pnpm @lerna-lite/cli version --conventional-commits --conventional-prerelease --preid beta --yes --create-release github
+            lerna version --conventional-commits --conventional-prerelease --preid beta --yes --create-release github
           else
-            pnpm @lerna-lite/cli version --conventional-commits --yes --create-release github
+            lerna version --conventional-commits --yes --create-release github
           fi
