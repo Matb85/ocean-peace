@@ -117,7 +117,6 @@ public class Mayo extends AccessibilityService {
 
         // CHECK IF EVENT IS PART OF SAME APP
         if (!CURRENT_PACKAGE_NAME.equals(PREVIOUSLY_OPENED_PACKAGE_NAME)) {
-            MayoDisplay.cancel();
 
             localHandler.removeCallbacksAndMessages(HANDLER_TOKEN);
 
