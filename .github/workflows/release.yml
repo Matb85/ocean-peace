@@ -33,7 +33,7 @@ jobs:
           node-version: 16.x
 
       - name: install pnpm
-        run: npm i pnpm @lerna-lite/cli -g && pnpm --no-frozen-lockfile --filter "@redinn/*" install
+        run: npm i pnpm -g && pnpm --no-frozen-lockfile install
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
@@ -52,7 +52,7 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
 
           if [ ${{ github.base_ref }} = next ]; then
-            lerna version --conventional-commits --conventional-prerelease --preid beta --yes --create-release github
+            pnpm lerna version --conventional-commits --conventional-prerelease --preid beta --yes --create-release github
           else
-            lerna version --conventional-commits --yes --create-release github
+            pnpm lerna version --conventional-commits --yes --create-release github
           fi
