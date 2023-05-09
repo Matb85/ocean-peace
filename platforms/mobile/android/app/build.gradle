@@ -56,7 +56,7 @@ dependencies {
     // for creating documentation TODO: documentation
     //implementation fileTree(dir: '/home/raccoon/Android/Sdk/platforms/android-32', include: ['*.aar', '*.jar'], exclude: [])
 
-    def work_version = "2.7.1"
+    def work_version = "2.8.1"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
