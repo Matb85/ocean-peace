@@ -46,7 +46,7 @@
     "@mdi/js": "7.0.96",
     "@redinn/oceanpeace-mobile": "workspace:^0.2.4",
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release",
-    "@sveltejs/vite-plugin-svelte": "1.0.8",
+    "@sveltejs/vite-plugin-svelte": "2.2.0",
     "svelte-spa-router": "3.3.0"
   }
 }
