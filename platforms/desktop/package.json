@@ -1,6 +1,6 @@
 {
-  "name": "@redinn/oceanpeace-desktop",
   "version": "0.2.4",
+  "name": "@redinn/oceanpeace-desktop",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,12 +9,12 @@
     "start": "sirv build --no-clear",
     "tauri": "tauri"
   },
-  "devDependencies": {
-    "@tauri-apps/cli": "1.1.1"
-  },
   "dependencies": {
-    "@tauri-apps/api": "1.1.0",
+    "@tauri-apps/api": "1.3.0",
     "pnpm": "8.4.0",
     "sirv-cli": "2.0.2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "1.3.1"
   }
 }

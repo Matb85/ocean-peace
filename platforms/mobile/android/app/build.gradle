@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'de.mannodermaus.android-junit5'
 
 android {
+    namespace "com.redinn.oceanpeace"
     compileSdk 33
     defaultConfig {
         applicationId "com.redinn.oceanpeace"

@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/Redinn-Labs/ocean-peace#readme",
   "devDependencies": {
-    "husky": "8.0.3",
-    "lerna": "^6.0.1"
+    "husky": "^8.0.3",
+    "lerna": "^6.6.2"
   }
 }
