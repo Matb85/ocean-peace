@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Ocean Peace</string>
-    <string name="title_activity_main">Ocean Peace</string>
-    <string name="package_name">com.redinn.oceanpeace</string>
-    <string name="custom_url_scheme">com.redinn.oceanpeace</string>
-    <string name="accessibility_service_label" />
-</resources>

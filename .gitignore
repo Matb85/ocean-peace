@@ -1,7 +1,0 @@
-node_modules/
-build/
-
-.DS_Store
-.svelte-kit
-.pnpm-debug.log
-platforms/mobile/android/release.jks
