@@ -53,8 +53,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Components\" />
 	  <Folder Include="Views\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Components\Buttons\Normal.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
