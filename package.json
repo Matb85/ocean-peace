@@ -3,7 +3,7 @@
   "description": "Ocean Peace - a digital wellbeing app for mobile & desktop",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "test": "pnpm run -r test"
   },
   "workspaces": [
@@ -21,5 +21,9 @@
     "@lerna-lite/cli": "^3.3.0",
     "@lerna-lite/version": "^3.3.0",
     "husky": "^9.0.11"
+  },
+  "packageManager": "pnpm@8.15.3+sha256.fc4a49bd609550a41e14d20efbce802a4b892aa4cac877322de2f0924f122991",
+  "dependencies": {
+    "pnpm": "8.15.3"
   }
 }

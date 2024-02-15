@@ -4,7 +4,7 @@
   import { Schedule } from "@redinnlabs/system/Units";
   import { t } from "./i18n";
 
-  export let websites = [];
+  export let websites: any[] = [];
 </script>
 
 <div class="card-flex-col">

@@ -22,7 +22,7 @@
   /** user name binding */
   let name = "";
   /** track changes */
-  const data: PreferencesI = JSON.parse(sessionStorage.getItem("preferences_temp"));
+  const data: PreferencesI = JSON.parse(sessionStorage.getItem("preferences_temp") || "{}");
   let baseName = (name = data.name);
   let firstTime = parseInt(data.screentime);
   const time = timeFromNumber(data.screentime);

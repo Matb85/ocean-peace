@@ -12,10 +12,10 @@
   import type { PresetI, ScheduleI } from "$schema";
   import SM from "$lib/sessionManager";
 
-  let preset: Partial<PresetI> = {};
+  let preset: PresetI = {} as any;
   const scheduleSM = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
   onMount(async () => {
-    preset = await Api.getPreset(scheduleSM.preset);
+    preset = (await Api.getPreset(scheduleSM.preset)) as any as PresetI;
   });
   /** save schedule to a file
    * @returns void

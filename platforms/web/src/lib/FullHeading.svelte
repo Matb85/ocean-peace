@@ -3,8 +3,8 @@
   import Link from "./Link.svelte";
   import SM from "$lib/sessionManager";
 
-  export let backHref = null;
-  export let editHref = null;
+  export let backHref = "";
+  export let editHref = "";
   export let tag: 1 | 2 | 3 | 4 | 5 | 6 = 4;
 
   SM.action.setProp("nativeBackUrl", backHref);

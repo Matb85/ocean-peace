@@ -15,8 +15,8 @@ export default function <K extends string>(prefix: string) {
     getProp(key: K): string {
       return sessionStorage.getItem(prefix + key)!;
     },
-    getProps<T extends K>(...keys: T[]): Partial<Record<T, string>> {
-      const res: Partial<Record<T, string>> = {};
+    getProps<T extends K>(...keys: T[]): Record<T, string> {
+      const res: Record<T, string> = {} as any;
       for (const prop of keys) {
         res[prop] = sessionStorage.getItem(prefix + prop)!;
       }
