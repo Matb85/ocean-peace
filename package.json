@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/Redinn-Labs/ocean-peace#readme",
   "devDependencies": {
-    "@lerna-lite/cli": "^2.3.0",
-    "husky": "^8.0.3"
+    "@lerna-lite/cli": "^3.3.0",
+    "@lerna-lite/version": "^3.3.0",
+    "husky": "^9.0.11"
   }
 }
