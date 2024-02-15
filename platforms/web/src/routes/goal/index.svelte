@@ -47,7 +47,7 @@
     data={[{ color: "#3772FF", value: parseInt(goalData.sessionTime) }]}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
-      <H tag={2}>24 min</H>
+      <H tag={2}>{formatMinutes((parseInt(goalData.limit) - parseInt(goalData.sessionTime)) / (1000 * 60))} min</H>
       <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
