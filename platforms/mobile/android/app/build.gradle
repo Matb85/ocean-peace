@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'de.mannodermaus.android-junit5'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
     namespace "com.redinn.oceanpeace"
@@ -49,7 +50,6 @@ repositories {
 }
 
 
-
 dependencies {
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
@@ -87,6 +87,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "androidx.room:room-rxjava3:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 
     // required by FYP
     implementation 'com.opencsv:opencsv:5.9'
