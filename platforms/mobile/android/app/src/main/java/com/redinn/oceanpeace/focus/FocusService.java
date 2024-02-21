@@ -106,7 +106,7 @@ public class FocusService extends Service {
      *
      *
      * Stopwatch is a focus session type that runs endless until user stop it or process will be killed.
-     * It blocks all preselected applications. Responsive for blocking is {@link com.redinn.oceanpeace.mayo.Mayo Mayo}.
+     * It blocks all preselected applications. Responsive for blocking is
      * Function first check if other focus session isn't running, then overrides {@link #appsPackageNames} array and send broadcast to Mayo to start blocking selected apps.
      *
      * @param apps {@link java.lang.reflect.Array array} of {@link String String} containing PackageNames of apps selected for blocking in focus session
@@ -152,7 +152,7 @@ public class FocusService extends Service {
      *
      *
      * Continuous is a focus session that runs for chosen by user duration.
-     * It blocks all preselected applications. Responsive for blocking is {@link com.redinn.oceanpeace.mayo.Mayo Mayo}.
+     * It blocks all preselected applications. Responsive for blocking is
      * Function first checks if other focus session isn't running, then overrides {@link #appsPackageNames} array and setups a handler's {@link Runnable Runnable} to run after timeout.
      * {@link Runnable Runable} runs {@link FocusService#stop() stop} function.
      * At the end function sends broadcast to Mayo to start blocking selected apps.
@@ -314,11 +314,6 @@ public class FocusService extends Service {
         isRunning = false;
         cyclesCount = 1;
 
-        Intent stopFocus = new Intent();
-        stopFocus.setAction("ocean.waves.mayo.focus.stop");
-        getApplicationContext().sendBroadcast(stopFocus);
-
-        stopForeground(true);
         stopSelf();
     }
 
@@ -327,11 +322,7 @@ public class FocusService extends Service {
      * Function sending broadcast for Mayo to bind this service
      */
     private void broadcastStart() {
-        Intent runFocus = new Intent();
-        runFocus.setAction("ocean.waves.mayo.focus.start");
-        runFocus.putExtra("packages", appsPackageNames);
-        getApplicationContext().sendBroadcast(runFocus);
-    }
+        }
 
 
 
