@@ -25,17 +25,17 @@ public class JSONManager {
         }
     }
 
-    static public JSONObject readFile( File file) throws Exception {
+    static public JSONObject readFile(File file) throws Exception {
         try {
             String content = getFileContents(file);
-            Log.d("PresetsPlugin", "file data: "+ content);
+            Log.d("PresetsPlugin", "file data: " + content);
             return new JSONObject(content);
         } catch (IOException | JSONException err) {
             throw new Exception(err.toString());
         }
     }
 
-    static  public  String getFileContents(final File file) throws IOException {
+    static public String getFileContents(final File file) throws IOException {
         final InputStream inputStream = new FileInputStream(file);
         final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 

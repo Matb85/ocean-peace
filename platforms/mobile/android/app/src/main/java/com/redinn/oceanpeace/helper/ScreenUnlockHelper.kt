@@ -25,7 +25,8 @@ object ScreenUnlockHelper {
     }
 
     fun getYesterdayUnlockCount(context: Context): Int {
-        val day = CalendarHelper.getDateCondensed(System.currentTimeMillis() - UsageStatsHelper.HOUR_24)
+        val day =
+            CalendarHelper.getDateCondensed(System.currentTimeMillis() - UsageStatsHelper.HOUR_24)
         return getUnlockCount(context, day)
     }
 

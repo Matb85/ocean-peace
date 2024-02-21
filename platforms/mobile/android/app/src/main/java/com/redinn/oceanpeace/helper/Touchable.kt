@@ -15,12 +15,14 @@ object Touchable {
                         return@setOnTouchListener true
                     }
                 }
+
                 MotionEvent.ACTION_CANCEL -> {
                     if (v.isEnabled) {
                         v.animate().cancel()
                         v.animate().alpha(1.0f).duration = 50
                     }
                 }
+
                 MotionEvent.ACTION_UP -> {
                     if (v.isEnabled) {
                         v.animate().cancel()

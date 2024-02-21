@@ -78,7 +78,7 @@ public class FocusPlugin extends Plugin {
 
         try {
             packages = new JSONArray(call.getString("packages"));
-            Log.i("T", "startContinuous: " + packages.toString());
+            Log.i("T", "startContinuous: " + packages);
             _duration = call.getInt("duration").longValue();
         } catch (NullPointerException e) {
             call.reject("Data provided is empty", e);
@@ -190,7 +190,7 @@ public class FocusPlugin extends Plugin {
 
 
 
-    private ServiceConnection connection = new ServiceConnection() {
+    private final ServiceConnection connection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,

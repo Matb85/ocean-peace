@@ -10,12 +10,11 @@ import android.app.Service
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.IntentFilter
 import android.graphics.BitmapFactory
 import android.os.Binder
-import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
 import com.hour.hour.AppConfig

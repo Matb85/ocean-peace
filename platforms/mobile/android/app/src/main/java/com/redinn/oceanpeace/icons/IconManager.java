@@ -59,8 +59,8 @@ public class IconManager {
             /* SKIP SYSTEM APPS
              * https://stackoverflow.com/questions/8784505/how-do-i-check-if-an-app-is-a-non-system-app-in-android*/
             if (!appInfo.sourceDir.startsWith("/data/app/") ||
-                packageManager.getLaunchIntentForPackage(appInfo.packageName) == null
-                    //(appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0
+                    packageManager.getLaunchIntentForPackage(appInfo.packageName) == null
+                //(appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0
             )
                 continue;
 
@@ -70,12 +70,12 @@ public class IconManager {
             Icon tempIcon;
             if ((tempIcon = iconDB.get(appInfo.packageName)) != null) {
                 if (Objects.equals(tempIcon.version, packageInfo.versionName)) {
-                    Log.i("IconManager", "["+tempIcon.packageName+"]: "+"icon already exists, skipping generation");
+                    Log.i("IconManager", "[" + tempIcon.packageName + "]: " + "icon already exists, skipping generation");
                     continue;
                 }
             }
 
-            Log.i("IconManager", "["+appInfo.packageName+"]: "+"icon DOES NOT exists, generating...");
+            Log.i("IconManager", "[" + appInfo.packageName + "]: " + "icon DOES NOT exists, generating...");
 
             /* RETRIEVE ICON PROPERTIES */
             String ICON_PATH = ICONS_FOLDER_DIRECTORY + "/" + appInfo.packageName + ".png";
@@ -96,8 +96,8 @@ public class IconManager {
             Icon newIconRecord = new Icon(appInfo.packageName, LABEL, ICON_PATH, VERSION);
             OceanDatabase.getDatabase(context).iconDAO().insert(newIconRecord);
 
-            REGENERATED_ICONS_COUNTER ++;
-            Log.i("IconManager", "["+appInfo.packageName+"]: "+"generation successful");
+            REGENERATED_ICONS_COUNTER++;
+            Log.i("IconManager", "[" + appInfo.packageName + "]: " + "generation successful");
 
         } // end of installedPackages loop
         Log.i("IconManager", "successfully regenerated " + REGENERATED_ICONS_COUNTER + " icons");

@@ -45,8 +45,8 @@ class UpdateServerTask(val context: Context) : TimerTask() {
                 jsonArray.put(s.toJson())
             }
             val json = JSONObject()
-                    .put("digest", digest.toJson())
-                    .put("summary", jsonArray)
+                .put("digest", digest.toJson())
+                .put("summary", jsonArray)
 
             if (digest.totalTime == 0L) {
                 recordUpdate(day, pref, prefEdit)
@@ -67,7 +67,11 @@ class UpdateServerTask(val context: Context) : TimerTask() {
         }
     }
 
-    private fun recordUpdate(day: String, pref: SharedPreferences, prefEdit: SharedPreferences.Editor) {
+    private fun recordUpdate(
+        day: String,
+        pref: SharedPreferences,
+        prefEdit: SharedPreferences.Editor
+    ) {
         updateLock.lock()
 
         val updatedDays = pref.getStringSet("updated", setOf<String>())!!.toMutableSet()

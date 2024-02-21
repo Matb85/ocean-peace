@@ -36,13 +36,18 @@ class BlockerActivity : Activity() {
         layout.apply {
             setBackgroundColor(Color.parseColor("#AAAAAAAA"))
 
-            addView(closeStrictModeText, LP.frame(LP.WRAP_CONTENT, LP.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL)
+            addView(
+                closeStrictModeText,
+                LP.frame(LP.WRAP_CONTENT, LP.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL)
                     .setMargins(dp(20), dp(20), dp(20), 0)
-                    .build())
+                    .build()
+            )
             addView(img, LP.frame(dp(200), dp(200), Gravity.CENTER).build())
-            addView(textView, LP.frame(LP.MATCH_PARENT, LP.WRAP_CONTENT, Gravity.BOTTOM)
+            addView(
+                textView, LP.frame(LP.MATCH_PARENT, LP.WRAP_CONTENT, Gravity.BOTTOM)
                     .setMargins(dp(20), 0, dp(20), dp(60))
-                    .build())
+                    .build()
+            )
         }
     }
 

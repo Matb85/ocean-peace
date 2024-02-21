@@ -22,6 +22,7 @@ object ClientHelper {
         fun onSuccess()
         fun onFail(code: FailCode)
     }
+
     fun checkConnectivity(): Boolean {
         val client = OkHttpClient()
         try {
@@ -41,10 +42,16 @@ object ClientHelper {
                 Logger.d("ClientHelper", "start request")
                 val json = MediaType.parse("application/json; charset=utf-8") ?: return@Thread
                 val message = JSONObject()
-                        .put("method", method)
-                        .put("deviceId", Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
-                        .put("data", data)
-                        .toString()
+                    .put("method", method)
+                    .put(
+                        "deviceId",
+                        Settings.Secure.getString(
+                            context.contentResolver,
+                            Settings.Secure.ANDROID_ID
+                        )
+                    )
+                    .put("data", data)
+                    .toString()
                 val client = OkHttpClient()
                 val body = RequestBody.create(json, message)
                 val request = Request.Builder().url(AppConfig.SERVER_ADDRESS).post(body).build()

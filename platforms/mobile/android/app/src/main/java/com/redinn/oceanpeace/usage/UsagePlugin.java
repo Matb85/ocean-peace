@@ -121,7 +121,7 @@ public class UsagePlugin extends Plugin {
             e.printStackTrace();
         }
 
-        Log.i("USAGE", "reduceStats: " + ret.toString());
+        Log.i("USAGE", "reduceStats: " + ret);
         return  ret;
     }
 
@@ -175,7 +175,7 @@ public class UsagePlugin extends Plugin {
             Usage usage = new Usage();
             JSObject ret = new JSObject();
             ret.put("unlocks", usage.getUnlockStats(getActivity().getApplicationContext()));
-            Log.i("TEST", "usagePermissionCallback_unlocks: " + ret.toString());
+            Log.i("TEST", "usagePermissionCallback_unlocks: " + ret);
             call.resolve(ret);
         }
     }
@@ -188,7 +188,7 @@ public class UsagePlugin extends Plugin {
             JSObject ret = new JSObject();
             ret.put("unlocks", usage.countUnlocks(Calendar.getInstance().getTimeInMillis()-10000,
                     Calendar.getInstance().getTimeInMillis(), getActivity().getApplicationContext()));
-            Log.i("TEST", "usagePermissionCallback_unlocks: " + ret.toString());
+            Log.i("TEST", "usagePermissionCallback_unlocks: " + ret);
             call.resolve(ret);
         } else {
             call.reject("Permission not granted");

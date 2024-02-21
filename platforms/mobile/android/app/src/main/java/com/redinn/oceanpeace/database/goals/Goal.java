@@ -2,7 +2,6 @@ package com.redinn.oceanpeace.database.goals;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -12,9 +11,9 @@ import com.getcapacitor.JSObject;
 
 /**
  * Class providing saving, loading and deleting functions for  <br>
- *  <br>
+ * <br>
  * Goal basic structure:<br>
- *
+ * <p>
  * {<br>
  * &emsp;"id": "goal1676156268732",<br>
  * &emsp;"name": "Hdhs",<br>
@@ -32,7 +31,6 @@ import com.getcapacitor.JSObject;
 @Entity
 public class Goal {
     @PrimaryKey
-    @NonNull
     public String id;
 
     @ColumnInfo(name = "name")

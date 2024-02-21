@@ -17,8 +17,8 @@ object CsvHelper {
         val alreadyExist = File(file.path).exists()
         return try {
             val writer = CSVWriterBuilder(FileWriter(file.path, true))
-                    .withSeparator(',')
-                    .build() as CSVWriter
+                .withSeparator(',')
+                .build() as CSVWriter
 
             if (!alreadyExist) {
                 writer.writeNext(usageHeader)
@@ -44,7 +44,8 @@ object CsvHelper {
             val reader = CSVReaderBuilder(FileReader(file.path)).build()
             var nextLine: Array<String?> = reader.readNext()
             while (nextLine != null) {
-                val record = UsageRecord(nextLine[0]!!, nextLine[1]!!.toLong(), nextLine[2]!!.toLong())
+                val record =
+                    UsageRecord(nextLine[0]!!, nextLine[1]!!.toLong(), nextLine[2]!!.toLong())
                 records.add(record)
                 nextLine = reader.readNext()
             }

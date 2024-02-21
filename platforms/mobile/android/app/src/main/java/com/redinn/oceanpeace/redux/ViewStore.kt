@@ -8,12 +8,12 @@ import redux.api.Store
 class ViewStore {
     // State
     data class State(
-            val agreeTermsConditions: Boolean = false,
-            val isReminderOn: Boolean = false,
-            val isStrictModeOn: Boolean = false,
-            val isForegroundOn: Boolean = false,
-            val usageLimit: Int = 30,
-            val notTrackingList: List<String> = listOf()
+        val agreeTermsConditions: Boolean = false,
+        val isReminderOn: Boolean = false,
+        val isStrictModeOn: Boolean = false,
+        val isForegroundOn: Boolean = false,
+        val usageLimit: Int = 30,
+        val notTrackingList: List<String> = listOf()
     )
 
     // Actions
@@ -34,22 +34,22 @@ class ViewStore {
         fun load(json: JSONObject?): State? {
             if (json == null) return null
             return State(
-                    agreeTermsConditions = json.getBoolean("agreeTermsConditions"),
-                    isReminderOn = json.getBoolean("isReminderOn"),
-                    isStrictModeOn = json.getBoolean("isStrictModeOn"),
-                    usageLimit = json.getInt("usageLimit"),
-                    isForegroundOn = json.getBoolean("isForegroundOn")
+                agreeTermsConditions = json.getBoolean("agreeTermsConditions"),
+                isReminderOn = json.getBoolean("isReminderOn"),
+                isStrictModeOn = json.getBoolean("isStrictModeOn"),
+                usageLimit = json.getInt("usageLimit"),
+                isForegroundOn = json.getBoolean("isForegroundOn")
             )
         }
 
         @Throws(JSONException::class, NullPointerException::class)
         fun save(state: State): JSONObject {
             return JSONObject()
-                    .put("agreeTermsConditions", state.agreeTermsConditions)
-                    .put("isReminderOn", state.isReminderOn)
-                    .put("isStrictModeOn", state.isStrictModeOn)
-                    .put("usageLimit", state.usageLimit)
-                    .put("isForegroundOn", state.isForegroundOn)
+                .put("agreeTermsConditions", state.agreeTermsConditions)
+                .put("isReminderOn", state.isReminderOn)
+                .put("isStrictModeOn", state.isStrictModeOn)
+                .put("usageLimit", state.usageLimit)
+                .put("isForegroundOn", state.isForegroundOn)
         }
 
         // Reducer
@@ -58,24 +58,31 @@ class ViewStore {
                 is Action._PresistenceRestore -> {
                     action.state
                 }
+
                 is Action.AgreeTermsConditions -> {
                     state.copy(agreeTermsConditions = true)
                 }
+
                 is Action.SetReminder -> {
                     state.copy(isReminderOn = action.on)
                 }
+
                 is Action.SetStrictMode -> {
                     state.copy(isStrictModeOn = action.on)
                 }
+
                 is Action.SetForeground -> {
                     state.copy(isForegroundOn = action.on)
                 }
+
                 is Action.SetUsageLimit -> {
                     state.copy(usageLimit = action.time)
                 }
+
                 is Action.SetNotTrackingList -> {
                     state.copy(notTrackingList = action.list)
                 }
+
                 else -> state
             }
         }

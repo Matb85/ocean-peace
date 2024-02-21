@@ -24,12 +24,14 @@ object ViewTransition {
                 override fun onAnimationEnd(animator: Animator) {
                     cb.invoke()
                 }
+
                 override fun onAnimationCancel(animator: Animator) {}
                 override fun onAnimationRepeat(animator: Animator) {}
             })
         }
         ani.start()
     }
+
     fun fadeOut(v: View, duration: Int, cb: (() -> Unit)? = null) {
         val ani = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
         ani.duration = duration.toLong()
@@ -40,11 +42,13 @@ object ViewTransition {
                 v.alpha = 1.0f
                 cb?.invoke()
             }
+
             override fun onAnimationCancel(animator: Animator) {}
             override fun onAnimationRepeat(animator: Animator) {}
         })
         ani.start()
     }
+
     fun fade(from: View, to: View, duration: Int, cb: (() -> Unit)? = null) {
         fadeOut(from, duration, null)
         fadeIn(to, duration, cb)
@@ -54,12 +58,19 @@ object ViewTransition {
 
     //region slide
     //---------------------------------------------------------------
-    fun slideIn(v: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)? = null) {
+    fun slideIn(
+        v: View,
+        dir: Direction,
+        translation: Int,
+        duration: Int,
+        cb: (() -> Unit)? = null
+    ) {
         val animatorListener = object : Animator.AnimatorListener {
             override fun onAnimationStart(animator: Animator) {}
             override fun onAnimationEnd(animator: Animator) {
                 cb?.invoke()
             }
+
             override fun onAnimationCancel(animator: Animator) {}
             override fun onAnimationRepeat(animator: Animator) {}
         }
@@ -75,6 +86,7 @@ object ViewTransition {
                 }
                 trans.start()
             }
+
             Direction.DOWN -> {
                 v.translationX = 0f
                 v.translationY = (-translation).toFloat()
@@ -86,6 +98,7 @@ object ViewTransition {
                 }
                 trans.start()
             }
+
             Direction.LEFT -> {
                 v.translationX = translation.toFloat()
                 v.translationY = 0f
@@ -97,6 +110,7 @@ object ViewTransition {
                 }
                 trans.start()
             }
+
             Direction.RIGHT -> {
                 v.translationX = (-translation).toFloat()
                 v.translationY = 0f
@@ -110,7 +124,14 @@ object ViewTransition {
             }
         }
     }
-    fun slideOut(v: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)? = null) {
+
+    fun slideOut(
+        v: View,
+        dir: Direction,
+        translation: Int,
+        duration: Int,
+        cb: (() -> Unit)? = null
+    ) {
         val animatorListener = object : Animator.AnimatorListener {
             override fun onAnimationStart(animator: Animator) {}
             override fun onAnimationEnd(animator: Animator) {
@@ -132,18 +153,21 @@ object ViewTransition {
                 trans.addListener(animatorListener)
                 trans.start()
             }
+
             Direction.DOWN -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationY", translation.toFloat())
                 trans.duration = duration.toLong()
                 trans.addListener(animatorListener)
                 trans.start()
             }
+
             Direction.LEFT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", -translation.toFloat())
                 trans.duration = duration.toLong()
                 trans.addListener(animatorListener)
                 trans.start()
             }
+
             Direction.RIGHT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", translation.toFloat())
                 trans.duration = duration.toLong()
@@ -152,7 +176,15 @@ object ViewTransition {
             }
         }
     }
-    fun slide(from: View, to: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)?) {
+
+    fun slide(
+        from: View,
+        to: View,
+        dir: Direction,
+        translation: Int,
+        duration: Int,
+        cb: (() -> Unit)?
+    ) {
         slideOut(from, dir, translation, duration, null)
         slideIn(to, dir, translation, duration, cb)
     }
@@ -161,12 +193,19 @@ object ViewTransition {
 
     //region fadeSlide
     //---------------------------------------------------------------
-    fun fadeslideIn(v: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)? = null) {
+    fun fadeslideIn(
+        v: View,
+        dir: Direction,
+        translation: Int,
+        duration: Int,
+        cb: (() -> Unit)? = null
+    ) {
         val animatorListener = object : Animator.AnimatorListener {
             override fun onAnimationStart(animator: Animator) {}
             override fun onAnimationEnd(animator: Animator) {
                 cb?.invoke()
             }
+
             override fun onAnimationCancel(animator: Animator) {}
             override fun onAnimationRepeat(animator: Animator) {}
         }
@@ -187,6 +226,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
+
             Direction.DOWN -> {
                 v.translationX = 0f
                 v.translationY = (-translation).toFloat()
@@ -203,6 +243,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
+
             Direction.LEFT -> {
                 v.translationX = translation.toFloat()
                 v.translationY = 0f
@@ -219,6 +260,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
+
             Direction.RIGHT -> {
                 v.translationX = (-translation).toFloat()
                 v.translationY = 0f
@@ -237,7 +279,14 @@ object ViewTransition {
             }
         }
     }
-    fun fadeslideOut(v: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)? = null) {
+
+    fun fadeslideOut(
+        v: View,
+        dir: Direction,
+        translation: Int,
+        duration: Int,
+        cb: (() -> Unit)? = null
+    ) {
         val animatorListener = object : Animator.AnimatorListener {
             override fun onAnimationStart(animator: Animator) {}
             override fun onAnimationEnd(animator: Animator) {
@@ -247,6 +296,7 @@ object ViewTransition {
                 v.alpha = 1.0f
                 cb?.invoke()
             }
+
             override fun onAnimationCancel(animator: Animator) {}
             override fun onAnimationRepeat(animator: Animator) {}
         }
@@ -264,6 +314,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
+
             Direction.DOWN -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationY", translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
@@ -274,6 +325,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
+
             Direction.LEFT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", -translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
@@ -284,6 +336,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
+
             Direction.RIGHT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
@@ -296,7 +349,15 @@ object ViewTransition {
             }
         }
     }
-    fun fadeslide(from: View, to: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)? = null) {
+
+    fun fadeslide(
+        from: View,
+        to: View,
+        dir: Direction,
+        translation: Int,
+        duration: Int,
+        cb: (() -> Unit)? = null
+    ) {
         fadeslideOut(from, dir, translation, duration, null)
         fadeslideIn(to, dir, translation, duration, cb)
     }

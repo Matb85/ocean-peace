@@ -5,14 +5,14 @@ import com.redinn.oceanpeace.iface.SerializableToJson
 import org.json.JSONObject
 
 data class UsageRecord(
-        val packageName: String = "",
-        val starTime: Long = 0,
-        val duration: Long = 0
+    val packageName: String = "",
+    val starTime: Long = 0,
+    val duration: Long = 0
 ) : SerializableToJson {
     override fun toJson(): JSONObject {
         return JSONObject().put("packageName", packageName)
-                .put("starTime", starTime)
-                .put("duration", duration)
+            .put("starTime", starTime)
+            .put("duration", duration)
     }
 
     fun toArray(): Array<String> {

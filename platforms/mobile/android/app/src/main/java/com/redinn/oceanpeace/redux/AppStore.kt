@@ -17,7 +17,8 @@ class AppStore {
 
         val pref = context.getSharedPreferences("redux", Context.MODE_PRIVATE)
         try {
-            ViewStore.load(JSONObject(pref.getString("view", "")!!))?.let { dispatch(ViewStore.Action._PresistenceRestore(it)) }
+            ViewStore.load(JSONObject(pref.getString("view", "")!!))
+                ?.let { dispatch(ViewStore.Action._PresistenceRestore(it)) }
         } catch (e: Exception) {
             Logger.e("redux", "persistence load viewState: ${e.message} - ${e.localizedMessage}")
         }
@@ -44,6 +45,7 @@ class AppStore {
     fun <S : Any> observe(store: Store<S>): Observable<S> {
         return Observable.create(object : ObservableOnSubscribe<S> {
             private var mSubscribe: Store.Subscription? = null
+
             @Throws(Exception::class)
             override fun subscribe(emitter: ObservableEmitter<S>) {
                 mSubscribe = store.subscribe({ emitter.onNext(store.state) })

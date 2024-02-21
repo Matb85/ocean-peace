@@ -36,5 +36,6 @@ public abstract class OceanDatabase extends RoomDatabase {
 
     // DAOs
     public abstract GoalDAO goalDAO();
+
     public abstract IconDAO iconDAO();
 }

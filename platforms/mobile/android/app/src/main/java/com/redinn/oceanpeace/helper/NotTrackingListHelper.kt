@@ -21,7 +21,8 @@ object NotTrackingListHelper {
 
     fun addRecords(context: Context, l: List<NotTrackingRecord>) {
         Logger.d("NotTrackingListHelper", "add ${l.map { it.packageName }}")
-        val prefEdit = context.getSharedPreferences("NotTrackingListHelper", Context.MODE_PRIVATE).edit()
+        val prefEdit =
+            context.getSharedPreferences("NotTrackingListHelper", Context.MODE_PRIVATE).edit()
         for (r in l) {
             prefEdit.putString(r.packageName, r.appName)
         }
@@ -30,7 +31,8 @@ object NotTrackingListHelper {
 
     fun removeRecords(context: Context, l: List<NotTrackingRecord>) {
         Logger.d("NotTrackingListHelper", "remove ${l.map { it.packageName }}")
-        val prefEdit = context.getSharedPreferences("NotTrackingListHelper", Context.MODE_PRIVATE).edit()
+        val prefEdit =
+            context.getSharedPreferences("NotTrackingListHelper", Context.MODE_PRIVATE).edit()
         for (r in l) {
             prefEdit.remove(r.packageName)
         }
@@ -40,11 +42,20 @@ object NotTrackingListHelper {
     fun getList(context: Context): List<NotTrackingRecord> {
         val time = System.currentTimeMillis()
         val summary = UsageSummary.getSummary(context,
-                ((time - 2 * UsageStatsHelper.HOUR_24)..time step UsageStatsHelper.HOUR_24).map { CalendarHelper.getDateCondensed(it) }
+            ((time - 2 * UsageStatsHelper.HOUR_24)..time step UsageStatsHelper.HOUR_24).map {
+                CalendarHelper.getDateCondensed(
+                    it
+                )
+            }
         )
         val trackingList = getNotTrackingRecords(context)
         val hashMap = hashMapOf<String, NotTrackingRecord>()
-        hashMap.putAll(summary.map { Pair(it.packageName, NotTrackingRecord(it.appName, it.packageName, false)) })
+        hashMap.putAll(summary.map {
+            Pair(
+                it.packageName,
+                NotTrackingRecord(it.appName, it.packageName, false)
+            )
+        })
         hashMap.putAll(trackingList.map { Pair(it.packageName, it) })
         return hashMap.values.sortedBy { it.appName }
     }

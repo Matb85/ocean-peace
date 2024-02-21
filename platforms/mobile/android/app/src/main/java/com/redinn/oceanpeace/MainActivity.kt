@@ -1,22 +1,22 @@
 package com.redinn.oceanpeace
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import com.getcapacitor.BridgeActivity
 import com.redinn.oceanpeace.focus.FocusPlugin
 import com.redinn.oceanpeace.goals.GoalsPlugin
+import com.redinn.oceanpeace.helper.Logger
+import com.redinn.oceanpeace.helper.NotTrackingListHelper
+import com.redinn.oceanpeace.helper.NotificationHelper
 import com.redinn.oceanpeace.icons.IconManager
 import com.redinn.oceanpeace.icons.IconsPlugin
 import com.redinn.oceanpeace.managers.PermissionManager
 import com.redinn.oceanpeace.presets.PresetsPlugin
 import com.redinn.oceanpeace.schedule.SchedulePlugin
 import com.redinn.oceanpeace.usage.UsagePlugin
-import android.content.ComponentName
-import android.content.Intent
-import android.content.ServiceConnection
-import com.redinn.oceanpeace.helper.Logger
-import com.redinn.oceanpeace.helper.NotTrackingListHelper
-import com.redinn.oceanpeace.helper.NotificationHelper
 import io.reactivex.disposables.CompositeDisposable
 
 class MainActivity : BridgeActivity() {

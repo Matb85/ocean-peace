@@ -56,7 +56,7 @@ public class UIPlugin extends Plugin {
             try {
                 data = JSONManager.readFile(new File(FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json"));
             } catch (Exception e) {
-                Log.e("UIPlugin", "settings.json does not exist " + e.toString());
+                Log.e("UIPlugin", "settings.json does not exist " + e);
             }
             data.put(call.getString("key"), call.getString("value"));
             JSONManager.writeFile(data, FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json");
@@ -74,7 +74,7 @@ public class UIPlugin extends Plugin {
             try {
                 data = JSONManager.readFile(new File(FunctionBase.getFilesDir(getActivity().getApplicationContext()) + "/settings.json"));
             } catch (Exception e) {
-                Log.e("UIPlugin", "settings.json does not exist " + e.toString());
+                Log.e("UIPlugin", "settings.json does not exist " + e);
             }            JSObject res = new JSObject();
             res.put("data", data);
             call.resolve(res);

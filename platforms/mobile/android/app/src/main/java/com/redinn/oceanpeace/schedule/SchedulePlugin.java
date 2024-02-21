@@ -26,7 +26,7 @@ public class SchedulePlugin extends Plugin {
     @Override
     public void load() {
         Context ctx = getActivity().getApplicationContext();
-
+        
         File iconFolderFile = new File(getSchedulesFolder(ctx));
         if (!iconFolderFile.isDirectory()) {
             Log.d("SchedulesPlugin", "creating the schedule folder");

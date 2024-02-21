@@ -8,7 +8,8 @@ object PackageHelper {
     fun getAppName(context: Context, packageName: String): String {
         val packageManager = context.packageManager
         return try {
-            val applicationInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+            val applicationInfo =
+                packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
             packageManager.getApplicationLabel(applicationInfo).toString()
         } catch (e: PackageManager.NameNotFoundException) {
             Logger.e("getAppName", "fail ($packageName) ${e.message} - ${e.localizedMessage}")

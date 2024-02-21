@@ -13,10 +13,10 @@ import java.io.File
 
 @Suppress("LiftReturnOrAssignment")
 data class UsageDigest(
-        val date: String,
-        val summaries: List<UsageSummary>,
-        val totalTime: Long,
-        val unlockCount: Int
+    val date: String,
+    val summaries: List<UsageSummary>,
+    val totalTime: Long,
+    val unlockCount: Int
 ) : SerializableToJson {
     override fun toJson(): JSONObject {
         val summaryList = JSONArray()
@@ -24,10 +24,10 @@ data class UsageDigest(
             summaryList.put(i.toJson())
         }
         return JSONObject()
-                .put("date", date)
-                .put("totalTime", totalTime)
-                .put("unlockCount", unlockCount)
-                .put("summaryList", summaryList)
+            .put("date", date)
+            .put("totalTime", totalTime)
+            .put("unlockCount", unlockCount)
+            .put("summaryList", summaryList)
     }
 
     companion object {
@@ -44,7 +44,12 @@ data class UsageDigest(
                     Logger.d(TAG, "fromJson failed: i = $i")
                 }
             }
-            return UsageDigest(json.getString("date"), summary, json.getLong("totalTime"), json.getInt("unlockCount"))
+            return UsageDigest(
+                json.getString("date"),
+                summary,
+                json.getLong("totalTime"),
+                json.getInt("unlockCount")
+            )
         }
 
         fun make(context: Context, day: String): UsageDigest {
@@ -55,7 +60,12 @@ data class UsageDigest(
                 return UsageDigest(day, listOf(), 0, 0)
             }
             val summary = UsageSummary.makeSummary(context, records)
-            return UsageDigest(day, summary, summary.map { it.useTimeTotal }.sum(), ScreenUnlockHelper.getUnlockCount(context, day))
+            return UsageDigest(
+                day,
+                summary,
+                summary.map { it.useTimeTotal }.sum(),
+                ScreenUnlockHelper.getUnlockCount(context, day)
+            )
         }
 
         fun loadFiltered(context: Context, days: List<String>): List<UsageDigest> {
@@ -85,7 +95,7 @@ data class UsageDigest(
             try {
                 val pref = context.getSharedPreferences(TAG, Context.MODE_PRIVATE)
                 val str = pref.getString(day, null) ?: throw Exception("record $day not found")
-                return UsageDigest.fromJson(JSONObject(str))
+                return fromJson(JSONObject(str))
             } catch (e: Exception) {
                 val digest = make(context, day)
                 save(context, digest)

@@ -228,7 +228,7 @@ public class Usage {
             iteration_time += 60L * 60L * 1000L;
         }
 
-        Log.i("TEST", "getUnlockStats: " + Stats.toString());
+        Log.i("TEST", "getUnlockStats: " + Stats);
         return Stats;
     }
 

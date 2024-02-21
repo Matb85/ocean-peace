@@ -18,6 +18,7 @@ object ResourceHelper {
     fun setup(c: Context) {
         context = WeakReference(c)
     }
+
     fun dp(value: Float): Int {
         val c = context?.get() ?: return 0
         return TypedValue.applyDimension(
@@ -26,10 +27,12 @@ object ResourceHelper {
             c.resources.displayMetrics
         ).roundToInt()
     }
+
     fun dp(value: Int): Int = dp(value.toFloat())
     fun dimen(@DimenRes resId: Int): Int {
         return context?.get()?.resources?.getDimensionPixelOffset(resId) ?: 0
     }
+
     fun color(@ColorRes resId: Int): Int {
         val c = context?.get() ?: return 0
         return ContextCompat.getColor(c, resId)

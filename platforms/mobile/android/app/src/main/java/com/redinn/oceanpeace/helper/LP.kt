@@ -15,7 +15,7 @@ object LP {
     private fun toSpec(value: Int): Int {
         return when (value) {
             0, MATCH_PARENT, WRAP_CONTENT -> value
-            else -> return  View.MeasureSpec.makeMeasureSpec(value, View.MeasureSpec.EXACTLY)
+            else -> return View.MeasureSpec.makeMeasureSpec(value, View.MeasureSpec.EXACTLY)
 
         }
     }
@@ -37,10 +37,12 @@ object LP {
             mParams.setMargins(left, top, right, bottom)
             return this
         }
+
         fun setGravity(gravity: Int): FrameLayoutBuilder {
             mParams.gravity = gravity
             return this
         }
+
         fun build(): FrameLayout.LayoutParams {
             return mParams
         }
@@ -53,22 +55,27 @@ object LP {
         internal constructor(width: Int, height: Int) {
             mParams = LinearLayout.LayoutParams(toSpec(width), toSpec(height))
         }
+
         internal constructor(width: Int, height: Int, gravity: Int) {
             mParams = LinearLayout.LayoutParams(toSpec(width), toSpec(height))
             mParams.gravity = gravity
         }
+
         fun setWeight(weight: Int): LinearLayoutBuilder {
             mParams.weight = weight.toFloat()
             return this
         }
+
         fun setMargins(left: Int, top: Int, right: Int, bottom: Int): LinearLayoutBuilder {
             mParams.setMargins(left, top, right, bottom)
             return this
         }
+
         fun setGravity(gravity: Int): LinearLayoutBuilder {
             mParams.gravity = gravity
             return this
         }
+
         fun build(): LinearLayout.LayoutParams {
             return mParams
         }
@@ -82,42 +89,52 @@ object LP {
             mParams.setMargins(left, top, right, bottom)
             return this
         }
+
         fun alignParentEnd(): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1)
             return this
         }
+
         fun alignParentBottom(): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1)
             return this
         }
+
         fun alignParentCenter(): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.CENTER_IN_PARENT, 1)
             return this
         }
+
         fun alignCenterHorizontal(): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 1)
             return this
         }
+
         fun alignCenterVertical(): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.CENTER_VERTICAL, 1)
             return this
         }
+
         fun toLeftOf(id: Int): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.LEFT_OF, id)
             return this
         }
+
         fun toRightOf(id: Int): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.RIGHT_OF, id)
             return this
         }
+
         fun aboveOf(id: Int): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.ABOVE, id)
             return this
         }
+
         fun belowOf(id: Int): RelativeLayoutBuilder {
             mParams.addRule(RelativeLayout.BELOW, id)
             return this
         }
+
         fun build(): RelativeLayout.LayoutParams {
             return mParams
         }
@@ -126,18 +143,23 @@ object LP {
     fun vg(width: Int, height: Int): ViewGroupLayoutBuilder {
         return ViewGroupLayoutBuilder(width, height)
     }
+
     fun frame(width: Int, height: Int): FrameLayoutBuilder {
         return FrameLayoutBuilder(width, height, 0)
     }
+
     fun frame(width: Int, height: Int, gravity: Int): FrameLayoutBuilder {
         return FrameLayoutBuilder(width, height, gravity)
     }
+
     fun linear(width: Int, height: Int): LinearLayoutBuilder {
         return LinearLayoutBuilder(width, height)
     }
+
     fun linear(width: Int, height: Int, gravity: Int): LinearLayoutBuilder {
         return LinearLayoutBuilder(width, height, gravity)
     }
+
     fun relative(width: Int, height: Int): RelativeLayoutBuilder {
         return RelativeLayoutBuilder(width, height)
     }

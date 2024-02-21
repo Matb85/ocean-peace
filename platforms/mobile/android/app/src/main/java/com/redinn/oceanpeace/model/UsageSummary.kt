@@ -7,15 +7,15 @@ import com.redinn.oceanpeace.iface.SerializableToJson
 import org.json.JSONObject
 
 data class UsageSummary(
-        val appName: String,
-        val packageName: String,
-        val useTimeTotal: Long
+    val appName: String,
+    val packageName: String,
+    val useTimeTotal: Long
 ) : SerializableToJson {
     override fun toJson(): JSONObject {
         return JSONObject()
-                .put("appName", appName)
-                .put("packageName", packageName)
-                .put("useTimeTotal", useTimeTotal)
+            .put("appName", appName)
+            .put("packageName", packageName)
+            .put("useTimeTotal", useTimeTotal)
     }
 
     companion object {
@@ -54,7 +54,11 @@ data class UsageSummary(
         }
 
         fun fromJson(json: JSONObject): UsageSummary {
-            return UsageSummary(json.getString("appName"), json.getString("packageName"), json.getLong("useTimeTotal"))
+            return UsageSummary(
+                json.getString("appName"),
+                json.getString("packageName"),
+                json.getLong("useTimeTotal")
+            )
         }
     }
 }

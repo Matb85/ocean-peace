@@ -11,7 +11,6 @@ import com.getcapacitor.JSObject;
 @Entity
 public class Icon {
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "package_name")
     public String packageName;
 
@@ -43,9 +42,12 @@ public class Icon {
         this.iconPath = iconPath;
         this.version = version;
     }
+
     @Ignore
     public Icon(@NonNull String packageName) {
         this.packageName = packageName;
     }
-    public Icon(){}
+
+    public Icon() {
+    }
 }

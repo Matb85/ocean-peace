@@ -11,7 +11,7 @@ import com.redinn.oceanpeace.R
 
 object NotificationHelper {
 
-    fun createChannel(context: Context){
+    fun createChannel(context: Context) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

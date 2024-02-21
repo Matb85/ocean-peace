@@ -23,8 +23,8 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
 import com.getcapacitor.annotation.PermissionCallback;
 
-@CapacitorPlugin (
-        name="Permissions",
+@CapacitorPlugin(
+        name = "Permissions",
         permissions = {
                 @Permission(
                         alias = "usage",
@@ -64,32 +64,21 @@ public class PermissionManager extends Plugin {
 
     @PermissionCallback
     private void usageCallback(PluginCall call) {
-        if (getPermissionState("usage") == PermissionState.GRANTED) {
-            result.put("usage", true);
-        }
-        else {
-            result.put("usage", false);
-        }
+        result.put("usage", getPermissionState("usage") == PermissionState.GRANTED);
     }
 
     @PermissionCallback
     private void notificationPolicyCallback(PluginCall call) {
-        if (getPermissionState("notificationPolicy") == PermissionState.GRANTED) {
-            result.put("notificationPolicy", true);
-        }
-        else {
-            result.put("notificationPolicy", false);
-        }
+        result.put("notificationPolicy", getPermissionState("notificationPolicy") == PermissionState.GRANTED);
     }
 
     boolean hasUsagePermission() {
         AppOpsManager opsManager = (AppOpsManager) getActivity().getApplicationContext().getSystemService(Context.APP_OPS_SERVICE);
-        int mode = opsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(),getActivity().getApplicationContext().getPackageName());
+        int mode = opsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), getActivity().getApplicationContext().getPackageName());
 
         if (mode == AppOpsManager.MODE_DEFAULT) {
             return getActivity().getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
-        }
-        else {
+        } else {
             return mode == AppOpsManager.MODE_ALLOWED;
         }
     }
