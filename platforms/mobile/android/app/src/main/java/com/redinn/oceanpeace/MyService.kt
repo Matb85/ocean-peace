@@ -1,18 +1,18 @@
 package com.redinn.oceanpeace
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
-import com.redinn.oceanpeace.helper.UsageStatsHelper
-import java.util.Timer
-import java.util.TimerTask
-import android.app.AlarmManager
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.Service
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.IntentFilter
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Build
@@ -25,12 +25,16 @@ import com.redinn.oceanpeace.helper.Logger
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
 import com.redinn.oceanpeace.helper.NotificationHelper
 import com.redinn.oceanpeace.helper.PackageHelper
+import com.redinn.oceanpeace.helper.UsageStatsHelper
 import com.redinn.oceanpeace.helper.UsageStatsHelper.queryTodayUsage
 import com.redinn.oceanpeace.model.UsageRecord
 import com.redinn.oceanpeace.redux.ViewStore
 import org.json.JSONObject
 import java.lang.ref.WeakReference
+import java.util.Timer
+import java.util.TimerTask
 import java.util.concurrent.locks.ReentrantLock
+
 
 /*
  * different method to handle this class for Android version < 26 and >= 26
@@ -54,25 +58,17 @@ class MyService : Service() {
     private var mTodayUsages = HashMap<String, Long>()
     private var mNotTrackingList: List<String>? = null
     private var mToday: String = ""
-    var isReminderOn: Boolean = false
-    var isStrictModeOn: Boolean = false
-    var usageLimit: Int = 30
+    private var isReminderOn: Boolean = false
+    private var isStrictModeOn: Boolean = false
+    private var usageLimit: Int = 30
 
     //region Life cycle
     override fun onCreate() {
         super.onCreate()
+        Logger.d("MyService", "Hello")
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForeground()
-            registerScreenUnlockReceiver()
-        } else {
-            try {
-                if (JSONObject(getSharedPreferences("redux", Context.MODE_PRIVATE).getString("view", "")).getBoolean("isForegroundOn")) {
-                    startForeground()
-                }
-            } catch (e: Exception) {
-            }
-        }
+        startForeground()
+        registerScreenUnlockReceiver()
 
         loadRedux()
         loadUsages()
@@ -89,6 +85,7 @@ class MyService : Service() {
         try {
             unregisterReceiver(ScreenUnlockReceiver())
         } catch (e: Exception) {
+            Logger.e("MyService", e.toString())
         }
 
         super.onDestroy()
@@ -115,44 +112,57 @@ class MyService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         Logger.d("MyService", "onTaskRemoved")
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            val restartService = Intent(applicationContext,
-                    this.javaClass)
-            restartService.`package` = packageName
-            val restartServicePI = PendingIntent.getService(
-                    applicationContext, 1, restartService,
-                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE)
-            val alarmService = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmService.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 3000, restartServicePI)
-        }
+        val restartService = Intent(
+            applicationContext,
+            this.javaClass
+        )
+        restartService.`package` = packageName
+        val restartServicePI = PendingIntent.getService(
+            applicationContext, 1, restartService,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE
+        )
+        val alarmService =
+            applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmService.set(
+            AlarmManager.ELAPSED_REALTIME,
+            SystemClock.elapsedRealtime() + 3000,
+            restartServicePI
+        )
+
         super.onTaskRemoved(rootIntent)
     }
 
-    fun startForeground() {
+    private fun startForeground() {
         val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0 or PendingIntent.FLAG_MUTABLE)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 0, intent, 0 or PendingIntent.FLAG_MUTABLE)
 
         val icon = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher_foreground)
 
+        val channel = NotificationChannel(
+            "default",
+            "PennSkanvTicChannel",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        channel.description = "PennSkanvTic channel for foreground service notification"
+
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
+        Logger.d("MyService", "Dispatching the notification")
         val notification = Notification.Builder(this, "default")
-                .setContentTitle(resources.getString(R.string.app_name))
-                .setContentText("Tracking App Usage")
-                .setLargeIcon(icon)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setVisibility(Notification.VISIBILITY_SECRET)
-                .setOngoing(true)
-                .setContentIntent(pendingIntent)
-                .build()
+            .setContentTitle(resources.getString(R.string.app_name))
+            .setContentText("Tracking App Usage")
+            .setLargeIcon(icon)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setVisibility(Notification.VISIBILITY_SECRET)
+            .setOngoing(true)
+            .setContentIntent(pendingIntent)
+            .build()
         startForeground(50, notification) //get a random id
     }
 
-    fun stopForeground() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            stopForeground(true)
-        }
-    }
 
     private fun registerScreenUnlockReceiver() {
         val intentFilter = IntentFilter()
@@ -168,20 +178,26 @@ class MyService : Service() {
         val usageStatsManager = getSystemService(Activity.USAGE_STATS_SERVICE) as UsageStatsManager
 
         mTimer = timer
-        mLastQueryTime = getSharedPreferences("MyService", Context.MODE_PRIVATE).getLong("mLastQueryTime", 1000L)
+        mLastQueryTime =
+            getSharedPreferences("MyService", Context.MODE_PRIVATE).getLong("mLastQueryTime", 1000L)
 
         val monitoringTask = object : TimerTask() {
             val lock = ReentrantLock()
             override fun run() {
                 if (lock.tryLock()) {
-                    val result = UsageStatsHelper.getLatestEvent(usageStatsManager, mLastQueryTime, System.currentTimeMillis())
+                    val result = UsageStatsHelper.getLatestEvent(
+                        usageStatsManager,
+                        mLastQueryTime,
+                        System.currentTimeMillis()
+                    )
                     val foregroundEvent = result.foregroundPackageName
 
                     if (result.lastEndTime != 0L) {
                         mLastQueryTime = result.lastEndTime
-                        val prefEdit = getSharedPreferences("MyService", Context.MODE_PRIVATE).edit()
+                        val prefEdit =
+                            getSharedPreferences("MyService", Context.MODE_PRIVATE).edit()
                         prefEdit.putLong("mLastQueryTime", mLastQueryTime)
-                        prefEdit.commit()
+                        prefEdit.apply()
                     }
 
                     addUsages(result.records)
@@ -202,19 +218,28 @@ class MyService : Service() {
 
     private fun onAppSwitch(packageName: String) {
         val t = mTodayUsages[packageName] ?: 0
-        Logger.d("onAppSwitch", "$packageName - usage: ${t
-                / 60000}min  limit: $usageLimit  In NotTrackingList: ${mNotTrackingList?.contains(packageName)}")
+        Logger.d(
+            "onAppSwitch", "$packageName - usage: ${
+                t
+                        / 60000
+            }min  limit: $usageLimit  In NotTrackingList: ${mNotTrackingList?.contains(packageName)}"
+        )
 
         if (t >= usageLimit * 60000 && mNotTrackingList?.contains(packageName) == false) {
             if (isReminderOn) {
                 // TODO: add this app into exeption
                 if (!isStrictModeOn) {
                     NotificationHelper.show(
-                            this,
-                            "${PackageHelper.getAppName(this, packageName)} - ${CalendarHelper.toReadableDuration(t)}",
-                                    "Why not take a break?",
+                        this,
+                        "${
+                            PackageHelper.getAppName(
+                                this,
+                                packageName
+                            )
+                        } - ${CalendarHelper.toReadableDuration(t)}",
+                        "Why not take a break?",
 //                            packageName.hashCode()
-                            1
+                        1
                     )
                 } else {
                     val intent = Intent(this, BlockerActivity::class.java)
@@ -228,7 +253,7 @@ class MyService : Service() {
     private fun loadRedux() {
         val pref = getSharedPreferences("redux", Context.MODE_PRIVATE)
         val store = try {
-            ViewStore.load(JSONObject(pref.getString("view", ""))) ?: return
+            ViewStore.load(JSONObject(pref.getString("view", "").toString())) ?: return
         } catch (e: Exception) {
             Logger.e("loadRedux", "${e.message}, use default value")
             ViewStore.State()

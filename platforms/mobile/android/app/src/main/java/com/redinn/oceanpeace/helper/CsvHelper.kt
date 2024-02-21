@@ -41,7 +41,7 @@ object CsvHelper {
                 return listOf()
             }
             val records = arrayListOf<UsageRecord>()
-            val reader = CSVReaderBuilder(FileReader(file.path)).build();
+            val reader = CSVReaderBuilder(FileReader(file.path)).build()
             var nextLine: Array<String?> = reader.readNext()
             while (nextLine != null) {
                 val record = UsageRecord(nextLine[0]!!, nextLine[1]!!.toLong(), nextLine[2]!!.toLong())

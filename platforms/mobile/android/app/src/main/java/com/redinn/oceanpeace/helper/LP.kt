@@ -1,6 +1,5 @@
 package com.redinn.oceanpeace.helper
 
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -16,11 +15,8 @@ object LP {
     private fun toSpec(value: Int): Int {
         return when (value) {
             0, MATCH_PARENT, WRAP_CONTENT -> value
-            else -> return if (Build.VERSION.SDK_INT >= 21) { // 5.0
-                View.MeasureSpec.makeMeasureSpec(value, View.MeasureSpec.EXACTLY)
-            } else {
-                value // Android 4 bugged with makeMeasureSpec
-            }
+            else -> return  View.MeasureSpec.makeMeasureSpec(value, View.MeasureSpec.EXACTLY)
+
         }
     }
 
@@ -73,7 +69,7 @@ object LP {
             mParams.gravity = gravity
             return this
         }
-        fun build(): LinearLayout.LayoutParams? {
+        fun build(): LinearLayout.LayoutParams {
             return mParams
         }
     }

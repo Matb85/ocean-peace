@@ -1,8 +1,8 @@
 package com.redinn.oceanpeace.helper
 
 import android.app.usage.UsageEvents
-import android.app.usage.UsageEvents.Event.MOVE_TO_BACKGROUND
-import android.app.usage.UsageEvents.Event.MOVE_TO_FOREGROUND
+import android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED
+import android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import com.redinn.oceanpeace.MainApplication.Companion.store
@@ -36,14 +36,14 @@ object UsageStatsHelper {
             val timeStamp = event.timeStamp
             val eventType = event.eventType
 
-            if (eventType == MOVE_TO_BACKGROUND && mLastForegroundEvent == packageName && timeStamp > mLastTimeStamp) {
+            if (eventType == ACTIVITY_PAUSED && mLastForegroundEvent == packageName && timeStamp > mLastTimeStamp) {
                 mLastForegroundEvent?.let {
                     recordUsage(it, mLastTimeStamp, timeStamp - mLastTimeStamp)
                     records.add(UsageRecord(packageName, mLastTimeStamp, timeStamp - mLastTimeStamp))
                 }
                 mLastForegroundEvent = null
                 lastEndTime = timeStamp
-            } else if (eventType == MOVE_TO_FOREGROUND) {
+            } else if (eventType == ACTIVITY_RESUMED) {
                 mLastForegroundEvent = packageName
                 mLastTimeStamp = timeStamp
             }
@@ -80,7 +80,7 @@ object UsageStatsHelper {
 
     fun getTodayUsageTime(filter: Boolean = false): Long {
         val records = if (filter) filter(queryTodayUsage()) else queryTodayUsage()
-        return records.map { it.duration }.sum()
+        return records.sumOf { it.duration }
     }
 
     fun queryUsage(day: String): List<UsageRecord> {
@@ -105,16 +105,16 @@ object UsageStatsHelper {
         var sum = 0L
         var count = 0
         for ((_, value) in all) {
-            val t = UsageDigest.fromJson(JSONObject(value as? String)).totalTime
+            val t = UsageDigest.fromJson(JSONObject((value as? String).toString())).totalTime
             if (t != 0L) {
                 sum += t
                 count += 1
             }
         }
-        if (count == 0 || all.isEmpty()) {
-            return 0L
+        return if (count == 0 || all.isEmpty()) {
+            0L
         } else {
-            return (sum / count)
+            (sum / count)
         }
     }
 }

@@ -64,7 +64,7 @@ object ViewTransition {
             override fun onAnimationRepeat(animator: Animator) {}
         }
         when (dir) {
-            ViewTransition.Direction.UP -> {
+            Direction.UP -> {
                 v.translationX = 0f
                 v.translationY = translation.toFloat()
                 v.visibility = View.VISIBLE
@@ -75,7 +75,7 @@ object ViewTransition {
                 }
                 trans.start()
             }
-            ViewTransition.Direction.DOWN -> {
+            Direction.DOWN -> {
                 v.translationX = 0f
                 v.translationY = (-translation).toFloat()
                 v.visibility = View.VISIBLE
@@ -86,7 +86,7 @@ object ViewTransition {
                 }
                 trans.start()
             }
-            ViewTransition.Direction.LEFT -> {
+            Direction.LEFT -> {
                 v.translationX = translation.toFloat()
                 v.translationY = 0f
                 v.visibility = View.VISIBLE
@@ -97,7 +97,7 @@ object ViewTransition {
                 }
                 trans.start()
             }
-            ViewTransition.Direction.RIGHT -> {
+            Direction.RIGHT -> {
                 v.translationX = (-translation).toFloat()
                 v.translationY = 0f
                 v.visibility = View.VISIBLE
@@ -126,25 +126,25 @@ object ViewTransition {
         v.translationX = 0f
         v.translationY = 0f
         when (dir) {
-            ViewTransition.Direction.UP -> {
+            Direction.UP -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationY", -translation.toFloat())
                 trans.duration = duration.toLong()
                 trans.addListener(animatorListener)
                 trans.start()
             }
-            ViewTransition.Direction.DOWN -> {
+            Direction.DOWN -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationY", translation.toFloat())
                 trans.duration = duration.toLong()
                 trans.addListener(animatorListener)
                 trans.start()
             }
-            ViewTransition.Direction.LEFT -> {
+            Direction.LEFT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", -translation.toFloat())
                 trans.duration = duration.toLong()
                 trans.addListener(animatorListener)
                 trans.start()
             }
-            ViewTransition.Direction.RIGHT -> {
+            Direction.RIGHT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", translation.toFloat())
                 trans.duration = duration.toLong()
                 trans.addListener(animatorListener)
@@ -159,7 +159,7 @@ object ViewTransition {
     //---------------------------------------------------------------
     //endregion
 
-    //region fadeslide
+    //region fadeSlide
     //---------------------------------------------------------------
     fun fadeslideIn(v: View, dir: Direction, translation: Int, duration: Int, cb: (() -> Unit)? = null) {
         val animatorListener = object : Animator.AnimatorListener {
@@ -171,7 +171,7 @@ object ViewTransition {
             override fun onAnimationRepeat(animator: Animator) {}
         }
         when (dir) {
-            ViewTransition.Direction.UP -> {
+            Direction.UP -> {
                 v.translationX = 0f
                 v.translationY = translation.toFloat()
                 v.alpha = 0f
@@ -187,7 +187,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
-            ViewTransition.Direction.DOWN -> {
+            Direction.DOWN -> {
                 v.translationX = 0f
                 v.translationY = (-translation).toFloat()
                 v.alpha = 0f
@@ -203,7 +203,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
-            ViewTransition.Direction.LEFT -> {
+            Direction.LEFT -> {
                 v.translationX = translation.toFloat()
                 v.translationY = 0f
                 v.alpha = 0f
@@ -219,7 +219,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
-            ViewTransition.Direction.RIGHT -> {
+            Direction.RIGHT -> {
                 v.translationX = (-translation).toFloat()
                 v.translationY = 0f
                 v.alpha = 0f
@@ -254,7 +254,7 @@ object ViewTransition {
         v.translationY = 0f
         v.alpha = 1.0f
         when (dir) {
-            ViewTransition.Direction.UP -> {
+            Direction.UP -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationY", -translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
                 trans.duration = duration.toLong()
@@ -264,7 +264,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
-            ViewTransition.Direction.DOWN -> {
+            Direction.DOWN -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationY", translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
                 trans.duration = duration.toLong()
@@ -274,7 +274,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
-            ViewTransition.Direction.LEFT -> {
+            Direction.LEFT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", -translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
                 trans.duration = duration.toLong()
@@ -284,7 +284,7 @@ object ViewTransition {
                 aniSet.play(trans).with(alpha)
                 aniSet.start()
             }
-            ViewTransition.Direction.RIGHT -> {
+            Direction.RIGHT -> {
                 val trans = ObjectAnimator.ofFloat(v, "translationX", translation.toFloat())
                 val alpha = ObjectAnimator.ofFloat(v, "alpha", 0.0f)
                 trans.duration = duration.toLong()

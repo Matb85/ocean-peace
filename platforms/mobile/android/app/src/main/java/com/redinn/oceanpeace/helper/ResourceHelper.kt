@@ -10,6 +10,7 @@ import androidx.annotation.FontRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import java.lang.ref.WeakReference
+import kotlin.math.roundToInt
 
 @Suppress("unused")
 object ResourceHelper {
@@ -19,7 +20,11 @@ object ResourceHelper {
     }
     fun dp(value: Float): Int {
         val c = context?.get() ?: return 0
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, c.resources.displayMetrics))
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            value,
+            c.resources.displayMetrics
+        ).roundToInt()
     }
     fun dp(value: Int): Int = dp(value.toFloat())
     fun dimen(@DimenRes resId: Int): Int {

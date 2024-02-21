@@ -2,7 +2,6 @@ package com.redinn.oceanpeace
 
 import android.app.Application
 import android.content.Context
-import com.redinn.oceanpeace.helper.GraphHelper
 import com.redinn.oceanpeace.helper.ResourceHelper
 import com.redinn.oceanpeace.helper.UsageStatsHelper
 import com.redinn.oceanpeace.redux.AppStore
@@ -14,7 +13,6 @@ class MainApplication : Application() {
         super.onCreate()
         ResourceHelper.setup(applicationContext)
         UsageStatsHelper.setup(applicationContext)
-        GraphHelper.setup(applicationContext)
     }
     //---------------------------------------------------------------
     //endregion

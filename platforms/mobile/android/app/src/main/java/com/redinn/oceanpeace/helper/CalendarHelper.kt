@@ -18,7 +18,7 @@ object CalendarHelper {
         return SimpleDateFormat("yyyyMMdd").format(cal.time)
     }
 
-    fun getTimeConsensed(time: Long): String {
+    fun getTimeCondensed(time: Long): String {
         val cal = Calendar.getInstance(Locale.ENGLISH)
         cal.timeInMillis = time
         return SimpleDateFormat("HH:mm").format(cal.time)
