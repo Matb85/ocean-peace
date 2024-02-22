@@ -3,8 +3,6 @@ package com.redinn.oceanpeace
 import android.app.Activity
 import android.app.AlarmManager
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.app.usage.UsageStatsManager
@@ -18,16 +16,14 @@ import android.os.Binder
 import android.os.IBinder
 import android.os.SystemClock
 import android.util.Log
-import com.redinn.oceanpeace.AppConfig
 import com.redinn.oceanpeace.client.UpdateServerTask
 import com.redinn.oceanpeace.helper.CalendarHelper
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
 import com.redinn.oceanpeace.helper.NotificationHelper
-import com.redinn.oceanpeace.helper.UsageStatsHelper
-import com.redinn.oceanpeace.helper.UsageStatsHelper.queryTodayUsage
 import com.redinn.oceanpeace.icons.IconManager
 import com.redinn.oceanpeace.model.UsageRecord
 import com.redinn.oceanpeace.redux.ViewStore
+import com.redinn.oceanpeace.usage.Usage
 import org.json.JSONObject
 import java.lang.ref.WeakReference
 import java.util.Timer
@@ -64,7 +60,6 @@ class MyService : Service() {
     //region Life cycle
     override fun onCreate() {
         super.onCreate()
-        Log.d("MyService", "Hello")
 
         startForeground()
         registerScreenUnlockReceiver()
@@ -140,15 +135,6 @@ class MyService : Service() {
 
         val icon = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher_foreground)
 
-        val channel = NotificationChannel(
-            "default",
-            "PennSkanvTicChannel",
-            NotificationManager.IMPORTANCE_HIGH
-        )
-        channel.description = "PennSkanvTic channel for foreground service notification"
-
-        val notificationManager = getSystemService(NotificationManager::class.java)
-        notificationManager.createNotificationChannel(channel)
         Log.d("MyService", "Dispatching the notification")
         val notification = Notification.Builder(this, "default")
             .setContentTitle(resources.getString(R.string.app_name))
@@ -184,7 +170,7 @@ class MyService : Service() {
             val lock = ReentrantLock()
             override fun run() {
                 if (lock.tryLock()) {
-                    val result = UsageStatsHelper.getLatestEvent(
+                    val result = Usage.getLatestEvent(
                         usageStatsManager,
                         mLastQueryTime,
                         System.currentTimeMillis()
@@ -219,8 +205,7 @@ class MyService : Service() {
         val t = mTodayUsages[packageName] ?: 0
         Log.d(
             "onAppSwitch", "$packageName - usage: ${
-                t
-                        / 60000
+                t / 60000
             }min  limit: $usageLimit  In NotTrackingList: ${mNotTrackingList?.contains(packageName)}"
         )
 
@@ -267,7 +252,7 @@ class MyService : Service() {
     }
 
     private fun loadUsages() {
-        val records = queryTodayUsage()
+        val records = Usage.queryTodayUsage()
         mTodayUsages = HashMap()
         mToday = CalendarHelper.getDate(System.currentTimeMillis())
         for (r in records) {

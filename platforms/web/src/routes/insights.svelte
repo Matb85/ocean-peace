@@ -6,19 +6,22 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { formatMinutes } from "$lib/utils";
+  import { formatMinutes, numberToTime } from "$lib/utils";
   import type { GoalHistoryI, HourlyUsageI, SingleAppUsageI } from "$schema/usage";
   import { onMount } from "svelte";
-  const maxScreenTime: number = 270;
 
   let appsused: SingleAppUsageI[] = [];
   let screenTimeHistory: GoalHistoryI[] = [];
   let hourlyUsageToday: HourlyUsageI[] = [];
+  let totalTime = 0;
+  let maxScreenTime: number = 0;
 
   onMount(() => {
     Api.getAppsUsedToday().then(d => (appsused = d));
     Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
     Api.getUsageIntensityToday().then(d => (hourlyUsageToday = d));
+    Api.getTotalTime().then(d => (totalTime = d));
+    Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
   });
 </script>
 
@@ -42,7 +45,10 @@
     data={appsused.map(a => ({ color: a.color, value: a.minutes }))}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
-      <H tag={2}>{formatMinutes(appsused[appsused.length - 1]?.minutes || 0)}</H>
+      <H tag={2}>
+        {@const time = numberToTime(maxScreenTime - totalTime)}
+        {(time[0] > 0 ? time[0] : 0) + "h " + (time[1] > 0 ? time[1] : 0) + "min"}
+      </H>
       <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>

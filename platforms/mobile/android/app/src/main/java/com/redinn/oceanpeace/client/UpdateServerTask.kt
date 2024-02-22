@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.redinn.oceanpeace.helper.ClientHelper
-import com.redinn.oceanpeace.helper.UsageStatsHelper
 import com.redinn.oceanpeace.model.UsageDigest
+import com.redinn.oceanpeace.usage.Usage
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.TimerTask
@@ -39,7 +39,7 @@ class UpdateServerTask(val context: Context) : TimerTask() {
 
         for (day in toBeUpdate) {
             val digest = UsageDigest.load(context, day)
-            val summary = UsageStatsHelper.queryUsage(day)
+            val summary = Usage.queryUsage(day)
             val jsonArray = JSONArray()
             for (s in summary) {
                 jsonArray.put(s.toJson())

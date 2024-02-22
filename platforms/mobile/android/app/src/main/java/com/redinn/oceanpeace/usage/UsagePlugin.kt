@@ -1,12 +1,8 @@
 package com.redinn.oceanpeace.usage
 
 import android.Manifest
-import android.app.AppOpsManager
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Process
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -19,6 +15,7 @@ import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import com.getcapacitor.annotation.Permission
 import com.getcapacitor.annotation.PermissionCallback
+import com.redinn.oceanpeace.helper.PermissionHelper.hasAppUsagePermission
 import java.util.Calendar
 
 @CapacitorPlugin(
@@ -28,7 +25,10 @@ import java.util.Calendar
 class UsagePlugin : Plugin() {
     @PluginMethod
     fun getAppsUsageToday(call: PluginCall) {
-        if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
+        if (getPermissionState("usage") != PermissionState.GRANTED && !hasAppUsagePermission(
+                activity.applicationContext
+            )
+        ) {
             requestPermissionForAlias("usage", call, "usagePermsCallback_AppsUsed")
             ContextCompat.startActivity(
                 activity.applicationContext,
@@ -36,41 +36,24 @@ class UsagePlugin : Plugin() {
                 Bundle.EMPTY
             )
         } else {
-            val usage = Usage()
             val ret = JSObject()
-            ret.put("stats", reduceStats(usage.getUsageData(activity.applicationContext)))
+            ret.put("stats", reduceStats(Usage.getUsageData(activity.applicationContext)))
             call.resolve(ret)
         }
     }
 
     @PermissionCallback
     private fun usagePermsCallback_AppsUsed(call: PluginCall) {
-        if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
-            val usage = Usage()
+        if (getPermissionState("usage") == PermissionState.GRANTED && hasAppUsagePermission(activity.applicationContext)) {
             val ret = JSObject()
-            ret.put("stats", reduceStats(usage.getUsageData(activity.applicationContext)))
+            ret.put("stats", reduceStats(Usage.getUsageData(activity.applicationContext)))
             call.resolve(ret)
         } else {
             call.reject("Permission not granted")
         }
     }
 
-    fun hasPermission(): Boolean {
-        val opsManager =
-            activity.applicationContext.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = opsManager.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            activity.applicationContext.packageName
-        )
-        return if (mode == AppOpsManager.MODE_DEFAULT) {
-            activity.applicationContext.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
-        } else {
-            mode == AppOpsManager.MODE_ALLOWED
-        }
-    }
-
-    fun reduceStats(stats: JSArray): JSArray {
+    private fun reduceStats(stats: JSArray): JSArray {
         val ret = JSArray()
         val temp = JSObject()
         try {
@@ -108,7 +91,10 @@ class UsagePlugin : Plugin() {
 
     @PluginMethod
     fun getTotalTime(call: PluginCall) {
-        if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
+        if (getPermissionState("usage") != PermissionState.GRANTED && !hasAppUsagePermission(
+                activity.applicationContext
+            )
+        ) {
             requestPermissionForAlias("usage", call, "usagePermsCallback_Time")
             ContextCompat.startActivity(
                 activity.applicationContext,
@@ -116,19 +102,17 @@ class UsagePlugin : Plugin() {
                 Bundle.EMPTY
             )
         } else {
-            val usage = Usage()
-            val ret = JSObject()
-            ret.put("time", usage.getTotalTime(activity.applicationContext))
-            call.resolve(ret)
+            val res = JSObject()
+            res.put("time", Usage.getTotalTime3(activity.applicationContext))
+            call.resolve(res)
         }
     }
 
     @PermissionCallback
-    private fun usagePermsCallback_Time(call: PluginCall) {
-        if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
-            val usage = Usage()
+    fun usagePermsCallback_Time(call: PluginCall) {
+        if (getPermissionState("usage") == PermissionState.GRANTED && hasAppUsagePermission(activity.applicationContext)) {
             val ret = JSObject()
-            ret.put("time", usage.getTotalTime(activity.applicationContext))
+            ret.put("time", Usage.getTotalTime2(activity.applicationContext) / 1000)
             call.resolve(ret)
         } else {
             call.reject("Permission not granted")
@@ -137,7 +121,10 @@ class UsagePlugin : Plugin() {
 
     @PluginMethod
     fun getUnlocks(call: PluginCall) {
-        if (getPermissionState("usage") != PermissionState.GRANTED && !hasPermission()) {
+        if (getPermissionState("usage") != PermissionState.GRANTED && !hasAppUsagePermission(
+                activity.applicationContext
+            )
+        ) {
             requestPermissionForAlias("usage", call, "usagePermsCallback_unlocks")
             ContextCompat.startActivity(
                 activity.applicationContext,
@@ -146,9 +133,8 @@ class UsagePlugin : Plugin() {
             )
         } else {
             Log.i("TEST", "getUnlocks: starting!")
-            val usage = Usage()
             val ret = JSObject()
-            ret.put("unlocks", usage.getUnlockStats(activity.applicationContext))
+            ret.put("unlocks", Usage.getUnlockStats(activity.applicationContext))
             Log.i("TEST", "usagePermissionCallback_unlocks: $ret")
             call.resolve(ret)
         }
@@ -156,11 +142,10 @@ class UsagePlugin : Plugin() {
 
     @PermissionCallback
     fun usagePermissionCallback_unlocks(call: PluginCall) {
-        if (getPermissionState("usage") == PermissionState.GRANTED && hasPermission()) {
-            val usage = Usage()
+        if (getPermissionState("usage") == PermissionState.GRANTED && hasAppUsagePermission(activity.applicationContext)) {
             val ret = JSObject()
             ret.put(
-                "unlocks", usage.countUnlocks(
+                "unlocks", Usage.countUnlocks(
                     Calendar.getInstance().timeInMillis - 10000,
                     Calendar.getInstance().timeInMillis, activity.applicationContext
                 )

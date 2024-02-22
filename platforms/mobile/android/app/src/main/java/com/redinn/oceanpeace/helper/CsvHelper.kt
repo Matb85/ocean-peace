@@ -17,7 +17,7 @@ object CsvHelper {
     fun write(file: File, records: List<UsageRecord>): Boolean {
         val alreadyExist = File(file.path).exists()
         return try {
-            val writer = CSVWriterBuilder(FileWriter(file.path, true))
+            val writer = CSVWriterBuilder(FileWriter(file, true))
                 .withSeparator(',')
                 .build() as CSVWriter
 
@@ -43,13 +43,17 @@ object CsvHelper {
             }
             val records = arrayListOf<UsageRecord>()
             val reader = CSVReaderBuilder(FileReader(file.path)).build()
-            var nextLine: Array<String?> = reader.readNext()
-            while (nextLine != null) {
-                val record =
-                    UsageRecord(nextLine[0]!!, nextLine[1]!!.toLong(), nextLine[2]!!.toLong())
-                records.add(record)
+            var nextLine: Array<String>? = reader.readNext()
+            Log.d("CsvHelper", "Reading the first line...")
+            Log.d("CsvHelper", nextLine?.joinToString(" ") ?: "")
+            while (true) {
                 nextLine = reader.readNext()
+                if (nextLine == null) break
+                val record =
+                    UsageRecord(nextLine[0], nextLine[1].toLong(), nextLine[2].toLong())
+                records.add(record)
             }
+            Log.d("CsvHelper", "All the lines read!")
             reader.close()
             return records
         } catch (e: Exception) {

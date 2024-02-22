@@ -53,6 +53,7 @@ data class UsageDigest(
         }
 
         fun make(context: Context, day: String): UsageDigest {
+            Log.d("USAGE_DIGEST", "make")
             val file = File(context.filesDir.path + "/" + day)
             val records = CsvHelper.read(file)
             Log.d(TAG, "make $day - ${records.size}")

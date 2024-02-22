@@ -11,11 +11,13 @@ import com.redinn.oceanpeace.focus.FocusPlugin
 import com.redinn.oceanpeace.goals.GoalsPlugin
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
 import com.redinn.oceanpeace.helper.NotificationHelper
+import com.redinn.oceanpeace.helper.ResourceHelper
 import com.redinn.oceanpeace.icons.IconManager
 import com.redinn.oceanpeace.icons.IconsPlugin
 import com.redinn.oceanpeace.managers.PermissionManager
 import com.redinn.oceanpeace.presets.PresetsPlugin
 import com.redinn.oceanpeace.schedule.SchedulePlugin
+import com.redinn.oceanpeace.usage.Usage
 import com.redinn.oceanpeace.usage.UsagePlugin
 import io.reactivex.disposables.CompositeDisposable
 
@@ -44,6 +46,8 @@ class MainActivity : BridgeActivity() {
         registerPlugin(UIPlugin::class.java)
         registerPlugin(PermissionManager::class.java)
         //endregion
+        ResourceHelper.setup(applicationContext)
+        Usage.setup(applicationContext)
 
         if (!mStoreRetained) {
             mStoreRetained = true

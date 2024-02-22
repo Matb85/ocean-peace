@@ -17,15 +17,15 @@ interface UsagePlugin {
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
-  async getUsageTime(): Promise<number> {
-      const { time } = await Usage.getTotalTime();
+  async getTotalTime(): Promise<number> {
+    const { time } = await Usage.getTotalTime();
 
-      return time;
+    return time;
   },
   async getAppsUsedToday(): Promise<SingleAppUsageI[]> {
     const { stats } = await Usage.getAppsUsageToday();
-    let colors : string[] = ["#B5179E", "#3772FF", "#FCBA04", "#F8F5FA"];
-    for (let i=0; i<4; i++) {
+    let colors: string[] = ["#B5179E", "#3772FF", "#FCBA04", "#F8F5FA"];
+    for (let i = 0; i < 4; i++) {
       stats[i].icon.iconPath = Capacitor.convertFileSrc(stats[i].icon.iconPath);
       stats[i].color = colors[i];
     }
@@ -50,7 +50,7 @@ const plugin: UsageMethods = {
     //   ret.push(temp)
     // }
 
-    console.log(unlocks.toString())
+    console.log(unlocks.toString());
 
     return unlocks;
     /*

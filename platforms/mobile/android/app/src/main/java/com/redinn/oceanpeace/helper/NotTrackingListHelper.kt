@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.redinn.oceanpeace.model.NotTrackingRecord
 import com.redinn.oceanpeace.model.UsageSummary
+import com.redinn.oceanpeace.usage.Usage
 
 object NotTrackingListHelper {
     private fun getNotTrackingRecords(context: Context): List<NotTrackingRecord> {
@@ -43,7 +44,7 @@ object NotTrackingListHelper {
     fun getList(context: Context): List<NotTrackingRecord> {
         val time = System.currentTimeMillis()
         val summary = UsageSummary.getSummary(context,
-            ((time - 2 * UsageStatsHelper.HOUR_24)..time step UsageStatsHelper.HOUR_24).map {
+            ((time - 2 * Usage.HOUR_24)..time step Usage.HOUR_24).map {
                 CalendarHelper.getDateCondensed(
                     it
                 )

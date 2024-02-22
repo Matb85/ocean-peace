@@ -1,24 +1,9 @@
 package com.redinn.oceanpeace
 
-import android.app.Application
 import android.content.Context
-import com.redinn.oceanpeace.helper.ResourceHelper
-import com.redinn.oceanpeace.helper.UsageStatsHelper
 import com.redinn.oceanpeace.redux.AppStore
 
-class MainApplication : Application() {
-    //region Lifecycle
-    //---------------------------------------------------------------
-    override fun onCreate() {
-        super.onCreate()
-        ResourceHelper.setup(applicationContext)
-        UsageStatsHelper.setup(applicationContext)
-    }
-    //---------------------------------------------------------------
-    //endregion
-
-    //region Redux Store
-    //---------------------------------------------------------------
+class MainApplication {
     companion object {
         private var sStoreRef: Int = 0
         private var sStore: AppStore? = null

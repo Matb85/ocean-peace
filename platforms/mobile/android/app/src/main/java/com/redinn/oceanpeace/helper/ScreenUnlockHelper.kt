@@ -1,6 +1,7 @@
 package com.redinn.oceanpeace.helper
 
 import android.content.Context
+import com.redinn.oceanpeace.usage.Usage
 
 object ScreenUnlockHelper {
     private const val TAG = "ScreenUnlockHelper"
@@ -26,16 +27,16 @@ object ScreenUnlockHelper {
 
     fun getYesterdayUnlockCount(context: Context): Int {
         val day =
-            CalendarHelper.getDateCondensed(System.currentTimeMillis() - UsageStatsHelper.HOUR_24)
+            CalendarHelper.getDateCondensed(System.currentTimeMillis() - Usage.HOUR_24)
         return getUnlockCount(context, day)
     }
 
     fun getNDayUnlockCount(context: Context, n: Int): Int {
         val currentTime = System.currentTimeMillis()
-        val startTime = System.currentTimeMillis() - (n - 1) * UsageStatsHelper.HOUR_24
+        val startTime = System.currentTimeMillis() - (n - 1) * Usage.HOUR_24
         val pref = context.getSharedPreferences(TAG, Context.MODE_PRIVATE)
         var sum = 0
-        for (i in startTime..currentTime step UsageStatsHelper.HOUR_24) {
+        for (i in startTime..currentTime step Usage.HOUR_24) {
             val day = CalendarHelper.getDateCondensed(i)
             sum += pref.getInt(day, 0)
         }
