@@ -5,10 +5,10 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import com.getcapacitor.BridgeActivity
 import com.redinn.oceanpeace.focus.FocusPlugin
 import com.redinn.oceanpeace.goals.GoalsPlugin
-import com.redinn.oceanpeace.helper.Logger
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
 import com.redinn.oceanpeace.helper.NotificationHelper
 import com.redinn.oceanpeace.icons.IconManager
@@ -77,7 +77,7 @@ class MainActivity : BridgeActivity() {
         try {
             unbindService(con)
         } catch (e: Exception) {
-            Logger.e("MainActivity", e.toString())
+            Log.e("MainActivity", e.toString())
         }
     }
 

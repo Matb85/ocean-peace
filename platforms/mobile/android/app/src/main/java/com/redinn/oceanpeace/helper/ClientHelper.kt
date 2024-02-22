@@ -2,7 +2,8 @@ package com.redinn.oceanpeace.helper
 
 import android.content.Context
 import android.provider.Settings
-import com.hour.hour.AppConfig
+import android.util.Log
+import com.redinn.oceanpeace.AppConfig
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -31,7 +32,7 @@ object ClientHelper {
             val body = response.body()?.string()
             return body == "Hello!"
         } catch (e: Exception) {
-            Logger.e("ClientHelper", "${e.message}")
+            Log.e("ClientHelper", "${e.message}")
             return false
         }
     }
@@ -39,7 +40,7 @@ object ClientHelper {
     fun send(context: Context, method: String, data: JSONObject, cb: RequestCallback?) {
         Thread {
             try {
-                Logger.d("ClientHelper", "start request")
+                Log.d("ClientHelper", "start request")
                 val json = MediaType.parse("application/json; charset=utf-8") ?: return@Thread
                 val message = JSONObject()
                     .put("method", method)
@@ -57,20 +58,20 @@ object ClientHelper {
                 val request = Request.Builder().url(AppConfig.SERVER_ADDRESS).post(body).build()
                 val response = client.newCall(request).execute()
                 val responseBody = response.body()?.string()
-                Logger.d("ClientHelper", "response: $responseBody")
+                Log.d("ClientHelper", "response: $responseBody")
                 if (responseBody == "OK") {
                     cb?.onSuccess()
                 } else {
                     throw ConnectException()
                 }
             } catch (e: ConnectException) {
-                Logger.e("ClientHelper", "${e.message}")
+                Log.e("ClientHelper", "${e.message}")
                 cb?.onFail(FailCode.CONNECTION_FAIL)
             } catch (e: IOException) {
-                Logger.e("ClientHelper", "${e.message}")
+                Log.e("ClientHelper", "${e.message}")
                 cb?.onFail(FailCode.IO_FAIL)
             } catch (e: Exception) {
-                Logger.e("ClientHelper", "${e.message}")
+                Log.e("ClientHelper", "${e.message}")
                 cb?.onFail(FailCode.INVALID_REQUEST)
             }
         }.start()

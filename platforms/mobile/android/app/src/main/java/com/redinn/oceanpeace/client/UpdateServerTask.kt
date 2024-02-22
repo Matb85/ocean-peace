@@ -2,8 +2,8 @@ package com.redinn.oceanpeace.client
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.redinn.oceanpeace.helper.ClientHelper
-import com.redinn.oceanpeace.helper.Logger
 import com.redinn.oceanpeace.helper.UsageStatsHelper
 import com.redinn.oceanpeace.model.UsageDigest
 import org.json.JSONArray
@@ -51,16 +51,16 @@ class UpdateServerTask(val context: Context) : TimerTask() {
             if (digest.totalTime == 0L) {
                 recordUpdate(day, pref, prefEdit)
             } else {
-                Logger.d("updateServerTask", "update $day start")
+                Log.d("updateServerTask", "update $day start")
 
                 ClientHelper.send(context, "summary", json, object : ClientHelper.RequestCallback {
                     override fun onSuccess() {
-                        Logger.d("updateServerTask", "update $day success")
+                        Log.d("updateServerTask", "update $day success")
                         recordUpdate(day, pref, prefEdit)
                     }
 
                     override fun onFail(code: ClientHelper.FailCode) {
-                        Logger.d("updateServerTask", "update $day fail")
+                        Log.d("updateServerTask", "update $day fail")
                     }
                 })
             }

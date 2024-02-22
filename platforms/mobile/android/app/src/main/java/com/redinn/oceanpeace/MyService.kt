@@ -17,15 +17,15 @@ import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.IBinder
 import android.os.SystemClock
-import com.hour.hour.AppConfig
+import android.util.Log
+import com.redinn.oceanpeace.AppConfig
 import com.redinn.oceanpeace.client.UpdateServerTask
 import com.redinn.oceanpeace.helper.CalendarHelper
-import com.redinn.oceanpeace.helper.Logger
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
 import com.redinn.oceanpeace.helper.NotificationHelper
-import com.redinn.oceanpeace.helper.PackageHelper
 import com.redinn.oceanpeace.helper.UsageStatsHelper
 import com.redinn.oceanpeace.helper.UsageStatsHelper.queryTodayUsage
+import com.redinn.oceanpeace.icons.IconManager
 import com.redinn.oceanpeace.model.UsageRecord
 import com.redinn.oceanpeace.redux.ViewStore
 import org.json.JSONObject
@@ -64,7 +64,7 @@ class MyService : Service() {
     //region Life cycle
     override fun onCreate() {
         super.onCreate()
-        Logger.d("MyService", "Hello")
+        Log.d("MyService", "Hello")
 
         startForeground()
         registerScreenUnlockReceiver()
@@ -74,34 +74,34 @@ class MyService : Service() {
         loadNotTrackingList()
 
         startForegroundListener()
-        Logger.d("MyService", "onCreate")
+        Log.d("MyService", "onCreate")
     }
 
     override fun onDestroy() {
-        Logger.d("MyService", "onDestroy")
+        Log.d("MyService", "onDestroy")
         mTimer?.cancel()
         sendBroadcast(Intent(this, ServiceEndReceiver::class.java))
         try {
             unregisterReceiver(ScreenUnlockReceiver())
         } catch (e: Exception) {
-            Logger.e("MyService", e.toString())
+            Log.e("MyService", e.toString())
         }
 
         super.onDestroy()
     }
 
     override fun onBind(p0: Intent?): IBinder {
-        Logger.d("MyService", "onBind")
+        Log.d("MyService", "onBind")
         return binder
     }
 
     override fun onRebind(intent: Intent?) {
-        Logger.d("MyService", "onRebind")
+        Log.d("MyService", "onRebind")
         super.onRebind(intent)
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        Logger.d("MyService", "onUnbind")
+        Log.d("MyService", "onUnbind")
         return super.onUnbind(intent)
     }
 
@@ -110,7 +110,7 @@ class MyService : Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
-        Logger.d("MyService", "onTaskRemoved")
+        Log.d("MyService", "onTaskRemoved")
         val restartService = Intent(
             applicationContext,
             this.javaClass
@@ -149,7 +149,7 @@ class MyService : Service() {
 
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(channel)
-        Logger.d("MyService", "Dispatching the notification")
+        Log.d("MyService", "Dispatching the notification")
         val notification = Notification.Builder(this, "default")
             .setContentTitle(resources.getString(R.string.app_name))
             .setContentText("Tracking App Usage")
@@ -217,7 +217,7 @@ class MyService : Service() {
 
     private fun onAppSwitch(packageName: String) {
         val t = mTodayUsages[packageName] ?: 0
-        Logger.d(
+        Log.d(
             "onAppSwitch", "$packageName - usage: ${
                 t
                         / 60000
@@ -231,7 +231,7 @@ class MyService : Service() {
                     NotificationHelper.show(
                         this,
                         "${
-                            PackageHelper.getAppName(
+                            IconManager.getAppName(
                                 this,
                                 packageName
                             )
@@ -254,7 +254,7 @@ class MyService : Service() {
         val store = try {
             ViewStore.load(JSONObject(pref.getString("view", "").toString())) ?: return
         } catch (e: Exception) {
-            Logger.e("loadRedux", "${e.message}, use default value")
+            Log.e("loadRedux", "${e.message}, use default value")
             ViewStore.State()
         }
         isReminderOn = store.isReminderOn

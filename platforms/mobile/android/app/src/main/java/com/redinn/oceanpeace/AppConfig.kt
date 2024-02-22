@@ -1,4 +1,4 @@
-package com.hour.hour
+package com.redinn.oceanpeace
 
 @Suppress("unused")
 object AppConfig {

@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.redinn.oceanpeace.MainActivity
 import com.redinn.oceanpeace.R
 
@@ -23,7 +24,7 @@ object NotificationHelper {
     }
 
     fun show(context: Context, title: String, content: String, id: Int) {
-        Logger.d("NotificationHelper", "Dispatching notifications")
+        Log.d("NotificationHelper", "Dispatching notifications")
 
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

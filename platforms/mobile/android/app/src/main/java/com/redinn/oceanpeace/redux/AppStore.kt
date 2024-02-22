@@ -1,7 +1,7 @@
 package com.redinn.oceanpeace.redux
 
 import android.content.Context
-import com.redinn.oceanpeace.helper.Logger
+
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
@@ -20,7 +20,7 @@ class AppStore {
             ViewStore.load(JSONObject(pref.getString("view", "")!!))
                 ?.let { dispatch(ViewStore.Action._PresistenceRestore(it)) }
         } catch (e: Exception) {
-            Logger.e("redux", "persistence load viewState: ${e.message} - ${e.localizedMessage}")
+            Log.e("redux", "persistence load viewState: ${e.message} - ${e.localizedMessage}")
         }
     }
 
@@ -29,7 +29,7 @@ class AppStore {
         try {
             pref.putString("view", ViewStore.save(view.state).toString())
         } catch (e: Exception) {
-            Logger.e("redux", "persistence load viewState: ${e.message} - ${e.localizedMessage}")
+            Log.e("redux", "persistence load viewState: ${e.message} - ${e.localizedMessage}")
         }
         pref.apply()
     }

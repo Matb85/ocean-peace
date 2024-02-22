@@ -7,6 +7,7 @@ import android.util.Log
 import com.redinn.oceanpeace.FunctionBase
 import com.redinn.oceanpeace.database.OceanDatabase
 import com.redinn.oceanpeace.database.icons.Icon
+
 import me.zhanghai.android.appiconloader.AppIconLoader
 import java.io.File
 import java.io.FileNotFoundException
@@ -103,6 +104,17 @@ object IconManager {
             Log.e("IconManager", "file not found [94:90]", e)
         } catch (e: IOException) {
             Log.e("IconManager", "failed to close FileOutputStream [93:89]", e)
+        }
+    }
+
+    fun getAppName(context: Context, packageName: String): String {
+        return try {
+            val pkgName =
+                OceanDatabase.getDatabase(context).iconDAO().getIcon(packageName).packageName
+            pkgName
+        } catch (e: PackageManager.NameNotFoundException) {
+            Log.e("getAppName", "fail ($packageName) ${e.message} - ${e.localizedMessage}")
+            packageName
         }
     }
 }

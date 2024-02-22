@@ -5,6 +5,7 @@ import android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED
 import android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.util.Log
 import com.redinn.oceanpeace.MainApplication.Companion.store
 import com.redinn.oceanpeace.model.UsageDigest
 import com.redinn.oceanpeace.model.UsageRecord
@@ -67,7 +68,7 @@ object UsageStatsHelper {
 
     private fun recordUsage(packageName: String, startTime: Long, duration: Long) {
         val context = context?.get() ?: return
-        Logger.d(
+        Log.d(
             "recordUsage",
             "$packageName   from ${CalendarHelper.getDate(startTime)}  -  ${duration / 1000}s"
         )

@@ -66,7 +66,7 @@ class UIPlugin : Plugin() {
             } catch (e: Exception) {
                 Log.e("UIPlugin", "settings.json does not exist $e")
             }
-            data.put(call.getString("key"), call.getString("value"))
+            data.put(call.getString("key")!!, call.getString("value"))
             writeFile(data, getFilesDir(activity.applicationContext) + "/settings.json")
             call.resolve()
         } catch (e: Exception) {

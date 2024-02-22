@@ -1,6 +1,7 @@
 package com.redinn.oceanpeace.helper
 
 import android.content.Context
+import android.util.Log
 import com.redinn.oceanpeace.model.NotTrackingRecord
 import com.redinn.oceanpeace.model.UsageSummary
 
@@ -20,7 +21,7 @@ object NotTrackingListHelper {
     }
 
     fun addRecords(context: Context, l: List<NotTrackingRecord>) {
-        Logger.d("NotTrackingListHelper", "add ${l.map { it.packageName }}")
+        Log.d("NotTrackingListHelper", "add ${l.map { it.packageName }}")
         val prefEdit =
             context.getSharedPreferences("NotTrackingListHelper", Context.MODE_PRIVATE).edit()
         for (r in l) {
@@ -30,7 +31,7 @@ object NotTrackingListHelper {
     }
 
     fun removeRecords(context: Context, l: List<NotTrackingRecord>) {
-        Logger.d("NotTrackingListHelper", "remove ${l.map { it.packageName }}")
+        Log.d("NotTrackingListHelper", "remove ${l.map { it.packageName }}")
         val prefEdit =
             context.getSharedPreferences("NotTrackingListHelper", Context.MODE_PRIVATE).edit()
         for (r in l) {

@@ -2,7 +2,7 @@ package com.redinn.oceanpeace.model
 
 import android.content.Context
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
-import com.redinn.oceanpeace.helper.PackageHelper
+import com.redinn.oceanpeace.icons.IconManager
 import com.redinn.oceanpeace.iface.SerializableToJson
 import org.json.JSONObject
 
@@ -25,7 +25,7 @@ data class UsageSummary(
                 dict[r.packageName] = (dict[r.packageName] ?: 0) + r.duration
             }
             return dict.map {
-                UsageSummary(PackageHelper.getAppName(context, it.key), it.key, it.value)
+                UsageSummary(IconManager.getAppName(context, it.key), it.key, it.value)
             }.sortedByDescending { it.useTimeTotal }
         }
 

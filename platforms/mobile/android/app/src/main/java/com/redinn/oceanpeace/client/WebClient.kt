@@ -1,16 +1,16 @@
 package com.redinn.oceanpeace.client
 
 import android.os.Handler
-import java.io.IOException
+import android.util.Log
+import com.redinn.oceanpeace.iface.SerializableToJson
 import okhttp3.Call
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
-import okhttp3.MediaType
 import org.json.JSONException
-import com.redinn.oceanpeace.helper.Logger
-import com.redinn.oceanpeace.iface.SerializableToJson
+import java.io.IOException
 
 @Suppress("unused", "PrivatePropertyName", "UNUSED_PARAMETER", "MemberVisibilityCanBePrivate")
 class WebClient {
@@ -44,6 +44,7 @@ class WebClient {
     //region ApiBuilder
     class ApiBuilder internal constructor(url: String) {
         private enum class RequestType { GET, POST, PUT, DELETE }
+
         private val JSON = MediaType.parse("application/json; charset=utf-8")
         private val mUrl = url
         private var mType = RequestType.GET
@@ -54,57 +55,73 @@ class WebClient {
             mBody = body
             return this
         }
+
         fun put(body: RequestBody): ApiBuilder {
             mType = RequestType.PUT
             mBody = body
             return this
         }
+
         fun delete(body: RequestBody?): ApiBuilder {
             mType = RequestType.DELETE
             mBody = body
             return this
         }
+
         fun post(data: SerializableToJson): ApiBuilder {
             try {
                 post(RequestBody.create(JSON, data.toJson().toString(0)))
             } catch (e: JSONException) {
-                Logger.e("WebClient", "Json Exception on input: ${e.message}")
+                Log.e("WebClient", "Json Exception on input: ${e.message}")
             }
             return this
         }
+
         fun put(data: SerializableToJson): ApiBuilder {
             try {
                 post(RequestBody.create(JSON, data.toJson().toString(0)))
             } catch (e: JSONException) {
-                Logger.e("WebClient", "Json Exception on input: ${e.message}")
+                Log.e("WebClient", "Json Exception on input: ${e.message}")
             }
             return this
         }
+
         fun delete(data: SerializableToJson): ApiBuilder {
             try {
                 delete(RequestBody.create(JSON, data.toJson().toString(0)))
             } catch (e: JSONException) {
-                Logger.e("WebClient", "Json Exception on input: ${e.message}")
+                Log.e("WebClient", "Json Exception on input: ${e.message}")
             }
             return this
         }
+
         fun token(token: String): ApiBuilder {
             mToken = token
             return this
         }
+
         fun execute(http: OkHttpClient, cb: ((Result, Response?, String?) -> Unit)?) {
             val req = Request.Builder().url(mUrl)
             when (mType) {
-                RequestType.GET -> { }
-                RequestType.POST -> { mBody?.let { req.post(it) } }
-                RequestType.PUT -> { mBody?.let { req.put(it) } }
-                RequestType.DELETE -> { req.delete(mBody) }
+                RequestType.GET -> {}
+                RequestType.POST -> {
+                    mBody?.let { req.post(it) }
+                }
+
+                RequestType.PUT -> {
+                    mBody?.let { req.put(it) }
+                }
+
+                RequestType.DELETE -> {
+                    req.delete(mBody)
+                }
             }
             // Insert token if needed
             http.newCall(req.build()).enqueue(object : okhttp3.Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     cb?.invoke(Result.ServerUnreachable, null, null)
                 }
+
                 @Throws(IOException::class)
                 override fun onResponse(call: Call, response: Response) {
                     cb?.invoke(Result.Success, response, response.body()?.string())

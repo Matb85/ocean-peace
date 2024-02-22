@@ -1,5 +1,6 @@
 package com.redinn.oceanpeace.helper
 
+import android.util.Log
 import com.opencsv.CSVReaderBuilder
 import com.opencsv.CSVWriter
 import com.opencsv.CSVWriterBuilder
@@ -29,7 +30,7 @@ object CsvHelper {
             writer.close()
             true
         } catch (e: Exception) {
-            Logger.e("CsvHelper", e.message + ": " + e.localizedMessage)
+            Log.e("CsvHelper", e.message + ": " + e.localizedMessage)
             false
         }
     }
@@ -37,7 +38,7 @@ object CsvHelper {
     fun read(file: File): List<UsageRecord> {
         try {
             if (!file.canRead()) {
-                Logger.d("CsvHelper", "can't read file ${file.path}")
+                Log.d("CsvHelper", "can't read file ${file.path}")
                 return listOf()
             }
             val records = arrayListOf<UsageRecord>()
@@ -52,7 +53,7 @@ object CsvHelper {
             reader.close()
             return records
         } catch (e: Exception) {
-            Logger.e("CsvHelper", e.message + ": " + e.localizedMessage)
+            Log.e("CsvHelper", e.message + ": " + e.localizedMessage)
             return listOf()
         }
     }

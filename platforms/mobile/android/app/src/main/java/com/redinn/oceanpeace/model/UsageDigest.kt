@@ -1,9 +1,9 @@
 package com.redinn.oceanpeace.model
 
 import android.content.Context
+import android.util.Log
 import com.redinn.oceanpeace.helper.CalendarHelper
 import com.redinn.oceanpeace.helper.CsvHelper
-import com.redinn.oceanpeace.helper.Logger
 import com.redinn.oceanpeace.helper.NotTrackingListHelper
 import com.redinn.oceanpeace.helper.ScreenUnlockHelper
 import com.redinn.oceanpeace.iface.SerializableToJson
@@ -41,7 +41,7 @@ data class UsageDigest(
                 try {
                     summary.add(UsageSummary.fromJson(item))
                 } catch (e: Exception) {
-                    Logger.d(TAG, "fromJson failed: i = $i")
+                    Log.d(TAG, "fromJson failed: i = $i")
                 }
             }
             return UsageDigest(
@@ -55,7 +55,7 @@ data class UsageDigest(
         fun make(context: Context, day: String): UsageDigest {
             val file = File(context.filesDir.path + "/" + day)
             val records = CsvHelper.read(file)
-            Logger.d(TAG, "make $day - ${records.size}")
+            Log.d(TAG, "make $day - ${records.size}")
             if (records.isEmpty()) {
                 return UsageDigest(day, listOf(), 0, 0)
             }
