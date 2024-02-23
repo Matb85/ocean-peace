@@ -1,7 +1,6 @@
 package com.redinn.oceanpeace.usage
 
 import android.app.usage.UsageEvents
-import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.icu.util.Calendar
@@ -11,6 +10,8 @@ import com.getcapacitor.JSObject
 import com.redinn.oceanpeace.database.OceanDatabase
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 object Usage {
     // region GET functions
@@ -28,36 +29,11 @@ object Usage {
         return calendar.timeInMillis
     }
 
-    private fun getEvents(context: Context): List<UsageEvents.Event> {
-        val list: MutableList<UsageEvents.Event> = ArrayList()
-
-        val events =
-            getManager(context).queryEvents(getDayStart(), System.currentTimeMillis())
-        while (events.hasNextEvent()) {
-            val temp = UsageEvents.Event()
-            events.getNextEvent(temp)
-            list.add(temp)
-        }
-        return list
-    }
-
-    // endregion
-    // region API
-    // region USAGE DATA functions
     data class Stat(
         var totalTime: Long = 0,
         var startTime: Long = 0,
         var resumed: Boolean = false
     )
-
-    private fun isApp(packageName: String, context: Context): Boolean {
-        return try {
-            val info = context.packageManager.getApplicationInfo(packageName, 0)
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
 
     private fun applicationsUsageData(context: Context): HashMap<String, Stat> {
         val events =
@@ -70,7 +46,7 @@ object Usage {
             val event = UsageEvents.Event()
             events.getNextEvent(event)
 
-            Log.d(TAG, "TODAY  ${event.packageName}, ${event.timeStamp} ${event.eventType}")
+            //Log.d(TAG, "TODAY  ${event.packageName}, ${event.timeStamp} ${event.eventType}")
             if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
                 var temp = activityTime[event.packageName]
                 if (temp == null) temp = Stat()
@@ -90,7 +66,6 @@ object Usage {
             }
         }
 
-
         // Activity is currently running in foreground [edge case]
         for (name in activityTime.keys) {
             val stat = activityTime[name]
@@ -103,30 +78,25 @@ object Usage {
 
     // endregion
     fun getUsageData(context: Context): JSArray {
-        val ret = JSArray()
+        val arr = JSArray()
         val icons = OceanDatabase.getDatabase(context).iconDAO().getAllIcons()
         val dataSet = applicationsUsageData(context)
         for (packageName in dataSet.keys) {
             var icon: JSObject
-
             // receive ICON data
             val data = icons[packageName]
             if (data == null) {
-//                icon.put("packageName", "");
-//                icon.put("label", "unknown");
-//                icon.put("iconPath", "");
-//                icon.put("version", "");
                 continue
             } else {
                 icon = data.toJSON()
                 if (data.label == "") icon.put("label", "unknown")
             }
             val app = JSObject()
-            app.put("minutes", dataSet[packageName]!!.totalTime / 60000)
+            app.put("minutes", dataSet[packageName]!!.totalTime / 1000 / 60)
             app.put("icon", icon)
-            ret.put(app)
+            arr.put(app)
         }
-        return ret
+        return arr
     }
 
     fun getTotalTime(context: Context): Long {
@@ -138,83 +108,90 @@ object Usage {
         return time
     }
 
-    fun getTotalTime2(context: Context): Long {
-        val queryUsageStats: List<UsageStats> = getManager(context)
-            .queryUsageStats(
-                UsageStatsManager.INTERVAL_BEST, getDayStart(),
-                System.currentTimeMillis()
-            )
-
-        val icons = OceanDatabase.getDatabase(context).iconDAO().getAllIcons()
-
-        var s: Long = 0
-        for (stat in queryUsageStats) {
-
-            if (icons[stat.packageName] != null) {
-                Log.d(
-                    TAG,
-                    (icons[stat.packageName]?.label
-                        ?: "not found") + "totalTimeForegroundServiceUsed: ${stat.totalTimeForegroundServiceUsed} totalTimeInForeground:  ${stat.totalTimeInForeground} totalTimeVisible: ${stat.totalTimeVisible}"
-                )
-                s += stat.totalTimeInForeground
-            }
-        }
-
-        // convert milliseconds to minutes
-        return s / 1000 / 60
-    }
+    const val ONE_HOUR = 1000L * 60 * 60
 
     fun getUnlockStats(context: Context): JSONArray {
-        val startingTime =
-            System.currentTimeMillis() - 10 * 60L * 60L * 1000L - Calendar.getInstance()[Calendar.MINUTE] * 60L * 1000L - Calendar.getInstance()[Calendar.SECOND] * 1000L - Calendar.getInstance()[Calendar.MILLISECOND]
-        val Stats = JSONArray()
-        var iteration_time = startingTime
-        var hour = (Calendar.getInstance()[java.util.Calendar.HOUR_OF_DAY] - 10).toByte()
+        val hour = Calendar.getInstance()
+        Log.d(TAG, SimpleDateFormat("hh:mm aaa", Locale.getDefault()).format(hour.time))
+
+        hour.timeInMillis -= ONE_HOUR * 8  // 10hours back but we want to display the ending time of every period
+        Log.d(TAG, SimpleDateFormat("hh:mm aaa", Locale.getDefault()).format(hour.time))
+
+        val endTime = System.currentTimeMillis()
+        val startTime =
+            endTime - ONE_HOUR * 10
+        var iterationTime = startTime
+        val stats = JSONArray()
         var key = 0
-        while (iteration_time < Calendar.getInstance().timeInMillis) {
-            val count = countUnlocks(
-                iteration_time,
-                iteration_time + 60L * 60 * 1000,
-                context
-            )
+        while (iterationTime < endTime) {
+            val count = countUnlocks(iterationTime, iterationTime + ONE_HOUR * 2, context)
             val record = JSONObject()
             try {
-                record.put(
-                    "hour",
-                    if (hour > 12) (hour - 12).toString() + "pm" else hour.toString() + "am"
-                )
+                Log.e(TAG, hour.toString())
+                val timeStamp: String =
+                    SimpleDateFormat("hh aa", Locale.getDefault()).format(hour.time)
+                record.put("hour", timeStamp)
                 record.put("key", key)
                 record.put("value", count)
             } catch (e: java.lang.Exception) {
-                e.printStackTrace()
+                Log.e(TAG, e.printStackTrace().toString())
             }
-            Stats.put(record)
-            hour++
+            stats.put(record)
             key += 10
-            iteration_time += 60L * 60L * 1000L
+            hour.timeInMillis += ONE_HOUR * 2
+            iterationTime += ONE_HOUR * 2
         }
-        Log.i("TEST", "getUnlockStats: $Stats")
-        return Stats
+        Log.i("TEST", "getUnlockStats: $stats")
+        return stats
     }
 
-    // region UNLOCKS functions
-    fun countUnlocks(start_time: Long, end_time: Long, context: Context): Int {
-        val manager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    private fun countUnlocks(startTime: Long, endTime: Long, context: Context): Int {
+        val manager = getManager(context)
         var count = 0
-        val events = manager.queryEvents(
-            start_time,
-            end_time
-        )
+        val events = manager.queryEvents(startTime, endTime)
         while (events.hasNextEvent()) {
-            val _event = UsageEvents.Event()
-            events.getNextEvent(_event)
-            if (_event.eventType == UsageEvents.Event.KEYGUARD_HIDDEN) {
-                count++
-            }
+            val event = UsageEvents.Event()
+            events.getNextEvent(event)
+            if (event.eventType == UsageEvents.Event.KEYGUARD_HIDDEN) count++
         }
         return count
-    } // endregion
-    // endregion
+    }
+
+    fun reduceStats(stats: JSArray): JSArray {
+        val ret = JSArray()
+        val temp = JSObject()
+        try {
+            for (k in 0..2) {
+                var max: Long = 0
+                var idx = 0
+                // searching for max time spent
+                for (i in 0 until stats.length()) {
+                    val a = stats.getJSONObject(i).getLong("minutes")
+                    if (a > max) {
+                        max = a
+                        idx = i
+                    }
+                }
+                ret.put(stats.getJSONObject(idx))
+                stats.remove(idx)
+            }
+            var othersTime: Long = 0
+            for (i in 0 until stats.length()) othersTime += stats.getJSONObject(i)
+                .getLong("minutes")
+            temp.put("minutes", othersTime)
+            val icon = JSObject()
+            icon.put("packageName", "")
+            icon.put("label", "Other Apps")
+            icon.put("iconPath", "")
+            icon.put("version", "")
+            temp.put("icon", icon)
+            ret.put(temp)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        Log.i("USAGE", "reduceStats: $ret")
+        return ret
+    }
 
 
 }

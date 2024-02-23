@@ -10,18 +10,24 @@
   import type { GoalHistoryI, HourlyUsageI, SingleAppUsageI } from "$schema/usage";
   import { onMount } from "svelte";
 
-  let appsused: SingleAppUsageI[] = [];
+  let appsUsed: SingleAppUsageI[] = [];
   let screenTimeHistory: GoalHistoryI[] = [];
   let hourlyUsageToday: HourlyUsageI[] = [];
   let totalTime = 0;
   let maxScreenTime: number = 0;
+  let appsUsedTimeNormaliser = 0;
 
   onMount(() => {
-    Api.getAppsUsedToday().then(d => (appsused = d));
+    Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
+    Api.getTotalTime().then(d => (totalTime = d));
+    Api.getAppsUsedToday().then(d => {
+      let timeSpent = 0;
+      for (const app of d) timeSpent += app.minutes;
+      appsUsed = d;
+      appsUsedTimeNormaliser = maxScreenTime / timeSpent;
+    });
     Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
     Api.getUsageIntensityToday().then(d => (hourlyUsageToday = d));
-    Api.getTotalTime().then(d => (totalTime = d));
-    Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
   });
 </script>
 
@@ -29,7 +35,7 @@
 
 <div class="w-full h-80 absolute -z-50 top-0">
   <div class="wh-full block absolute z-10 bg-gradient-to-t from-white" />
-  <Aquarium percent={80} />
+  <Aquarium percent={maxScreenTime - totalTime < 0 ? 0 : ((maxScreenTime - totalTime) / maxScreenTime) * 100} />
   <Cutout className="w-full bottom-0 absolute" />
 </div>
 
@@ -42,25 +48,24 @@
   <PieChart
     className="w-3/4 mx-auto"
     maxValue={maxScreenTime}
-    data={appsused.map(a => ({ color: a.color, value: a.minutes }))}
+    data={appsUsed.map(a => ({ color: a.color, value: a.minutes * appsUsedTimeNormaliser }))}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>
-        {@const time = numberToTime(maxScreenTime - totalTime)}
+        {@const time = numberToTime(totalTime)}
         {(time[0] > 0 ? time[0] : 0) + "h " + (time[1] > 0 ? time[1] : 0) + "min"}
       </H>
-      <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
   <ChartKey
     className="w-full mt-2 items-center flex-col flex-wrap flex-none"
-    data={appsused.map(a => ({ color: a.color, text: a.icon.label, bold: formatMinutes(a.minutes) }))}
+    data={appsUsed.map(a => ({ color: a.color, text: a.icon.label, bold: formatMinutes(a.minutes) }))}
   />
 </section>
 
 <H thin>Hourly Usage Today</H>
 <LineChart
-  axisX={hourlyUsageToday.filter((x, i) => i % 2 == 0).map(h => h.hour)}
+  axisX={hourlyUsageToday.map(h => h.hour)}
   data={hourlyUsageToday.map(h => ({ key: h.key, value: h.value }))}
 />
 

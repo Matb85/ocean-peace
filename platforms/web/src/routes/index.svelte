@@ -21,11 +21,6 @@
     Api.getAllPermissions();
     Api.getTotalTime().then(d => (totalTime = d));
     Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
-
-    setTimeout(() => {
-      console.log(maxScreenTime, totalTime);
-      console.log(maxScreenTime - totalTime);
-    }, 1000);
   });
 
   /** sets up data for a new goal
@@ -82,8 +77,6 @@
     </H>
   </div>
 </Link>
-
-{totalTime}
 
 <!-- goals display -->
 <H thin>{$t("d.goal.your")}</H>
