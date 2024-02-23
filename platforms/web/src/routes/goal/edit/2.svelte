@@ -55,7 +55,7 @@
 <H thin>{$t("d.goal.limit_type")}</H>
 <RadioInput bind:chosen={type} options={limitTypes} />
 
-<div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 ? "1" : "0.5"}>
+<div class="fixed-bottom-button" class:enabled={activeDays.length > 0}>
   <Link href={activeDays.length > 0 ? "/goal/edit/3" : ""}>
     <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>

@@ -84,7 +84,7 @@
   </div>
 </div>
 
-<div class="fixed-bottom-button bg-white" style:opacity={activeDays.length > 0 && isTimeCorrect ? "1" : "0.5"}>
+<div class="fixed-bottom-button" class:enabled={activeDays.length > 0 && isTimeCorrect}>
   <Link href={activeDays.length > 0 && isTimeCorrect ? "/focus/editschedule/3" : ""}>
     <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>

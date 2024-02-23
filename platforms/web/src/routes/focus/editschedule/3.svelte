@@ -60,8 +60,8 @@
   {Math.floor(parseInt(scheduleSM.stopTime) / 60)}:{Math.floor(parseInt(scheduleSM.stopTime) % 60)}
 </H>
 
-<div on:click={saveSchedule} class="fixed-bottom-button">
-  <Button isFullWidth>{$t("d.cta.save")}</Button>
+<div class="fixed-bottom-button enabled">
+  <Button isFullWidth on:click={saveSchedule}>{$t("d.cta.save")}</Button>
 </div>
 
 <Confirmation {isComplete} text={$t("d.schedule.saved")} />

@@ -64,6 +64,6 @@
 
   <LanguageSelector className="text-black" />
 </section>
-<div class="fixed-bottom-button{baseName == name && numberFromTime([h, m * 5]) == firstTime ? ' grayscale' : ''}">
+<div class="fixed-bottom-button" class:grayscale={baseName == name && numberFromTime([h, m * 5]) == firstTime}>
   <Button isFullWidth on:click={save}>{$t("d.cta.save")}</Button>
 </div>
