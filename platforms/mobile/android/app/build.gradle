@@ -72,7 +72,6 @@ dependencies {
     implementation 'me.zhanghai.android.appiconloader:appiconloader:1.5.0'
     implementation "androidx.work:work-runtime:$work_version"
 
-
     // 4) Jupiter API & Test Runner, if you don't have it already
     androidTestImplementation "androidx.test:runner:1.4.0"
     androidTestImplementation "org.junit.jupiter:junit-jupiter-api:5.9.3"
@@ -88,19 +87,6 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "androidx.room:room-rxjava3:$room_version"
     ksp "androidx.room:room-compiler:$room_version"
-
-    // required by FYP
-    implementation 'com.opencsv:opencsv:5.9'
-    // RxAndroid: https://github.com/ReactiveX/RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    // RxJava: https://github.com/ReactiveX/RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
-    // RxKotlin: https://github.com/ReactiveX/RxKotlin
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-    // Redux: https://github.com/pardom/redux-kotlin
-    implementation 'com.github.pardom:redux-kotlin:1.2.1'
-    // OkHttp: https://github.com/square/okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
 
 }
 

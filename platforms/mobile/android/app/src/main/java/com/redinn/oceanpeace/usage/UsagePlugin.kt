@@ -103,7 +103,7 @@ class UsagePlugin : Plugin() {
             )
         } else {
             val res = JSObject()
-            res.put("time", Usage.getTotalTime3(activity.applicationContext))
+            res.put("time", Usage.getTotalTime(activity.applicationContext))
             call.resolve(res)
         }
     }
