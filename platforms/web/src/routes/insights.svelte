@@ -6,7 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
-  import { formatMinutes, numberToTime } from "$lib/utils";
+  import { formatMinutes } from "$lib/utils";
   import type { GoalHistoryI, HourlyUsageI, SingleAppUsageI } from "$schema/usage";
   import { onMount } from "svelte";
 
@@ -52,8 +52,7 @@
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>
-        {@const time = numberToTime(totalTime)}
-        {(time[0] > 0 ? time[0] : 0) + "h " + (time[1] > 0 ? time[1] : 0) + "min"}
+        {formatMinutes(totalTime)}
       </H>
     </div>
   </PieChart>

@@ -9,7 +9,7 @@
   import { onMount } from "svelte";
   import { t } from "$lib/i18n";
   import Navbar from "$lib/Navbar.svelte";
-  import { numberToTime } from "$lib/utils";
+  import { formatMinutes, numberToTime } from "$lib/utils";
 
   let allGoals: GoalI[] = [];
   let totalTime = 0;
@@ -71,8 +71,7 @@
       {time[0] + "h " + time[1] + "min"}
     </H>
     <H tag={4} noMargins>
-      {@const time = numberToTime(maxScreenTime - totalTime)}
-      {(time[0] > 0 ? time[0] : 0) + "h " + (time[1] > 0 ? time[1] : 0) + "min"}
+      {formatMinutes(maxScreenTime - totalTime)}
       {$t("d.left")}
     </H>
   </div>

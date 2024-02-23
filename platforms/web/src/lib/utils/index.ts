@@ -50,7 +50,7 @@ export function stringTimeFromNumber(stringTime: string): string {
  */
 export function formatMinutes(minutes: number): string {
   const time = numberToTime(minutes);
-  return time[0] + "h " + time[1] + "min";
+  return (time[0] > 0 ? time[0] : 0) + "h " + (time[1] > 0 ? time[1] : 0) + "min";
 }
 
 export const WebsiteTypes = ["single website", "all subdomains", "all domains"];
