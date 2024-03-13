@@ -1,4 +1,3 @@
-import type { AppIconI } from "$schema";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import type {
   AppsUsage,
@@ -22,8 +21,8 @@ const plugin: UsageMethods = {
   async getAppsUsedToday(): Promise<SingleAppUsageI[]> {
     const { data: stats } = await Usage.getAppsUsageToday();
     let colors: string[] = ["#B5179E", "#3772FF", "#FCBA04", "#F8F5FA"];
-    //console.log("STATS READY");
-    //console.log(JSON.stringify(stats, null, 2));
+    console.log("STATS READY");
+    console.log(JSON.stringify(stats, null, 2));
     for (let i = 0; i < Math.min(4, stats.length); i++) {
       stats[i].icon.iconPath = Capacitor.convertFileSrc(stats[i].icon.iconPath);
       stats[i].color = colors[i];

@@ -35,18 +35,20 @@ object Usage {
         var resumed: Boolean = false
     )
 
-    private fun applicationsUsageData(context: Context): HashMap<String, Stat> {
+    private fun allAppsUsageData(context: Context): HashMap<String, Stat> {
         val events =
-            getManager(context).queryEvents(getDayStart(), System.currentTimeMillis())
+            getManager(context).queryEvents(
+                System.currentTimeMillis() - (Calendar.getInstance().timeInMillis - getDayStart()),
+                System.currentTimeMillis()
+            )
 
         val activityTime = HashMap<String, Stat>()
-        Log.e(TAG, "applicationsUsageData")
 
         while (events.hasNextEvent()) {
             val event = UsageEvents.Event()
             events.getNextEvent(event)
 
-            //Log.d(TAG, "TODAY  ${event.packageName}, ${event.timeStamp} ${event.eventType}")
+            //Log.d(TAG, "${event.packageName}, ${event.timeStamp} ${event.eventType}")
             if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
                 var temp = activityTime[event.packageName]
                 if (temp == null) temp = Stat()
@@ -57,7 +59,7 @@ object Usage {
                 var temp = activityTime[event.packageName]
                 if (temp == null) temp = Stat()
 
-                // If app was opened sum it's working time
+                // If app was opened assume it's working time
                 if (temp.resumed) {
                     temp.totalTime += event.timeStamp - temp.startTime
                     temp.resumed = false
@@ -76,16 +78,49 @@ object Usage {
         return activityTime
     }
 
-    // endregion
+    fun singleAppUsageData(context: Context, packageName: String): Long {
+        val events =
+            getManager(context).queryEvents(
+                System.currentTimeMillis() - (Calendar.getInstance().timeInMillis - getDayStart()),
+                System.currentTimeMillis()
+            )
+
+        val temp = Stat()
+
+        while (events.hasNextEvent()) {
+            val event = UsageEvents.Event()
+            events.getNextEvent(event)
+            if (event.packageName != packageName) continue
+            //Log.d(TAG, "${event.packageName}, ${event.timeStamp} ${event.eventType}")
+            if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
+                temp.startTime = event.timeStamp
+                temp.resumed = true
+            } else if (event.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
+                // If app was opened assume it's working time
+                if (temp.resumed) {
+                    temp.totalTime += event.timeStamp - temp.startTime
+                    temp.resumed = false
+                }
+            }
+        }
+
+        // Activity is currently running in foreground [edge case]
+        if (temp.resumed)
+            temp.totalTime += System.currentTimeMillis() - temp.startTime
+
+        return temp.totalTime
+    }
+
     fun getUsageData(context: Context): JSArray {
         val arr = JSArray()
         val icons = OceanDatabase.getDatabase(context).iconDAO().getAllIcons()
-        val dataSet = applicationsUsageData(context)
+        val dataSet = allAppsUsageData(context)
         for (packageName in dataSet.keys) {
             var icon: JSObject
             // receive ICON data
             val data = icons[packageName]
             if (data == null) {
+                // TODO: add the "Other" time counter
                 continue
             } else {
                 icon = data.toJSON()
@@ -101,7 +136,7 @@ object Usage {
 
     fun getTotalTime(context: Context): Long {
         var time: Long = 0
-        val data = applicationsUsageData(context)
+        val data = allAppsUsageData(context)
         for (s in data.values) {
             time += s.totalTime / 1000 / 60
         }

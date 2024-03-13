@@ -1,9 +1,12 @@
 package com.redinn.oceanpeace
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import com.getcapacitor.BridgeActivity
 import com.redinn.oceanpeace.focus.FocusPlugin
 import com.redinn.oceanpeace.goals.GoalsPlugin
+import com.redinn.oceanpeace.helper.PermissionHelper
 import com.redinn.oceanpeace.icons.IconManager
 import com.redinn.oceanpeace.icons.IconsPlugin
 import com.redinn.oceanpeace.managers.PermissionManager
@@ -22,6 +25,13 @@ class MainActivity : BridgeActivity() {
         registerPlugin(SchedulePlugin::class.java)
         registerPlugin(UIPlugin::class.java)
         registerPlugin(PermissionManager::class.java)
+
+        val isEnabled = PermissionHelper.isAccessibilitySettingsOn(this)
+        if (!isEnabled) {
+            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            //  startActivity(intent)
+        }
+
         //endregion
         super.onCreate(savedInstanceState)
     }
@@ -31,16 +41,5 @@ class MainActivity : BridgeActivity() {
         super.onStart()
     }
 
-    //  override fun onPause() {
-    //      super.onPause()
-    //  }
-
-    //   override fun onStop() {
-    //       super.onStop()
-    //   }
-
-//    override fun onDestroy() {
-//       super.onDestroy()
-//    }
 
 }

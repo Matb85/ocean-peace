@@ -15,17 +15,11 @@
   let hourlyUsageToday: HourlyUsageI[] = [];
   let totalTime = 0;
   let maxScreenTime: number = 0;
-  let appsUsedTimeNormaliser = 0;
 
   onMount(() => {
     Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
     Api.getTotalTime().then(d => (totalTime = d));
-    Api.getAppsUsedToday().then(d => {
-      let timeSpent = 0;
-      for (const app of d) timeSpent += app.minutes;
-      appsUsed = d;
-      appsUsedTimeNormaliser = maxScreenTime / timeSpent;
-    });
+    Api.getAppsUsedToday().then(d => (appsUsed = d));
     Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
     Api.getUsageIntensityToday().then(d => (hourlyUsageToday = d));
   });
@@ -47,8 +41,8 @@
 <section class="w-11/12">
   <PieChart
     className="w-3/4 mx-auto"
-    maxValue={maxScreenTime}
-    data={appsUsed.map(a => ({ color: a.color, value: a.minutes * appsUsedTimeNormaliser }))}
+    maxValue={Math.max(maxScreenTime, totalTime)}
+    data={appsUsed.map(a => ({ color: a.color, value: a.minutes }))}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
       <H tag={2}>
