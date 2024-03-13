@@ -7,7 +7,6 @@ import android.util.Log
 import com.redinn.oceanpeace.FunctionBase
 import com.redinn.oceanpeace.database.OceanDatabase
 import com.redinn.oceanpeace.database.icons.Icon
-
 import me.zhanghai.android.appiconloader.AppIconLoader
 import java.io.File
 import java.io.FileNotFoundException
@@ -43,11 +42,12 @@ object IconManager {
          * including system utilities */
         val installedPackages = packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
         for (packageInfo in installedPackages) {
+            Log.e("IconManager", packageInfo.packageName)
             val appInfo = packageInfo.applicationInfo
 
             /* SKIP SYSTEM APPS
              * https://stackoverflow.com/questions/8784505/how-do-i-check-if-an-app-is-a-non-system-app-in-android*/
-            if (!appInfo.sourceDir.startsWith("/data/app/") ||
+            if (appInfo.packageName.startsWith("com.android") || // tried but not working: !appInfo.sourceDir.startsWith("/data/app/")
                 packageManager.getLaunchIntentForPackage(appInfo.packageName) == null //(appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0
             ) continue
 
@@ -107,14 +107,4 @@ object IconManager {
         }
     }
 
-    fun getAppName(context: Context, packageName: String): String {
-        return try {
-            val pkgName =
-                OceanDatabase.getDatabase(context).iconDAO().getIcon(packageName).packageName
-            pkgName
-        } catch (e: PackageManager.NameNotFoundException) {
-            Log.e("getAppName", "fail ($packageName) ${e.message} - ${e.localizedMessage}")
-            packageName
-        }
-    }
 }
