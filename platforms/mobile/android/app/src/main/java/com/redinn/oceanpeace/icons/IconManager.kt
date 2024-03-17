@@ -42,7 +42,7 @@ object IconManager {
          * including system utilities */
         val installedPackages = packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
         for (packageInfo in installedPackages) {
-            Log.e("IconManager", packageInfo.packageName)
+            //Log.e("IconManager", packageInfo.packageName)
             val appInfo = packageInfo.applicationInfo
 
             /* SKIP SYSTEM APPS

@@ -16,7 +16,7 @@ const config: CapacitorConfig = {
   // comment out this line for production
   // adjust for development whenever necessary
   //server: { url: "http://10.0.2.2:3000", cleartext: true }, // for the emulator
-  server: { url: "http://192.168.0.171:3000", cleartext: true }, // for real devices
+  //server: { url: "http://192.168.0.171:3000", cleartext: true }, // for real devices
 };
 
 export default config;

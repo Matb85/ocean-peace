@@ -9,9 +9,5 @@
 			"backgroundColor": "ffffffff",
 			"androidScaleType": "CENTER_CROP"
 		}
-	},
-	"server": {
-		"url": "http://192.168.0.171:3000",
-		"cleartext": true
 	}
 }

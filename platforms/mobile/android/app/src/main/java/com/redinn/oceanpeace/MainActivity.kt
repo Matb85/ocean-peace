@@ -29,7 +29,7 @@ class MainActivity : BridgeActivity() {
         val isEnabled = PermissionHelper.isAccessibilitySettingsOn(this)
         if (!isEnabled) {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            //  startActivity(intent)
+            startActivity(intent)
         }
 
         //endregion
