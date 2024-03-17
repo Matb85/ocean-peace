@@ -27,10 +27,10 @@ jobs:
             User git
             IdentityFile ~/.ssh/id_ed25519_design_system
 
-      - name: Setup Node.js 16.x
+      - name: Setup Node.js 20.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 20.x
 
       - name: install pnpm
         run: npm i pnpm -g && pnpm --no-frozen-lockfile install
