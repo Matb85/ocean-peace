@@ -13,9 +13,9 @@
   import { t } from "$lib/i18n";
 
   const scheduleData = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
-  let presetData: Partial<PresetI> = {};
+  let presetData: PresetI = {} as any;
   onMount(async () => {
-    presetData = await Api.getPreset(scheduleData.preset);
+    presetData = (await Api.getPreset(scheduleData.preset)) as any as PresetI;
 
     SM.action.setProps({
       type: "edit",

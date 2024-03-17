@@ -2,22 +2,25 @@
   import { Button, Aquarium, H } from "@redinnlabs/system/Elements";
   import { Goal } from "@redinnlabs/system/Units";
   import Cutout from "$lib/Cutout.svelte";
-
   import SM from "$lib/sessionManager";
   import Link from "$lib/Link.svelte";
-  const curScreenTime: number = 100;
-  const maxScreenTime: number = 270;
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { GoalI } from "$schema";
   import { onMount } from "svelte";
   import { t } from "$lib/i18n";
   import Navbar from "$lib/Navbar.svelte";
-  import { numberToTime } from "$lib/utils";
+  import { formatMinutes, numberToTime } from "$lib/utils";
+
   let allGoals: GoalI[] = [];
+  let totalTime = 0;
+  let maxScreenTime: number = 0;
+
   onMount(async () => {
     SM.action.setProp("nativeBackUrl", "/");
-    allGoals = await Api.getAllGoals();
+    Api.getAllGoals().then(d => (allGoals = d));
     Api.getAllPermissions();
+    Api.getTotalTime().then(d => (totalTime = d));
+    Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
   });
 
   /** sets up data for a new goal
@@ -56,11 +59,7 @@
 
 <!-- aquarium background -->
 <Link href="/insights" className="w-full h-80 block relative">
-  <Aquarium
-    percent={(maxScreenTime - curScreenTime) / maxScreenTime < 0
-      ? 0
-      : ((maxScreenTime - curScreenTime) / maxScreenTime) * 100}
-  />
+  <Aquarium percent={maxScreenTime - totalTime < 0 ? 0 : ((maxScreenTime - totalTime) / maxScreenTime) * 100} />
   <!-- cut out-->
   <Cutout className="w-full bottom-0 absolute" />
 
@@ -68,12 +67,11 @@
   <div class="text-shadow text-white absolute w-full bottom-24 grid grid-cols-1 place-items-center">
     <H noMargins>{$t("d.screentime.your")}</H>
     <H tag={2} noMargins className="text-shadow-sm">
-      {@const time = numberToTime(curScreenTime)}
+      {@const time = numberToTime(totalTime)}
       {time[0] + "h " + time[1] + "min"}
     </H>
     <H tag={4} noMargins>
-      {@const time = numberToTime(maxScreenTime - curScreenTime)}
-      {time[0] + "h " + time[1] + "min"}
+      {formatMinutes(maxScreenTime - totalTime)}
       {$t("d.left")}
     </H>
   </div>

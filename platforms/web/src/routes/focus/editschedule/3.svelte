@@ -12,10 +12,10 @@
   import type { PresetI, ScheduleI } from "$schema";
   import SM from "$lib/sessionManager";
 
-  let preset: Partial<PresetI> = {};
+  let preset: PresetI = {} as any;
   const scheduleSM = SM.schedule.getProps("id", "name", "preset", "activeDays", "startTime", "stopTime");
   onMount(async () => {
-    preset = await Api.getPreset(scheduleSM.preset);
+    preset = (await Api.getPreset(scheduleSM.preset)) as any as PresetI;
   });
   /** save schedule to a file
    * @returns void
@@ -60,8 +60,8 @@
   {Math.floor(parseInt(scheduleSM.stopTime) / 60)}:{Math.floor(parseInt(scheduleSM.stopTime) % 60)}
 </H>
 
-<div on:click={saveSchedule} class="fixed-bottom-button">
-  <Button isFullWidth>{$t("d.cta.save")}</Button>
+<div class="fixed-bottom-button enabled">
+  <Button isFullWidth on:click={saveSchedule}>{$t("d.cta.save")}</Button>
 </div>
 
 <Confirmation {isComplete} text={$t("d.schedule.saved")} />

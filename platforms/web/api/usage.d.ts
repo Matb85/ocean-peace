@@ -21,7 +21,7 @@ export interface HourlyUsageI {
 }
 
 export interface UsageMethods {
-  getUsageTime(): Promise<number>;
+  getTotalTime(): Promise<number>;
 
   /** used in insights.svelte in the chart where apps used today are displayed
    * @returns an array with 3 most used a a 4th element that represents the rest
@@ -36,7 +36,7 @@ export interface UsageMethods {
    * the y position (the number of phone unlocks during that hour)
    */
   getUsageIntensityToday(): Promise<HourlyUsageI[]>;
-  
+
   /** used in insights.svelte in the screen time 7-day history
    * returns an array with screen time stats from the last 7 days
    * @returns a 7-element array, each element contains:

@@ -6,7 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
   import SelectedApps from "$lib/SelectedApps.svelte";
   import DangerZone from "$lib/DangerZone.svelte";
-  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
+  // import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { querystring } from "svelte-spa-router";
   import { t } from "$lib/i18n";
   import Api from "@redinn/oceanpeace-mobile/api";
@@ -47,7 +47,7 @@
     data={[{ color: "#3772FF", value: parseInt(goalData.sessionTime) }]}
   >
     <div class="wh-full flex flex-col items-center justify-center gap-2">
-      <H tag={2}>24 min</H>
+      <H tag={2}>{formatMinutes((parseInt(goalData.limit) - parseInt(goalData.sessionTime)) / (1000 * 60))}</H>
       <H tag={3} className="!font-normal">{$t("d.left")}</H>
     </div>
   </PieChart>
@@ -89,7 +89,9 @@
 <H thin>{$t("d.dialog.apps")}</H>
 <SelectedApps apps={selectedApps} />
 
+<!--
 <H thin>{$t("d.dialog.web")}</H>
 <SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites") || "[]")} />
+-->
 
 <DangerZone deleteUrl="/goal/delete" label={$t("d.cta.delete") + " " + $t("d.goal.goal").toLowerCase()} />

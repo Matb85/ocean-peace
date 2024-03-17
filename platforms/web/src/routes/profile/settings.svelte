@@ -22,7 +22,7 @@
   /** user name binding */
   let name = "";
   /** track changes */
-  const data: PreferencesI = JSON.parse(sessionStorage.getItem("preferences_temp"));
+  const data: PreferencesI = JSON.parse(sessionStorage.getItem("preferences_temp") || "{}");
   let baseName = (name = data.name);
   let firstTime = parseInt(data.screentime);
   const time = timeFromNumber(data.screentime);
@@ -64,6 +64,6 @@
 
   <LanguageSelector className="text-black" />
 </section>
-<div class="fixed-bottom-button{baseName == name && numberFromTime([h, m * 5]) == firstTime ? ' grayscale' : ''}">
+<div class="fixed-bottom-button" class:grayscale={baseName == name && numberFromTime([h, m * 5]) == firstTime}>
   <Button isFullWidth on:click={save}>{$t("d.cta.save")}</Button>
 </div>

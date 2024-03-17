@@ -48,7 +48,7 @@
   {/each}
 </div>
 
-<div class="fixed-bottom-button bg-white" style:opacity={preset.length > 0 && name.length > 0 ? "1" : "0.5"}>
+<div class="fixed-bottom-button" class:enabled={preset.length > 0 && name.length > 0}>
   <Link href={preset.length > 0 && name.length > 0 ? "/focus/editschedule/2" : ""}>
     <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>

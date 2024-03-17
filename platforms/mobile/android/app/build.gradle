@@ -1,10 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'de.mannodermaus.android-junit5'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
     namespace "com.redinn.oceanpeace"
     compileSdk 33
     defaultConfig {
+        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
         applicationId "com.redinn.oceanpeace"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -21,7 +23,6 @@ android {
         // 1) Make sure to use the AndroidJUnitRunner, or a subclass of it. This requires a dependency on androidx.test:runner, too!
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // 2) Connect JUnit 5 to the runner
-        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -49,10 +50,10 @@ repositories {
 }
 
 
-
 dependencies {
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation 'androidx.core:core-ktx:1.10.1'
 
     // for creating documentation TODO: documentation
     //implementation fileTree(dir: '/home/raccoon/Android/Sdk/platforms/android-32', include: ['*.aar', '*.jar'], exclude: [])
@@ -71,7 +72,6 @@ dependencies {
     implementation 'me.zhanghai.android.appiconloader:appiconloader:1.5.0'
     implementation "androidx.work:work-runtime:$work_version"
 
-
     // 4) Jupiter API & Test Runner, if you don't have it already
     androidTestImplementation "androidx.test:runner:1.4.0"
     androidTestImplementation "org.junit.jupiter:junit-jupiter-api:5.9.3"
@@ -86,6 +86,8 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "androidx.room:room-rxjava3:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
+
 }
 
 tasks.withType(Test) {
@@ -98,6 +100,7 @@ tasks.withType(Test) {
 
 
 apply from: 'capacitor.build.gradle'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 try {
     def servicesJSON = file('google-services.json')

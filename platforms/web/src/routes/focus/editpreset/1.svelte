@@ -6,7 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
 
   import SelectedApps from "$lib/SelectedApps.svelte";
-  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
+  // import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import type { AppIconI } from "$schema";
@@ -40,15 +40,16 @@
   <Button secondary size="small">{$t("d.cta.edit")}</Button>
 </Link>
 
+<!--
 <H thin>{$t("d.dialog.web")}</H>
-
 <SelectedWebsites websites={JSON.parse(SM.dialogs.getProp("websites"))} />
 
 <Link href="/dialogs/websites">
   <Button secondary size="small">{$t("d.cta.edit")}</Button>
 </Link>
+-->
 
-<div class="fixed-bottom-button bg-white" style:opacity={selectedApps.length > 0 && name.length > 0 ? "1" : "0.5"}>
+<div class="fixed-bottom-button" class:enabled={selectedApps.length > 0 && name.length > 0}>
   <Link href={selectedApps.length > 0 && name.length > 0 ? "/focus/editpreset/2" : ""}>
     <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>

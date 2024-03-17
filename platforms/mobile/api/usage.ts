@@ -1,4 +1,3 @@
-import type { AppIconI } from "$schema";
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import type {
   AppsUsage,
@@ -9,23 +8,22 @@ import type {
 } from "@redinn/oceanpeace-web/api/usage";
 
 interface UsagePlugin {
-  getAppsUsageToday(): Promise<{ stats: SingleAppUsageI[] }>;
-  getTotalTime(): Promise<{ time: number }>;
-  getUnlocks(): Promise<{ unlocks: HourlyUsageI[] }>;
+  getAppsUsageToday(): Promise<{ data: SingleAppUsageI[] }>;
+  getTotalTime(): Promise<{ data: number }>;
+  getUnlocks(): Promise<{ data: HourlyUsageI[] }>;
 }
 
 const Usage = registerPlugin<UsagePlugin>("Usage");
 
 const plugin: UsageMethods = {
-  async getUsageTime(): Promise<number> {
-      const { time } = await Usage.getTotalTime();
+  getTotalTime: () => Usage.getTotalTime().then(x => x.data),
 
-      return time;
-  },
   async getAppsUsedToday(): Promise<SingleAppUsageI[]> {
-    const { stats } = await Usage.getAppsUsageToday();
-    let colors : string[] = ["#B5179E", "#3772FF", "#FCBA04", "#F8F5FA"];
-    for (let i=0; i<4; i++) {
+    const { data: stats } = await Usage.getAppsUsageToday();
+    let colors: string[] = ["#B5179E", "#3772FF", "#FCBA04", "#F8F5FA"];
+    console.log("STATS READY");
+    console.log(JSON.stringify(stats, null, 2));
+    for (let i = 0; i < Math.min(4, stats.length); i++) {
       stats[i].icon.iconPath = Capacitor.convertFileSrc(stats[i].icon.iconPath);
       stats[i].color = colors[i];
     }
@@ -38,22 +36,9 @@ const plugin: UsageMethods = {
     ];
     */
   },
-  async getUsageIntensityToday(): Promise<HourlyUsageI[]> {
-    const { unlocks } = await Usage.getUnlocks();
 
-    // let ret: HourlyUsageI[];
-    // for ( let i=0; i<10; i++) {
-    //   let temp: HourlyUsageI;
-    //   temp.hour = unlocks[i].hour;
-    //   temp.key = unlocks[i].key;
-    //   temp.value = unlocks[i].value;
-    //   ret.push(temp)
-    // }
-
-    console.log(unlocks.toString())
-
-    return unlocks;
-    /*
+  getUsageIntensityToday: () => Usage.getUnlocks().then(x => x.data),
+  /*
     [
       { hour: "8am", key: 0, value: 0 },
       { hour: "9am", key: 10, value: 30 },
@@ -68,7 +53,6 @@ const plugin: UsageMethods = {
       { hour: "6pm", key: 100, value: 100 },
     ]; 
     */
-  },
 
   async getScreenTimeHistory(): Promise<GoalHistoryI[]> {
     return [

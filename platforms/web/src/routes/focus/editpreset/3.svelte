@@ -6,7 +6,7 @@
   import FullHeading from "$lib/FullHeading.svelte";
 
   import SelectedApps from "$lib/SelectedApps.svelte";
-  import SelectedWebsites from "$lib/SelectedWebsites.svelte";
+  // import SelectedWebsites from "$lib/SelectedWebsites.svelte";
   import { onMount } from "svelte";
   import Api from "@redinn/oceanpeace-mobile/api";
   import { goTo } from "$lib/utils";
@@ -55,11 +55,13 @@
 <H tag={6} thin>{$t("d.dialog.apps")}</H>
 <SelectedApps apps={allowedApps} />
 
+<!--
 <H tag={6} thin>{$t("d.dialog.web")}</H>
 <SelectedWebsites websites={JSON.parse(dialogsSM.websites)} />
+-->
 
-<div on:click={saveGoal} class="fixed-bottom-button">
-  <Button isFullWidth>{$t("d.cta.save")}</Button>
+<div class="fixed-bottom-button">
+  <Button isFullWidth on:click={saveGoal}>{$t("d.cta.save")}</Button>
 </div>
 
 <Confirmation {isComplete} text={$t("d.preset.saved")} />

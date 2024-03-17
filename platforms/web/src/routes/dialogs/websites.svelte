@@ -23,7 +23,7 @@
   let url = "";
   $: url, search();
 
-  let urls = [];
+  let urls: string[] = [];
   /** fetches the favicon
    * @returns void
    */

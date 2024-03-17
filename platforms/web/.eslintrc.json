@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["google", "eslint-config-prettier"],
+  "extends": ["google", "eslint-config-prettier", "plugin:svelte/recommended"],
   "parserOptions": {
     "sourceType": "module",
     "project": ["./tsconfig.json"],
@@ -10,8 +10,15 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": ["svelte3", "@typescript-eslint"],
-  "overrides": [{ "files": ["**/*.svelte"], "processor": "svelte3/svelte3" }],
+  "plugins": ["@typescript-eslint"],
+  "overrides": [
+    {
+      "files": ["*.svelte"],
+      "parser": "svelte-eslint-parser",
+      // Parse the `<script>` in `.svelte` as TypeScript by adding the following configuration.
+      "parserOptions": { "parser": "@typescript-eslint/parser" }
+    }
+  ],
   "settings": { "svelte3/typescript": true },
 
   "rules": {

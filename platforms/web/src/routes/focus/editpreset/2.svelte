@@ -62,7 +62,7 @@
   {/each}
 </section>
 
-<div class="fixed-bottom-button bg-white rounded-2xl" style:opacity={chosen.length > 0 ? "1" : "0.5"}>
+<div class="fixed-bottom-button" class:enabled={chosen.length > 0}>
   <Link href={chosen.length > 0 ? "/focus/editpreset/3" : ""}>
     <Button isFullWidth>{$t("d.cta.con")}</Button>
   </Link>
