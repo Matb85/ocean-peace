@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2024-03-20)
+
+### Features
+
+* **mobile:** :recycle: add ScreenTime History + improve functions in the usage plugins ([df807f2](https://github.com/Redinn-Labs/ocean-peace/commit/df807f2f582c28da25945dcacc8cfe9c688232f3))
+
 ## 0.2.6 (2024-03-17)
 
 **Note:** Version bump only for package @redinn/oceanpeace-desktop
