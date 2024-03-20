@@ -1,7 +1,8 @@
 {
   "screentime": {
     "screentime": "Screen time",
-    "your": "Your screen time"
+    "your": "Your screen time",
+    "unlocks": "Usage intensity"
   },
   "left": "left",
   "last": "last",

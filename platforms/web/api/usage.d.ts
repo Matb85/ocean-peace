@@ -11,8 +11,8 @@ export interface SingleAppUsageI {
 }
 export interface GoalHistoryI {
   day: string;
-  status: boolean;
-  minutes: number;
+  //status: boolean;
+  time: number;
 }
 export interface HourlyUsageI {
   hour: string;

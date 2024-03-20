@@ -68,6 +68,22 @@ class UsagePlugin : Plugin() {
         returnPrimitiveData(call, Usage.getUnlockStats(activity.applicationContext))
     }
 
+    @PluginMethod
+    fun getScreenTimeHistory(call: PluginCall) {
+        if (!permissionGranted(call, "getScreenTimeHistoryCallback"))
+            return
+        returnPrimitiveData(call, Usage.getScreenTimeHistory(activity.applicationContext, 7))
+    }
+
+    @PermissionCallback
+    private fun getScreenTimeHistoryCallback(call: PluginCall) {
+        if (getPermissionState("usage") != PermissionState.GRANTED) {
+            call.reject("Permission is required")
+            return
+        }
+        returnPrimitiveData(call, Usage.getScreenTimeHistory(activity.applicationContext, 7))
+    }
+
     private fun permissionGranted(call: PluginCall, callback: String): Boolean {
         Log.d(TAG, "Method with callback $callback triggered")
         if (getPermissionState("usage") != PermissionState.GRANTED && !hasAppUsagePermission(

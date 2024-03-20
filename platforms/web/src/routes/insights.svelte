@@ -20,8 +20,8 @@
     Api.getPreferences().then(d => (maxScreenTime = parseInt(d.screentime)));
     Api.getTotalTime().then(d => (totalTime = d));
     Api.getAppsUsedToday().then(d => (appsUsed = d));
-    Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
     Api.getUsageIntensityToday().then(d => (hourlyUsageToday = d));
+    Api.getScreenTimeHistory().then(d => (screenTimeHistory = d));
   });
 </script>
 
@@ -56,7 +56,7 @@
   />
 </section>
 
-<H thin>Hourly Usage Today</H>
+<H thin>{$t("d.screentime.unlocks")}</H>
 <LineChart
   axisX={hourlyUsageToday.map(h => h.hour)}
   data={hourlyUsageToday.map(h => ({ key: h.key, value: h.value }))}
@@ -66,9 +66,17 @@
 <section class="flex flex-wrap items-center justify-center max-w-xs">
   {#each screenTimeHistory as session}
     <div class="text-center">
-      <PieChart className="w-20 h-20" maxValue={maxScreenTime} data={[{ color: "#3772FF", value: session.minutes }]}>
-        <div class="wh-full bg-green-light text-green-dark flex items-center justify-center">
-          <Icon d={session.status ? mdiCheck : mdiClose} className="fill-current w-32" />
+      <PieChart
+        className="w-20 h-20"
+        maxValue={maxScreenTime}
+        data={[{ color: "#3772FF", value: Math.min(session.time, maxScreenTime) }]}
+      >
+        <div
+          class="wh-full {session.time < maxScreenTime
+            ? 'text-green-dark bg-green-light'
+            : 'text-red-dark bg-red-light'} flex items-center justify-center"
+        >
+          <Icon d={session.time < maxScreenTime ? mdiCheck : mdiClose} className="fill-current w-32" />
         </div>
       </PieChart>
       <p>{session.day}</p>
