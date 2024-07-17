@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "1.5.3",
-    "pnpm": "8.15.3",
+    "pnpm": "8.15.9",
     "sirv-cli": "2.0.2"
   },
   "devDependencies": {
