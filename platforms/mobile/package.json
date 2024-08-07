@@ -8,14 +8,14 @@
     "icons": "capacitor-assets generate --android"
   },
   "dependencies": {
-    "@capacitor/android": "5.7.0",
+    "@capacitor/android": "5.7.8",
     "@capacitor/app": "5.0.7",
     "@redinn/oceanpeace-web": "workspace:0.2.6"
   },
   "devDependencies": {
     "@capacitor/assets": "3.0.4",
-    "@capacitor/cli": "5.7.0",
-    "@capacitor/core": "5.7.0",
+    "@capacitor/cli": "5.7.8",
+    "@capacitor/core": "5.7.8",
     "@capacitor/splash-screen": "5.0.7"
   }
 }
