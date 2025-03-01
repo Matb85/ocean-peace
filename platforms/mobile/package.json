@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@capacitor/android": "5.7.0",
-    "@capacitor/app": "5.0.7",
+    "@capacitor/app": "5.0.8",
     "@redinn/oceanpeace-web": "workspace:0.2.6"
   },
   "devDependencies": {
