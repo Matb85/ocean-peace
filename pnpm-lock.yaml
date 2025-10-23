@@ -47,7 +47,7 @@ importers:
         specifier: 5.0.7
         version: 5.0.7(@capacitor/core@5.7.0)
       '@redinn/oceanpeace-web':
-        specifier: workspace:0.2.6
+        specifier: workspace:0.2.7
         version: link:../web
     devDependencies:
       '@capacitor/assets':
@@ -69,7 +69,7 @@ importers:
         specifier: ^7.4.47
         version: 7.4.47
       '@redinn/oceanpeace-mobile':
-        specifier: workspace:^0.2.6
+        specifier: workspace:^0.2.7
         version: link:../mobile
       '@redinnlabs/system':
         specifier: github:Redinn-Labs/design-system#release
