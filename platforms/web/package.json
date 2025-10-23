@@ -1,6 +1,6 @@
 {
   "name": "@redinn/oceanpeace-web",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "private": true,
   "type": "module",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
-    "@redinn/oceanpeace-mobile": "workspace:^0.2.7",
+    "@redinn/oceanpeace-mobile": "workspace:^0.2.8",
     "@redinnlabs/system": "github:Redinn-Labs/design-system#release",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "svelte-spa-router": "^4.0.1"
